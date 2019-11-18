@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+            android:id="@+id/menu_top"
+            android:checkableBehavior="none">
+        <item
+                android:id="@+id/btn_grid_plan"
+                android:title="План-сетка" android:icon="@drawable/grid_plan_icon"/>
+        <item
+                android:id="@+id/noticeFragment"
+                android:title="Объявления" android:icon="@drawable/notice_icon"/>
+        <item
+                android:id="@+id/eventsFragment"
+                android:title="Мероприятия" android:icon="@drawable/events_icon"/>
+    </group>
+    <group
+            android:id="@+id/menu_bottom" android:checkableBehavior="single">
+        <item android:title="Информация" android:id="@+id/infoFragment" android:icon="@drawable/info_icon"/>
+        <item android:title="Поделиться" android:id="@+id/btn_share" android:icon="@drawable/share_icon"/>
+        <item android:title="Настройки" android:id="@+id/btn_settings" android:icon="@drawable/settings_icon"/>
+    </group>
+    <group
+            android:id="@+id/menu_sing_out" android:checkableBehavior="single">
+        <item android:title="Выйти" android:id="@+id/btn_sign_out" android:icon="@drawable/sign_out_icon"/>
+    </group>
+
+</menu>

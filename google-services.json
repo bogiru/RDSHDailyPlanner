@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1030213299185",
+    "firebase_url": "https://rdsh-daily-planner.firebaseio.com",
+    "project_id": "rdsh-daily-planner",
+    "storage_bucket": "rdsh-daily-planner.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030213299185:android:f09da4ecb870a92819f250",
+        "android_client_info": {
+          "package_name": "com.bogiruapps.rdshapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030213299185-jhumkmucb41ccd2p5vsnua4neuo4pb7r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnFvobsKFf_CqxOgiCevWcMx6orzU4Mis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030213299185-jhumkmucb41ccd2p5vsnua4neuo4pb7r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
