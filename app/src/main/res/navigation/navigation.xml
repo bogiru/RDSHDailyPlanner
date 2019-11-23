@@ -18,4 +18,9 @@
             android:name="com.bogiruapps.rdshapp.events.EventsFragment"
             android:label="fragment_events"
             tools:layout="@layout/fragment_events" />
+    <fragment
+            android:id="@+id/choseSchoolFragment"
+            android:name="com.bogiruapps.rdshapp.ChoseSchoolFragment"
+            android:label="fragment_chose_school"
+            tools:layout="@layout/fragment_chose_school" />
 </navigation>
