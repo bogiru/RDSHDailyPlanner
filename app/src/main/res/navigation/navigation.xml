@@ -2,12 +2,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
-            app:startDestination="@id/noticeFragment">
+            app:startDestination="@id/loadFragment">
 
     <fragment android:id="@+id/noticeFragment" android:name="com.bogiruapps.rdshapp.notice.NoticeFragment"
-              android:label="fragment_notice" tools:layout="@layout/fragment_notice"/>
+              android:label="fragment_notice" tools:layout="@layout/fragment_notice">
+        <argument
+                android:name="hasSchool"
+                app:argType="boolean"
+                android:defaultValue="false"/>
+    </fragment>
+
     <fragment android:id="@+id/loginFragment" android:name="com.bogiruapps.rdshapp.login.LoginFragment"
-              android:label="LoginFragment"/>
+            android:label="LoginFragment"/>
+
     <fragment
             android:id="@+id/infoFragment"
             android:name="com.bogiruapps.rdshapp.info.InfoFragment"
@@ -20,7 +27,20 @@
             tools:layout="@layout/fragment_events" />
     <fragment
             android:id="@+id/choseSchoolFragment"
-            android:name="com.bogiruapps.rdshapp.ChoseSchoolFragment"
+            android:name="com.bogiruapps.rdshapp.school.ChooseSchoolFragment"
             android:label="fragment_chose_school"
             tools:layout="@layout/fragment_chose_school" />
+    <fragment
+            android:id="@+id/loadFragment"
+            android:name="com.bogiruapps.rdshapp.splash.SplashFragment"
+            android:label="fragment_load"
+            tools:layout="@layout/fragment_splash" >
+
+        <action
+                android:id="@+id/action_loadFragment_to_noticeFragment"
+                app:destination="@id/noticeFragment" />
+        <action
+                android:id="@+id/action_loadFragment_to_choseSchoolFragment"
+                app:destination="@id/choseSchoolFragment" />
+    </fragment>
 </navigation>

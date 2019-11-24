@@ -2,9 +2,9 @@ package com.bogiruapps.rdshapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -14,6 +14,9 @@ import androidx.navigation.ui.NavigationUI
 import com.bogiruapps.rdshapp.databinding.ActivityMainBinding
 import com.bogiruapps.rdshapp.login.LoginViewModel
 import com.firebase.ui.auth.AuthUI
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.drawer_header.*
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
@@ -21,11 +24,12 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
     private lateinit var loginViewModel: LoginViewModel
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
         drawerLayout = binding.drawerLayout
@@ -34,7 +38,13 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
 
-        binding.lifecycleOwner = this
+      /*  binding.lifecycleOwner = this*/
+
+
+        db = FirebaseFirestore.getInstance()
+
+
+
         observeState()
     }
 
@@ -51,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         loginViewModel.authenticationState.observe(this, Observer { state ->
             when (state) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
+                    addUser()
                     binding.navView.menu.findItem(R.id.btn_sign_out).setOnMenuItemClickListener {
                         signOut()
                         true
@@ -65,6 +76,20 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun addUser() {
+        val authUser = FirebaseAuth.getInstance().currentUser
+        val user = User(authUser?.displayName, authUser?.email, "")
+        val document = db.collection("users").document(user.email.toString())
+        document.get()
+            .addOnSuccessListener {
+                if (!it.exists()) document.set(user)
+                text_name.text = it["name"].toString()
+            }
+            .addOnFailureListener {
+
+            }
     }
 
     private fun signOut() {
