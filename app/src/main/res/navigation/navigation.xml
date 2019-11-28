@@ -2,18 +2,25 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
-            app:startDestination="@id/loadFragment">
+            app:startDestination="@id/splashFragment">
 
-    <fragment android:id="@+id/noticeFragment" android:name="com.bogiruapps.rdshapp.notice.NoticeFragment"
-              android:label="fragment_notice" tools:layout="@layout/fragment_notice">
+    <fragment
+            android:id="@+id/noticeFragment"
+            android:name="com.bogiruapps.rdshapp.notice.NoticeFragment"
+            android:label="fragment_notice"
+            tools:layout="@layout/fragment_notice">
         <argument
                 android:name="hasSchool"
                 app:argType="boolean"
-                android:defaultValue="false"/>
+                android:defaultValue="true" />
     </fragment>
 
     <fragment android:id="@+id/loginFragment" android:name="com.bogiruapps.rdshapp.login.LoginFragment"
-            android:label="LoginFragment"/>
+            android:label="LoginFragment">
+        <action
+                android:id="@+id/action_loginFragment_to_splashFragment"
+                app:destination="@id/splashFragment" />
+    </fragment>
 
     <fragment
             android:id="@+id/infoFragment"
@@ -31,16 +38,20 @@
             android:label="fragment_chose_school"
             tools:layout="@layout/fragment_chose_school" />
     <fragment
-            android:id="@+id/loadFragment"
+            android:id="@+id/splashFragment"
             android:name="com.bogiruapps.rdshapp.splash.SplashFragment"
-            android:label="fragment_load"
+            android:label="fragment_splash"
             tools:layout="@layout/fragment_splash" >
 
         <action
-                android:id="@+id/action_loadFragment_to_noticeFragment"
-                app:destination="@id/noticeFragment" />
+                android:id="@+id/action_splashFragment_to_noticeFragment"
+                app:destination="@id/noticeFragment" >
+            <argument
+                    app:argType="boolean"
+                    android:name="hasSchool" />
+        </action>
         <action
-                android:id="@+id/action_loadFragment_to_choseSchoolFragment"
+                android:id="@+id/action_splashFragment_to_choseSchoolFragment"
                 app:destination="@id/choseSchoolFragment" />
     </fragment>
 </navigation>

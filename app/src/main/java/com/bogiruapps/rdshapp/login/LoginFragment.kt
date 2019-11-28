@@ -70,7 +70,7 @@ class LoginFragment : Fragment() {
         loginViewModel.authenticationState.observe(viewLifecycleOwner, Observer { state ->
             when(state) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
-                    findNavController().navigate(R.id.noticeFragment)
+                    findNavController().navigate(R.id.splashFragment)
                 }
                 else -> {
 

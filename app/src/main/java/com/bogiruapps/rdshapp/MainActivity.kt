@@ -2,9 +2,9 @@ package com.bogiruapps.rdshapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.bogiruapps.rdshapp.databinding.ActivityMainBinding
 import com.bogiruapps.rdshapp.login.LoginViewModel
+import com.bogiruapps.rdshapp.splash.SplashFragment
 import com.firebase.ui.auth.AuthUI
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -61,14 +62,17 @@ class MainActivity : AppCompatActivity() {
         loginViewModel.authenticationState.observe(this, Observer { state ->
             when (state) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
+                    Log.i("QWE", "AUTHENTICATED")
                     addUser()
                     binding.navView.menu.findItem(R.id.btn_sign_out).setOnMenuItemClickListener {
                         signOut()
                         true
                     }
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+
                 }
                 else -> {
+                    Log.i("QWE", "UnAuthenticated")
                     navController.navigate(R.id.loginFragment)
                     drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
                     supportActionBar?.setDisplayHomeAsUpEnabled(false)
