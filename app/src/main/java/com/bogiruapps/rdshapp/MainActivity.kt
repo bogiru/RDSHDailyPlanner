@@ -2,6 +2,7 @@ package com.bogiruapps.rdshapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import androidx.appcompat.widget.Toolbar
 
@@ -30,8 +31,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        Log.i("QWE", "CREATE Activity")
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
@@ -41,16 +42,10 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         NavigationUI.setupWithNavController(binding.navView, navController)
 
-       /* setSupportActionBar(binding.toolbar)
-        actionBar?.setDisplayHomeAsUpEnabled(true)*/
-      /*  binding.lifecycleOwner = this*/
-
-
         db = FirebaseFirestore.getInstance()
 
-
-
         observeState()
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -63,6 +58,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeState() {
+        Log.i("QWE", "observeState start")
         loginViewModel.authenticationState.observe(this, Observer { state ->
             when (state) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {

@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentLoginBinding
@@ -33,6 +32,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.i("QWE", "CREATE Login")
         binding = DataBindingUtil.inflate<FragmentLoginBinding>(inflater, R.layout.fragment_login, container, false)
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         return binding.root
@@ -59,6 +59,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun signIn() {
+        Log.i("QWE", "login - signIn")
         val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build())
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(providers).build(),

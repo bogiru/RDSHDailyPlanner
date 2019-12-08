@@ -32,5 +32,10 @@
             android:id="@+id/choseSchoolFragment"
             android:name="com.bogiruapps.rdshapp.school.ChooseSchoolFragment"
             android:label="fragment_chose_school"
-            tools:layout="@layout/fragment_chose_school" />
+            tools:layout="@layout/fragment_choose_school" />
+    <fragment
+            android:id="@+id/mainFragment"
+            android:name="com.bogiruapps.rdshapp.MainFragment"
+            android:label="fragment_main"
+            tools:layout="@layout/fragment_main" />
 </navigation>
