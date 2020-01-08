@@ -1,102 +1,168 @@
 package com.bogiruapps.rdshapp
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.setupWithNavController
 import com.bogiruapps.rdshapp.databinding.ActivityMainBinding
-import com.bogiruapps.rdshapp.login.LoginViewModel
+import com.bogiruapps.rdshapp.databinding.DrawerHeaderBinding
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.drawer_header.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var drawerLayout: DrawerLayout
-    private lateinit var  navController: NavController
-    private lateinit var appBarConfiguration: AppBarConfiguration
+
+    companion object {
+        const val TAG = "MainActivity"
+    }
+
     private lateinit var binding: ActivityMainBinding
-    private lateinit var loginViewModel: LoginViewModel
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var toolbar: Toolbar
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
+    private lateinit var navView: NavigationView
+
+    private lateinit var mainViewModel: MainActivityViewModel
+
+    private lateinit var authFirebase: FirebaseAuth
+    private val providers = arrayListOf(
+        AuthUI.IdpConfig.EmailBuilder().build()
+    )
+
     private lateinit var db: FirebaseFirestore
+    private lateinit var userRepository: UserRepository
+    private lateinit var userDataSource: UserRemoteDataSource
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.i("QWE", "CREATE Activity")
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
 
-        drawerLayout = binding.drawerLayout
-        navController = this.findNavController(R.id.nav_host_fragment)
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
-        NavigationUI.setupWithNavController(binding.navView, navController)
+        configureViewModel()
+        configureBinding()
+        setupObserverViewModel()
+        configureFirebase()
+        configureToolbar()
+        configureNavigationView()
+        setupLogoutButton()
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+            RC_SIGN_IN -> mainViewModel.handleSignInActivityResult(resultCode, data, authFirebase.currentUser)
+        }
+    }
+
+    private fun configureViewModel() {
         db = FirebaseFirestore.getInstance()
+        userDataSource = UserRemoteDataSource.getInstance(db)
+        userRepository = UserRepositoryImpl.getInstance(userDataSource)
+        val viewModelFactory = MainActivityViewModelFactory(userRepository)
+        mainViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
+    }
 
-        observeState()
+    private fun configureBinding() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.viewModel = mainViewModel
+        binding.lifecycleOwner = this
+    }
+
+    private fun setupObserverViewModel() {
+        mainViewModel.openSignInActivityEvent.observe(this, EventObserver {
+            openSignInActivity()
+        })
+
+        mainViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
+            openNoticeFragment()
+        })
+    }
+
+    private fun configureFirebase() {
+        authFirebase = FirebaseAuth.getInstance()
+        mainViewModel.checkUserIsConnected(authFirebase.currentUser)
+    }
+
+    private fun configureToolbar() {
+        drawerLayout = binding.drawerLayout
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
+    }
+
+    private fun configureNavigationView() {
+        navView = binding.navView
+        val navViewBinding = DataBindingUtil.inflate<DrawerHeaderBinding>(
+            layoutInflater, R.layout.drawer_header, navView, false
+        )
+        navViewBinding.viewModel = mainViewModel
+        navViewBinding.lifecycleOwner = this
+        binding.navView.addHeaderView(navViewBinding.root)
+
+        navController = findNavController(R.id.nav_host_fragment)
+        appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
+        navView.setupWithNavController(navController)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+
+
 
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(navController, drawerLayout)
+        val navController = findNavController(R.id.nav_host_fragment)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
-        finish()
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
-    private fun observeState() {
-        Log.i("QWE", "observeState start")
-        loginViewModel.authenticationState.observe(this, Observer { state ->
-            when (state) {
-                LoginViewModel.AuthenticationState.AUTHENTICATED -> {
-                    Log.i("QWE", "AUTHENTICATED")
-                    addUser()
-                    binding.navView.menu.findItem(R.id.btn_sign_out).setOnMenuItemClickListener {
-                        signOut()
-                        true
-                    }
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-
-                }
-                else -> {
-                    Log.i("QWE", "UnAuthenticated")
-                    navController.navigate(R.id.loginFragment)
-                    drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-                    supportActionBar?.setDisplayHomeAsUpEnabled(false)
-
-                }
-            }
-        })
+    private fun setupLogoutButton() {
+        navView.menu.findItem(R.id.btn_sign_out).setOnMenuItemClickListener {
+            mainViewModel.logoutUser(this)
+            drawerLayout.closeDrawer(GravityCompat.START)
+            true
+        }
     }
 
-    private fun addUser() {
-        val authUser = FirebaseAuth.getInstance().currentUser
-        val user = User(authUser?.displayName, authUser?.email, "")
-        val document = db.collection("users").document(user.email.toString())
-        document.get()
-            .addOnSuccessListener {
-                if (!it.exists()) document.set(user)
-                text_name.text = it["name"].toString()
+    private fun setupObserverDestination() {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.choseSchoolFragment) {
+                setEnabledMenuItem(false)
+            } else {
+                setEnabledMenuItem(true)
             }
-            .addOnFailureListener {
-
-            }
+        }
     }
 
-    private fun signOut() {
-        AuthUI.getInstance().signOut(this)
+    private fun setEnabledMenuItem(value: Boolean) {
+       // navView.menu.findItem(R.id.eventFragment).isEnabled = value
+        navView.menu.findItem(R.id.infoFragment).isEnabled = value
+    }
+
+    private fun openSignInActivity() {
+        startActivityForResult(
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .build(),
+            RC_SIGN_IN
+        )
+    }
+
+    private fun openNoticeFragment() {
+        navController.navigate(R.id.noticeFragment)
     }
 }

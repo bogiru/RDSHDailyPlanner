@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.R
 import kotlinx.android.synthetic.main.notice_item.view.*
 
-class NoticeAdapter(private val notices: List<Notice>) : RecyclerView.Adapter<NoticeAdapter.ViewHolder>() {
+class NoticeAdapter(private val notices: List<String>) : RecyclerView.Adapter<NoticeAdapter.ViewHolder>() {
 
 
 
@@ -20,7 +20,7 @@ class NoticeAdapter(private val notices: List<Notice>) : RecyclerView.Adapter<No
     override fun getItemCount(): Int = notices.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.view.notice_text_view.text = notices[position].text
+        holder.view.notice_text_view.text = notices[position]
     }
 
 

@@ -7,14 +7,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bogiruapps.rdshapp.FirestoreRepository
+import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
-import kotlinx.android.synthetic.main.fragment_choose_school.view.*
+import com.bogiruapps.rdshapp.UserRemoteDataSource
+import com.bogiruapps.rdshapp.UserRepositoryImpl
+import com.bogiruapps.rdshapp.databinding.FragmentNoticeBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_notice.*
 import kotlinx.android.synthetic.main.fragment_notice.view.*
 import kotlinx.android.synthetic.main.notice_empty.view.*
 import kotlinx.android.synthetic.main.notice_full.view.*
@@ -23,52 +29,74 @@ class NoticeFragment : Fragment() {
 
     private lateinit var noticeViewModel: NoticeViewModel
 
+    private lateinit var binding: FragmentNoticeBinding
+
+    private lateinit var db: FirebaseFirestore
+    private lateinit var userRepository: UserRepositoryImpl
+    private lateinit var userDataSource: UserRemoteDataSource
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val repository = FirestoreRepository.getInstance(activity!!.application)
-        val factory = NoticeViewModelFactory(repository)
+        configureViewModel()
+        configureBinding(inflater, container)
+        setupObserverViewModel()
+        configureFirebase()
+
+        return binding.root
+    }
+
+    private fun configureViewModel() {
+        db = FirebaseFirestore.getInstance()
+        userDataSource = UserRemoteDataSource.getInstance(db)
+        userRepository = UserRepositoryImpl.getInstance(userDataSource)
+        val factory = NoticeViewModelFactory(userRepository)
         noticeViewModel = ViewModelProviders.of(this, factory).get(NoticeViewModel::class.java)
-        noticeViewModel.checkHasSchool()
-
-        return inflater.inflate(R.layout.fragment_notice, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        noticeViewModel.isCheckSchool.observe(viewLifecycleOwner, Observer { check ->
-            if (check) {
-                view.pb_notice.visibility = View.INVISIBLE
-                if (noticeViewModel.hasSchool.value!!) {
-                    view.include_notice_full.visibility = View.VISIBLE
-                    initRecycleView(view)
-
-                } else {
-                    view.include_notice_empty.visibility = View.VISIBLE
-                    view.include_notice_empty.btn_apply_school.setOnClickListener {
-                        findNavController().navigate(R.id.choseSchoolFragment)
-                    }
-
-                }
-            }
+    private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notice, container, false)
+        binding.viewModel = noticeViewModel
+        binding.lifecycleOwner = this.viewLifecycleOwner
+    }
+    private fun setupObserverViewModel() {
+        /*showProgress()*/
+        noticeViewModel.openChooseSchoolFragmentEvent.observe(this, EventObserver {
+            openChooseSchoolFragment()
+        })
+        noticeViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
+            openNoticeFragment()
         })
     }
 
-    private fun initRecycleView(view: View) {
-        noticeViewModel.getNotices()
-
-        noticeViewModel.isLoadSchools.observe(viewLifecycleOwner, Observer {isLoad ->
-            if (isLoad) {
-                val notices = noticeViewModel.notices
-                view.include_notice_full.recycler_view_notice.apply {
-                    layoutManager =
-                        LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
-                    adapter = NoticeAdapter(notices)
-                }
-            }
-        })
+    private fun configureFirebase() {
+        val auth = FirebaseAuth.getInstance()
+        noticeViewModel.checkUserSchool(auth.currentUser)
     }
+
+    private fun openChooseSchoolFragment() {
+        hideProgress()
+        findNavController().navigate(R.id.choseSchoolFragment)
+    }
+
+    private fun openNoticeFragment() {
+        hideProgress()
+        showNotice()
+    }
+
+    private fun showNotice() {
+        include_notice_full.visibility = View.VISIBLE
+    }
+
+    private fun showProgress() {
+        pb_notice.visibility = View.VISIBLE
+    }
+
+
+private fun hideProgress() {
+    pb_notice.visibility = View.INVISIBLE
+    }
+
 
 }
