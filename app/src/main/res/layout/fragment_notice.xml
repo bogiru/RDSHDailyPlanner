@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#EBE7E7"
-        tools:context=".notice.NoticeFragment">
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="viewModel"
+                type="com.bogiruapps.rdshapp.notice.NoticeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#EBE7E7"
+            tools:context=".notice.NoticeFragment">
 
 
-    <ProgressBar
-            android:id="@+id/pb_notice"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <ProgressBar
+                android:id="@+id/pb_notice"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <include
-            android:id="@+id/include_notice_empty"
-            layout="@layout/notice_empty"
-            android:visibility="invisible" />
+        <include
+                android:id="@+id/include_notice_empty"
+                layout="@layout/notice_empty"
+                android:visibility="invisible" />
 
-    <include
-            android:id="@+id/include_notice_full"
-            layout="@layout/notice_full"
-            android:visibility="invisible" />
+        <include
+                android:id="@+id/include_notice_full"
+                layout="@layout/notice_full"
+                android:visibility="invisible" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

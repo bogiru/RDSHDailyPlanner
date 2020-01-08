@@ -1,46 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="viewModel"
+                type="com.bogiruapps.rdshapp.MainActivityViewModel" />
+    </data>
 
     <androidx.drawerlayout.widget.DrawerLayout
             android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <LinearLayout
-                android:id="@+id/viewLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                tools:context=".MainActivity">
+
+            <androidx.appcompat.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/colorPrimary"
+                    android:theme="?attr/actionBarTheme"
+                    android:minHeight="?attr/actionBarSize"
+                    android:id="@+id/toolbar"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             <fragment
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:id="@+id/nav_host_fragment"
                     android:name="androidx.navigation.fragment.NavHostFragment"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     app:defaultNavHost="true"
-                    app:navGraph="@navigation/navigation">
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    app:navGraph="@navigation/navigation" />
 
-            </fragment>
-        </LinearLayout>
-
-      <!--  <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-                android:layout_width="match_parent"
-                android:transitionName="actionBar"
-                android:layout_height="wrap_content"/>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.navigation.NavigationView
                 android:id="@+id/nav_view"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
-                app:headerLayout="@layout/drawer_header"
-                app:menu="@menu/drawer_menu"/>
+                android:fitsSystemWindows="true"
+                app:menu="@menu/drawer_menu" />
+
     </androidx.drawerlayout.widget.DrawerLayout>
 
-</layout>
 
+</layout>
