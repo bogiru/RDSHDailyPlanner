@@ -163,6 +163,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openNoticeFragment() {
-        navController.navigate(R.id.noticeFragment)
+        navController.navigate(R.id.splashFragment)
     }
 }

@@ -59,3 +59,11 @@ fun QuerySnapshot.toSchoolList(): List<String> {
     }
     return items
 }
+
+fun QuerySnapshot.toNoticeList(): List<String> {
+    val items = mutableListOf<String>()
+    for (item in this) {
+        items.add(item["text"].toString())
+    }
+    return items
+}

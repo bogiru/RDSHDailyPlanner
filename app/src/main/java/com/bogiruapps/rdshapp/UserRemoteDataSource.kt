@@ -1,6 +1,7 @@
 package com.bogiruapps.rdshapp
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -10,11 +11,8 @@ class UserRemoteDataSource(db: FirebaseFirestore) : UserDataSource {
         private var INSTANCE: UserRemoteDataSource? = null
 
         fun getInstance(database: FirebaseFirestore): UserRemoteDataSource {
-            return if (INSTANCE == null) {
-                UserRemoteDataSource(database)
-            } else {
-                INSTANCE as UserRemoteDataSource
-            }
+            if (INSTANCE == null) INSTANCE = UserRemoteDataSource(database)
+            return INSTANCE as UserRemoteDataSource
         }
     }
 
@@ -53,10 +51,43 @@ class UserRemoteDataSource(db: FirebaseFirestore) : UserDataSource {
 
     suspend fun fetchSchools(): Result<List<String>> = withContext(ioDispatcher) {
         return@withContext try {
-            when (val result = schoolsCollection.get().await()) {
+            when(val result = schoolsCollection.get().await()) {
                 is Result.Success -> Result.Success(result.data.toSchoolList())
                 is Result.Error -> Result.Error(result.exception)
                 is Result.Canceled -> Result.Canceled(result.exception)
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    private suspend fun fetchIdCurrentSchool(school: String): Result<String> = withContext(ioDispatcher) {
+        return@withContext try {
+            when (val result = schoolsCollection.whereEqualTo("name", school).get().await()) {
+                is Result.Success -> Result.Success(result.data.documents[0].id)
+                is Result.Error -> Result.Error(result.exception)
+                is Result.Canceled -> Result.Canceled(result.exception)
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    suspend fun fetchNotices(schoolName: String): Result<List<String>> = withContext(ioDispatcher) {
+        return@withContext try {
+            when (val idSchool = fetchIdCurrentSchool(schoolName)) {
+                is Result.Success -> {
+                    when (val result =
+                        schoolsCollection.document(idSchool.data).collection("notices").get()
+                            .await()) {
+                        is Result.Success -> Result.Success(result.data.toNoticeList())
+                        is Result.Error -> Result.Error(result.exception)
+                        is Result.Canceled -> Result.Canceled(result.exception)
+                    }
+                }
+                is Result.Error -> Result.Error(idSchool.exception)
+                is Result.Canceled -> Result.Canceled(idSchool.exception)
+
             }
         } catch (e: Exception) {
             Result.Error(e)

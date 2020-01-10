@@ -2,6 +2,7 @@ package com.bogiruapps.rdshapp.school
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -70,7 +71,6 @@ class ChooseSchoolFragment : Fragment() {
         schoolViewModel.schools.observe(this, Observer {
             val schools = it
             setupSpinner(schools)
-
         })
     }
 
@@ -80,7 +80,8 @@ class ChooseSchoolFragment : Fragment() {
         btnChoose.setOnClickListener {
             val auth = FirebaseAuth.getInstance()
             schoolViewModel.updateSchool(auth.currentUser!!, chosenSchool)
-            findNavController().navigate(R.id.noticeFragment)
+
+            findNavController().navigate(R.id.splashFragment)
         }
     }
 
