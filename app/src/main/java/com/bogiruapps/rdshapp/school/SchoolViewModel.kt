@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.school
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,14 +28,16 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
     }
 
     fun updateSchool(firebaseUser: FirebaseUser, school: String) {
-        viewModelScope.launch {
             viewModelScope.launch {
                 val user = User(firebaseUser.displayName, firebaseUser.email, school)
+
+                userRepository.currentUser.value = user
                 when (userRepository.updateUser(user)) {
-                    is Result.Success -> userRepository.currentUser.value = user
+                    is Result.Success -> {
+                        userRepository.currentUser.value = user
+                    }
                 }
             }
-        }
     }
 
     private fun initSchools() {

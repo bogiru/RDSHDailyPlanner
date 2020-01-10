@@ -12,18 +12,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.UserRemoteDataSource
 import com.bogiruapps.rdshapp.UserRepositoryImpl
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeBinding
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_notice.*
-import kotlinx.android.synthetic.main.fragment_notice.view.*
-import kotlinx.android.synthetic.main.notice_empty.view.*
-import kotlinx.android.synthetic.main.notice_full.view.*
 
 class NoticeFragment : Fragment() {
 
@@ -42,7 +37,6 @@ class NoticeFragment : Fragment() {
         configureViewModel()
         configureBinding(inflater, container)
         setupObserverViewModel()
-        configureFirebase()
 
         return binding.root
     }
@@ -61,38 +55,17 @@ class NoticeFragment : Fragment() {
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
     private fun setupObserverViewModel() {
-        /*showProgress()*/
-        noticeViewModel.openChooseSchoolFragmentEvent.observe(this, EventObserver {
-            openChooseSchoolFragment()
-        })
-        noticeViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
-            openNoticeFragment()
+        noticeViewModel.notices.observe(this, Observer {
+            val notices = it
+            setupRecyclerView(notices)
         })
     }
 
-    private fun configureFirebase() {
-        val auth = FirebaseAuth.getInstance()
-        noticeViewModel.checkUserSchool(auth.currentUser)
-    }
-
-    private fun openChooseSchoolFragment() {
+    private fun setupRecyclerView(notices: List<String>) {
+        binding.recyclerViewNotice.layoutManager = LinearLayoutManager(activity)
+        binding.recyclerViewNotice.adapter = NoticeAdapter(notices)
         hideProgress()
-        findNavController().navigate(R.id.choseSchoolFragment)
     }
-
-    private fun openNoticeFragment() {
-        hideProgress()
-        showNotice()
-    }
-
-    private fun showNotice() {
-        include_notice_full.visibility = View.VISIBLE
-    }
-
-    private fun showProgress() {
-        pb_notice.visibility = View.VISIBLE
-    }
-
 
 private fun hideProgress() {
     pb_notice.visibility = View.INVISIBLE

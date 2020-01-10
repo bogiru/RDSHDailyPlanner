@@ -5,49 +5,40 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.Result
-import com.bogiruapps.rdshapp.User
-import com.bogiruapps.rdshapp.UserRepository
+import com.bogiruapps.rdshapp.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class NoticeViewModel(val userRepository: UserRepository) : ViewModel() {
+class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     val user: LiveData<User> = userRepository.currentUser
 
     private val auth = FirebaseAuth.getInstance().currentUser
 
-    private val _openChooseSchoolFragmentEvent = MutableLiveData<Event<Unit>>()
-    val openChooseSchoolFragmentEvent: LiveData<Event<Unit>> = _openChooseSchoolFragmentEvent
+    private val _notices = MutableLiveData<List<String>>()
+    val notices: LiveData<List<String>> = _notices
 
-    private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
-    val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
 
-    fun checkUserSchool(firebaseUser: FirebaseUser?) {
+    init {
+        initNotices()
+    }
+
+    private fun initNotices() {
+        _dataLoading.value = true
         viewModelScope.launch {
-            when(val result = userRepository.fetchUser(firebaseUser?.email.toString())) {
+            when (val result = userRepository.fetchNotices(userRepository.currentUser.value?.school.toString())) {
                 is Result.Success -> {
-                    val user = result.data
-                    if (user != null) {
-                        val school = user.school
-                        if (school == "") showSchoolFragment()
-                        else showNoticeFragment()
-                    }
+                    _notices.value = result.data
+                    _dataLoading.value = false
                 }
             }
         }
     }
 
-    private fun showSchoolFragment() {
-        _openChooseSchoolFragmentEvent.value = Event(Unit)
-    }
-
-    private fun showNoticeFragment() {
-        _openNoticeFragmentEvent.value = Event(Unit)
-    }
 
 }

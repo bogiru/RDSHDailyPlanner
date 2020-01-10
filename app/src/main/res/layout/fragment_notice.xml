@@ -27,15 +27,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        <include
-                android:id="@+id/include_notice_empty"
-                layout="@layout/notice_empty"
-                android:visibility="invisible" />
-
-        <include
-                android:id="@+id/include_notice_full"
-                layout="@layout/notice_full"
-                android:visibility="invisible" />
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_notice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -2,13 +2,13 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
-        app:startDestination="@id/noticeFragment">
+        app:startDestination="@id/splashFragment">
 
     <fragment
-            android:id="@+id/noticeFragment"
-            android:name="com.bogiruapps.rdshapp.notice.NoticeFragment"
-            android:label="fragment_notice"
-            tools:layout="@layout/fragment_notice">
+            android:id="@+id/splashFragment"
+            android:name="com.bogiruapps.rdshapp.splash.SplashFragment"
+            android:label="fragment_splash"
+            tools:layout="@layout/fragment_splash">
         <argument
                 android:name="hasSchool"
                 app:argType="boolean"
@@ -34,8 +34,7 @@
             android:label="fragment_chose_school"
             tools:layout="@layout/fragment_choose_school" />
     <fragment
-            android:id="@+id/mainFragment"
-            android:name="com.bogiruapps.rdshapp.MainFragment"
-            android:label="fragment_main"
-            tools:layout="@layout/fragment_main" />
+            android:id="@+id/noticeFragment"
+            android:name="com.bogiruapps.rdshapp.notice.NoticeFragment"
+            android:label="NoticeFragment" />
 </navigation>

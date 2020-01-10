@@ -12,4 +12,7 @@ interface UserRepository {
     suspend fun fetchUser(userId: String): Result<User?>
 
     suspend fun fetchSchools(): Result<List<String>>
+
+    suspend fun fetchNotices(school: String): Result<List<String>>
+
 }
