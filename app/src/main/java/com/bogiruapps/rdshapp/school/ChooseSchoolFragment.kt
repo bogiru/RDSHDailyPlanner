@@ -81,7 +81,7 @@ class ChooseSchoolFragment : Fragment() {
             val auth = FirebaseAuth.getInstance()
             schoolViewModel.updateSchool(auth.currentUser!!, chosenSchool)
 
-            findNavController().navigate(R.id.splashFragment)
+            findNavController().navigate(R.id.noticeFragment)
         }
     }
 

@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp
 import androidx.lifecycle.MutableLiveData
+import com.bogiruapps.rdshapp.notice.Notice
 
 interface UserRepository {
 
@@ -13,6 +14,8 @@ interface UserRepository {
 
     suspend fun fetchSchools(): Result<List<String>>
 
-    suspend fun fetchNotices(school: String): Result<List<String>>
+    suspend fun fetchNotices(school: String): Result<List<Notice>>
+
+    suspend fun createNewNotice(school: String, notice: Notice): Result<Void?>
 
 }

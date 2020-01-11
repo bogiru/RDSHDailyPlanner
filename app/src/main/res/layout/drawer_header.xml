@@ -45,7 +45,7 @@
 
         <TextView
                 android:id="@+id/text_name"
-                android:text="@{viewModel.name}"
+                android:text="@{viewModel.userRepository.currentUser.name}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

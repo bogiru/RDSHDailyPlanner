@@ -1,9 +1,11 @@
 package com.bogiruapps.rdshapp
+
 import android.util.Log
+import com.bogiruapps.rdshapp.notice.Notice
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QuerySnapshot
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+
 
 class UserRemoteDataSource(db: FirebaseFirestore) : UserDataSource {
 
@@ -61,7 +63,7 @@ class UserRemoteDataSource(db: FirebaseFirestore) : UserDataSource {
         }
     }
 
-    private suspend fun fetchIdCurrentSchool(school: String): Result<String> = withContext(ioDispatcher) {
+    private suspend fun fetchIdSchool(school: String): Result<String> = withContext(ioDispatcher) {
         return@withContext try {
             when (val result = schoolsCollection.whereEqualTo("name", school).get().await()) {
                 is Result.Success -> Result.Success(result.data.documents[0].id)
@@ -72,10 +74,30 @@ class UserRemoteDataSource(db: FirebaseFirestore) : UserDataSource {
             Result.Error(e)
         }
     }
+/* */
+    suspend fun createNotice(schoolName: String, notice: Notice): Result<Void> = withContext(ioDispatcher) {
+       return@withContext try {
+           when (val idSchool = fetchIdSchool(schoolName)) {
+               is Result.Success ->
+                   schoolsCollection
+                       .document(idSchool.data)
+                       .collection("notices")
+                       .document()
+                       .set(hashMapOf("text" to notice.text))
+                       .await()
 
-    suspend fun fetchNotices(schoolName: String): Result<List<String>> = withContext(ioDispatcher) {
+               is Result.Error -> Result.Error(idSchool.exception)
+               is Result.Canceled -> Result.Canceled(idSchool.exception)
+
+           }
+       } catch (e: Exception) {
+           Result.Error(e)
+       }
+   }
+
+    suspend fun fetchNotices(schoolName: String): Result<List<Notice>> = withContext(ioDispatcher) {
         return@withContext try {
-            when (val idSchool = fetchIdCurrentSchool(schoolName)) {
+            when (val idSchool = fetchIdSchool(schoolName)) {
                 is Result.Success -> {
                     when (val result =
                         schoolsCollection.document(idSchool.data).collection("notices").get()
@@ -95,3 +117,4 @@ class UserRemoteDataSource(db: FirebaseFirestore) : UserDataSource {
     }
 
 }
+

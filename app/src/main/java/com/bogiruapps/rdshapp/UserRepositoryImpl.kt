@@ -1,6 +1,6 @@
 package com.bogiruapps.rdshapp
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.bogiruapps.rdshapp.notice.Notice
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
@@ -40,8 +40,13 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) : UserRep
         return@coroutineScope task.await()
     }
 
-    override suspend fun fetchNotices(school: String): Result<List<String>> = coroutineScope  {
-        val task = async { dataSource.fetchNotices(school)}
+    override suspend fun fetchNotices(schoolName: String): Result<List<Notice>> = coroutineScope  {
+        val task = async { dataSource.fetchNotices(schoolName)}
+        return@coroutineScope task.await()
+    }
+
+    override suspend fun createNewNotice(schoolName: String, notice: Notice): Result<Void?> = coroutineScope {
+        val task = async { dataSource.createNotice(schoolName, notice)}
         return@coroutineScope task.await()
     }
 }

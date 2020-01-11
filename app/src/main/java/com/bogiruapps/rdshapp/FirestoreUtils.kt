@@ -1,4 +1,5 @@
 package com.bogiruapps.rdshapp
+import com.bogiruapps.rdshapp.notice.Notice
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
@@ -60,10 +61,10 @@ fun QuerySnapshot.toSchoolList(): List<String> {
     return items
 }
 
-fun QuerySnapshot.toNoticeList(): List<String> {
-    val items = mutableListOf<String>()
+fun QuerySnapshot.toNoticeList(): List<Notice> {
+    val items = mutableListOf<Notice>()
     for (item in this) {
-        items.add(item["text"].toString())
+        items.add(Notice(item["text"].toString()))
     }
     return items
 }

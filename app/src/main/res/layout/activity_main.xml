@@ -21,6 +21,7 @@
                 tools:context=".MainActivity">
 
             <androidx.appcompat.widget.Toolbar
+                    app:titleTextColor="#FFFFFF"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/colorPrimary"

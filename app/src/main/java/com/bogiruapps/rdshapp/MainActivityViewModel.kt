@@ -23,8 +23,6 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
     val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
 
     val user: LiveData<User> = userRepository.currentUser
-    val name = user.value?.name
-    val email = user.value?.email
 
     fun checkUserIsConnected(firebaseUser: FirebaseUser?) {
         if (firebaseUser != null) {

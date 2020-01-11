@@ -2,18 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
-        app:startDestination="@id/splashFragment">
-
-    <fragment
-            android:id="@+id/splashFragment"
-            android:name="com.bogiruapps.rdshapp.splash.SplashFragment"
-            android:label="fragment_splash"
-            tools:layout="@layout/fragment_splash">
-        <argument
-                android:name="hasSchool"
-                app:argType="boolean"
-                android:defaultValue="true" />
-    </fragment>
+        app:startDestination="@id/noticeFragment">
 
     <fragment android:id="@+id/loginFragment" android:name="com.bogiruapps.rdshapp.login.LoginFragment"
             android:label="LoginFragment"/>
