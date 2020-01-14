@@ -2,23 +2,14 @@ package com.bogiruapps.rdshapp
 
 import android.util.Log
 import com.bogiruapps.rdshapp.notice.Notice
+import com.bogiruapps.rdshapp.school.School
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 
-class UserRemoteDataSource(db: FirebaseFirestore) : UserDataSource {
-
-    companion object {
-        private var INSTANCE: UserRemoteDataSource? = null
-
-        fun getInstance(database: FirebaseFirestore): UserRemoteDataSource {
-            if (INSTANCE == null) INSTANCE = UserRemoteDataSource(database)
-            return INSTANCE as UserRemoteDataSource
-        }
-    }
-
-
+class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
     private val ioDispatcher =  Dispatchers.IO
     private val userCollection = db.collection(USERS_COLLECTION_NAME)
     private val schoolsCollection = db.collection(SCHOOL_COLLECTION_NAME)
@@ -35,14 +26,31 @@ class UserRemoteDataSource(db: FirebaseFirestore) : UserDataSource {
         return@withContext userCollection.document(user.email.toString()).update(
             "name", user.name,
             "email", user.email,
-            "school", user.school
+            "school", user.school.name
         ).await()
     }
 
     suspend fun fetchUser(userId: String): Result<User?> = withContext(ioDispatcher) {
         return@withContext try {
             when(val resultDocumentSnapshot = userCollection.document(userId).get().await()) {
-                is Result.Success -> Result.Success(resultDocumentSnapshot.data.toUser())
+                is Result.Success -> {
+                    val schoolName = resultDocumentSnapshot.data["school"].toString()
+                    if (schoolName == "") Result.Success(resultDocumentSnapshot.data.toUser(""))
+                    else {
+                        when (val idSchool = fetchIdSchool(schoolName)) {
+                            is Result.Success -> {
+                                Result.Success(
+                                    resultDocumentSnapshot.data.toUser(
+                                        idSchool.data
+                                    )
+                                )
+
+                            }
+                            is Result.Error -> Result.Error(idSchool.exception)
+                            is Result.Canceled -> Result.Canceled(idSchool.exception)
+                        }
+                    }
+                }
                 is Result.Error -> Result.Error(resultDocumentSnapshot.exception)
                 is Result.Canceled -> Result.Canceled(resultDocumentSnapshot.exception)
             }
@@ -51,7 +59,7 @@ class UserRemoteDataSource(db: FirebaseFirestore) : UserDataSource {
         }
     }
 
-    suspend fun fetchSchools(): Result<List<String>> = withContext(ioDispatcher) {
+    suspend fun fetchSchools(): Result<List<School>> = withContext(ioDispatcher) {
         return@withContext try {
             when(val result = schoolsCollection.get().await()) {
                 is Result.Success -> Result.Success(result.data.toSchoolList())
@@ -75,46 +83,66 @@ class UserRemoteDataSource(db: FirebaseFirestore) : UserDataSource {
         }
     }
 /* */
-    suspend fun createNotice(schoolName: String, notice: Notice): Result<Void> = withContext(ioDispatcher) {
+    suspend fun createNotice(school: School, notice: Notice): Result<Void> = withContext(ioDispatcher) {
        return@withContext try {
-           when (val idSchool = fetchIdSchool(schoolName)) {
-               is Result.Success ->
-                   schoolsCollection
-                       .document(idSchool.data)
-                       .collection("notices")
-                       .document()
-                       .set(hashMapOf("text" to notice.text))
-                       .await()
-
-               is Result.Error -> Result.Error(idSchool.exception)
-               is Result.Canceled -> Result.Canceled(idSchool.exception)
-
-           }
+           schoolsCollection
+               .document(school.id)
+               .collection("notices")
+               .document()
+               .set(hashMapOf("text" to notice.text))
+               .await()
        } catch (e: Exception) {
            Result.Error(e)
        }
    }
 
-    suspend fun fetchNotices(schoolName: String): Result<List<Notice>> = withContext(ioDispatcher) {
-        return@withContext try {
-            when (val idSchool = fetchIdSchool(schoolName)) {
-                is Result.Success -> {
-                    when (val result =
-                        schoolsCollection.document(idSchool.data).collection("notices").get()
-                            .await()) {
-                        is Result.Success -> Result.Success(result.data.toNoticeList())
-                        is Result.Error -> Result.Error(result.exception)
-                        is Result.Canceled -> Result.Canceled(result.exception)
-                    }
-                }
-                is Result.Error -> Result.Error(idSchool.exception)
-                is Result.Canceled -> Result.Canceled(idSchool.exception)
+    suspend fun updateNotice(school: School, notice: Notice):  Result<Void?> = withContext(ioDispatcher) {
 
+        return@withContext db.collection("schools")
+                    .document(school.id)
+                    .collection("notices")
+                    .document(notice.id)
+                    .update("text", notice.text)
+                    .await()
+    }
+
+    suspend fun deleteNotice(school: School, notice: Notice):  Result<Void?> = withContext(ioDispatcher) {
+        Log.i("Deletee", notice.id + " " + school.name)
+        return@withContext db.collection("schools")
+            .document(school.id)
+            .collection("notices")
+            .document(notice.id)
+            .delete()
+            .addOnSuccessListener {  }
+            .addOnFailureListener { }
+            .await()
+
+    }
+
+    suspend fun fetchNotices(school: School): Result<List<Notice>> = withContext(ioDispatcher) {
+
+        return@withContext try {
+            when (val result =
+                schoolsCollection.document(school.id).collection("notices").get()
+                    .await()) {
+                is Result.Success -> Result.Success(result.data.toNoticeList())
+                is Result.Error -> Result.Error(result.exception)
+                is Result.Canceled -> Result.Canceled(result.exception)
             }
         } catch (e: Exception) {
             Result.Error(e)
         }
     }
+
+    fun fetchFirestoreRecyclerOptions(school: School): FirestoreRecyclerOptions<Notice> {
+        val collection = schoolsCollection.document(school.id).collection("notices")
+        val query = collection.orderBy("text")
+        return FirestoreRecyclerOptions.Builder<Notice>().setQuery(query, Notice::class.java).build()
+    }
+
+
+
+
 
 }
 

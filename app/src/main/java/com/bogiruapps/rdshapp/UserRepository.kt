@@ -1,6 +1,8 @@
 package com.bogiruapps.rdshapp
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.notice.Notice
+import com.bogiruapps.rdshapp.school.School
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 interface UserRepository {
 
@@ -12,10 +14,16 @@ interface UserRepository {
 
     suspend fun fetchUser(userId: String): Result<User?>
 
-    suspend fun fetchSchools(): Result<List<String>>
+    suspend fun fetchSchools(): Result<List<School>>
 
-    suspend fun fetchNotices(school: String): Result<List<Notice>>
+    fun fetchFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Notice>
 
-    suspend fun createNewNotice(school: String, notice: Notice): Result<Void?>
+   /* suspend fun fetchNotices(school: School): Result<List<Notice>>*/
+
+    suspend fun createNewNotice(notice: Notice): Result<Void?>
+
+    suspend fun updateNotice(notice: Notice): Result<Void?>
+
+    suspend fun deleteNotice(notice: Notice): Result<Void?>
 
 }

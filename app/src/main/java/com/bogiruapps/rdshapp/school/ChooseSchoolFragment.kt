@@ -2,7 +2,6 @@ package com.bogiruapps.rdshapp.school
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,15 +9,12 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.UserRemoteDataSource
-import com.bogiruapps.rdshapp.UserRepositoryImpl
 import com.bogiruapps.rdshapp.databinding.FragmentChooseSchoolBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_choose_school.view.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass.
@@ -26,37 +22,23 @@ import kotlinx.android.synthetic.main.fragment_choose_school.view.*
 class ChooseSchoolFragment : Fragment() {
 
     private lateinit var binding: FragmentChooseSchoolBinding
-    private lateinit var schoolViewModel: SchoolViewModel
-
-
-    private lateinit var db: FirebaseFirestore
-    private lateinit var userRepository: UserRepositoryImpl
-    private lateinit var userDataSource: UserRemoteDataSource
+    private val schoolViewModel: SchoolViewModel by viewModel()
 
     private lateinit var spinner: Spinner
     private lateinit var btnChoose: Button
     private lateinit var progressBar: ProgressBar
-    private var chosenSchool: String = ""
+    private lateinit var chosenSchool: School
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        configureViewModel()
         configureBinding(inflater, container)
         setupObserverViewModel()
         configureFirebase()
         setupChooseButton()
     return binding.root
 }
-
-    private fun configureViewModel() {
-        db = FirebaseFirestore.getInstance()
-        userDataSource = UserRemoteDataSource.getInstance(db)
-        userRepository = UserRepositoryImpl.getInstance(userDataSource)
-        val factory = SchoolViewModelFactory(userRepository)
-        schoolViewModel = ViewModelProviders.of(this, factory).get(SchoolViewModel::class.java)
-    }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_choose_school, container, false)
@@ -72,6 +54,10 @@ class ChooseSchoolFragment : Fragment() {
             val schools = it
             setupSpinner(schools)
         })
+
+        schoolViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
+            findNavController().navigate(R.id.noticeFragment)
+        })
     }
 
     private fun configureFirebase() {}
@@ -80,14 +66,12 @@ class ChooseSchoolFragment : Fragment() {
         btnChoose.setOnClickListener {
             val auth = FirebaseAuth.getInstance()
             schoolViewModel.updateSchool(auth.currentUser!!, chosenSchool)
-
-            findNavController().navigate(R.id.noticeFragment)
         }
     }
 
-    private fun setupSpinner(items: List<String>) {
+    private fun setupSpinner(items: List<School>) {
         val spinnerAdapter: ArrayAdapter<String> =
-            ArrayAdapter(context!!, android.R.layout.simple_spinner_item, items)
+            ArrayAdapter(context!!, android.R.layout.simple_spinner_item, getSchoolNames(items))
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = spinnerAdapter
         hideProgress()
@@ -105,6 +89,12 @@ class ChooseSchoolFragment : Fragment() {
             override fun onNothingSelected(p0: AdapterView<*>?) {
             }
         }
+    }
+
+    private fun getSchoolNames(schools: List<School>): List<String> {
+        val schoolName = mutableListOf<String>()
+        for (school in schools) schoolName.add(school.name)
+        return schoolName
     }
 
     private fun hideProgress(/*view : View*/) {

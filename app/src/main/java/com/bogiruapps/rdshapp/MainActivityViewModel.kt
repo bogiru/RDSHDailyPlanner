@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bogiruapps.rdshapp.school.School
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseUser
@@ -69,7 +70,7 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
     }
 
     private fun createUserToDb(firebaseUser: FirebaseUser) {
-        val user = User(firebaseUser.displayName, firebaseUser.email, "")
+        val user = User(firebaseUser.displayName, firebaseUser.email, School("", ""))
         viewModelScope.launch {
             when(userRepository.createNewUser(user)) {
                 is Result.Success -> fetchCurrentUserInformation(firebaseUser)
@@ -81,6 +82,7 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
 
     private fun setupUserInformation(user: User) {
         userRepository.currentUser.value = user
+        //Log.i("QWE", "setupUserInformation: " + )
         showNoticeFragment()
     }
 

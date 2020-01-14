@@ -3,6 +3,7 @@
           package="com.bogiruapps.rdshapp">
 
     <application
+            android:name=".App"
             android:allowBackup="true"
             android:icon="@drawable/rdsh_image"
             android:label="@string/app_name"

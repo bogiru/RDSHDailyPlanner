@@ -1,5 +1,7 @@
 package com.bogiruapps.rdshapp
+import android.util.Log
 import com.bogiruapps.rdshapp.notice.Notice
+import com.bogiruapps.rdshapp.school.School
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
@@ -51,12 +53,14 @@ fun returnSuccessOrError(result: Result<Void?>): Result<Void?> {
     }
 }
 
-fun DocumentSnapshot.toUser(): User? = this.toObject(User::class.java)
+fun DocumentSnapshot.toUser(schoolId: String): User? {
+    return User(data?.get("name").toString(), data?.get("email").toString(), School(data?.get("school").toString(), schoolId))
+}
 
-fun QuerySnapshot.toSchoolList(): List<String> {
-    val items = mutableListOf<String>()
+fun QuerySnapshot.toSchoolList(): List<School> {
+    val items = mutableListOf<School>()
     for (item in this) {
-        items.add(item["name"].toString())
+        items.add(School(item["name"].toString(), item.id))
     }
     return items
 }
@@ -64,7 +68,7 @@ fun QuerySnapshot.toSchoolList(): List<String> {
 fun QuerySnapshot.toNoticeList(): List<Notice> {
     val items = mutableListOf<Notice>()
     for (item in this) {
-        items.add(Notice(item["text"].toString()))
+        items.add(Notice(item.id, item["text"].toString()))
     }
     return items
 }

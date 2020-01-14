@@ -1,21 +1,13 @@
 package com.bogiruapps.rdshapp
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.notice.Notice
+import com.bogiruapps.rdshapp.school.School
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
 
 class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) : UserRepository {
-
-    companion object {
-        private var INSTANCE: UserRepositoryImpl? = null
-
-        fun getInstance(dataSource: UserRemoteDataSource): UserRepositoryImpl {
-            if (INSTANCE == null) INSTANCE = UserRepositoryImpl(dataSource)
-            return INSTANCE as UserRepositoryImpl
-        }
-    }
-
     override val currentUser = MutableLiveData<User>()
 /*    override val schoolsUser = MutableLiveData<String>()*/
 
@@ -35,18 +27,32 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) : UserRep
         return@coroutineScope task.await()
     }
 
-    override suspend fun fetchSchools(): Result<List<String>> = coroutineScope {
+    override suspend fun fetchSchools(): Result<List<School>> = coroutineScope {
         val task = async { dataSource.fetchSchools() }
         return@coroutineScope task.await()
     }
 
-    override suspend fun fetchNotices(schoolName: String): Result<List<Notice>> = coroutineScope  {
-        val task = async { dataSource.fetchNotices(schoolName)}
+   /* override suspend fun fetchNotices(school: School): Result<List<Notice>> = coroutineScope  {
+        val task = async { dataSource.fetchNotices(school)}
+        return@coroutineScope task.await()
+    }*/
+
+    override fun fetchFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Notice> {
+        return dataSource.fetchFirestoreRecyclerOptions(currentUser.value!!.school)
+    }
+
+    override suspend fun createNewNotice(notice: Notice): Result<Void?> = coroutineScope {
+        val task = async { dataSource.createNotice(currentUser.value!!.school, notice)}
         return@coroutineScope task.await()
     }
 
-    override suspend fun createNewNotice(schoolName: String, notice: Notice): Result<Void?> = coroutineScope {
-        val task = async { dataSource.createNotice(schoolName, notice)}
+    override suspend fun updateNotice(notice: Notice): Result<Void?> = coroutineScope {
+        val task = async { dataSource.updateNotice(currentUser.value!!.school, notice)}
+        return@coroutineScope task.await()
+    }
+
+    override suspend fun deleteNotice(notice: Notice): Result<Void?> = coroutineScope {
+        val task = async { dataSource.deleteNotice(currentUser.value!!.school, notice)}
         return@coroutineScope task.await()
     }
 }

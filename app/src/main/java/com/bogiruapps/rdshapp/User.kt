@@ -1,10 +1,12 @@
 package com.bogiruapps.rdshapp
 
+import com.bogiruapps.rdshapp.school.School
+
 
 data class User(
     var name: String? = "",
     var email: String? = "",
-    var school: String? = ""
+    var school: School
 ) {
 
     companion object {

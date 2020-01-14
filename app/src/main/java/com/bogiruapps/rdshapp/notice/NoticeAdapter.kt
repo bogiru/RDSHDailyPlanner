@@ -1,29 +1,44 @@
 package com.bogiruapps.rdshapp.notice
 
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bogiruapps.rdshapp.R
-import kotlinx.android.synthetic.main.notice_item.view.*
-
-class NoticeAdapter(private val notices: List<Notice>) : RecyclerView.Adapter<NoticeAdapter.ViewHolder>() {
-
+import com.bogiruapps.rdshapp.databinding.NoticeItemBinding
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.notice_item, parent, false)
-        return ViewHolder(view)
+
+
+class NoticeAdapter(
+        options : FirestoreRecyclerOptions<Notice>,
+        private val viewModel: NoticeViewModel) :
+    FirestoreRecyclerAdapter<Notice, NoticeAdapter.NoticeViewHolder>(options) {
+
+    override fun onBindViewHolder(p0: NoticeViewHolder, p1: Int, p2: Notice) {
+        p0.bind(viewModel, p2)
     }
 
-    override fun getItemCount(): Int = notices.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
+            return NoticeViewHolder.from(parent)
+        }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.view.notice_text_view.text = notices[position].text
-    }
+        class NoticeViewHolder(private val binding: NoticeItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
+            fun bind(viewModel: NoticeViewModel, notice: Notice) {
+               // Log.i("Deletee", "id " + notice.text)
+                binding.notice = notice
+                binding.viewModel = viewModel
+                binding.executePendingBindings()
+            }
 
-class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
-
+            companion object {
+                fun from(parent: ViewGroup): NoticeViewHolder {
+                    val layoutInflater = LayoutInflater.from(parent.context)
+                    val binding = NoticeItemBinding.inflate(layoutInflater, parent, false)
+                    return NoticeViewHolder(binding)
+                }
+            }
+        }
 }

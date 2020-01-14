@@ -2,43 +2,43 @@ package com.bogiruapps.rdshapp.notice
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.EventObserver
-
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.UserRemoteDataSource
-import com.bogiruapps.rdshapp.UserRepositoryImpl
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeBinding
+import com.bogiruapps.rdshapp.databinding.NoticeItemBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_notice.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class NoticeFragment : Fragment() {
 
-    private lateinit var noticeViewModel: NoticeViewModel
+    private val noticeViewModel: NoticeViewModel by viewModel()
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: NoticeAdapter
 
     private lateinit var binding: FragmentNoticeBinding
 
-    private lateinit var db: FirebaseFirestore
-    private lateinit var userRepository: UserRepositoryImpl
-    private lateinit var userDataSource: UserRemoteDataSource
+
+    private var currentNumberNoticeItem: Int = 0
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        configureViewModel()
         configureBinding(inflater, container)
-
         setupObserverViewModel()
         configureFirebase()
         setupListenerOnFub()
@@ -46,18 +46,12 @@ class NoticeFragment : Fragment() {
         return binding.root
     }
 
-    private fun configureViewModel() {
-        db = FirebaseFirestore.getInstance()
-        userDataSource = UserRemoteDataSource.getInstance(db)
-        userRepository = UserRepositoryImpl.getInstance(userDataSource)
-        val factory = NoticeViewModelFactory(userRepository)
-        noticeViewModel = ViewModelProviders.of(this, factory).get(NoticeViewModel::class.java)
-    }
-
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notice, container, false)
         binding.viewModel = noticeViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
+
+
     }
     private fun setupObserverViewModel() {
         /*showProgress()*/
@@ -65,18 +59,17 @@ class NoticeFragment : Fragment() {
             openChooseSchoolFragment()
         })
         noticeViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
-            openNoticeFragment()
+            hideProgress()
+            configureRecyclerView()
         })
 
         noticeViewModel.closeAddNoticeFragmentEvent.observe(this, EventObserver {
             hideAddNotice()
-            openNoticeFragment()
+            hideProgress()
 
         })
 
-        noticeViewModel.notices.observe(this, Observer {
-            val notices = it
-            setupRecyclerView(notices)
+        noticeViewModel.notices.observe(this, Observer { notices ->
         })
     }
 
@@ -90,16 +83,17 @@ class NoticeFragment : Fragment() {
         findNavController().navigate(R.id.choseSchoolFragment)
     }
 
-    private fun openNoticeFragment() {
-        binding.recyclerViewNotice.visibility = View.VISIBLE
-        noticeViewModel.initNotices()
-    }
+    private fun configureRecyclerView() {
+        val linearLayoutManager = GridLayoutManager(activity, 5)
+        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
+        recyclerView = binding.recyclerViewNotice
 
+        adapter = NoticeAdapter(noticeViewModel.fetchFirestoreRecyclerOptions(), noticeViewModel)
 
-    private fun setupRecyclerView(notices: List<Notice>) {
-        binding.recyclerViewNotice.layoutManager = LinearLayoutManager(activity)
-        binding.recyclerViewNotice.adapter = NoticeAdapter(notices)
-        hideProgress()
+        binding.recyclerViewNotice.layoutManager = linearLayoutManager
+        binding.recyclerViewNotice.adapter = adapter
+        adapter.startListening()
+
     }
 
     private fun setupListenerOnFub() {
@@ -110,7 +104,6 @@ class NoticeFragment : Fragment() {
 
     private fun showAddNotice() {
         binding.addNoticeLayout.visibility = View.VISIBLE
-        binding.textNotice = "Барболина Мария"
         binding.fubNotice.visibility = View.INVISIBLE
     }
 
@@ -121,6 +114,14 @@ class NoticeFragment : Fragment() {
 
     private fun hideProgress() {
         pb_notice.visibility = View.INVISIBLE
+    }
+
+    override fun onStart() {
+        super.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
     }
 
 }

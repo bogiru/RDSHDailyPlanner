@@ -7,7 +7,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -18,7 +17,7 @@ import com.bogiruapps.rdshapp.databinding.DrawerHeaderBinding
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,21 +32,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var navView: NavigationView
 
-    private lateinit var mainViewModel: MainActivityViewModel
+    private val mainViewModel: MainActivityViewModel by viewModel()
 
     private lateinit var authFirebase: FirebaseAuth
     private val providers = arrayListOf(
         AuthUI.IdpConfig.EmailBuilder().build()
     )
 
-    private lateinit var db: FirebaseFirestore
-    private lateinit var userRepository: UserRepository
-    private lateinit var userDataSource: UserRemoteDataSource
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        configureViewModel()
         configureBinding()
         setupObserverViewModel()
         configureFirebase()
@@ -61,14 +55,6 @@ class MainActivity : AppCompatActivity() {
         when(requestCode) {
             RC_SIGN_IN -> mainViewModel.handleSignInActivityResult(resultCode, data, authFirebase.currentUser)
         }
-    }
-
-    private fun configureViewModel() {
-        db = FirebaseFirestore.getInstance()
-        userDataSource = UserRemoteDataSource.getInstance(db)
-        userRepository = UserRepositoryImpl.getInstance(userDataSource)
-        val viewModelFactory = MainActivityViewModelFactory(userRepository)
-        mainViewModel = ViewModelProviders.of(this, viewModelFactory).get(MainActivityViewModel::class.java)
     }
 
     private fun configureBinding() {
