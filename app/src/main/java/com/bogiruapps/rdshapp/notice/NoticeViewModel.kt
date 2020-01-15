@@ -1,15 +1,11 @@
 package com.bogiruapps.rdshapp.notice
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.*
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.launch
 
 class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() {
 
@@ -29,10 +25,12 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
     private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
 
-    private val _closeAddNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
-    val closeAddNoticeFragmentEvent: LiveData<Event<Unit>> = _closeAddNoticeFragmentEvent
+    private val _openNoticeDetailFragmentEvent = MutableLiveData<Event<Unit>>()
+    val openNoticeDetailFragmentEvent: LiveData<Event<Unit>> = _openNoticeDetailFragmentEvent
 
-    fun checkUserSchool(firebaseUser: FirebaseUser?) {
+    val tempNotice = Notice()
+
+    fun checkUserSchool() {
         val user = userRepository.currentUser.value
         if (user != null) {
             val school = user.school
@@ -43,31 +41,9 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
         }
     }
 
-    fun addNotice(text: String) {
-        viewModelScope.launch {
-            when (userRepository.createNewNotice(Notice("", text))) {
-                is Result.Success -> {
-                    hideAddNoticeFragment()
-                }
-            }
-        }
-    }
-
-    fun editNotice(notice: Notice) {
-        viewModelScope.launch {
-            notice.text = "сурок"
-            Log.i("Deletee", notice.id)
-            when (userRepository.updateNotice(notice)) {
-            }
-        }
-    }
-
-    fun deleteNotice(notice: Notice) {
-        viewModelScope.launch {
-            Log.i("Deletee", "dfd" + notice.id)
-            //userRepository.deleteNotice(notice)
-        }
-    }
+    /*fun addNotice(text: String) {
+        op
+    }*/
 
    /* fun initNotices() {
         _dataLoading.value = true
@@ -86,8 +62,9 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
         return userRepository.fetchFirestoreRecyclerOptions()
     }
 
-    private fun hideAddNoticeFragment() {
-        _closeAddNoticeFragmentEvent.value = Event(Unit)
+    fun openNoticeDetailFragment(notice: Notice? = null) {
+        userRepository.currentNotice.value = notice
+        _openNoticeDetailFragmentEvent.value = Event(Unit)
     }
 
     private fun showSchoolFragment() {

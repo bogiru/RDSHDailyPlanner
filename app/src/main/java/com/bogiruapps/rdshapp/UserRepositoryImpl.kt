@@ -9,6 +9,7 @@ import kotlinx.coroutines.coroutineScope
 
 class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) : UserRepository {
     override val currentUser = MutableLiveData<User>()
+    override val currentNotice = MutableLiveData<Notice>()
 /*    override val schoolsUser = MutableLiveData<String>()*/
 
 

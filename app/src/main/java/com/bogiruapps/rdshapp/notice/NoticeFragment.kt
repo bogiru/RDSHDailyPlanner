@@ -2,7 +2,6 @@ package com.bogiruapps.rdshapp.notice
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeBinding
-import com.bogiruapps.rdshapp.databinding.NoticeItemBinding
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_notice.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -27,12 +25,7 @@ class NoticeFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: NoticeAdapter
-
     private lateinit var binding: FragmentNoticeBinding
-
-
-    private var currentNumberNoticeItem: Int = 0
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +46,7 @@ class NoticeFragment : Fragment() {
 
 
     }
+
     private fun setupObserverViewModel() {
         /*showProgress()*/
         noticeViewModel.openChooseSchoolFragmentEvent.observe(this, EventObserver {
@@ -63,8 +57,8 @@ class NoticeFragment : Fragment() {
             configureRecyclerView()
         })
 
-        noticeViewModel.closeAddNoticeFragmentEvent.observe(this, EventObserver {
-            hideAddNotice()
+        noticeViewModel.openNoticeDetailFragmentEvent.observe(this, EventObserver {
+            showANoticeDetail()
             hideProgress()
 
         })
@@ -75,7 +69,7 @@ class NoticeFragment : Fragment() {
 
     private fun configureFirebase() {
         val auth = FirebaseAuth.getInstance()
-        noticeViewModel.checkUserSchool(auth.currentUser)
+        noticeViewModel.checkUserSchool()
     }
 
     private fun openChooseSchoolFragment() {
@@ -98,18 +92,12 @@ class NoticeFragment : Fragment() {
 
     private fun setupListenerOnFub() {
         binding.fubNotice.setOnClickListener {
-            showAddNotice()
+            showANoticeDetail()
         }
     }
 
-    private fun showAddNotice() {
-        binding.addNoticeLayout.visibility = View.VISIBLE
-        binding.fubNotice.visibility = View.INVISIBLE
-    }
-
-    private fun hideAddNotice() {
-        binding.addNoticeLayout.visibility = View.INVISIBLE
-        binding.fubNotice.visibility = View.VISIBLE
+    private fun showANoticeDetail() {
+        findNavController().navigate(R.id.noticeDetailFragment)
     }
 
     private fun hideProgress() {

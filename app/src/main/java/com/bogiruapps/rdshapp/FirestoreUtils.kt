@@ -65,10 +65,10 @@ fun QuerySnapshot.toSchoolList(): List<School> {
     return items
 }
 
-fun QuerySnapshot.toNoticeList(): List<Notice> {
+/*fun QuerySnapshot.toNoticeList(): List<Notice> {
     val items = mutableListOf<Notice>()
     for (item in this) {
         items.add(Notice(item.id, item["text"].toString()))
     }
     return items
-}
+}*/

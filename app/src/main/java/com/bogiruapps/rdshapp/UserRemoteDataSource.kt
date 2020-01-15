@@ -89,7 +89,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
                .document(school.id)
                .collection("notices")
                .document()
-               .set(hashMapOf("text" to notice.text))
+               .set(hashMapOf("text" to notice.text, "title" to notice.title, "date" to notice.date, "author" to notice.author, "importance" to notice.importance))
                .await()
        } catch (e: Exception) {
            Result.Error(e)
@@ -102,7 +102,10 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
                     .document(school.id)
                     .collection("notices")
                     .document(notice.id)
-                    .update("text", notice.text)
+                    .update(
+                        "text", notice.text,
+                        "title", notice.title,
+                        "importance", notice.importance)
                     .await()
     }
 
@@ -119,7 +122,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
 
     }
 
-    suspend fun fetchNotices(school: School): Result<List<Notice>> = withContext(ioDispatcher) {
+    /*suspend fun fetchNotices(school: School): Result<List<Notice>> = withContext(ioDispatcher) {
 
         return@withContext try {
             when (val result =
@@ -132,7 +135,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         } catch (e: Exception) {
             Result.Error(e)
         }
-    }
+    }*/
 
     fun fetchFirestoreRecyclerOptions(school: School): FirestoreRecyclerOptions<Notice> {
         val collection = schoolsCollection.document(school.id).collection("notices")

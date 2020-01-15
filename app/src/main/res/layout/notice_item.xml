@@ -19,7 +19,7 @@
         <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="0dp"
-                android:onClick="@{(view) -> viewModel.deleteNotice(notice)}"
+                android:onClick="@{(view) -> viewModel.openNoticeDetailFragment(notice)}"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -37,7 +37,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
-                        android:text="@{notice.text}"
+                        android:text="@{notice.title}"
                         android:textSize="14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView2"

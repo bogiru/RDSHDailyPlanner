@@ -17,8 +17,13 @@ class NoticeAdapter(
     FirestoreRecyclerAdapter<Notice, NoticeAdapter.NoticeViewHolder>(options) {
 
     override fun onBindViewHolder(p0: NoticeViewHolder, p1: Int, p2: Notice) {
+        p2.id = snapshots.getSnapshot(p1).reference.id
         p0.bind(viewModel, p2)
+
+
     }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
             return NoticeViewHolder.from(parent)

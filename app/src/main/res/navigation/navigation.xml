@@ -26,4 +26,9 @@
             android:id="@+id/noticeFragment"
             android:name="com.bogiruapps.rdshapp.notice.NoticeFragment"
             android:label="NoticeFragment" />
+    <fragment
+            android:id="@+id/noticeDetailFragment"
+            android:name="com.bogiruapps.rdshapp.notice.notice_detail.NoticeDetailFragment"
+            android:label="fragment_notice_detail"
+            tools:layout="@layout/fragment_notice_detail" />
 </navigation>

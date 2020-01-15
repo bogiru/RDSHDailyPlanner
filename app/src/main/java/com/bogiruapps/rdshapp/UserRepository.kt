@@ -7,6 +7,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 interface UserRepository {
 
     val currentUser: MutableLiveData<User>
+    val currentNotice: MutableLiveData<Notice>
 
     suspend fun createNewUser(user: User): Result<Void?>
 
@@ -25,5 +26,6 @@ interface UserRepository {
     suspend fun updateNotice(notice: Notice): Result<Void?>
 
     suspend fun deleteNotice(notice: Notice): Result<Void?>
+
 
 }
