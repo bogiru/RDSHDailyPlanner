@@ -13,30 +13,35 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/notice_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+            android:id="@+id/notice_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#52aef4">
 
         <ProgressBar
-            android:id="@+id/pb_notice"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                android:id="@+id/pb_notice"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_notice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:background="#52aef4"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/notice_item"/>
+                app:layout_constraintVertical_bias="0.0"
+                tools:listitem="@layout/notice_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fub_notice"
@@ -44,9 +49,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:onClick="@{(view) -> viewModel.openNoticeDetailFragment(viewModel.tempNotice)}"
                 android:clickable="true"
-                app:backgroundTint="#03A9F4"
+                android:onClick="@{(view) -> viewModel.showEditDetailFragment(viewModel.tempNotice)}"
+                app:backgroundTint="#CA1A11"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/ic_plus"

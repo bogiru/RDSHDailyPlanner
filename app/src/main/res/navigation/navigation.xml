@@ -20,15 +20,25 @@
     <fragment
             android:id="@+id/choseSchoolFragment"
             android:name="com.bogiruapps.rdshapp.school.ChooseSchoolFragment"
-            android:label="fragment_chose_school"
+            android:label="Выбор школы"
             tools:layout="@layout/fragment_choose_school" />
     <fragment
             android:id="@+id/noticeFragment"
             android:name="com.bogiruapps.rdshapp.notice.NoticeFragment"
-            android:label="NoticeFragment" />
+            android:label="Объявления" >
+        <action
+                android:id="@+id/action_noticeFragment_to_noticeDetailFragment"
+                app:destination="@id/noticeEditFragment"
+                app:enterAnim="@anim/fui_slide_in_right" />
+    </fragment>
     <fragment
-            android:id="@+id/noticeDetailFragment"
-            android:name="com.bogiruapps.rdshapp.notice.notice_detail.NoticeDetailFragment"
-            android:label="fragment_notice_detail"
-            tools:layout="@layout/fragment_notice_detail" />
+            android:id="@+id/noticeEditFragment"
+            android:name="com.bogiruapps.rdshapp.notice.notice_edit.NoticeEditFragment"
+            android:label="Информация об объявлении"
+            tools:layout="@layout/fragment_notice_edit" >
+        <action
+                android:id="@+id/action_noticeDetailFragment_to_noticeFragment"
+                app:destination="@id/noticeFragment"
+                app:enterAnim="@anim/fui_slide_in_right" />
+    </fragment>
 </navigation>

@@ -1,15 +1,16 @@
 package com.bogiruapps.rdshapp.notice
 
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.EventObserver
@@ -57,15 +58,38 @@ class NoticeFragment : Fragment() {
             configureRecyclerView()
         })
 
-        noticeViewModel.openNoticeDetailFragmentEvent.observe(this, EventObserver {
+        noticeViewModel.openNoticeEditFragmentEvent.observe(this, EventObserver {
             showANoticeDetail()
             hideProgress()
 
         })
 
-        noticeViewModel.notices.observe(this, Observer { notices ->
+        noticeViewModel.openAlertDialogDeleteEvent.observe(this, EventObserver {
+            showAllertDialogDelete()
         })
     }
+
+    @SuppressLint("ResourceType")
+    private fun showAllertDialogDelete(){
+        val alertBuilder = AlertDialog.Builder(activity)
+        alertBuilder.setTitle("Удалить объявление")
+        alertBuilder.setMessage("Вы уверены, что хотите удалить объявление?")
+        alertBuilder.setIconAttribute(R.drawable.rdsh_image)
+        alertBuilder.setCancelable(true)
+        alertBuilder.setPositiveButton(
+            "Да"
+        ) { _: DialogInterface, _: Int ->
+            noticeViewModel.deleteNotice()
+        }
+        alertBuilder.setNegativeButton(
+            "Нет"
+        ) { _: DialogInterface, _: Int ->
+        }
+        alertBuilder.show()
+    }
+
+
+
 
     private fun configureFirebase() {
         val auth = FirebaseAuth.getInstance()
@@ -78,13 +102,8 @@ class NoticeFragment : Fragment() {
     }
 
     private fun configureRecyclerView() {
-        val linearLayoutManager = GridLayoutManager(activity, 5)
-        linearLayoutManager.orientation = LinearLayoutManager.HORIZONTAL
-        recyclerView = binding.recyclerViewNotice
-
         adapter = NoticeAdapter(noticeViewModel.fetchFirestoreRecyclerOptions(), noticeViewModel)
-
-        binding.recyclerViewNotice.layoutManager = linearLayoutManager
+        binding.recyclerViewNotice.layoutManager = LinearLayoutManager(activity)
         binding.recyclerViewNotice.adapter = adapter
         adapter.startListening()
 
@@ -97,7 +116,8 @@ class NoticeFragment : Fragment() {
     }
 
     private fun showANoticeDetail() {
-        findNavController().navigate(R.id.noticeDetailFragment)
+        findNavController().navigate(R.id.action_noticeFragment_to_noticeDetailFragment)
+        adapter.stopListening()
     }
 
     private fun hideProgress() {

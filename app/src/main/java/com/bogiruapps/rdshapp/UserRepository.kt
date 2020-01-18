@@ -25,7 +25,7 @@ interface UserRepository {
 
     suspend fun updateNotice(notice: Notice): Result<Void?>
 
-    suspend fun deleteNotice(notice: Notice): Result<Void?>
+    suspend fun deleteNotice(): Result<Void?>
 
 
 }

@@ -5,6 +5,7 @@ import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.school.School
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -61,6 +62,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
 
     suspend fun fetchSchools(): Result<List<School>> = withContext(ioDispatcher) {
         return@withContext try {
+            val data = System.currentTimeMillis()
             when(val result = schoolsCollection.get().await()) {
                 is Result.Success -> Result.Success(result.data.toSchoolList())
                 is Result.Error -> Result.Error(result.exception)
@@ -89,7 +91,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
                .document(school.id)
                .collection("notices")
                .document()
-               .set(hashMapOf("text" to notice.text, "title" to notice.title, "date" to notice.date, "author" to notice.author, "importance" to notice.importance))
+               .set(hashMapOf("text" to notice.text, "title" to notice.title, "date" to notice.date, "author" to notice.author))
                .await()
        } catch (e: Exception) {
            Result.Error(e)
@@ -104,8 +106,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
                     .document(notice.id)
                     .update(
                         "text", notice.text,
-                        "title", notice.title,
-                        "importance", notice.importance)
+                        "title", notice.title)
                     .await()
     }
 
@@ -139,9 +140,10 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
 
     fun fetchFirestoreRecyclerOptions(school: School): FirestoreRecyclerOptions<Notice> {
         val collection = schoolsCollection.document(school.id).collection("notices")
-        val query = collection.orderBy("text")
+        val query = collection.orderBy("date", Query.Direction.DESCENDING)
         return FirestoreRecyclerOptions.Builder<Notice>().setQuery(query, Notice::class.java).build()
     }
+
 
 
 

@@ -1,11 +1,14 @@
 package com.bogiruapps.rdshapp.notice
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.*
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 
 class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() {
 
@@ -25,8 +28,11 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
     private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
 
-    private val _openNoticeDetailFragmentEvent = MutableLiveData<Event<Unit>>()
-    val openNoticeDetailFragmentEvent: LiveData<Event<Unit>> = _openNoticeDetailFragmentEvent
+    private val _openNoticeEditFragmentEvent = MutableLiveData<Event<Unit>>()
+    val openNoticeEditFragmentEvent: LiveData<Event<Unit>> = _openNoticeEditFragmentEvent
+
+    private val _openAlertDialogDeleteEvent = MutableLiveData<Event<Unit>>()
+    val openAlertDialogDeleteEvent: LiveData<Event<Unit>> = _openAlertDialogDeleteEvent
 
     val tempNotice = Notice()
 
@@ -39,6 +45,10 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
                 showNoticeFragment()
             }
         }
+    }
+
+    fun checkAuthorNotice(author: String): Boolean {
+        return (userRepository.currentUser.value!!.name == author)
     }
 
     /*fun addNotice(text: String) {
@@ -62,9 +72,15 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
         return userRepository.fetchFirestoreRecyclerOptions()
     }
 
-    fun openNoticeDetailFragment(notice: Notice? = null) {
+    fun deleteNotice() {
+        viewModelScope.launch {
+            userRepository.deleteNotice()
+        }
+    }
+
+    fun showEditDetailFragment(notice: Notice? = null) {
         userRepository.currentNotice.value = notice
-        _openNoticeDetailFragmentEvent.value = Event(Unit)
+        _openNoticeEditFragmentEvent.value = Event(Unit)
     }
 
     private fun showSchoolFragment() {
@@ -73,6 +89,12 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
 
     private fun showNoticeFragment() {
         _openNoticeFragmentEvent.value = Event(Unit)
+    }
+
+    fun showAlertDialogDelete(notice: Notice?) {
+        userRepository.currentNotice.value = notice
+        Log.i("Deletee", "showAlert: " + notice!!.id)
+        _openAlertDialogDeleteEvent.value = Event(Unit)
     }
 
 

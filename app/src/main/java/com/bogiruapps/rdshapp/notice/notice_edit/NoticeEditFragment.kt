@@ -1,30 +1,26 @@
-package com.bogiruapps.rdshapp.notice.notice_detail
+package com.bogiruapps.rdshapp.notice.notice_edit
 
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
-import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.databinding.FragmentNoticeDetailBinding
+import com.bogiruapps.rdshapp.databinding.FragmentNoticeEditBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
  * A simple [Fragment] subclass.
  */
-class NoticeDetailFragment : Fragment() {
+class NoticeEditFragment : Fragment() {
 
-    private val noticeDetailViewModel: NoticeDetailViewModel by viewModel()
-    private lateinit var binding: FragmentNoticeDetailBinding
+    private val noticeEditViewModel: NoticeEditViewModel by viewModel()
+    private lateinit var binding: FragmentNoticeEditBinding
 
 
 
@@ -38,22 +34,22 @@ class NoticeDetailFragment : Fragment() {
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notice_detail, container, false)
-        binding.viewModel = noticeDetailViewModel
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notice_edit, container, false)
+        binding.viewModel = noticeEditViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
 
     private fun setupObserverViewModel() {
-        noticeDetailViewModel.openEditNotice.observe(this, EventObserver {
+        noticeEditViewModel.openEditNotice.observe(this, EventObserver {
             showEditNotice()
         })
 
-        noticeDetailViewModel.closeEditNotice.observe(this, EventObserver {
+        noticeEditViewModel.closeEditNotice.observe(this, EventObserver {
             hideEditNotice()
         })
 
-        noticeDetailViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
-            findNavController().navigate(R.id.noticeFragment)
+        noticeEditViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
+            findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeFragment)
         })
 
     }

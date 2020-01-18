@@ -1,6 +1,5 @@
-package com.bogiruapps.rdshapp.notice.notice_detail
+package com.bogiruapps.rdshapp.notice.notice_edit
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,8 +8,9 @@ import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.UserRepository
 import com.bogiruapps.rdshapp.notice.Notice
 import kotlinx.coroutines.launch
+import java.util.*
 
-class NoticeDetailViewModel(private val userRepository: UserRepository) : ViewModel() {
+class NoticeEditViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     private val _openEditNotice = MutableLiveData<Event<Unit>>()
     val openEditNotice: LiveData<Event<Unit>> = _openEditNotice
@@ -23,35 +23,31 @@ class NoticeDetailViewModel(private val userRepository: UserRepository) : ViewMo
 
     val notice = userRepository.currentNotice
 
-    init {
-        checkNotice()
-    }
-
-    private fun checkNotice() {
-        if (userRepository.currentNotice.value!!.id == "") openEditNotice()
-    }
-
     fun createNotice(notice: Notice) {
-        Log.i("QWE", notice.text)
+        notice.author = userRepository.currentUser.value!!.name.toString()
+        notice.date = Calendar.getInstance().time
+
         viewModelScope.launch {
             userRepository.createNewNotice(notice)
             openNoticeFragment()
         }
     }
 
+   /* private fun getCurrentDate(): String {
+        val calendar = Calendar.getInstance().time
+        return DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(calendar)
+    }*/
+
     fun editNotice(notice: Notice) {
         if (notice.id == "") createNotice(notice)
         else viewModelScope.launch {
             userRepository.updateNotice(notice)
-            closeEditNotice()
+            //closeEditNotice()
+            openNoticeFragment()
         }
     }
 
-    fun deleteNotice(notice: Notice) {
-        viewModelScope.launch {
-            userRepository.deleteNotice(notice)
-        }
-    }
+
 
     fun openEditNotice() {
         _openEditNotice.value = Event(Unit)
@@ -62,6 +58,7 @@ class NoticeDetailViewModel(private val userRepository: UserRepository) : ViewMo
     }
 
     private fun openNoticeFragment() {
+
         _openNoticeFragmentEvent.value = Event(Unit)
     }
 

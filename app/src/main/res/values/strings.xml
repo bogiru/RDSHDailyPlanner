@@ -10,6 +10,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="hello_blank_fragment">hello</string>
+    <string name="author" translatable="false">Автор: %1$s</string>
     <string name="info_text1" translatable="false">
         Российское движение школьников (РДШ) — Общественно-государственная детско-юношеская организация,
         деятельность которой целиком сосредоточена на развитии и воспитании школьников.

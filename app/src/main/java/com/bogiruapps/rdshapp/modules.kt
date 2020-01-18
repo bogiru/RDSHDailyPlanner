@@ -1,11 +1,7 @@
 package com.bogiruapps.rdshapp
 
-import com.bogiruapps.rdshapp.MainActivityViewModel
-import com.bogiruapps.rdshapp.UserRemoteDataSource
-import com.bogiruapps.rdshapp.UserRepository
-import com.bogiruapps.rdshapp.UserRepositoryImpl
 import com.bogiruapps.rdshapp.notice.NoticeViewModel
-import com.bogiruapps.rdshapp.notice.notice_detail.NoticeDetailViewModel
+import com.bogiruapps.rdshapp.notice.notice_edit.NoticeEditViewModel
 import com.bogiruapps.rdshapp.school.SchoolViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -31,6 +27,6 @@ val modules = module {
     viewModel { MainActivityViewModel(userRepository = get()) }
     viewModel { NoticeViewModel(userRepository = get()) }
     viewModel { SchoolViewModel(userRepository = get()) }
-    viewModel { NoticeDetailViewModel(userRepository = get()) }
+    viewModel { NoticeEditViewModel(userRepository = get()) }
 
 }
