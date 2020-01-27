@@ -1,6 +1,7 @@
 package com.bogiruapps.rdshapp
 
 import com.bogiruapps.rdshapp.school.School
+import java.util.*
 
 
 data class User(
@@ -14,5 +15,7 @@ data class User(
         const val FIELD_EMAIL = "email"
         const val FIELD_SCHOOL = "school"
     }
+
+    constructor() : this("", "", School("", ""))
 
 }

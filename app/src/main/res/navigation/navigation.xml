@@ -16,7 +16,12 @@
             android:id="@+id/eventsFragment"
             android:name="com.bogiruapps.rdshapp.events.EventsFragment"
             android:label="fragment_events"
-            tools:layout="@layout/fragment_events" />
+            tools:layout="@layout/fragment_events" >
+        <action
+                android:id="@+id/action_eventsFragment_to_tasksEventFragment"
+                app:destination="@id/tasksEventFragment"
+                app:enterAnim="@anim/fui_slide_in_right" />
+    </fragment>
     <fragment
             android:id="@+id/choseSchoolFragment"
             android:name="com.bogiruapps.rdshapp.school.ChooseSchoolFragment"
@@ -41,4 +46,8 @@
                 app:destination="@id/noticeFragment"
                 app:enterAnim="@anim/fui_slide_in_right" />
     </fragment>
+    <fragment
+            android:id="@+id/tasksEventFragment"
+            android:name="com.bogiruapps.rdshapp.events.tasksEvent.TasksEventFragment"
+            android:label="TasksEventFragment" />
 </navigation>

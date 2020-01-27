@@ -1,5 +1,7 @@
 package com.bogiruapps.rdshapp
 
+import com.bogiruapps.rdshapp.events.EventViewModel
+import com.bogiruapps.rdshapp.events.tasksEvent.TaskEventViewModel
 import com.bogiruapps.rdshapp.notice.NoticeViewModel
 import com.bogiruapps.rdshapp.notice.notice_edit.NoticeEditViewModel
 import com.bogiruapps.rdshapp.school.SchoolViewModel
@@ -28,5 +30,7 @@ val modules = module {
     viewModel { NoticeViewModel(userRepository = get()) }
     viewModel { SchoolViewModel(userRepository = get()) }
     viewModel { NoticeEditViewModel(userRepository = get()) }
+    viewModel { EventViewModel(userRepository = get()) }
+    viewModel { TaskEventViewModel(userRepository = get()) }
 
 }

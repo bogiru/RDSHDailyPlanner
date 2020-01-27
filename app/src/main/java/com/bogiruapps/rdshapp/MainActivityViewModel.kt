@@ -59,12 +59,14 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
             when(val result = userRepository.fetchUser(firebaseUser.email.toString())) {
                 is Result.Success -> {
                     val user = result.data
+                    Log.i("QWE", "mainViewModel ${user.toString()}")
                     if (user != null) {
                         setupUserInformation(user)
                     } else {
                         createUserToDb(firebaseUser)
                     }
                 }
+             //   is Result.Error -> createUserToDb(firebaseUser)
             }
         }
     }

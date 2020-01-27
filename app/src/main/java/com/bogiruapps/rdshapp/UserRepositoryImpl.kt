@@ -1,5 +1,8 @@
 package com.bogiruapps.rdshapp
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.school.School
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -9,7 +12,8 @@ import kotlinx.coroutines.coroutineScope
 
 class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) : UserRepository {
     override val currentUser = MutableLiveData<User>()
-    override val currentNotice = MutableLiveData<Notice>()
+    override var currentNotice = MutableLiveData<Notice>()
+    override var currentEvent = MutableLiveData<SchoolEvent>()
 /*    override val schoolsUser = MutableLiveData<String>()*/
 
 
@@ -33,13 +37,31 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) : UserRep
         return@coroutineScope task.await()
     }
 
-   /* override suspend fun fetchNotices(school: School): Result<List<Notice>> = coroutineScope  {
-        val task = async { dataSource.fetchNotices(school)}
+    override suspend fun addUserToSchool(): Result<Void?> = coroutineScope {
+        val task = async { dataSource.addStudentToSchool(currentUser.value!!.school, currentUser.value!!)}
         return@coroutineScope task.await()
-    }*/
+    }
 
-    override fun fetchFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Notice> {
-        return dataSource.fetchFirestoreRecyclerOptions(currentUser.value!!.school)
+    override suspend fun fetchStudents(): Result<List<User?>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
+    /* override suspend fun fetchNotices(school: School): Result<List<Notice>> = coroutineScope  {
+         val task = async { dataSource.fetchNotices(school)}
+         return@coroutineScope task.await()
+     }*/
+
+    override fun fetchFirestoreRecyclerOptionsEvents(): FirestoreRecyclerOptions<SchoolEvent> {
+        return dataSource.fetchFirestoreRecyclerOptionsEvent(currentUser.value!!.school)
+    }
+
+    override fun fetchFirestoreRecyclerOptionsNotice(): FirestoreRecyclerOptions<Notice> {
+        return dataSource.fetchFirestoreRecyclerOptionsNotice(currentUser.value!!.school)
+    }
+
+    override fun fetchFirestoreRecyclerOptionsTasksEvent(): FirestoreRecyclerOptions<TaskEvent> {
+        return dataSource.fetchFirestoreRecyclerOptionsTasksEvent(currentUser.value!!.school, currentEvent.value!!)
     }
 
     override suspend fun createNewNotice(notice: Notice): Result<Void?> = coroutineScope {

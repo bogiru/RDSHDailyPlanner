@@ -69,7 +69,7 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
     }*/
 
     fun fetchFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Notice> {
-        return userRepository.fetchFirestoreRecyclerOptions()
+        return userRepository.fetchFirestoreRecyclerOptionsNotice()
     }
 
     fun deleteNotice() {

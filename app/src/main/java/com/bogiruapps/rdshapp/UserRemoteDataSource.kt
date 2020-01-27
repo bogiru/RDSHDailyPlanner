@@ -1,6 +1,8 @@
 package com.bogiruapps.rdshapp
 
 import android.util.Log
+import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.school.School
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -8,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import com.bogiruapps.rdshapp.Event as Event
 
 
 class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
@@ -17,13 +20,21 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
 
     override suspend fun createUser(user: User): Result<Void?> = withContext(ioDispatcher) {
         return@withContext try {
-            userCollection.document(user.email.toString()).set(user).await()
+            userCollection.document(user.email.toString()).set(
+                hashMapOf(
+                    "name" to user.name,
+                    "school" to (user.school.name),
+                    "email" to user.email
+                )
+            ).await()
         } catch (e: Exception) {
+            Log.i("QWE", e.toString())
             Result.Error(e)
         }
     }
 
     override suspend fun updateUser(user: User): Result<Void?> = withContext(ioDispatcher) {
+        Log.i("QWE", "updateUser ${user.name}")
         return@withContext userCollection.document(user.email.toString()).update(
             "name", user.name,
             "email", user.email,
@@ -36,10 +47,12 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
             when(val resultDocumentSnapshot = userCollection.document(userId).get().await()) {
                 is Result.Success -> {
                     val schoolName = resultDocumentSnapshot.data["school"].toString()
-                    if (schoolName == "") Result.Success(resultDocumentSnapshot.data.toUser(""))
-                    else {
-                        when (val idSchool = fetchIdSchool(schoolName)) {
+                    when {
+                        resultDocumentSnapshot.data == null -> Result.Success(null)
+                        schoolName == "" -> Result.Success(resultDocumentSnapshot.data.toUser(""))
+                        else -> when (val idSchool = fetchIdSchool(schoolName)) {
                             is Result.Success -> {
+
                                 Result.Success(
                                     resultDocumentSnapshot.data.toUser(
                                         idSchool.data
@@ -47,7 +60,10 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
                                 )
 
                             }
-                            is Result.Error -> Result.Error(idSchool.exception)
+                            is Result.Error -> {
+                                Result.Success(null)
+
+                            }
                             is Result.Canceled -> Result.Canceled(idSchool.exception)
                         }
                     }
@@ -75,8 +91,34 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
 
     private suspend fun fetchIdSchool(school: String): Result<String> = withContext(ioDispatcher) {
         return@withContext try {
+
             when (val result = schoolsCollection.whereEqualTo("name", school).get().await()) {
                 is Result.Success -> Result.Success(result.data.documents[0].id)
+                is Result.Error -> Result.Error(result.exception)
+                is Result.Canceled -> Result.Canceled(result.exception)
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    suspend fun addStudentToSchool(school: School, user: User): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext schoolsCollection.document(school.id).collection("users").document(user.email.toString()).set(
+            hashMapOf("email" to user.email, "role" to "", "name" to user.name)).await()
+    }
+
+    suspend fun fetchStudents(school: School): Result<List<User?>> = withContext(ioDispatcher) {
+        return@withContext try {
+            when (val result = schoolsCollection.document(school.id).collection("users").get().await()) {
+                is Result.Success -> {
+                    val students = mutableListOf<User>()
+                    for (student in result.data) {
+                        when (val user  = fetchUser(student.id)) {
+                            is Result.Success -> user.data?.let { students.add(it) }
+                        }
+                    }
+                    Result.Success(students)
+                }
                 is Result.Error -> Result.Error(result.exception)
                 is Result.Canceled -> Result.Canceled(result.exception)
             }
@@ -138,16 +180,22 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         }
     }*/
 
-    fun fetchFirestoreRecyclerOptions(school: School): FirestoreRecyclerOptions<Notice> {
+    fun fetchFirestoreRecyclerOptionsEvent(school: School): FirestoreRecyclerOptions<SchoolEvent> {
+        val collection = schoolsCollection.document(school.id).collection("events")
+        val query = collection.orderBy("progress", Query.Direction.DESCENDING)
+        return FirestoreRecyclerOptions.Builder<SchoolEvent>().setQuery(query, SchoolEvent::class.java).build()
+    }
+
+    fun fetchFirestoreRecyclerOptionsNotice(school: School): FirestoreRecyclerOptions<Notice> {
         val collection = schoolsCollection.document(school.id).collection("notices")
         val query = collection.orderBy("date", Query.Direction.DESCENDING)
         return FirestoreRecyclerOptions.Builder<Notice>().setQuery(query, Notice::class.java).build()
     }
 
-
-
-
-
-
+    fun fetchFirestoreRecyclerOptionsTasksEvent(school: School, event: SchoolEvent): FirestoreRecyclerOptions<TaskEvent> {
+        val collection = schoolsCollection.document(school.id).collection("events").document(event.id).collection("tasks")
+        val query = collection.orderBy("isCompleted", Query.Direction.DESCENDING)
+        return FirestoreRecyclerOptions.Builder<TaskEvent>().setQuery(query, TaskEvent::class.java).build()
+    }
 }
 

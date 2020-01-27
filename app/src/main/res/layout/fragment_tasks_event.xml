@@ -5,22 +5,18 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.events.EventViewModel" />
-        <variable
-                name="user"
-                type="com.bogiruapps.rdshapp.User" />
+                type="com.bogiruapps.rdshapp.events.tasksEvent.TaskEventViewModel" />
     </data>
 
     <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".events.EventsFragment">
+            tools:context=".events.tasksEvent.TasksEventFragment">
 
         <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_tasks_event"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/recycler_view_events"
-                tools:listitem="@layout/events_item"/>
-
+                tools:listitem="@layout/tasks_event_item" />
     </FrameLayout>
 </layout>

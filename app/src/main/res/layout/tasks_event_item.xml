@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:tools="http://schemas.android.com/tools"
         xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
-                name="notice"
-                type="com.bogiruapps.rdshapp.notice.Notice" />
-        <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.notice.NoticeViewModel" />
+                type="com.bogiruapps.rdshapp.events.tasksEvent.TaskEventViewModel" />
+        <variable
+                name="taskEvent"
+                type="com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -44,10 +44,35 @@
                         android:layout_margin="4dp"
                         android:background="@drawable/round_item">
 
+                    <ProgressBar
+                            android:id="@+id/dividing_line_task_event"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="237dp"
+                            android:layout_height="8dp"
+                            android:layout_marginTop="16dp"
+                            android:progress="100"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/status_task_event" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/event_fub"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:clickable="true"
+                            android:visibility="gone"
+                            app:backgroundTint="#CA1A11"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/task_list_icon" />
+
                     <ImageView
                             android:id="@+id/rdsh_image"
-                            android:layout_width="64dp"
-                            android:layout_height="65dp"
+                            android:layout_width="47dp"
+                            android:layout_height="48dp"
                             android:src="@drawable/rdsh_image"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -61,7 +86,7 @@
                             android:background="#00EDF33E"
                             android:fontFamily="sans-serif"
                             android:hint="fgfdgfdgdfgfdg"
-                            android:text="@{notice.title}"
+                            android:text="@{taskEvent.title}"
                             android:textColor="#359AE8"
                             android:textColorLink="#2196F3"
                             android:textSize="30sp"
@@ -70,80 +95,55 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                            android:id="@+id/date_text_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif"
-                            android:hint="Fdnjh"
-                            android:text="@{notice.date.toString()}"
-                            android:textColor="@android:color/secondary_text_dark"
-                            android:textStyle="italic"
-                            app:layout_constraintStart_toStartOf="@+id/textView2"
-                            app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-                    <TextView
-                            android:id="@+id/textView2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="sans-serif"
-                            android:hint="@string/author"
-                            android:text="@{notice.author}"
-                            android:textColor="@android:color/secondary_text_dark"
-                            android:textStyle="italic"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/title_task_event" />
-
-                    <TextView
-                            android:id="@+id/text_notice"
+                            android:id="@+id/description_task_event"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
-                            android:layout_marginTop="16dp"
+                            android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="16dp"
-                            android:text="@{notice.text}"
+                            android:hint="dsfdsfdsfsdfdsfdsfsdf"
+                            android:text="@{taskEvent.description}"
                             android:textColor="#000000"
-                            android:textSize="18sp"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/dividingLine" />
-
-                    <ProgressBar
-                            android:id="@+id/dividingLine"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="237dp"
-                            android:layout_height="8dp"
-                            android:layout_marginTop="16dp"
-                            android:progress="100"
                             android:visibility="gone"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/date_text_view" />
+                            app:layout_constraintTop_toBottomOf="@+id/dividing_line_task_event" />
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/fub_edit"
+                    <TextView
+                            android:id="@+id/responsible_task_event"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Ответсвенный: Барболин Семен"
+                            app:layout_constraintStart_toStartOf="@+id/title_task_event"
+                            app:layout_constraintTop_toBottomOf="@+id/title_task_event" />
+
+                    <TextView
+                            android:id="@+id/status_task_event"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Статус: Выполнен"
+                            app:layout_constraintStart_toStartOf="@+id/responsible_task_event"
+                            app:layout_constraintTop_toBottomOf="@+id/responsible_task_event" />
+
+                    <CheckBox
+                            android:id="@+id/ckeck_box_task_completed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
-                            android:clickable="true"
-                            android:onClick="@{(view) -> viewModel.showEditDetailFragment(notice)}"
+                            android:layout_marginBottom="8dp"
+                            android:text="Задание выполнил(а)"
                             android:visibility="gone"
-                            app:backgroundTint="#CA1A11"
+                            app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/ic_edit_icon"
-                            tools:ignore="VectorDrawableCompat" />
+                            app:layout_constraintTop_toBottomOf="@+id/description_task_event" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </FrameLayout>
 
         </androidx.cardview.widget.CardView>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
