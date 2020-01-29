@@ -7,7 +7,7 @@ import java.util.*
 data class User(
     var name: String? = "",
     var email: String? = "",
-    var school: School
+    var school: School = School("", "")
 ) {
 
     companion object {
@@ -15,7 +15,5 @@ data class User(
         const val FIELD_EMAIL = "email"
         const val FIELD_SCHOOL = "school"
     }
-
-    constructor() : this("", "", School("", ""))
 
 }

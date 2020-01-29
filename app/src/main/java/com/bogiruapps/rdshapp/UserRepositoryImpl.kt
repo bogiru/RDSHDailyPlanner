@@ -42,8 +42,9 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) : UserRep
         return@coroutineScope task.await()
     }
 
-    override suspend fun fetchStudents(): Result<List<User?>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override suspend fun fetchStudents(): Result<List<User?>> = coroutineScope {
+        val task = async { dataSource.fetchStudents(currentUser.value!!.school)}
+        return@coroutineScope task.await()
     }
 
 

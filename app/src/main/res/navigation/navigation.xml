@@ -33,21 +33,27 @@
             android:label="Объявления" >
         <action
                 android:id="@+id/action_noticeFragment_to_noticeDetailFragment"
-                app:destination="@id/noticeEditFragment"
-                app:enterAnim="@anim/fui_slide_in_right" />
+                app:destination="@id/noticeDetailFragment"
+                app:launchSingleTop="false"
+                app:popUpToInclusive="false" />
     </fragment>
     <fragment
             android:id="@+id/noticeEditFragment"
             android:name="com.bogiruapps.rdshapp.notice.notice_edit.NoticeEditFragment"
             android:label="Информация об объявлении"
-            tools:layout="@layout/fragment_notice_edit" >
-        <action
-                android:id="@+id/action_noticeDetailFragment_to_noticeFragment"
-                app:destination="@id/noticeFragment"
-                app:enterAnim="@anim/fui_slide_in_right" />
-    </fragment>
+            tools:layout="@layout/fragment_notice_edit" />
     <fragment
             android:id="@+id/tasksEventFragment"
             android:name="com.bogiruapps.rdshapp.events.tasksEvent.TasksEventFragment"
             android:label="TasksEventFragment" />
+    <fragment
+            android:id="@+id/noticeDetailFragment"
+            android:name="com.bogiruapps.rdshapp.notice.notice_detail.NoticeDetailFragment"
+            android:label="" >
+        <action
+                android:id="@+id/action_noticeDetailFragment_to_noticeEditFragment"
+                app:destination="@id/noticeEditFragment"
+                app:popUpTo="@+id/noticeDetailFragment"
+                app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

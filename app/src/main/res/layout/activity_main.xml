@@ -16,20 +16,20 @@
             android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:background="#03A9F4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="?attr/colorPrimary"
                 tools:context=".MainActivity">
 
             <androidx.appcompat.widget.Toolbar
-                    app:titleTextColor="#FFFFFF"
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/colorPrimary"
-                    android:theme="?attr/actionBarTheme"
                     android:minHeight="?attr/actionBarSize"
-                    android:id="@+id/toolbar"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:theme="?attr/actionBarTheme"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:titleTextColor="#FFFFFF" />
 
             <fragment
                     android:id="@+id/nav_host_fragment"

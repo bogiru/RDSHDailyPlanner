@@ -15,8 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/notice_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#52aef4">
+            android:layout_height="match_parent">
 
         <ProgressBar
                 android:id="@+id/pb_notice"
@@ -33,7 +32,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
-                android:background="#52aef4"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

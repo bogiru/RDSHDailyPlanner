@@ -34,39 +34,9 @@ class NoticeAdapter(
             fun bind(viewModel: NoticeViewModel, notice: Notice) {
                 binding.notice = notice
                 binding.viewModel = viewModel
-                var numberClick = 1
-
-                binding.cardView.setOnClickListener {
-                    if (numberClick % 2 == 0) hideDetailNotice(viewModel, notice)
-                    else showDetailNotice(viewModel, notice)
-                    numberClick++
-                }
-
-                binding.cardView.setOnLongClickListener {
-                    if (viewModel.checkAuthorNotice(notice.author)) {
-                        viewModel.showAlertDialogDelete(notice)
-                    }
-                    return@setOnLongClickListener true
-                }
-
                 binding.executePendingBindings()
 
             }
-
-            private fun showDetailNotice(viewModel: NoticeViewModel,  notice: Notice) {
-                binding.rdshImage.visibility = View.GONE
-                binding.textNotice.visibility = View.VISIBLE
-                if (viewModel.checkAuthorNotice(notice.author)) binding.fubEdit.visibility = View.VISIBLE
-                binding.dividingLine.visibility = View.VISIBLE
-            }
-
-            private fun hideDetailNotice(viewModel: NoticeViewModel,  notice: Notice) {
-                binding.rdshImage.visibility = View.VISIBLE
-                binding.textNotice.visibility = View.GONE
-                binding.fubEdit.visibility = View.GONE
-                binding.dividingLine.visibility = View.GONE
-            }
-
             companion object {
                 fun from(parent: ViewGroup): NoticeViewHolder {
                     val layoutInflater = LayoutInflater.from(parent.context)

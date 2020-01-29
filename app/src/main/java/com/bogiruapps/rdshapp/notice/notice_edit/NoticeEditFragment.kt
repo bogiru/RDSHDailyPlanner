@@ -6,12 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeEditBinding
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -30,6 +32,7 @@ class NoticeEditFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         setupObserverViewModel()
+        configureToolbar()
         return binding.root
     }
 
@@ -49,8 +52,18 @@ class NoticeEditFragment : Fragment() {
         })
 
         noticeEditViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
-            findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeFragment)
+            findNavController().navigate(R.id.action_noticeFragment_to_noticeDetailFragment)
         })
+
+    }
+
+    private fun configureToolbar() {
+        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
+
+        activity?.toolbar?.menu?.findItem(R.id.item_share)?.isVisible = false
+        editItem?.isVisible = false
+        deleteItem?.isVisible = false
 
     }
 

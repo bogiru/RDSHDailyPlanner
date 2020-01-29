@@ -53,9 +53,7 @@ fun returnSuccessOrError(result: Result<Void?>): Result<Void?> {
     }
 }
 
-fun DocumentSnapshot.toUser(schoolId: String): User? {
-    return User(data?.get("name").toString(), data?.get("email").toString(), School(data?.get("school").toString(), schoolId))
-}
+fun DocumentSnapshot.toUser(): User? = this.toObject(User::class.java)
 
 fun QuerySnapshot.toSchoolList(): List<School> {
     val items = mutableListOf<School>()

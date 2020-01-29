@@ -20,13 +20,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
 
     override suspend fun createUser(user: User): Result<Void?> = withContext(ioDispatcher) {
         return@withContext try {
-            userCollection.document(user.email.toString()).set(
-                hashMapOf(
-                    "name" to user.name,
-                    "school" to (user.school.name),
-                    "email" to user.email
-                )
-            ).await()
+            userCollection.document(user.email.toString()).set(user).await()
         } catch (e: Exception) {
             Log.i("QWE", e.toString())
             Result.Error(e)
@@ -34,11 +28,10 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
     }
 
     override suspend fun updateUser(user: User): Result<Void?> = withContext(ioDispatcher) {
-        Log.i("QWE", "updateUser ${user.name}")
         return@withContext userCollection.document(user.email.toString()).update(
             "name", user.name,
             "email", user.email,
-            "school", user.school.name
+            "school", user.school
         ).await()
     }
 
@@ -46,27 +39,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         return@withContext try {
             when(val resultDocumentSnapshot = userCollection.document(userId).get().await()) {
                 is Result.Success -> {
-                    val schoolName = resultDocumentSnapshot.data["school"].toString()
-                    when {
-                        resultDocumentSnapshot.data == null -> Result.Success(null)
-                        schoolName == "" -> Result.Success(resultDocumentSnapshot.data.toUser(""))
-                        else -> when (val idSchool = fetchIdSchool(schoolName)) {
-                            is Result.Success -> {
-
-                                Result.Success(
-                                    resultDocumentSnapshot.data.toUser(
-                                        idSchool.data
-                                    )
-                                )
-
-                            }
-                            is Result.Error -> {
-                                Result.Success(null)
-
-                            }
-                            is Result.Canceled -> Result.Canceled(idSchool.exception)
-                        }
-                    }
+                    Result.Success(resultDocumentSnapshot.data.toUser())
                 }
                 is Result.Error -> Result.Error(resultDocumentSnapshot.exception)
                 is Result.Canceled -> Result.Canceled(resultDocumentSnapshot.exception)
@@ -89,23 +62,8 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         }
     }
 
-    private suspend fun fetchIdSchool(school: String): Result<String> = withContext(ioDispatcher) {
-        return@withContext try {
-
-            when (val result = schoolsCollection.whereEqualTo("name", school).get().await()) {
-                is Result.Success -> Result.Success(result.data.documents[0].id)
-                is Result.Error -> Result.Error(result.exception)
-                is Result.Canceled -> Result.Canceled(result.exception)
-            }
-        } catch (e: Exception) {
-            Result.Error(e)
-        }
-    }
-
     suspend fun addStudentToSchool(school: School, user: User): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext schoolsCollection.document(school.id).collection("users").document(user.email.toString()).set(
-            hashMapOf("email" to user.email, "role" to "", "name" to user.name)).await()
-    }
+        return@withContext schoolsCollection.document(school.id).collection("users").document(user.email.toString()).set(user).await()}
 
     suspend fun fetchStudents(school: School): Result<List<User?>> = withContext(ioDispatcher) {
         return@withContext try {
@@ -113,9 +71,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
                 is Result.Success -> {
                     val students = mutableListOf<User>()
                     for (student in result.data) {
-                        when (val user  = fetchUser(student.id)) {
-                            is Result.Success -> user.data?.let { students.add(it) }
-                        }
+                        student.toUser()?.let { students.add(it) }
                     }
                     Result.Success(students)
                 }

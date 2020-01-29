@@ -66,7 +66,7 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
                         createUserToDb(firebaseUser)
                     }
                 }
-             //   is Result.Error -> createUserToDb(firebaseUser)
+                is Result.Error ->  Log.i("QWE", "mainViewModel ${result.exception}")
             }
         }
     }
