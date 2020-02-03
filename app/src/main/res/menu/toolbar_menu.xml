@@ -3,20 +3,20 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+            android:id="@+id/item_edit"
+            android:icon="@drawable/ic_edit"
+            android:title="Item_edit"
+            android:visible="false"
+            app:showAsAction="always" />
+    <item
             android:id="@+id/item_delete"
             android:icon="@drawable/ic_delete"
             android:title="Item_delete"
             android:visible="false"
             app:showAsAction="always" />
     <item
-            android:icon="@drawable/ic_edit"
-            android:id="@+id/item_edit"
-            android:visible="false"
-            android:title="Item_edit"
-            app:showAsAction="always" />
-    <item
             android:id="@+id/item_share"
             android:icon="@android:drawable/ic_menu_share"
             android:title="Item"
-            app:showAsAction="always" />
+            app:showAsAction="ifRoom" />
 </menu>

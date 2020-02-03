@@ -10,7 +10,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import com.bogiruapps.rdshapp.Event as Event
 
 
 class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
@@ -121,6 +120,15 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
 
     }
 
+    suspend fun updateTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext schoolsCollection.document(school.id).collection("events").document(event.id).collection("tasks").document(taskEvent.id).update(
+            "title", taskEvent.title,
+            "description", taskEvent.description,
+            "user", taskEvent.user,
+            "compl", taskEvent.compl
+        ).await()
+    }
+
     /*suspend fun fetchNotices(school: School): Result<List<Notice>> = withContext(ioDispatcher) {
 
         return@withContext try {
@@ -138,7 +146,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
 
     fun fetchFirestoreRecyclerOptionsEvent(school: School): FirestoreRecyclerOptions<SchoolEvent> {
         val collection = schoolsCollection.document(school.id).collection("events")
-        val query = collection.orderBy("progress", Query.Direction.DESCENDING)
+        val query = collection.orderBy("amountTask", Query.Direction.DESCENDING)
         return FirestoreRecyclerOptions.Builder<SchoolEvent>().setQuery(query, SchoolEvent::class.java).build()
     }
 
@@ -149,8 +157,12 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
     }
 
     fun fetchFirestoreRecyclerOptionsTasksEvent(school: School, event: SchoolEvent): FirestoreRecyclerOptions<TaskEvent> {
-        val collection = schoolsCollection.document(school.id).collection("events").document(event.id).collection("tasks")
-        val query = collection.orderBy("isCompleted", Query.Direction.DESCENDING)
+        val collection = schoolsCollection
+            .document(school.id)
+            .collection("events")
+            .document(event.id)
+            .collection("tasks")
+        val query = collection.orderBy("compl", Query.Direction.DESCENDING)
         return FirestoreRecyclerOptions.Builder<TaskEvent>().setQuery(query, TaskEvent::class.java).build()
     }
 }

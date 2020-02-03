@@ -39,7 +39,7 @@
     </fragment>
     <fragment
             android:id="@+id/noticeEditFragment"
-            android:name="com.bogiruapps.rdshapp.notice.notice_edit.NoticeEditFragment"
+            android:name="com.bogiruapps.rdshapp.notice.notice_edit.EventEditFragment"
             android:label="Информация об объявлении"
             tools:layout="@layout/fragment_notice_edit" />
     <fragment

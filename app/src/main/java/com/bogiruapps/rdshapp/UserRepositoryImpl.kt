@@ -1,5 +1,4 @@
 package com.bogiruapps.rdshapp
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
@@ -63,6 +62,11 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) : UserRep
 
     override fun fetchFirestoreRecyclerOptionsTasksEvent(): FirestoreRecyclerOptions<TaskEvent> {
         return dataSource.fetchFirestoreRecyclerOptionsTasksEvent(currentUser.value!!.school, currentEvent.value!!)
+    }
+
+    override suspend fun updateTaskEvent(taskEvent: TaskEvent): Result<Void?> = coroutineScope {
+        val task = async { dataSource.updateTaskEvent(currentUser.value!!.school,  currentEvent.value!!, taskEvent) }
+        return@coroutineScope returnSuccessOrError(task.await())
     }
 
     override suspend fun createNewNotice(notice: Notice): Result<Void?> = coroutineScope {

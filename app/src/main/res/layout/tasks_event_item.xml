@@ -114,7 +114,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="Ответсвенный: Барболин Семен"
+                            android:text="@{@string/responsible(taskEvent.user.name)}"
                             app:layout_constraintStart_toStartOf="@+id/title_task_event"
                             app:layout_constraintTop_toBottomOf="@+id/title_task_event" />
 
@@ -131,13 +131,15 @@
                             android:id="@+id/ckeck_box_task_completed"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
                             android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
+                            android:onClick="@{(view) -> viewModel.taskCompleted(taskEvent)}"
+                            android:checked="@{taskEvent.compl}"
                             android:text="Задание выполнил(а)"
                             android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/description_task_event" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

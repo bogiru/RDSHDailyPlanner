@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.events
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,6 +33,8 @@ class EventsAdapter(
             binding.event = schoolEvent
             binding.viewModel = viewModel
             var numberClick = 1
+
+            Log.i("QWE", "progress ${schoolEvent.amountCompletedTask} ${schoolEvent.amountTask}")
 
             binding.cardView.setOnClickListener {
                 if (numberClick % 2 == 0) hideDetailEvent(viewModel)

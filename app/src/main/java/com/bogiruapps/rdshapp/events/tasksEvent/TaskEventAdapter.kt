@@ -1,13 +1,11 @@
 package com.bogiruapps.rdshapp.events.tasksEvent
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bogiruapps.rdshapp.databinding.EventsItemBinding
 import com.bogiruapps.rdshapp.databinding.TasksEventItemBinding
-import com.bogiruapps.rdshapp.events.EventViewModel
-import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 

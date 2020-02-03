@@ -31,6 +31,8 @@ interface UserRepository {
 
     fun fetchFirestoreRecyclerOptionsTasksEvent(): FirestoreRecyclerOptions<TaskEvent>
 
+    suspend fun updateTaskEvent(event: TaskEvent): Result<Void?>
+
    /* suspend fun fetchNotices(school: School): Result<List<Notice>>*/
 
     suspend fun createNewNotice(notice: Notice): Result<Void?>
