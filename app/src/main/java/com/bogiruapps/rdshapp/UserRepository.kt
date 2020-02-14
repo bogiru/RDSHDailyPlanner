@@ -1,4 +1,5 @@
 package com.bogiruapps.rdshapp
+import android.net.VpnService
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
@@ -30,6 +31,14 @@ interface UserRepository {
     fun fetchFirestoreRecyclerOptionsEvents(): FirestoreRecyclerOptions<SchoolEvent>
 
     fun fetchFirestoreRecyclerOptionsTasksEvent(): FirestoreRecyclerOptions<TaskEvent>
+
+    suspend fun createTaskEvent(event: TaskEvent): Result<Void?>
+
+    suspend fun createEvent(event: SchoolEvent): Result<Void?>
+
+    suspend fun updateEvent(event: SchoolEvent): Result<Void?>
+
+    suspend fun deleteEvent(): Result<Void?>
 
     suspend fun updateTaskEvent(event: TaskEvent): Result<Void?>
 

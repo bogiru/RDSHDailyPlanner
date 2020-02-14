@@ -1,13 +1,16 @@
 package com.bogiruapps.rdshapp.events.tasksEvent
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.TasksEventItemBinding
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.FirebaseAuth
 
 class TaskEventAdapter(
     options : FirestoreRecyclerOptions<TaskEvent>,
@@ -32,39 +35,46 @@ class TaskEventAdapter(
         fun bind(viewModel: TaskEventViewModel, taskEvent: TaskEvent) {
             binding.taskEvent = taskEvent
             binding.viewModel = viewModel
+
+            if (taskEvent.user!!.email == FirebaseAuth.getInstance().currentUser!!.email) {
+                binding.ckeckBoxTaskCompleted.visibility = View.GONE
+            }
+
+            if (taskEvent.compl) {
+                binding.statusTaskEvent.text = "Статус: Выполнен"
+               // binding.statusTaskEvent.setTextColor(3328)
+            } else {
+                binding.statusTaskEvent.text = "Статус: Ожидает выполнения"
+                //binding.statusTaskEvent.setTextColor(90800)
+            }
             var numberClick = 1
 
             binding.cardView.setOnClickListener {
                 if (numberClick % 2 == 0) hideDetailEvent(viewModel)
                 else showDetailEvent(viewModel, taskEvent)
+
                 numberClick++
             }
 
             /* binding.cardView.setOnLongClickListener {
-                 if (viewModel.checkAuthorNotice(notice.author)) {
-                     viewModel.showAlertDialogDelete(notice)
-                 }
+                     viewModel.showAlertDialogDelete(taskEvent)
                  return@setOnLongClickListener true
-             }*/
-
+             }
+*/
             binding.executePendingBindings()
 
         }
 
         private fun showDetailEvent(viewModel: TaskEventViewModel, taskEvent: TaskEvent) {
-            binding.rdshImage.visibility = View.GONE
+            binding.imageView5.setImageResource(R.drawable.ic_expand_less_black_48dp)
             binding.descriptionTaskEvent.visibility = View.VISIBLE
             binding.ckeckBoxTaskCompleted.visibility = View.VISIBLE
-            binding.dividingLineTaskEvent.visibility = View.VISIBLE
-            binding.eventFub.visibility = View.VISIBLE
         }
 
         private fun hideDetailEvent(viewModel: TaskEventViewModel) {
-            binding.rdshImage.visibility = View.VISIBLE
+            binding.imageView5.setImageResource(R.drawable.ic_keyboard_arrow_down_black_48dp)
             binding.descriptionTaskEvent.visibility = View.GONE
             binding.ckeckBoxTaskCompleted.visibility = View.GONE
-            binding.dividingLineTaskEvent.visibility = View.GONE
-            binding.eventFub.visibility = View.GONE
         }
 
         companion object {

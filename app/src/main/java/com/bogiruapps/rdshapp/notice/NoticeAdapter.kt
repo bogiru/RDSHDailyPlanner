@@ -1,15 +1,14 @@
 package com.bogiruapps.rdshapp.notice
 
-import android.util.Log
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bogiruapps.rdshapp.R
+import com.bogiruapps.rdshapp.R.drawable.header
 import com.bogiruapps.rdshapp.databinding.NoticeItemBinding
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-
-
 
 
 class NoticeAdapter(
@@ -33,7 +32,9 @@ class NoticeAdapter(
 
             fun bind(viewModel: NoticeViewModel, notice: Notice) {
                 binding.notice = notice
+                binding.constraintLayout.background
                 binding.viewModel = viewModel
+
                 binding.executePendingBindings()
 
             }

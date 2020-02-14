@@ -29,6 +29,7 @@ class ChooseSchoolFragment : Fragment() {
     private lateinit var progressBar: ProgressBar
     private lateinit var chosenSchool: School
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

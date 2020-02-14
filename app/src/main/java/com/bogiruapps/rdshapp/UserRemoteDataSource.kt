@@ -48,6 +48,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         }
     }
 
+
     suspend fun fetchSchools(): Result<List<School>> = withContext(ioDispatcher) {
         return@withContext try {
             val data = System.currentTimeMillis()
@@ -64,7 +65,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
     suspend fun addStudentToSchool(school: School, user: User): Result<Void?> = withContext(ioDispatcher) {
         return@withContext schoolsCollection.document(school.id).collection("users").document(user.email.toString()).set(user).await()}
 
-    suspend fun fetchStudents(school: School): Result<List<User?>> = withContext(ioDispatcher) {
+    suspend fun fetchStudents(school: School): Result<List<User>> = withContext(ioDispatcher) {
         return@withContext try {
             when (val result = schoolsCollection.document(school.id).collection("users").get().await()) {
                 is Result.Success -> {
@@ -105,6 +106,38 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
                         "text", notice.text,
                         "title", notice.title)
                     .await()
+    }
+
+    suspend fun createEvent(school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext schoolsCollection.document(school.id).collection("events").document().set(event).await()
+    }
+
+    suspend fun updateEvent(school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext db.collection("schools")
+            .document(school.id)
+            .collection("events")
+            .document(event.id)
+            .update(
+                "description", event.description,
+                "title", event.title,
+                "amountCompletedTask", event.amountCompletedTask,
+                "amountTask", event.amountTask,
+                        "deadline", event.deadline)
+            .await()
+    }
+
+    suspend fun deleteEvent(school: School, event: SchoolEvent):  Result<Void?> = withContext(ioDispatcher) {
+        return@withContext db.collection("schools")
+            .document(school.id)
+            .collection("events")
+            .document(event.id)
+            .delete()
+            .await()
+
+    }
+
+    suspend fun createTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext schoolsCollection.document(school.id).collection("events").document(event.id).collection("tasks").document().set(taskEvent).await()
     }
 
     suspend fun deleteNotice(school: School, notice: Notice):  Result<Void?> = withContext(ioDispatcher) {

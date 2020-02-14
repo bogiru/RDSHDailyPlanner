@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="viewModel"
+                type="com.bogiruapps.rdshapp.events.detail_event.EventDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/frameLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/round_item"
+            tools:visibility="visible">
+
+
+        <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="345dp"
+                android:layout_height="271dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.72"
+                app:srcCompat="@drawable/rdsh_image2" />
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/extendedFloatingActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="#5A9FF1"
+                android:onClick="@{(view) -> viewModel.showTaskEventRecyclerView()}"
+                android:text="Задачи"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                app:backgroundTint="#5A9FF1"
+                app:icon="@drawable/task_list_icon"
+                app:iconTint="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:rippleColor="#FCFFFFFF"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="138dp" />
+
+
+        <ScrollView
+                android:id="@+id/scrollView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/frameLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+
+                        android:paddingBottom="64dp"
+                        tools:context=".events.tasksEvent.TasksEventFragment"
+                        tools:layout_conversion_absoluteHeight="657dp"
+                        tools:layout_conversion_absoluteWidth="411dp">
+
+                    <View
+                            android:id="@+id/view"
+                            android:layout_width="0dp"
+                            android:layout_height="3dp"
+                            android:layout_marginStart="32dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="32dp"
+                            android:background="#DADADA"
+                            android:visibility="visible"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/title_event"
+                            tools:layout_conversion_absoluteHeight="2dp"
+                            tools:layout_conversion_absoluteWidth="250dp" />
+
+                    <View
+                            android:id="@+id/view2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="#DADADA"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.25"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView6"
+                            tools:layout_conversion_absoluteHeight="0dp"
+                            tools:layout_conversion_absoluteWidth="0dp"
+                            tools:layout_editor_absoluteX="103dp"
+                            tools:layout_editor_absoluteY="162dp" />
+
+                    <TextView
+                            android:id="@+id/title_event"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center"
+                            android:text="@{viewModel.event.title}"
+                            android:textColor="#39A4F0"
+                            android:textSize="30sp"
+                            android:transitionName="titleEvent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:layout_conversion_absoluteHeight="24dp"
+                            tools:layout_conversion_absoluteWidth="357dp" />
+
+                    <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:text="@{viewModel.event.deadline}"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+                            tools:layout_conversion_absoluteHeight="19dp"
+                            tools:layout_conversion_absoluteWidth="138dp" />
+
+                    <ProgressBar
+                            android:id="@+id/progressBar"
+                            style="@style/MyProgressBarTwo"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="32dp"
+                            android:layout_marginEnd="8dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.51"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/textView1"
+                            tools:layout_conversion_absoluteHeight="16dp"
+                            tools:layout_conversion_absoluteWidth="379dp" />
+
+                    <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            app:layout_constraintBottom_toTopOf="@+id/view"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/progressBar"
+                            app:srcCompat="@drawable/ic_keyboard_arrow_down_black_48dp"
+                            tools:layout_conversion_absoluteHeight="0dp"
+                            tools:layout_conversion_absoluteWidth="0dp"
+                            tools:layout_editor_absoluteX="411dp"
+                            tools:layout_editor_absoluteY="383dp" />
+
+                    <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/view"
+                            app:srcCompat="@drawable/rdsh_image2"
+                            tools:layout_conversion_absoluteHeight="0dp"
+                            tools:layout_conversion_absoluteWidth="0dp"
+                            tools:layout_editor_absoluteX="411dp"
+                            tools:layout_editor_absoluteY="162dp"
+                            tools:visibility="gone" />
+
+                    <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="8dp"
+                            android:gravity="center"
+                            android:text="@{viewModel.event.description}"
+                            android:textStyle="italic"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.096"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/view2"
+                            tools:layout_conversion_absoluteHeight="388dp"
+                            tools:layout_conversion_absoluteWidth="395dp" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </ScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

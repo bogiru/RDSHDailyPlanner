@@ -1,28 +1,26 @@
-package com.bogiruapps.rdshapp.notice.notice_edit
-
+package com.bogiruapps.rdshapp.events.edit_event
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
+import android.widget.CalendarView
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.databinding.FragmentNoticeEditBinding
+import com.bogiruapps.rdshapp.databinding.FragmentEventEditBinding
+import com.bogiruapps.rdshapp.events.edit_event.EventEditViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-/**
- * A simple [Fragment] subclass.
- */
+
 class EventEditFragment : Fragment() {
 
-    private val noticeEditViewModel: NoticeEditViewModel by viewModel()
-    private lateinit var binding: FragmentNoticeEditBinding
+    private val eventEditViewModel: EventEditViewModel by viewModel()
+    private lateinit var binding: FragmentEventEditBinding
 
 
 
@@ -32,50 +30,37 @@ class EventEditFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         setupObserverViewModel()
+        setClickListenerOnCalendarView()
         configureToolbar()
         return binding.root
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notice_edit, container, false)
-        binding.viewModel = noticeEditViewModel
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_edit, container, false)
+        binding.viewModel = eventEditViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
 
     private fun setupObserverViewModel() {
-        noticeEditViewModel.openEditNotice.observe(this, EventObserver {
-            showEditNotice()
-        })
+        eventEditViewModel.openSchoolEventFragment.observe(this, EventObserver {
+        findNavController().navigate(R.id.action_eventEditFragment_to_eventsFragment)
+    })
 
-        noticeEditViewModel.closeEditNotice.observe(this, EventObserver {
-            hideEditNotice()
-        })
-
-        noticeEditViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
-            findNavController().navigate(R.id.action_noticeFragment_to_noticeDetailFragment)
-        })
-
-    }
+}
 
     private fun configureToolbar() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
 
-        activity?.toolbar?.menu?.findItem(R.id.item_share)?.isVisible = false
+        activity?.toolbar?.menu?.findItem(R.id.item_share)?.isVisible = true
         editItem?.isVisible = false
         deleteItem?.isVisible = false
 
     }
 
-    private fun showEditNotice() {
-        binding.editNoticeLayout.visibility = View.VISIBLE
+    private fun setClickListenerOnCalendarView() {
+        binding.calendarViewEvent.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            eventEditViewModel.updateDate(year - 1900, month, dayOfMonth)
+        }
     }
-
-    private fun hideEditNotice() {
-        binding.editNoticeLayout.visibility = View.INVISIBLE
-    }
-
-
-
-
 }

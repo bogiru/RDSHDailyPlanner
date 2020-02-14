@@ -18,125 +18,113 @@
             android:layout_height="wrap_content"
             android:paddingBottom="10dp">
 
-    <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:longClickable="true"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-        <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shadow"
-                app:cardElevation="2dp">
+        <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="0dp"
+                android:layout_height="118dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/header"
+                android:longClickable="true"
+                android:onClick="@{(view) -> viewModel.showTaskEventFragment(event, view)}"
+                app:cardBackgroundColor="#E8FFFFFF"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/round_item">
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/event_fub"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        android:clickable="true"
-                        android:onClick="@{(view) -> viewModel.showTaskEventFragment(event)}"
-                        android:visibility="gone"
-                        app:backgroundTint="#CA1A11"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/task_list_icon" />
-
-                <ImageView
-                        android:id="@+id/rdsh_image"
-                        android:layout_width="47dp"
-                        android:layout_height="48dp"
-                        android:src="@drawable/rdsh_image"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/rdsh_image4" />
-
-                <TextView
-                        android:id="@+id/title_task_event"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="12dp"
-                        android:background="#00EDF33E"
-                        android:fontFamily="sans-serif"
-                        android:hint="fgfdgfdgdfgfdg"
-                        android:text="@{event.title}"
-                        android:textColor="#359AE8"
-                        android:textColorLink="#2196F3"
-                        android:textSize="30sp"
-                        android:textStyle="bold"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                        android:id="@+id/date_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:fontFamily="sans-serif"
-                        android:hint="Дедлайн: 17.04.2003"
-                        android:text="@{event.deadline.toString()}"
-                        android:textColor="@android:color/secondary_text_dark"
-                        android:textStyle="italic"
-                        app:layout_constraintStart_toStartOf="@+id/title_task_event"
-                        app:layout_constraintTop_toBottomOf="@+id/progressBar2" />
-
-                <TextView
-                        android:id="@+id/textView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Прогресс:"
-                        app:layout_constraintStart_toStartOf="@+id/title_task_event"
-                        app:layout_constraintTop_toBottomOf="@+id/title_task_event" />
+                    android:layout_height="match_parent">
 
                 <ProgressBar
                         android:id="@+id/progressBar2"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:progress="@{(event.amountCompletedTask * 100 / event.amountTask)}"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginEnd="8dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-                <TextView
-                        android:id="@+id/text_event"
+                        style="@style/MyProgressBarTwo"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="@{event.description}"
-                        android:textColor="#000000"
-                        android:visibility="gone"
+                        android:layout_marginEnd="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/date_text_view"
-                        app:layout_constraintTop_toBottomOf="@+id/date_text_view" />
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                        tools:layout_conversion_absoluteHeight="16dp"
+                        tools:layout_conversion_absoluteWidth="379dp" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/constraintLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="73dp"
+                        android:background="@drawable/header2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                            android:id="@+id/title_task_event"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="8dp"
+                            android:fontFamily="sans-serif"
+                            android:hint="dsfdsfdsfsdf"
+                            android:text="@{event.title}"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#FFFFFF"
+                            android:textColorLink="#2196F3"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    <ProgressBar
+                            android:id="@+id/dividingLine"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="237dp"
+                            android:layout_height="8dp"
+                            android:layout_marginTop="16dp"
+                            android:progress="100"
+                            android:visibility="gone"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/date_text_view" />
+
+                    <TextView
+                            android:id="@+id/date_text_view"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:fontFamily="sans-serif"
+                            android:hint="Дедлайн: 17.04.2003"
+                            android:text="@{event.deadline}"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#FFFFFF"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                            android:id="@+id/textView4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Дедлайн:  "
+                            android:textColor="#FFFFFF"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@+id/date_text_view"
+                            app:layout_constraintEnd_toStartOf="@+id/date_text_view"
+                            app:layout_constraintTop_toTopOf="@+id/date_text_view" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </FrameLayout>
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

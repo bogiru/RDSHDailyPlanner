@@ -32,38 +32,13 @@ class EventsAdapter(
         fun bind(viewModel: EventViewModel, schoolEvent: SchoolEvent) {
             binding.event = schoolEvent
             binding.viewModel = viewModel
-            var numberClick = 1
-
-            Log.i("QWE", "progress ${schoolEvent.amountCompletedTask} ${schoolEvent.amountTask}")
-
-            binding.cardView.setOnClickListener {
-                if (numberClick % 2 == 0) hideDetailEvent(viewModel)
-                else showDetailEvent(viewModel, schoolEvent)
-                numberClick++
-            }
-
-           /* binding.cardView.setOnLongClickListener {
-                if (viewModel.checkAuthorNotice(notice.author)) {
-                    viewModel.showAlertDialogDelete(notice)
-                }
-                return@setOnLongClickListener true
-            }*/
-
+            if (schoolEvent.amountTask == 0) binding.progressBar2.progress = 0
+            else binding.progressBar2.progress = schoolEvent.amountCompletedTask * 100 / schoolEvent.amountTask
             binding.executePendingBindings()
 
         }
 
-        private fun showDetailEvent(viewModel: EventViewModel, event: SchoolEvent) {
-            binding.rdshImage.visibility = View.GONE
-            binding.textEvent.visibility = View.VISIBLE
-            binding.eventFub.visibility = View.VISIBLE
-        }
 
-        private fun hideDetailEvent(viewModel: EventViewModel) {
-            binding.rdshImage.visibility = View.VISIBLE
-            binding.textEvent.visibility = View.GONE
-            binding.eventFub.visibility = View.GONE
-        }
 
         companion object {
             fun from(parent: ViewGroup): EventsViewHolder {

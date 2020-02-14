@@ -11,12 +11,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeBinding
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notice.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -35,8 +37,10 @@ class NoticeFragment : Fragment() {
         configureBinding(inflater, container)
         setupObserverViewModel()
         configureFirebase()
-        setupListenerOnFub()
 
+
+        activity?.toolbar?.visibility = View.VISIBLE
+        activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
         return binding.root
     }
 
@@ -59,37 +63,16 @@ class NoticeFragment : Fragment() {
         })
 
         noticeViewModel.openNoticeEditFragmentEvent.observe(this, EventObserver {
-            showANoticeDetail()
+            findNavController().navigate(R.id.action_noticeFragment_to_noticeEditFragment)
             hideProgress()
 
         })
 
-        noticeViewModel.openAlertDialogDeleteEvent.observe(this, EventObserver {
-            showAllertDialogDelete()
+        noticeViewModel.openNoticeDetailFragmentEvent.observe(this, EventObserver {
+            showANoticeDetail()
         })
+
     }
-
-    @SuppressLint("ResourceType")
-    private fun showAllertDialogDelete(){
-        val alertBuilder = AlertDialog.Builder(activity)
-        alertBuilder.setTitle("Удалить объявление")
-        alertBuilder.setMessage("Вы уверены, что хотите удалить объявление?")
-        alertBuilder.setIconAttribute(R.drawable.rdsh_image)
-        alertBuilder.setCancelable(true)
-        alertBuilder.setPositiveButton(
-            "Да"
-        ) { _: DialogInterface, _: Int ->
-            noticeViewModel.deleteNotice()
-        }
-        alertBuilder.setNegativeButton(
-            "Нет"
-        ) { _: DialogInterface, _: Int ->
-        }
-        alertBuilder.show()
-    }
-
-
-
 
     private fun configureFirebase() {
         val auth = FirebaseAuth.getInstance()
@@ -102,17 +85,12 @@ class NoticeFragment : Fragment() {
     }
 
     private fun configureRecyclerView() {
+        val layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.HORIZONTAL, false)
         adapter = NoticeAdapter(noticeViewModel.fetchFirestoreRecyclerOptions(), noticeViewModel)
-        binding.recyclerViewNotice.layoutManager = LinearLayoutManager(activity)
+        binding.recyclerViewNotice.layoutManager = layoutManager
         binding.recyclerViewNotice.adapter = adapter
         adapter.startListening()
 
-    }
-
-    private fun setupListenerOnFub() {
-        binding.fubNotice.setOnClickListener {
-            showANoticeDetail()
-        }
     }
 
     private fun showANoticeDetail() {

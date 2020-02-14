@@ -52,20 +52,17 @@ class NoticeEditFragment : Fragment() {
         })
 
         noticeEditViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
-            findNavController().navigate(R.id.action_noticeFragment_to_noticeDetailFragment)
+            findNavController().navigate(R.id.action_noticeEditFragment_to_noticeFragment)
         })
 
     }
 
     private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
-
-        activity?.toolbar?.menu?.findItem(R.id.item_share)?.isVisible = false
-        editItem?.isVisible = false
-        deleteItem?.isVisible = false
-
+        activity?.toolbar?.visibility = View.VISIBLE
+        activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
     }
+
+
 
     private fun showEditNotice() {
         binding.editNoticeLayout.visibility = View.VISIBLE

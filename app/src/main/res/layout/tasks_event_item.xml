@@ -23,6 +23,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:longClickable="true"
                 app:cardCornerRadius="15dp"
@@ -32,118 +33,117 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shadow"
-                    app:cardElevation="2dp">
+                    android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/round_item">
-
-                    <ProgressBar
-                            android:id="@+id/dividing_line_task_event"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="237dp"
-                            android:layout_height="8dp"
-                            android:layout_marginTop="16dp"
-                            android:progress="100"
-                            android:visibility="gone"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/status_task_event" />
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                            android:id="@+id/event_fub"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:clickable="true"
-                            android:visibility="gone"
-                            app:backgroundTint="#CA1A11"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/task_list_icon" />
-
-                    <ImageView
-                            android:id="@+id/rdsh_image"
-                            android:layout_width="47dp"
-                            android:layout_height="48dp"
-                            android:src="@drawable/rdsh_image"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/rdsh_image4" />
+                        android:id="@+id/constraintLayout"
+                        android:layout_width="0dp"
+                        android:layout_height="103dp"
+                        android:background="@drawable/header2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                             android:id="@+id/title_task_event"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:background="#00EDF33E"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="4dp"
                             android:fontFamily="sans-serif"
-                            android:hint="fgfdgfdgdfgfdg"
+                            android:hint="dsfdsfdsfsdf"
                             android:text="@{taskEvent.title}"
-                            android:textColor="#359AE8"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#FFFFFF"
                             android:textColorLink="#2196F3"
-                            android:textSize="30sp"
+                            android:textSize="18sp"
                             android:textStyle="bold"
+
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
-
-                    <TextView
-                            android:id="@+id/description_task_event"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:hint="dsfdsfdsfsdfdsfdsfsdf"
-                            android:text="@{taskEvent.description}"
-                            android:textColor="#000000"
-                            android:visibility="gone"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/dividing_line_task_event" />
-
-                    <TextView
-                            android:id="@+id/responsible_task_event"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="@{@string/responsible(taskEvent.user.name)}"
-                            app:layout_constraintStart_toStartOf="@+id/title_task_event"
-                            app:layout_constraintTop_toBottomOf="@+id/title_task_event" />
 
                     <TextView
                             android:id="@+id/status_task_event"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Статус: Выполнен"
-                            app:layout_constraintStart_toStartOf="@+id/responsible_task_event"
-                            app:layout_constraintTop_toBottomOf="@+id/responsible_task_event" />
+                            android:layout_marginEnd="8dp"
+                            android:textColor="#FFFDFD"
+                            app:layout_constraintBottom_toTopOf="@+id/responsible_task_event"
+                            app:layout_constraintEnd_toEndOf="parent" />
 
-                    <CheckBox
-                            android:id="@+id/ckeck_box_task_completed"
+                    <TextView
+                            android:id="@+id/responsible_task_event"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
-                            android:onClick="@{(view) -> viewModel.taskCompleted(taskEvent)}"
-                            android:checked="@{taskEvent.compl}"
-                            android:text="Задание выполнил(а)"
-                            android:visibility="gone"
+                            android:hint="Ответственный: Барболин Семен"
+                            android:text="@{@string/responsible(taskEvent.user.name)}"
+                            android:textColor="#FFFFFF"
+                            android:textColorHint="#FFFFFF"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/description_task_event" />
+                            app:layout_constraintEnd_toEndOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
-            </FrameLayout>
+
+                <TextView
+                        android:id="@+id/description_task_event"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:hint="dsfdsfdsfsdfdsfdsfsdf"
+                        android:text="@{taskEvent.description}"
+                        android:textColor="#000000"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                        tools:visibility="visible" />
+
+                <CheckBox
+                        android:id="@+id/ckeck_box_task_completed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:checked="@{taskEvent.compl}"
+                        android:onClick="@{(view) -> viewModel.taskCompleted(taskEvent)}"
+                        android:text="Задание выполнил(а)"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/description_task_event"
+                        tools:visibility="visible" />
+
+                <TextView
+                        android:id="@+id/textView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="Подробнее"
+                        android:textColor="#000000"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                        app:layout_constraintTop_toBottomOf="@+id/ckeck_box_task_completed"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="21dp"
+                        android:layout_height="21dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/textView"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_down_black_48dp" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>

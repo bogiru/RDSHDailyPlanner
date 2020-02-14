@@ -1,30 +1,20 @@
 package com.bogiruapps.rdshapp.events
 
 
-import android.annotation.SuppressLint
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentEventsBinding
-import com.bogiruapps.rdshapp.databinding.FragmentNoticeBinding
-import com.bogiruapps.rdshapp.notice.NoticeAdapter
-import com.bogiruapps.rdshapp.notice.NoticeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_events.*
-import kotlinx.android.synthetic.main.fragment_events.view.*
 import kotlinx.android.synthetic.main.fragment_notice.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -42,6 +32,7 @@ class EventsFragment : Fragment() {
         configureBinding(inflater, container)
         setupObserverViewModel()
         configureFirebase()
+        configureToolbar()
         configureRecyclerView()
        // setupListenerOnFub()
 
@@ -57,9 +48,15 @@ class EventsFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-            eventViewModel.openTaskEventFragment.observe(this, EventObserver {
-                findNavController().navigate(R.id.action_eventsFragment_to_tasksEventFragment)
-            })
+        eventViewModel.openTaskEventFragment.observe(this, EventObserver {
+
+
+            findNavController().navigate(R.id.action_eventsFragment_to_eventDetailFragment)
+        })
+
+        eventViewModel.openEditEventFragment.observe(this, EventObserver {
+            findNavController().navigate(R.id.action_eventsFragment_to_eventEditFragment)
+        })
     }
 
     /*@SuppressLint("ResourceType")
@@ -89,7 +86,15 @@ class EventsFragment : Fragment() {
         //.checkUserSchool()
     }
 
+    private fun configureToolbar() {
+        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
 
+        activity?.toolbar?.menu?.findItem(R.id.item_share)?.isVisible = true
+        editItem?.isVisible = false
+        deleteItem?.isVisible = false
+
+    }
 
     private fun configureRecyclerView() {
         adapter = EventsAdapter(eventViewModel.fetchFirestoreRecyclerOptions(), eventViewModel)

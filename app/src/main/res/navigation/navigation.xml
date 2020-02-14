@@ -15,12 +15,14 @@
     <fragment
             android:id="@+id/eventsFragment"
             android:name="com.bogiruapps.rdshapp.events.EventsFragment"
-            android:label="fragment_events"
-            tools:layout="@layout/fragment_events" >
+            android:label="Мероприятия"
+            tools:layout="@layout/fragment_events">
         <action
-                android:id="@+id/action_eventsFragment_to_tasksEventFragment"
-                app:destination="@id/tasksEventFragment"
-                app:enterAnim="@anim/fui_slide_in_right" />
+                android:id="@+id/action_eventsFragment_to_eventEditFragment"
+                app:destination="@id/eventEditFragment" />
+        <action
+                android:id="@+id/action_eventsFragment_to_eventDetailFragment"
+                app:destination="@id/eventDetailFragment" />
     </fragment>
     <fragment
             android:id="@+id/choseSchoolFragment"
@@ -36,24 +38,70 @@
                 app:destination="@id/noticeDetailFragment"
                 app:launchSingleTop="false"
                 app:popUpToInclusive="false" />
+        <action
+                android:id="@+id/action_noticeFragment_to_noticeEditFragment"
+                app:destination="@id/noticeEditFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/eventEditFragment"
+            android:name="com.bogiruapps.rdshapp.events.edit_event.EventEditFragment"
+            android:label="Выбор школы"
+            tools:layout="@layout/fragment_event_edit">
+        <action
+                android:id="@+id/action_eventEditFragment_to_eventsFragment"
+                app:destination="@id/eventsFragment" />
     </fragment>
     <fragment
             android:id="@+id/noticeEditFragment"
-            android:name="com.bogiruapps.rdshapp.notice.notice_edit.EventEditFragment"
+            android:name="com.bogiruapps.rdshapp.notice.notice_edit.NoticeEditFragment"
             android:label="Информация об объявлении"
-            tools:layout="@layout/fragment_notice_edit" />
+            tools:layout="@layout/fragment_notice_edit" >
+        <action
+                android:id="@+id/action_noticeEditFragment_to_noticeFragment"
+                app:destination="@id/noticeFragment" />
+    </fragment>
     <fragment
             android:id="@+id/tasksEventFragment"
             android:name="com.bogiruapps.rdshapp.events.tasksEvent.TasksEventFragment"
-            android:label="TasksEventFragment" />
+            android:label="Задачи">
+        <action
+                android:id="@+id/action_tasksEventFragment_to_taskEventEditFragment"
+                app:destination="@id/taskEventEditFragment" />
+    </fragment>
     <fragment
             android:id="@+id/noticeDetailFragment"
             android:name="com.bogiruapps.rdshapp.notice.notice_detail.NoticeDetailFragment"
-            android:label="" >
+            android:label="Подробности">
         <action
                 android:id="@+id/action_noticeDetailFragment_to_noticeEditFragment"
                 app:destination="@id/noticeEditFragment"
                 app:popUpTo="@+id/noticeDetailFragment"
                 app:popUpToInclusive="true" />
+        <action
+                android:id="@+id/action_noticeDetailFragment_to_noticeFragment"
+                app:destination="@id/noticeFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/taskEventEditFragment"
+            android:name="com.bogiruapps.rdshapp.events.tasksEvent.taskEventEdit.TaskEventEditFragment"
+            android:label="Редактирование">
+        <action
+                android:id="@+id/action_taskEventEditFragment_to_tasksEventFragment"
+                app:destination="@id/tasksEventFragment"
+                app:popUpTo="@+id/eventDetailFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/eventDetailFragment"
+            android:name="com.bogiruapps.rdshapp.events.detail_event.EventDetailFragment"
+            android:label="Подробности">
+        <action
+                android:id="@+id/action_eventDetailFragment_to_eventEditFragment"
+                app:destination="@id/eventEditFragment" />
+        <action
+                android:id="@+id/action_eventDetailFragment_to_tasksEventFragment"
+                app:destination="@id/tasksEventFragment" />
+        <action
+                android:id="@+id/action_eventDetailFragment_to_eventsFragment"
+                app:destination="@id/eventsFragment" />
     </fragment>
 </navigation>

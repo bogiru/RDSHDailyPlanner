@@ -1,11 +1,15 @@
 package com.bogiruapps.rdshapp.notice.notice_detail
 
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
@@ -36,6 +40,10 @@ class NoticeDetailFragment : Fragment() {
         return binding.root
     }
 
+    fun showToast(message: String) {
+        Toast.makeText(activity!!, message, Toast.LENGTH_SHORT).show()
+    }
+
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notice_detail, container, false)
         binding.viewModel = noticeDetailViewModel
@@ -43,21 +51,48 @@ class NoticeDetailFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
+        noticeDetailViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
+            findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeFragment)
+        })
+
+        noticeDetailViewModel.openNoticeEditFragmentEvent.observe(this, EventObserver {
+            findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeEditFragment)
+        })
+
+        noticeDetailViewModel.openNoticeDeleteFragmentEvent.observe(this, EventObserver {
+            showAllertDialogDelete()
+        })
+
+        noticeDetailViewModel.showToast.observe(this, EventObserver {
+            showToast(it)
+        })
 
     }
 
     private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
-
-        activity?.toolbar?.menu?.findItem(R.id.item_share)?.isVisible = false
-        editItem?.isVisible = true
-        deleteItem?.isVisible = true
-
-        editItem?.setOnMenuItemClickListener {
-            findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeEditFragment)
-            return@setOnMenuItemClickListener true
-        }
+        activity?.toolbar?.visibility = View.GONE
+        activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
 
     }
+
+    @SuppressLint("ResourceType")
+    private fun showAllertDialogDelete(){
+        val alertBuilder = AlertDialog.Builder(activity)
+        alertBuilder.setTitle("Удалить объявление")
+        alertBuilder.setMessage("Вы уверены, что хотите удалить объявление?")
+        alertBuilder.setIconAttribute(R.drawable.rdsh_image)
+        alertBuilder.setCancelable(true)
+        alertBuilder.setPositiveButton(
+            "Да"
+        ) { _: DialogInterface, _: Int ->
+            noticeDetailViewModel.deleteNotice()
+            findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeFragment)
+        }
+        alertBuilder.setNegativeButton(
+            "Нет"
+        ) { _: DialogInterface, _: Int ->
+        }
+        alertBuilder.show()
+    }
+
 }

@@ -6,6 +6,6 @@ import java.util.*
 data class TaskEvent (
     var id: String = "",
     var title: String = "",
-    var compl: Boolean = true,
+    var compl: Boolean = false,
     var description: String = "",
-    var user: User = User())
+    var user: User? = User())

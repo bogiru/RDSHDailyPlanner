@@ -1,5 +1,7 @@
 package com.bogiruapps.rdshapp.notice.notice_detail
 
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,54 +14,43 @@ import java.util.*
 
 class NoticeDetailViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    private val _openEditNotice = MutableLiveData<Event<Unit>>()
-    val openEditNotice: LiveData<Event<Unit>> = _openEditNotice
-
-    private val _closeEditNotice = MutableLiveData<Event<Unit>>()
-    val closeEditNotice: LiveData<Event<Unit>> = _closeEditNotice
-
     private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
 
+    private val _openNoticeEditFragmentEvent = MutableLiveData<Event<Unit>>()
+    val openNoticeEditFragmentEvent: LiveData<Event<Unit>> = _openNoticeEditFragmentEvent
+
+    private val _openNoticeDeleteFragmentEvent = MutableLiveData<Event<Unit>>()
+    val openNoticeDeleteFragmentEvent: LiveData<Event<Unit>> = _openNoticeDeleteFragmentEvent
+
+    private val _showToast = MutableLiveData<Event<String>>()
+    val showToast: LiveData<Event<String>> = _showToast
+
     val notice = userRepository.currentNotice
 
-    fun createNotice(notice: Notice) {
-        notice.author = userRepository.currentUser.value!!.name.toString()
-        notice.date = Calendar.getInstance().time
-
+    fun deleteNotice() {
         viewModelScope.launch {
-            userRepository.createNewNotice(notice)
-            openNoticeFragment()
+            userRepository.deleteNotice()
         }
     }
 
-   /* private fun getCurrentDate(): String {
-        val calendar = Calendar.getInstance().time
-        return DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(calendar)
-    }*/
-
-    fun editNotice(notice: Notice) {
-        if (notice.id == "") createNotice(notice)
-        else viewModelScope.launch {
-            userRepository.updateNotice(notice)
-            //closeEditNotice()
-            openNoticeFragment()
-        }
-    }
-
-
-
-    fun openEditNotice() {
-        _openEditNotice.value = Event(Unit)
-    }
-
-    private fun closeEditNotice() {
-        _closeEditNotice.value = Event(Unit)
-    }
-
-    private fun openNoticeFragment() {
-
+    fun showNoticeFragment() {
         _openNoticeFragmentEvent.value = Event(Unit)
+    }
+
+    fun showEditNoticeFragment() {
+        if (userRepository.currentUser.value!!.name == userRepository.currentNotice.value!!.author) {
+            _openNoticeEditFragmentEvent.value = Event(Unit)
+        } else {
+            _showToast.value = Event("Право редактирование предоставлено только автору объявления")
+        }
+
+    }
+
+    fun showDeleteNoticeFragment() {
+        if (userRepository.currentUser.value!!.name == userRepository.currentNotice.value!!.author)  _openNoticeDeleteFragmentEvent.value = Event(Unit)
+        else _showToast.value = Event("Право удаления предоставлено только автору объявления")
+
     }
 
 }
