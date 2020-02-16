@@ -1,16 +1,13 @@
 package com.bogiruapps.rdshapp.events.tasksEvent
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.EventObserver
-import com.bogiruapps.rdshapp.Result
-import com.bogiruapps.rdshapp.UserRepository
+import com.bogiruapps.rdshapp.utils.Result
+import com.bogiruapps.rdshapp.data.UserRepository
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import io.grpc.okhttp.internal.Util
 import kotlinx.coroutines.launch
 
 class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -31,14 +28,14 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
                 val task = TaskEvent(
                     taskEvent.id,
                     taskEvent.title,
-                    !(taskEvent.compl),
+                    !(taskEvent.completed),
                     taskEvent.description,
                     taskEvent.user
                 )
                 when (userRepository.updateTaskEvent(task)) {
                     is Result.Success -> {
-                        if (taskEvent.compl) userRepository.currentEvent.value!!.amountCompletedTask--
-                        else userRepository.currentEvent.value!!.amountCompletedTask++
+                        if (taskEvent.completed) userRepository.currentEvent.value!!.countCompletedTask--
+                        else userRepository.currentEvent.value!!.countCompletedTask++
                         userRepository.updateEvent(userRepository.currentEvent.value!!)
                     }
                 }

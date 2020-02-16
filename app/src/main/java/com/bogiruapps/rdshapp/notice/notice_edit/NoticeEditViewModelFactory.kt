@@ -2,7 +2,7 @@ package com.bogiruapps.rdshapp.notice.notice_edit
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bogiruapps.rdshapp.UserRepository
+import com.bogiruapps.rdshapp.data.UserRepository
 
 class NoticeEditViewModelFactory(private val repository: UserRepository): ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {

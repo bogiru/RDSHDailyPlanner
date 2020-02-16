@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.Result
-import com.bogiruapps.rdshapp.UserRepository
-import com.google.firebase.firestore.util.Util
+import com.bogiruapps.rdshapp.data.UserRepository
 import kotlinx.coroutines.launch
 
 class EventDetailViewModel(val userRepository: UserRepository) : ViewModel() {

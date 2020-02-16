@@ -7,7 +7,7 @@ data class SchoolEvent (
     var title: String = "",
     var description: String = "",
     var deadline: Date = Date(),
-    var amountTask: Int = 0,
-    var amountCompletedTask: Int = 0
+    var countTask: Int = 0,
+    var countCompletedTask: Int = 0
     ) {
 }

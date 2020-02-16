@@ -5,13 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.Result
-import com.bogiruapps.rdshapp.UserRepository
+import com.bogiruapps.rdshapp.utils.Result
+import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import kotlinx.coroutines.launch
-import java.time.DayOfWeek
-import java.time.Month
-import java.time.Year
 import java.util.*
 
 class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {

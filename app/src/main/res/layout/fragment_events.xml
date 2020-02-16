@@ -9,7 +9,7 @@
                 type="com.bogiruapps.rdshapp.events.EventViewModel" />
         <variable
                 name="user"
-                type="com.bogiruapps.rdshapp.User" />
+                type="com.bogiruapps.rdshapp.user.User" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

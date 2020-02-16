@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.UserRepository
+import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.notice.Notice
 import kotlinx.coroutines.launch
 import java.util.*

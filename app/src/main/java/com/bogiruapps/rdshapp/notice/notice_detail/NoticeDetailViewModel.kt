@@ -1,16 +1,12 @@
 package com.bogiruapps.rdshapp.notice.notice_detail
 
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.UserRepository
-import com.bogiruapps.rdshapp.notice.Notice
+import com.bogiruapps.rdshapp.data.UserRepository
 import kotlinx.coroutines.launch
-import java.util.*
 
 class NoticeDetailViewModel(private val userRepository: UserRepository) : ViewModel() {
 

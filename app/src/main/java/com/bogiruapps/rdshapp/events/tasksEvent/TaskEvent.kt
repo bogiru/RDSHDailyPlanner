@@ -1,11 +1,11 @@
 package com.bogiruapps.rdshapp.events.tasksEvent
 
-import com.bogiruapps.rdshapp.User
-import java.util.*
+import com.bogiruapps.rdshapp.user.User
 
 data class TaskEvent (
     var id: String = "",
     var title: String = "",
-    var compl: Boolean = false,
+    var completed: Boolean = false,
     var description: String = "",
-    var user: User? = User())
+    var user: User? = User()
+)

@@ -5,10 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.Result
-import com.bogiruapps.rdshapp.User
-import com.bogiruapps.rdshapp.UserRepository
-import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.utils.Result
+import com.bogiruapps.rdshapp.user.User
+import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import kotlinx.coroutines.launch
 
@@ -28,7 +27,7 @@ class TaskEventEditViewModel(val userRepository: UserRepository) : ViewModel() {
         viewModelScope.launch {
             when(userRepository.createTaskEvent(taskEvent)) {
                 is Result.Success -> {
-                    userRepository.currentEvent.value!!.amountTask++
+                    userRepository.currentEvent.value!!.countTask++
                     when(userRepository.updateEvent(userRepository.currentEvent.value!!)) {
                         is Result.Success ->   showTaskEventFragment()
                     }

@@ -1,14 +1,13 @@
 package com.bogiruapps.rdshapp.notice
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.*
+import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.user.User
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.launch
 
 class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() {
 

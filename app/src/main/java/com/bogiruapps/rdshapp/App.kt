@@ -10,7 +10,7 @@ class App : Application() {
 
         startKoin {
             androidContext(this@App)
-            modules(modules)
+            modules(com.bogiruapps.rdshapp.di.modules)
         }
     }
 }

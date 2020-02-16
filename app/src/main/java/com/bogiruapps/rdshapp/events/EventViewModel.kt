@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.User
-import com.bogiruapps.rdshapp.UserRepository
+import com.bogiruapps.rdshapp.data.UserRepository
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 class EventViewModel(private val userRepository: UserRepository) : ViewModel() {

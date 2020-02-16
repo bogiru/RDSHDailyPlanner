@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -72,8 +71,11 @@ class EventDetailFragment : Fragment() {
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.event_detail_fragment, container, false)
         binding.viewModel = eventDetailViewModel
-        if (eventDetailViewModel.event.amountTask == 0) binding.progressBar.progress = 0
-        else binding.progressBar.progress = eventDetailViewModel.event.amountCompletedTask * 100 / eventDetailViewModel.event.amountTask
+        if (eventDetailViewModel.event.countTask == 0) {
+            binding.progressBar.progress = 0
+        } else {
+            binding.progressBar.progress = eventDetailViewModel.event.countCompletedTask * 100 / eventDetailViewModel.event.countTask
+        }
         binding.lifecycleOwner = this.viewLifecycleOwner
 
 

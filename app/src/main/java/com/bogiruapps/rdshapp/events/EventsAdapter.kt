@@ -1,8 +1,6 @@
 package com.bogiruapps.rdshapp.events
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.databinding.EventsItemBinding
@@ -32,8 +30,8 @@ class EventsAdapter(
         fun bind(viewModel: EventViewModel, schoolEvent: SchoolEvent) {
             binding.event = schoolEvent
             binding.viewModel = viewModel
-            if (schoolEvent.amountTask == 0) binding.progressBar2.progress = 0
-            else binding.progressBar2.progress = schoolEvent.amountCompletedTask * 100 / schoolEvent.amountTask
+            if (schoolEvent.countTask == 0) binding.progressBar2.progress = 0
+            else binding.progressBar2.progress = schoolEvent.countCompletedTask * 100 / schoolEvent.countTask
             binding.executePendingBindings()
 
         }

@@ -1,7 +1,5 @@
 package com.bogiruapps.rdshapp.events.tasksEvent
 
-import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,7 +38,7 @@ class TaskEventAdapter(
                 binding.ckeckBoxTaskCompleted.visibility = View.GONE
             }
 
-            if (taskEvent.compl) {
+            if (taskEvent.completed) {
                 binding.statusTaskEvent.text = "Статус: Выполнен"
                // binding.statusTaskEvent.setTextColor(3328)
             } else {

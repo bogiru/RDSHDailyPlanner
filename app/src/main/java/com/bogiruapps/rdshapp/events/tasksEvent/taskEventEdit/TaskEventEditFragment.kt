@@ -13,11 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.User
+import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.databinding.FragmentTaskEventEditBinding
-import com.bogiruapps.rdshapp.databinding.FragmentTasksEventBinding
-import com.bogiruapps.rdshapp.school.School
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 

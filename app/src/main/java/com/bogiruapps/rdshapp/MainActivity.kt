@@ -2,7 +2,6 @@ package com.bogiruapps.rdshapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,16 +15,13 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupWithNavController
 import com.bogiruapps.rdshapp.databinding.ActivityMainBinding
 import com.bogiruapps.rdshapp.databinding.DrawerHeaderBinding
+import com.bogiruapps.rdshapp.utils.RC_SIGN_IN
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
-
-    companion object {
-        const val TAG = "MainActivity"
-    }
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var drawerLayout: DrawerLayout
@@ -43,19 +39,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.i("QWE", "onCreate")
         configureBinding()
         setupObserverViewModel()
         configureFirebase()
         configureToolbar()
         configureNavigationView()
         setupLogoutButton()
+        setupObserverDestination()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when(requestCode) {
-            RC_SIGN_IN -> mainViewModel.handleSignInActivityResult(resultCode, data, authFirebase.currentUser)
+            RC_SIGN_IN ->
+                mainViewModel.handleSignInActivityResult(resultCode, data, authFirebase.currentUser)
         }
     }
 
@@ -67,7 +64,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupObserverViewModel() {
         mainViewModel.openSignInActivityEvent.observe(this, EventObserver {
-            Log.i("QWE", "signActivity(Observer)")
             openSignInActivity()
         })
 
@@ -100,9 +96,6 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         navView.setupWithNavController(navController)
         toolbar.setupWithNavController(navController, appBarConfiguration)
-
-
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -142,8 +135,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setEnabledMenuItem(value: Boolean) {
-       // navView.menu.findItem(R.id.eventFragment).isEnabled = value
         navView.menu.findItem(R.id.infoFragment).isEnabled = value
+        navView.menu.findItem(R.id.eventsFragment).isEnabled = value
+        navView.menu.findItem(R.id.btn_grid_plan).isEnabled = value
+        navView.menu.findItem(R.id.btn_share).isEnabled = value
+        navView.menu.findItem(R.id.btn_settings).isEnabled = value
+
     }
 
     private fun openSignInActivity() {

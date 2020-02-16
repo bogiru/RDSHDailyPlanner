@@ -6,7 +6,7 @@
             android:checkableBehavior="none">
         <item
                 android:id="@+id/btn_grid_plan"
-                android:title="План-сетка" android:icon="@drawable/grid_plan_icon"/>
+                android:title="План-сетка" android:icon="@drawable/grid_plan_icon" android:enabled="false"/>
         <item
                 android:id="@+id/noticeFragment"
                 android:title="Объявления" android:icon="@drawable/notice_icon"/>
@@ -17,8 +17,8 @@
     <group
             android:id="@+id/menu_bottom" android:checkableBehavior="single">
         <item android:title="Информация" android:id="@+id/infoFragment" android:icon="@drawable/info_icon"/>
-        <item android:title="Поделиться" android:id="@+id/btn_share" android:icon="@drawable/share_icon"/>
-        <item android:title="Настройки" android:id="@+id/choseSchoolFragment" android:icon="@drawable/settings_icon"/>
+        <item android:title="Поделиться" android:id="@+id/btn_share" android:icon="@drawable/share_icon" android:enabled="false"/>
+        <item android:title="Настройки" android:id="@+id/btn_settings" android:icon="@drawable/settings_icon" android:enabled="false"/>
     </group>
     <group
             android:id="@+id/menu_sing_out" android:checkableBehavior="single">
