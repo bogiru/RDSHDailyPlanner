@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.notice.Notice
+import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -23,9 +24,16 @@ class NoticeEditViewModel(private val userRepository: UserRepository) : ViewMode
 
     val notice = userRepository.currentNotice
 
-    fun createNotice(notice: Notice) {
+
+    fun updateNotice(notice: Notice) {
+        when (userRepository.stateNotice.value) {
+            State.EDIT -> editNotice(notice)
+            State.CREATE -> createNotice(notice)
+        }
+    }
+
+    private fun createNotice(notice: Notice) {
         notice.author = userRepository.currentUser.value!!.name.toString()
-        notice.date = Calendar.getInstance().time
 
         viewModelScope.launch {
             userRepository.createNewNotice(notice)
@@ -33,12 +41,7 @@ class NoticeEditViewModel(private val userRepository: UserRepository) : ViewMode
         }
     }
 
-   /* private fun getCurrentDate(): String {
-        val calendar = Calendar.getInstance().time
-        return DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT).format(calendar)
-    }*/
-
-    fun editNotice(notice: Notice) {
+    private fun editNotice(notice: Notice) {
         if (notice.id == "") createNotice(notice)
         else viewModelScope.launch {
             userRepository.updateNotice(notice)
@@ -46,8 +49,6 @@ class NoticeEditViewModel(private val userRepository: UserRepository) : ViewMode
             openNoticeFragment()
         }
     }
-
-
 
     fun openEditNotice() {
         _openEditNotice.value = Event(Unit)

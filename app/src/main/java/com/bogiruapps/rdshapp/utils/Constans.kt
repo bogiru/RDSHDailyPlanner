@@ -21,3 +21,5 @@ const val FIELD_USER = "user"
 const val FIELD_COMPLETED = "completed"
 const val FIELD_DATE = "date"
 
+const val GRID_SPAN_COUNT = 2
+

@@ -35,7 +35,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         ).await()
     }
 
-    suspend fun fetchUser(userId: String): Result<User?> = withContext(ioDispatcher) {
+    override suspend fun fetchUser(userId: String): Result<User?> = withContext(ioDispatcher) {
         return@withContext try {
             when (val resultDocumentSnapshot = userCollection.document(userId).get().await()) {
                 is Result.Success -> Result.Success(resultDocumentSnapshot.data.toUser())
@@ -47,7 +47,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         }
     }
 
-    suspend fun fetchUsers(school: School): Result<List<User>> = withContext(ioDispatcher) {
+    override suspend fun fetchUsers(school: School): Result<List<User>> = withContext(ioDispatcher) {
         return@withContext try {
             when (val result =
                 schoolsCollection.document(school.id).collection(USERS_COLLECTION_NAME).get().await()) {
@@ -60,7 +60,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         }
     }
 
-    suspend fun fetchSchools(): Result<List<School>> = withContext(ioDispatcher) {
+    override suspend fun fetchSchools(): Result<List<School>> = withContext(ioDispatcher) {
         return@withContext try {
             when (val result = schoolsCollection.get().await()) {
                 is Result.Success -> Result.Success(result.data.toSchoolList())
@@ -72,21 +72,21 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         }
     }
 
-    suspend fun addUserToSchool(school: School, user: User): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun addUserToSchool(school: School, user: User): Result<Void?> = withContext(ioDispatcher) {
             return@withContext schoolsCollection.document(school.id).collection(USERS_COLLECTION_NAME)
                 .document(user.email.toString()).set(user).await()
         }
 
-    suspend fun createNotice(school: School, notice: Notice): Result<Void> = withContext(ioDispatcher) {
+    override suspend fun createNotice(school: School, notice: Notice): Result<Void> = withContext(ioDispatcher) {
             return@withContext try {
-                schoolsCollection.document(school.id).collection(NOTICE_COLLECTION_NAME).document().set(notice)
+                schoolsCollection.document(school.id).collection(NOTICE_COLLECTION_NAME).document(notice.id).set(notice)
                     .await()
             } catch (e: Exception) {
                 Result.Error(e)
             }
         }
 
-    suspend fun updateNotice(school: School, notice: Notice): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun updateNotice(school: School, notice: Notice): Result<Void?> = withContext(ioDispatcher) {
             return@withContext db.collection(SCHOOL_COLLECTION_NAME)
                 .document(school.id).collection(NOTICE_COLLECTION_NAME).document(notice.id).update(
                     FIELD_TEXT, notice.text,
@@ -95,7 +95,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
                 .await()
         }
 
-    suspend fun deleteNotice(school: School, notice: Notice): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun deleteNotice(school: School, notice: Notice): Result<Void?> = withContext(ioDispatcher) {
             return@withContext db.collection(SCHOOL_COLLECTION_NAME)
                 .document(school.id).collection(NOTICE_COLLECTION_NAME)
                 .document(notice.id).delete()
@@ -103,12 +103,12 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
 
         }
 
-    suspend fun createEvent(school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun createEvent(school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext schoolsCollection.document(school.id)
-            .collection(EVENTS_COLLECTION_NAME).document().set(event).await()
+            .collection(EVENTS_COLLECTION_NAME).document(event.id).set(event).await()
     }
 
-    suspend fun updateEvent(school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun updateEvent(school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
             return@withContext db.collection(SCHOOL_COLLECTION_NAME).document(school.id)
                 .collection(EVENTS_COLLECTION_NAME).document(event.id)
                 .update(
@@ -121,17 +121,17 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
                 .await()
         }
 
-    suspend fun deleteEvent(school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun deleteEvent(school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
             return@withContext db.collection(SCHOOL_COLLECTION_NAME).document(school.id)
                 .collection(EVENTS_COLLECTION_NAME).document(event.id).delete().await()
         }
 
-    suspend fun createTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun createTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext schoolsCollection.document(school.id).collection(EVENTS_COLLECTION_NAME)
-            .document(event.id).collection(TASKS_COLLECTION_NAME).document().set(taskEvent).await()
+            .document(event.id).collection(TASKS_COLLECTION_NAME).document(taskEvent.id).set(taskEvent).await()
     }
 
-    suspend fun updateTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun updateTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext schoolsCollection.document(school.id).collection(EVENTS_COLLECTION_NAME)
             .document(event.id).collection(TASKS_COLLECTION_NAME).document(taskEvent.id).update(
             FIELD_TITLE, taskEvent.title,
@@ -141,17 +141,38 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         ).await()
     }
 
-    fun fetchFirestoreRecyclerOptionsNotice(school: School): FirestoreRecyclerOptions<Notice> {
-        val collection = schoolsCollection.document(school.id).collection(NOTICE_COLLECTION_NAME)
-        val query = collection.orderBy(FIELD_DATE, Query.Direction.DESCENDING)
-        return FirestoreRecyclerOptions.Builder<Notice>().setQuery(query, Notice::class.java).build()
+
+    suspend fun fetchFirestoreRecyclerQueryNotice(school: School): Result<Query> = withContext(ioDispatcher) {
+            return@withContext try {
+                when (val result = schoolsCollection.document(school.id)
+                    .collection(NOTICE_COLLECTION_NAME)
+                    .orderBy(FIELD_DATE, Query.Direction.DESCENDING)
+                    .get().await()
+                    ) {
+
+                    is Result.Success -> Result.Success(result.data.query)
+                    is Result.Error -> Result.Error(result.exception)
+                    is Result.Canceled -> Result.Error(result.exception)
+                }
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+
+    suspend fun fetchFirestoreRecyclerQueryEvent(school: School): Result<Query> = withContext(ioDispatcher) {
+        return@withContext try {
+            when (val result = schoolsCollection.document(school.id).collection(EVENTS_COLLECTION_NAME)
+                .orderBy(FIELD_COUNT_TASK, Query.Direction.DESCENDING).orderBy(FIELD_COUNT_COMPLETED_TASK, Query.Direction.ASCENDING)
+                .get().await()) {
+                is Result.Success -> Result.Success(result.data.query)
+                is Result.Error -> Result.Error(result.exception)
+                is Result.Canceled -> Result.Error(result.exception)
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
     }
 
-    fun fetchFirestoreRecyclerOptionsEvent(school: School): FirestoreRecyclerOptions<SchoolEvent> {
-        val collection = schoolsCollection.document(school.id).collection(EVENTS_COLLECTION_NAME)
-        val query = collection.orderBy(FIELD_COUNT_TASK, Query.Direction.DESCENDING)
-        return FirestoreRecyclerOptions.Builder<SchoolEvent>().setQuery(query, SchoolEvent::class.java).build()
-    }
 
     fun fetchFirestoreRecyclerOptionsTasksEvent(school: School, event: SchoolEvent): FirestoreRecyclerOptions<TaskEvent> {
         val collection = schoolsCollection

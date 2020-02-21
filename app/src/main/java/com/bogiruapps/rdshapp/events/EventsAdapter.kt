@@ -14,7 +14,6 @@ class EventsAdapter(
     FirestoreRecyclerAdapter<SchoolEvent, EventsAdapter.EventsViewHolder>(options) {
 
     override fun onBindViewHolder(p0: EventsViewHolder, p1: Int, p2: SchoolEvent) {
-        p2.id = snapshots.getSnapshot(p1).reference.id
         p0.bind(viewModel, p2)
 
     }

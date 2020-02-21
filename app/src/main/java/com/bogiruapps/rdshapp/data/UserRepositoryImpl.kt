@@ -7,7 +7,9 @@ import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.utils.returnSuccessOrError
 import com.bogiruapps.rdshapp.school.School
+import com.bogiruapps.rdshapp.utils.State
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
@@ -15,10 +17,10 @@ import kotlinx.coroutines.coroutineScope
 class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
     UserRepository {
     override val currentUser = MutableLiveData<User>()
-    override var currentNotice = MutableLiveData<Notice>()
-    override var currentEvent = MutableLiveData<SchoolEvent>()
-/*    override val schoolsUser = MutableLiveData<String>()*/
-
+    override val currentNotice = MutableLiveData<Notice>()
+    override val currentEvent = MutableLiveData<SchoolEvent>()
+    override val stateEvent = MutableLiveData<State>()
+    override val stateNotice = MutableLiveData<State>()
 
     override suspend fun createNewUser(user: User): Result<Void?> = coroutineScope {
         val task = async { dataSource.createUser(user) }
@@ -45,23 +47,19 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         return@coroutineScope task.await()
     }
 
-    override suspend fun fetchStudents(): Result<List<User>> = coroutineScope {
+    override suspend fun fetchUsers(): Result<List<User>> = coroutineScope {
         val task = async { dataSource.fetchUsers(currentUser.value!!.school)}
         return@coroutineScope task.await()
     }
 
-
-    /* override suspend fun fetchNotices(school: School): Result<List<Notice>> = coroutineScope  {
-         val task = async { dataSource.fetchNotices(school)}
-         return@coroutineScope task.await()
-     }*/
-
-    override fun fetchFirestoreRecyclerOptionsEvents(): FirestoreRecyclerOptions<SchoolEvent> {
-        return dataSource.fetchFirestoreRecyclerOptionsEvent(currentUser.value!!.school)
+    override suspend fun fetchFirestoreRecyclerQueryEvents(): Result<Query> = coroutineScope {
+        val task = async { dataSource.fetchFirestoreRecyclerQueryEvent(currentUser.value!!.school) }
+        return@coroutineScope (task.await())
     }
 
-    override fun fetchFirestoreRecyclerOptionsNotice(): FirestoreRecyclerOptions<Notice> {
-        return dataSource.fetchFirestoreRecyclerOptionsNotice(currentUser.value!!.school)
+    override suspend fun fetchFirestoreRecyclerQueryNotice(): Result<Query> = coroutineScope {
+        val task = async { dataSource.fetchFirestoreRecyclerQueryNotice(currentUser.value!!.school) }
+        return@coroutineScope (task.await())
     }
 
     override fun fetchFirestoreRecyclerOptionsTasksEvent(): FirestoreRecyclerOptions<TaskEvent> {

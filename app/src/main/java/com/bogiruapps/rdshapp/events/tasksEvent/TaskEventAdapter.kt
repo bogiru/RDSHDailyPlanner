@@ -17,7 +17,6 @@ class TaskEventAdapter(
     FirestoreRecyclerAdapter<TaskEvent, TaskEventAdapter.TaskEventViewHolder>(options) {
 
     override fun onBindViewHolder(p0:  TaskEventViewHolder, p1: Int, p2: TaskEvent) {
-        p2.id = snapshots.getSnapshot(p1).reference.id
         p0.bind(viewModel, p2)
 
     }

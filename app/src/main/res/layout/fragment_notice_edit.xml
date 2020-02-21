@@ -27,7 +27,7 @@
                 android:layout_marginBottom="16dp"
                 android:background="#5A9FF1"
                 android:text="Опубликовать"
-                android:onClick="@{(view) -> viewModel.editNotice(viewModel.notice)}"
+                android:onClick="@{(view) -> viewModel.updateNotice(viewModel.notice)}"
                 android:textColor="#FFFFFF"
                 app:backgroundTint="#5A9FF1"
                 app:icon="@drawable/enter_icon"

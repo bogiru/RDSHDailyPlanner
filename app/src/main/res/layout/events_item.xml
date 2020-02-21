@@ -27,7 +27,7 @@
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/header"
                 android:longClickable="true"
-                android:onClick="@{(view) -> viewModel.showTaskEventFragment(event, view)}"
+                android:onClick="@{(view) -> viewModel.showDetailEventFragment(event, view)}"
                 app:cardBackgroundColor="#E8FFFFFF"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="2dp"

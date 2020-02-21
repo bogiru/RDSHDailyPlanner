@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
 class NoticeDetailViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -37,6 +38,7 @@ class NoticeDetailViewModel(private val userRepository: UserRepository) : ViewMo
     fun showEditNoticeFragment() {
         if (userRepository.currentUser.value!!.name == userRepository.currentNotice.value!!.author) {
             _openNoticeEditFragmentEvent.value = Event(Unit)
+            userRepository.stateNotice.value = State.CREATE
         } else {
             _showToast.value = Event("Право редактирование предоставлено только автору объявления")
         }

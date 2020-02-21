@@ -4,31 +4,62 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.data.UserRepository
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.bogiruapps.rdshapp.utils.Result
+import com.bogiruapps.rdshapp.utils.State
+import com.google.firebase.firestore.Query
+import kotlinx.coroutines.launch
 
 class EventViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-    private val _openTaskEventFragment = MutableLiveData<Event<View>>()
-    val openTaskEventFragment: LiveData<Event<View>> = _openTaskEventFragment
+    private val _openDetailEventFragment = MutableLiveData<Event<View>>()
+    val openTaskEventFragment: LiveData<Event<View>> = _openDetailEventFragment
 
     private val _openEditEventFragment = MutableLiveData<Event<Unit>>()
     val openEditEventFragment: LiveData<Event<Unit>> = _openEditEventFragment
 
-    fun fetchFirestoreRecyclerOptions(): FirestoreRecyclerOptions<SchoolEvent> {
-        return userRepository.fetchFirestoreRecyclerOptionsEvents()
+    private val _showSchoolEventContent = MutableLiveData<Event<Unit>>()
+    val showSchoolEventContent: LiveData<Event<Unit>> = _showSchoolEventContent
+
+    private val _query = MutableLiveData<Query>()
+    val query: LiveData<Query> = _query
+
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
+
+    init {
+        fetchFirestoreRecyclerQuery()
     }
 
-    fun showTaskEventFragment(event: SchoolEvent, v: View) {
+    private fun fetchFirestoreRecyclerQuery() {
+        viewModelScope.launch {
+            when (val result = userRepository.fetchFirestoreRecyclerQueryEvents()) {
+                is Result.Success -> {
+                    _query.value = result.data
+                    _dataLoading.value = false
+                    showSchoolEventContent()
+                }
+            }
+        }
+    }
+
+    fun showDetailEventFragment(event: SchoolEvent, v: View) {
 
         userRepository.currentEvent.value = event
-        _openTaskEventFragment.value = Event(v)
+        _openDetailEventFragment.value = Event(v)
     }
 
-    fun showEditEventFragment() {
+    fun showCreateEventFragment() {
+        userRepository.stateEvent.value = State.CREATE
         userRepository.currentEvent.value = SchoolEvent()
         _openEditEventFragment.value = Event(Unit)
     }
+
+    private fun showSchoolEventContent() {
+        _showSchoolEventContent.value = Event(Unit)
+    }
+
 
 }

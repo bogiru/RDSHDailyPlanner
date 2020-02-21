@@ -3,20 +3,20 @@ package com.bogiruapps.rdshapp.notice
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.*
 import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.user.User
+import com.bogiruapps.rdshapp.utils.Result
+import com.bogiruapps.rdshapp.utils.State
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.Query
+import kotlinx.coroutines.launch
 
 class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     val user: LiveData<User> = userRepository.currentUser
-
-    private val auth = FirebaseAuth.getInstance().currentUser
-
-    private val _notices = MutableLiveData<List<Notice>>()
-    val notices: LiveData<List<Notice>> = _notices
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
@@ -33,25 +33,31 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
     private val _openNoticeDetailFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeDetailFragmentEvent: LiveData<Event<Unit>> = _openNoticeDetailFragmentEvent
 
-    val tempNotice = Notice()
+    private val _query = MutableLiveData<Query>()
+    val query: LiveData<Query> = _query
 
     fun checkUserSchool() {
         val user = userRepository.currentUser.value
         if (user != null) {
             val school = user.school
-            if (school.name == "") showSchoolFragment()
-            else {
-                showNoticeFragment()
+            if (school.name == "") {
+                showSchoolFragment()
+            } else {
+                initFirestoreRecyclerQuery()
             }
         }
     }
 
-    fun checkAuthorNotice(author: String): Boolean {
-        return (userRepository.currentUser.value!!.name == author)
-    }
-
-    fun fetchFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Notice> {
-        return userRepository.fetchFirestoreRecyclerOptionsNotice()
+    private fun initFirestoreRecyclerQuery() {
+        viewModelScope.launch {
+            when (val result = userRepository.fetchFirestoreRecyclerQueryNotice()) {
+                is Result.Success -> {
+                    _query.value = result.data
+                    _dataLoading.value = false
+                    showNoticeFragment()
+                }
+            }
+        }
     }
 
     fun showDetailNoticeFragment(notice: Notice) {
@@ -60,6 +66,7 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
     }
 
     fun showEditNoticeFragment() {
+        userRepository.stateNotice.value = State.CREATE
         userRepository.currentNotice.value = Notice()
         _openNoticeEditFragmentEvent.value = Event(Unit)
     }
@@ -71,8 +78,4 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
     private fun showNoticeFragment() {
         _openNoticeFragmentEvent.value = Event(Unit)
     }
-
-
-
-
 }

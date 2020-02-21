@@ -43,14 +43,14 @@ class TaskEventEditViewModel(val userRepository: UserRepository) : ViewModel() {
    /* fun editTaskEvent(event: SchoolEvent) {
         if (event.id == "") createTaskEvent(event)
         else viewModelScope.launch {
-            userRepository.updateEvent(event)
-            showTaskEventFragment()
+            userRepository.editEvent(event)
+            showDetailEventFragment()
         }
     }*/
 
     private fun initUsers() {
         viewModelScope.launch {
-            when (val result = userRepository.fetchStudents()) {
+            when (val result = userRepository.fetchUsers()) {
                 is Result.Success -> {
                     _users.value = result.data
                 }

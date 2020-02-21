@@ -6,13 +6,17 @@ import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.school.School
+import com.bogiruapps.rdshapp.utils.State
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
 
 interface UserRepository {
 
     val currentUser: MutableLiveData<User>
-    var currentNotice: MutableLiveData<Notice>
-    var currentEvent: MutableLiveData<SchoolEvent>
+    val currentNotice: MutableLiveData<Notice>
+    val currentEvent: MutableLiveData<SchoolEvent>
+    val stateEvent: MutableLiveData<State>
+    val stateNotice: MutableLiveData<State>
 
     suspend fun createNewUser(user: User): Result<Void?>
 
@@ -24,11 +28,11 @@ interface UserRepository {
 
     suspend fun addUserToSchool(): Result<Void?>
 
-    suspend fun fetchStudents(): Result<List<User?>>
+    suspend fun fetchUsers(): Result<List<User?>>
 
-    fun fetchFirestoreRecyclerOptionsNotice(): FirestoreRecyclerOptions<Notice>
+    suspend fun fetchFirestoreRecyclerQueryNotice(): Result<Query>
 
-    fun fetchFirestoreRecyclerOptionsEvents(): FirestoreRecyclerOptions<SchoolEvent>
+    suspend fun fetchFirestoreRecyclerQueryEvents(): Result<Query>
 
     fun fetchFirestoreRecyclerOptionsTasksEvent(): FirestoreRecyclerOptions<TaskEvent>
 

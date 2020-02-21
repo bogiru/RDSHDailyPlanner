@@ -90,6 +90,7 @@ class EventDetailFragment : Fragment() {
         deleteItem?.isVisible = true
 
         editItem?.setOnMenuItemClickListener {
+            eventDetailViewModel.setStateEdit()
             findNavController().navigate(R.id.action_eventDetailFragment_to_eventEditFragment)
             return@setOnMenuItemClickListener true
         }

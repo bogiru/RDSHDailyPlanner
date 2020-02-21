@@ -8,6 +8,7 @@ import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -22,6 +23,13 @@ class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {
         userRepository.currentEvent.value!!.deadline = Date(year, month, dayOfMonth)
     }
 
+    fun updateEvent(event: SchoolEvent) {
+        when (userRepository.stateEvent.value) {
+            State.CREATE -> createEvent(event)
+            State.EDIT -> editEvent(event)
+        }
+    }
+
     private fun createEvent(event: SchoolEvent) {
         viewModelScope.launch {
             when(userRepository.createEvent(event)) {
@@ -30,18 +38,15 @@ class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {
                     openSchoolEventFragment()
                 }
             }
-
         }
     }
 
-    fun editEvent(event: SchoolEvent) {
-        if (event.id == "") createEvent(event)
-        else viewModelScope.launch {
+    private fun editEvent(event: SchoolEvent) {
+        viewModelScope.launch {
             userRepository.updateEvent(event)
             openSchoolEventFragment()
         }
     }
-
 
     private fun openSchoolEventFragment() {
         _openSchoolEventFragment.value = Event(Unit)
