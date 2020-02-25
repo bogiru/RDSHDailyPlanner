@@ -7,5 +7,6 @@ import java.util.*
 data class User(
     var name: String? = "",
     var email: String? = "",
-    var school: School = School("", "")
+    var school: School = School("", ""),
+    var score: Int = 0
 )

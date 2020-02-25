@@ -58,6 +58,8 @@ fun returnSuccessOrError(result: Result<Void?>): Result<Void?> {
 
 fun DocumentSnapshot.toUser(): User? = this.toObject(User::class.java)
 
-fun QuerySnapshot.toSchoolList(): List<School> = this.map { item -> item.toObject(School::class.java) }
+fun QuerySnapshot.toSchoolList(): List<School> = this.map { item ->
+    School(item.data["name"].toString(), item.id)
+}
 
 fun QuerySnapshot.toUserList(): List<User> = this.map { item -> item.toObject(User::class.java) }

@@ -37,6 +37,11 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         return@coroutineScope task.await()
     }
 
+    override suspend fun updateUserInSchool(user: User): Result<Void?> = coroutineScope {
+        val task = async { dataSource.updateUserInSchool(user) }
+        return@coroutineScope task.await()
+    }
+
     override suspend fun fetchSchools(): Result<List<School>> = coroutineScope {
         val task = async { dataSource.fetchSchools() }
         return@coroutineScope task.await()
@@ -52,6 +57,11 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         return@coroutineScope task.await()
     }
 
+    override suspend fun fetchFirestoreRecyclerQueryUser(): Result<Query> = coroutineScope {
+        val task = async { dataSource.fetchFirestoreRecyclerQueryUser(currentUser.value!!.school) }
+        return@coroutineScope (task.await())
+    }
+
     override suspend fun fetchFirestoreRecyclerQueryEvents(): Result<Query> = coroutineScope {
         val task = async { dataSource.fetchFirestoreRecyclerQueryEvent(currentUser.value!!.school) }
         return@coroutineScope (task.await())
@@ -62,8 +72,9 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         return@coroutineScope (task.await())
     }
 
-    override fun fetchFirestoreRecyclerOptionsTasksEvent(): FirestoreRecyclerOptions<TaskEvent> {
-        return dataSource.fetchFirestoreRecyclerOptionsTasksEvent(currentUser.value!!.school, currentEvent.value!!)
+    override suspend fun fetchFirestoreRecyclerQueryTasksEvent(): Result<Query> = coroutineScope {
+        val task = async { dataSource.fetchFirestoreRecyclerQueryTaskEvent(currentUser.value!!.school, currentEvent.value!!) }
+        return@coroutineScope (task.await())
     }
 
     override suspend fun createEvent(event: SchoolEvent): Result<Void?> = coroutineScope {

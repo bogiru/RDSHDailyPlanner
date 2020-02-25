@@ -137,9 +137,9 @@ class MainActivity : AppCompatActivity() {
     private fun setEnabledMenuItem(value: Boolean) {
         navView.menu.findItem(R.id.infoFragment).isEnabled = value
         navView.menu.findItem(R.id.eventsFragment).isEnabled = value
-        navView.menu.findItem(R.id.btn_grid_plan).isEnabled = value
+        //navView.menu.findItem(R.id.btn_grid_plan).isEnabled = value
         navView.menu.findItem(R.id.btn_share).isEnabled = value
-        navView.menu.findItem(R.id.btn_settings).isEnabled = value
+        //navView.menu.findItem(R.id.btn_settings).isEnabled = value
 
     }
 

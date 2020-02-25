@@ -39,10 +39,8 @@ class TaskEventAdapter(
 
             if (taskEvent.completed) {
                 binding.statusTaskEvent.text = "Статус: Выполнен"
-               // binding.statusTaskEvent.setTextColor(3328)
             } else {
                 binding.statusTaskEvent.text = "Статус: Ожидает выполнения"
-                //binding.statusTaskEvent.setTextColor(90800)
             }
             var numberClick = 1
 

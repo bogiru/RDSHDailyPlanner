@@ -8,6 +8,7 @@ const val EVENTS_COLLECTION_NAME = "events"
 const val NOTICE_COLLECTION_NAME = "notices"
 const val TASKS_COLLECTION_NAME = "tasks"
 
+const val FIELD_SCORE = "score"
 const val FIELD_NAME = "name"
 const val FIELD_EMAIL = "email"
 const val FIELD_SCHOOL = "school"
@@ -21,5 +22,5 @@ const val FIELD_USER = "user"
 const val FIELD_COMPLETED = "completed"
 const val FIELD_DATE = "date"
 
-const val GRID_SPAN_COUNT = 2
+const val GRID_SPAN_COUNT = 3
 

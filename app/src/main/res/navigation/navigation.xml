@@ -4,9 +4,6 @@
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
         app:startDestination="@id/noticeFragment">
 
-    <fragment android:id="@+id/loginFragment" android:name="com.bogiruapps.rdshapp.login.LoginFragment"
-            android:label="LoginFragment"/>
-
     <fragment
             android:id="@+id/infoFragment"
             android:name="com.bogiruapps.rdshapp.info.InfoFragment"
@@ -104,4 +101,8 @@
                 android:id="@+id/action_eventDetailFragment_to_eventsFragment"
                 app:destination="@id/eventsFragment" />
     </fragment>
+    <fragment
+            android:id="@+id/usersFragment"
+            android:name="com.bogiruapps.rdshapp.user.UsersFragment"
+            android:label="UsersFragment" />
 </navigation>

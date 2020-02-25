@@ -24,17 +24,21 @@ interface UserRepository {
 
     suspend fun fetchUser(userId: String): Result<User?>
 
+    suspend fun updateUserInSchool(user: User): Result<Void?>
+
     suspend fun fetchSchools(): Result<List<School>>
 
     suspend fun addUserToSchool(): Result<Void?>
 
     suspend fun fetchUsers(): Result<List<User?>>
 
+    suspend fun fetchFirestoreRecyclerQueryUser():  Result<Query>
+
     suspend fun fetchFirestoreRecyclerQueryNotice(): Result<Query>
 
     suspend fun fetchFirestoreRecyclerQueryEvents(): Result<Query>
 
-    fun fetchFirestoreRecyclerOptionsTasksEvent(): FirestoreRecyclerOptions<TaskEvent>
+    suspend fun fetchFirestoreRecyclerQueryTasksEvent():  Result<Query>
 
     suspend fun createTaskEvent(event: TaskEvent): Result<Void?>
 

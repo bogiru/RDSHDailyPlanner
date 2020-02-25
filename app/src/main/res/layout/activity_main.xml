@@ -15,36 +15,76 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#DDF1FA"
-                tools:context=".MainActivity">
+                android:id="@+id/coordinatorLayout">
 
-            <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    style="@style/AppToolBar"
+            <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/appBar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorPrimary"
-                    android:minHeight="?attr/actionBarSize"
-                    android:theme="@style/AppToolBar"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:titleTextColor="#FFFFFF" />
+                    android:layout_height="239dp"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            <fragment
-                    android:id="@+id/nav_host_fragment"
-                    android:name="androidx.navigation.fragment.NavHostFragment"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:defaultNavHost="true"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
-                    app:navGraph="@navigation/navigation" />
+                <com.google.android.material.appbar.CollapsingToolbarLayout
+                        android:id="@+id/collapseToolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@color/colorPrimary"
+                        app:contentScrim="?attr/colorPrimary"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+                        app:titleEnabled="true">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <ImageView
+                            android:id="@+id/headerImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:transitionName="imageViewNotice"
+                            android:visibility="visible"
+                            tools:visibility="visible" />
+
+                    <androidx.appcompat.widget.Toolbar
+                            android:id="@+id/toolbar"
+                            android:layout_width="match_parent"
+                            android:layout_height="?attr/actionBarSize"
+                            android:addStatesFromChildren="false"
+                            android:alwaysDrawnWithCache="false"
+                            android:animateLayoutChanges="false"
+                            android:clipChildren="false"
+                            android:visibility="visible"
+                            app:layout_collapseMode="pin"
+                            app:subtitleTextColor="#FFFFFF"
+                            app:titleMarginStart="8dp"
+                            app:titleTextColor="#FFFFFF" />
+
+                </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#D2DCFCFC"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:context=".MainActivity">
+
+                <fragment
+                        android:id="@+id/nav_host_fragment"
+                        android:name="androidx.navigation.fragment.NavHostFragment"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:defaultNavHost="true"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:navGraph="@navigation/navigation" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <com.google.android.material.navigation.NavigationView
                 android:id="@+id/nav_view"

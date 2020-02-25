@@ -8,6 +8,7 @@ import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.UserRepository
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
 class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -15,12 +16,28 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
     private val _openTaskEventEdit = MutableLiveData<Event<Unit>>()
     val openTaskEventEdit: LiveData<Event<Unit>> = _openTaskEventEdit
 
-    fun fetchFirestoreRecyclerOptions(): FirestoreRecyclerOptions<TaskEvent> {
-        return userRepository.fetchFirestoreRecyclerOptionsTasksEvent()
-    }
+    private val _query = MutableLiveData<Query>()
+    val query: LiveData<Query> = _query
+
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
 
     val event = userRepository.currentEvent.value!!
 
+    init {
+        fetchFirestoreRecyclerQuery()
+    }
+
+    fun fetchFirestoreRecyclerQuery() {
+        viewModelScope.launch {
+            when (val result = userRepository.fetchFirestoreRecyclerQueryTasksEvent()) {
+                is Result.Success -> {
+                    _query.value = result.data
+                    _dataLoading.value = false
+                }
+            }
+        }
+    }
 
     fun taskCompleted(taskEvent: TaskEvent) {
         viewModelScope.launch {
@@ -34,9 +51,15 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
                 )
                 when (userRepository.updateTaskEvent(task)) {
                     is Result.Success -> {
-                        if (taskEvent.completed) userRepository.currentEvent.value!!.countCompletedTask--
-                        else userRepository.currentEvent.value!!.countCompletedTask++
+                        if (taskEvent.completed) {
+                            userRepository.currentEvent.value!!.countCompletedTask--
+                            userRepository.currentUser.value!!.score--
+                        } else {
+                            userRepository.currentEvent.value!!.countCompletedTask++
+                            userRepository.currentUser.value!!.score++
+                        }
                         userRepository.updateEvent(userRepository.currentEvent.value!!)
+                        userRepository.updateUserInSchool(userRepository.currentUser.value!!)
                     }
                 }
             }

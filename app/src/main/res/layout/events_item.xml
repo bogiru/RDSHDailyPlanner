@@ -9,7 +9,7 @@
                 type="com.bogiruapps.rdshapp.events.SchoolEvent" />
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.events.EventViewModel" />
+                type="com.bogiruapps.rdshapp.events.EventsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +29,7 @@
                 android:longClickable="true"
                 android:onClick="@{(view) -> viewModel.showDetailEventFragment(event, view)}"
                 app:cardBackgroundColor="#E8FFFFFF"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="15dp"
                 app:cardElevation="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

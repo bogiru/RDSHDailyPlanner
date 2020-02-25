@@ -9,6 +9,7 @@ import com.bogiruapps.rdshapp.utils.*
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.core.OrderBy
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -31,7 +32,8 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         return@withContext userCollection.document(user.email.toString()).update(
             FIELD_NAME, user.name,
             FIELD_EMAIL, user.email,
-            FIELD_SCHOOL, user.school
+            FIELD_SCHOOL, user.school,
+            FIELD_SCORE, user.score
         ).await()
     }
 
@@ -58,6 +60,12 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         } catch (e: Exception) {
             Result.Error(e)
         }
+    }
+
+    suspend fun updateUserInSchool(user: User) = withContext(ioDispatcher) {
+        return@withContext schoolsCollection.document(user.school.id).collection(USERS_COLLECTION_NAME).document(user.email.toString()).update(
+            FIELD_SCORE, user.score
+        ).await()
     }
 
     override suspend fun fetchSchools(): Result<List<School>> = withContext(ioDispatcher) {
@@ -141,6 +149,21 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         ).await()
     }
 
+    suspend fun fetchFirestoreRecyclerQueryUser(school: School): Result<Query> = withContext(ioDispatcher) {
+        return@withContext try {
+            when (val result = schoolsCollection.document(school.id)
+                .collection(USERS_COLLECTION_NAME)
+                .orderBy(FIELD_SCORE, Query.Direction.DESCENDING)
+                .get().await()
+                ) {
+                is Result.Success -> Result.Success(result.data.query)
+                is Result.Error -> Result.Error(result.exception)
+                is Result.Canceled -> Result.Error(result.exception)
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
 
     suspend fun fetchFirestoreRecyclerQueryNotice(school: School): Result<Query> = withContext(ioDispatcher) {
             return@withContext try {
@@ -173,16 +196,18 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         }
     }
 
-
-    fun fetchFirestoreRecyclerOptionsTasksEvent(school: School, event: SchoolEvent): FirestoreRecyclerOptions<TaskEvent> {
-        val collection = schoolsCollection
-            .document(school.id)
-            .collection(EVENTS_COLLECTION_NAME)
-            .document(event.id)
-            .collection(TASKS_COLLECTION_NAME)
-        val query = collection.orderBy(FIELD_COMPLETED, Query.Direction.DESCENDING)
-        return FirestoreRecyclerOptions.Builder<TaskEvent>().setQuery(query, TaskEvent::class.java)
-            .build()
+    suspend fun fetchFirestoreRecyclerQueryTaskEvent(school: School, event: SchoolEvent): Result<Query> = withContext(ioDispatcher) {
+        return@withContext try {
+            when (val result = schoolsCollection.document(school.id)
+                .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(TASKS_COLLECTION_NAME)
+                .orderBy(FIELD_COMPLETED, Query.Direction.DESCENDING).get().await()) {
+                is Result.Success -> Result.Success(result.data.query)
+                is Result.Error -> Result.Error(result.exception)
+                is Result.Canceled -> Result.Error(result.exception)
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
     }
 }
 

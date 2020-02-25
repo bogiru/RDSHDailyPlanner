@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.events.EventViewModel" />
+                type="com.bogiruapps.rdshapp.events.EventsViewModel" />
         <variable
                 name="user"
                 type="com.bogiruapps.rdshapp.user.User" />

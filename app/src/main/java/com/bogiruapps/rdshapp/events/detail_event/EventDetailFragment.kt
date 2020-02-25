@@ -10,10 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import com.bogiruapps.rdshapp.EventObserver
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.EventDetailFragmentBinding
+import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class EventDetailFragment : Fragment() {
@@ -37,10 +40,30 @@ class EventDetailFragment : Fragment() {
         return binding.root
     }
 
+    private fun showSnackBar(message: String) {
+        Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
+    }
+
     private fun setupObserverViewModel() {
         /*showProgress()*/
         eventDetailViewModel.openTaskEventRecyclerView.observe(this, EventObserver {
             findNavController().navigate(R.id.action_eventDetailFragment_to_tasksEventFragment)
+        })
+
+        eventDetailViewModel.openEventFragmentEvent.observe(this, EventObserver {
+            findNavController().navigate(R.id.action_eventDetailFragment_to_eventsFragment)
+        })
+
+        eventDetailViewModel.openEventEditFragmentEvent.observe(this, EventObserver {
+            findNavController().navigate(R.id.action_eventDetailFragment_to_eventEditFragment)
+        })
+
+        eventDetailViewModel.openEventDeleteFragmentEvent.observe(this, EventObserver {
+            showAllertDialogDelete()
+        })
+
+        eventDetailViewModel.showToast.observe(this, EventObserver {
+            showSnackBar(it)
         })
 
      /*   eventDetailViewModel.openEventDeleteFragmentEvent.observe(this, Observer {
@@ -84,22 +107,23 @@ class EventDetailFragment : Fragment() {
     private fun configureToolbar() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
-
-        activity?.toolbar?.menu?.findItem(R.id.item_share)?.isVisible = false
-        editItem?.isVisible = true
-        deleteItem?.isVisible = true
+        val image = activity!!.headerImage
 
         editItem?.setOnMenuItemClickListener {
-            eventDetailViewModel.setStateEdit()
-            findNavController().navigate(R.id.action_eventDetailFragment_to_eventEditFragment)
+            eventDetailViewModel.showEditEventFragment()
             return@setOnMenuItemClickListener true
         }
 
         deleteItem?.setOnMenuItemClickListener {
-            showAllertDialogDelete()
+            eventDetailViewModel.showDeleteEventFragment()
             return@setOnMenuItemClickListener true
         }
 
-    }
+        editItem?.isVisible = true
+        deleteItem?.isVisible = true
+        Glide.with(this).load(R.drawable.header2).into(image)
+        activity?.collapseToolbar?.title = eventDetailViewModel.event.title
+        activity?.appBar?.setExpanded(true)
 
+    }
 }

@@ -13,8 +13,17 @@ class EventDetailViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _openTaskEventRecyclerView = MutableLiveData<Event<Unit>>()
     val openTaskEventRecyclerView: LiveData<Event<Unit>> = _openTaskEventRecyclerView
 
+    private val _openEventFragmentEvent = MutableLiveData<Event<Unit>>()
+    val openEventFragmentEvent: LiveData<Event<Unit>> = _openEventFragmentEvent
+
+    private val _openEventEditFragmentEvent = MutableLiveData<Event<Unit>>()
+    val openEventEditFragmentEvent: LiveData<Event<Unit>> = _openEventEditFragmentEvent
+
     private val _openEventDeleteFragmentEvent = MutableLiveData<Event<Unit>>()
     val openEventDeleteFragmentEvent: LiveData<Event<Unit>> = _openEventDeleteFragmentEvent
+
+    private val _showToast = MutableLiveData<Event<String>>()
+    val showToast: LiveData<Event<String>> = _showToast
 
     val event = userRepository.currentEvent.value!!
 
@@ -22,15 +31,34 @@ class EventDetailViewModel(val userRepository: UserRepository) : ViewModel() {
         _openTaskEventRecyclerView.value = Event(Unit)
     }
 
-    fun setStateEdit() {
-        userRepository.stateEvent.value = State.EDIT
-    }
-
     fun deleteEvent() {
         viewModelScope.launch {
             when (userRepository.deleteEvent()) {
             }
         }
+    }
+
+    fun showEventFragment() {
+        _openEventFragmentEvent.value = Event(Unit)
+    }
+
+    fun showEditEventFragment() {
+        if (userRepository.currentUser.value!!.name == userRepository.currentNotice.value!!.author) {
+            _openEventEditFragmentEvent.value = Event(Unit)
+            userRepository.stateEvent.value = State.CREATE
+        } else {
+            _showToast.value = Event("Право редактирование предоставлено только автору объявления")
+        }
+
+    }
+
+    fun showDeleteEventFragment() {
+        if (userRepository.currentUser.value!!.name == userRepository.currentNotice.value!!.author)  {
+            _openEventDeleteFragmentEvent.value = Event(Unit)
+        } else {
+            _showToast.value = Event("Право удаления предоставлено только автору объявления")
+        }
+
     }
 
 

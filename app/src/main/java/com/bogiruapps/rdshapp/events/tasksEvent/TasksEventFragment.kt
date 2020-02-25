@@ -3,7 +3,6 @@ package com.bogiruapps.rdshapp.events.tasksEvent
 
 import android.os.Bundle
 import android.transition.TransitionInflater
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,9 +15,9 @@ import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentTasksEventBinding
-import com.bogiruapps.rdshapp.events.EventViewModel
-import com.bogiruapps.rdshapp.events.EventsAdapter
-import com.google.firebase.auth.FirebaseAuth
+import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -37,7 +36,6 @@ class TasksEventFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         configureBinding(inflater, container)
-        configureRecyclerView()
         configureToolbar()
         setupObserverViewModel()
 
@@ -54,6 +52,19 @@ class TasksEventFragment : Fragment() {
         taskEventViewModel.openTaskEventEdit.observe(this, EventObserver {
             findNavController().navigate(R.id.action_tasksEventFragment_to_taskEventEditFragment)
         })
+
+        taskEventViewModel.query.observe(this, Observer {query ->
+            configureRecyclerView(query)
+        })
+
+        taskEventViewModel.dataLoading.observe(this, Observer { isDataLoading ->
+            if (isDataLoading) {
+                binding.taskEventPb.visibility = View.VISIBLE
+            } else {
+                binding.taskEventPb.visibility = View.INVISIBLE
+            }
+        })
+
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
@@ -64,24 +75,30 @@ class TasksEventFragment : Fragment() {
 
     }
 
-    private fun configureRecyclerView() {
-        adapter = TaskEventAdapter(taskEventViewModel.fetchFirestoreRecyclerOptions(), taskEventViewModel)
+    private fun configureRecyclerView(query: Query) {
+        adapter = TaskEventAdapter(getFirestoreRecyclerOptions(query), taskEventViewModel)
         binding.recyclerViewTasksEvent.layoutManager = LinearLayoutManager(activity)
         binding.recyclerViewTasksEvent.adapter = adapter
         adapter.startListening()
 
     }
 
+    private fun getFirestoreRecyclerOptions(query: Query): FirestoreRecyclerOptions<TaskEvent> {
+        return FirestoreRecyclerOptions.Builder<TaskEvent>()
+            .setQuery(query!!, TaskEvent::class.java)
+            .setLifecycleOwner(this)
+            .build()
+    }
+
     private fun configureToolbar() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val image = activity!!.headerImage
 
-        activity?.toolbar?.menu?.findItem(R.id.item_share)?.isVisible = true
+        activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
+        activity?.collapseToolbar?.title = "Задачи"
+        activity?.appBar?.setExpanded(false)
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }
-
-
-
-
 }

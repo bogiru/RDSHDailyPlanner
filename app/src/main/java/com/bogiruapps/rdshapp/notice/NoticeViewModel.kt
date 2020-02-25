@@ -9,8 +9,6 @@ import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
@@ -43,12 +41,12 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
             if (school.name == "") {
                 showSchoolFragment()
             } else {
-                initFirestoreRecyclerQuery()
+                fetchFirestoreRecyclerQuery()
             }
         }
     }
 
-    private fun initFirestoreRecyclerQuery() {
+    private fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
             when (val result = userRepository.fetchFirestoreRecyclerQueryNotice()) {
                 is Result.Success -> {

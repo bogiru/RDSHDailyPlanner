@@ -96,4 +96,5 @@
         \n
     </string>
     <string name="responsible" translatable="false">Ответсвенный: %1$s</string>
+    <string name="score" translatable="false">Счет: %1$d</string>
 </resources>

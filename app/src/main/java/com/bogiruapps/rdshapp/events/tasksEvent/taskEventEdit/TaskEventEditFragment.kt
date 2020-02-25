@@ -53,13 +53,15 @@ class TaskEventEditFragment : Fragment() {
     }
 
     private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
+        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val image = activity!!.headerImage
 
-        activity?.toolbar?.menu?.findItem(R.id.item_share)?.isVisible = false
+        activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
+        activity?.collapseToolbar?.title = "Редактирование"
+        activity?.appBar?.setExpanded(false)
         editItem?.isVisible = false
         deleteItem?.isVisible = false
-
     }
 
     private fun setupSpinner(items: List<User?>) {

@@ -40,6 +40,16 @@
                 tools:layout_conversion_absoluteWidth="411dp"
                 tools:listitem="@layout/tasks_event_item" />
 
+        <ProgressBar
+                android:id="@+id/task_event_pb"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/recycler_view_tasks_event"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_view_tasks_event"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

@@ -9,7 +9,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 class EventsAdapter(
     options : FirestoreRecyclerOptions<SchoolEvent>,
-    private val viewModel: EventViewModel
+    private val viewModel: EventsViewModel
 ) :
     FirestoreRecyclerAdapter<SchoolEvent, EventsAdapter.EventsViewHolder>(options) {
 
@@ -26,7 +26,7 @@ class EventsAdapter(
 
     class EventsViewHolder(private val binding: EventsItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: EventViewModel, schoolEvent: SchoolEvent) {
+        fun bind(viewModel: EventsViewModel, schoolEvent: SchoolEvent) {
             binding.event = schoolEvent
             binding.viewModel = viewModel
             if (schoolEvent.countTask == 0) binding.progressBar2.progress = 0

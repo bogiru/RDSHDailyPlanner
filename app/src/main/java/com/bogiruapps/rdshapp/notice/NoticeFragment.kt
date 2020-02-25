@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
@@ -16,6 +17,7 @@ import com.bogiruapps.rdshapp.utils.GRID_SPAN_COUNT
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notice.*
+import kotlinx.android.synthetic.main.notice_item.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NoticeFragment : Fragment() {
@@ -73,8 +75,15 @@ class NoticeFragment : Fragment() {
     }
 
     private fun configureToolbar() {
+        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val image = activity!!.headerImage
+
         activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
-        activity?.toolbar?.visibility = View.VISIBLE
+        activity?.collapseToolbar?.title = "Объявления"
+        activity?.appBar?.setExpanded(false)
+        editItem?.isVisible = false
+        deleteItem?.isVisible = false
     }
 
     private fun openChooseSchoolFragment() {
@@ -88,8 +97,6 @@ class NoticeFragment : Fragment() {
         adapter = NoticeAdapter(options, noticeViewModel)
         binding.recyclerViewNotice.layoutManager = layoutManager
         binding.recyclerViewNotice.adapter = adapter
-        adapter.startListening()
-
     }
 
     private fun getFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Notice> {
@@ -101,8 +108,10 @@ class NoticeFragment : Fragment() {
     }
 
     private fun showNoticeDetail() {
-        findNavController().navigate(R.id.action_noticeFragment_to_noticeDetailFragment)
-        adapter.stopListening()
+        val extras = FragmentNavigatorExtras(
+            imageViewNotice to "imageViewNotice"
+        )
+        findNavController().navigate(R.id.action_noticeFragment_to_noticeDetailFragment, null, null, extras)
     }
 
     private fun hideProgress() {

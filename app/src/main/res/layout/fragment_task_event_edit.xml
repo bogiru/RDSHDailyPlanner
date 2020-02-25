@@ -14,7 +14,7 @@
             android:id="@+id/frameLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/round_item"
+            android:background="#F5F5DC"
             tools:context=".events.tasksEvent.taskEventEdit.TaskEventEditFragment" >
 
         <View
