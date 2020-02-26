@@ -90,7 +90,6 @@ class NoticeDetailFragment : Fragment() {
             return@setOnMenuItemClickListener true
         }
 
-        activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
         editItem?.isVisible = true
         deleteItem?.isVisible = true
         Glide.with(this).load(R.drawable.header9).into(image)

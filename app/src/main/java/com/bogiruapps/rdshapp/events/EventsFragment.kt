@@ -73,7 +73,6 @@ class EventsFragment : Fragment() {
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
         val image = activity!!.headerImage
 
-        activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
         activity?.collapseToolbar?.title = "Мероприятия"
         activity?.appBar?.setExpanded(false)
         editItem?.isVisible = false

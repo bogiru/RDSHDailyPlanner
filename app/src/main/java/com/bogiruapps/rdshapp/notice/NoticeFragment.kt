@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeBinding
@@ -77,7 +78,6 @@ class NoticeFragment : Fragment() {
     private fun configureToolbar() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
-        val image = activity!!.headerImage
 
         activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
         activity?.collapseToolbar?.title = "Объявления"
@@ -92,10 +92,10 @@ class NoticeFragment : Fragment() {
     }
 
     private fun configureRecyclerView() {
-        val layoutManager = GridLayoutManager(activity, GRID_SPAN_COUNT, GridLayoutManager.HORIZONTAL, false)
+        //val layoutManager = GridLayoutManager(activity, GRID_SPAN_COUNT, GridLayoutManager.HORIZONTAL, false)
         val options = getFirestoreRecyclerOptions()
         adapter = NoticeAdapter(options, noticeViewModel)
-        binding.recyclerViewNotice.layoutManager = layoutManager
+        binding.recyclerViewNotice.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding.recyclerViewNotice.adapter = adapter
     }
 

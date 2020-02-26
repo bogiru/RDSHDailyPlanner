@@ -53,11 +53,10 @@
                             android:alwaysDrawnWithCache="false"
                             android:animateLayoutChanges="false"
                             android:clipChildren="false"
+                            android:longClickable="false"
                             android:visibility="visible"
                             app:layout_collapseMode="pin"
-                            app:subtitleTextColor="#FFFFFF"
-                            app:titleMarginStart="8dp"
-                            app:titleTextColor="#FFFFFF" />
+                            app:titleMarginStart="8dp" />
 
                 </com.google.android.material.appbar.CollapsingToolbarLayout>
 

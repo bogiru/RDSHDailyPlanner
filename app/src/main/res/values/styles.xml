@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
@@ -23,7 +23,7 @@
     </style>
     
     <style name="AppToolBar" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal"> #ffffff </item>
+        <item name="colorControlNormal"> #000000 </item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
 

@@ -13,11 +13,107 @@
             android:id="@+id/edit_notice_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F5F5DC"
+            android:background="#D2DCFCFC"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
+
+        <ScrollView
+                android:id="@+id/scrollView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    tools:layout_conversion_absoluteHeight="0dp"
+                    tools:layout_conversion_absoluteWidth="0dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="0dp">
+
+                <EditText
+                        android:id="@+id/editText2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:hint="Введите текст объявления"
+                        android:text="@={viewModel.event.description}"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editText"
+                        tools:layout_conversion_absoluteHeight="217dp"
+                        tools:layout_conversion_absoluteWidth="0dp" />
+
+                <EditText
+                        android:id="@+id/editText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:gravity="top"
+                        android:hint="Введите название"
+                        android:text="@={viewModel.event.title}"
+                        android:textSize="18sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                        android:id="@+id/divider3"
+                        android:layout_width="250dp"
+                        android:layout_height="2dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/editText2" />
+
+                <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Выберите дедлайн:"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/divider3" />
+
+                <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView12">
+
+                    <CalendarView
+                            android:id="@+id/calendar_view_event"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:selectedWeekBackgroundColor="#00FFFFFF"
+                            android:unfocusedMonthDateColor="#FFEEEE"
+                            android:visibility="visible"
+                            android:weekNumberColor="#FFFFFF"
+                            android:weekSeparatorLineColor="#FFFFFF" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/extendedFloatingActionButton4"
@@ -35,62 +131,6 @@
                 app:iconTint="#FFFFFF"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
-
-        <EditText
-                android:id="@+id/editText"
-                android:layout_width="304dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:gravity="center"
-                android:hint="Введите название"
-                android:text="@={viewModel.event.title}"
-                android:textColor="#5A9FF1"
-                android:textColorHint="#A95A9FF1"
-                android:textColorLink="#00000000"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        <LinearLayout
-                android:id="@+id/linearLayout2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText2">
-
-            <CalendarView
-                    android:id="@+id/calendar_view_event"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:selectedWeekBackgroundColor="#00FFFFFF"
-                    android:unfocusedMonthDateColor="#FFEEEE"
-                    android:visibility="visible"
-                    android:weekNumberColor="#FFFFFF"
-                    android:weekSeparatorLineColor="#FFFFFF" />
-        </LinearLayout>
-
-        <EditText
-                android:id="@+id/editText2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
-                android:hint="Введите текст объявления"
-                android:text="@={viewModel.event.description}"
-                android:textColor="#BA9C9C9C"
-                android:textColorHint="#BA9C9C9C"
-                android:textColorLink="#00FFFFFF"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.54"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
