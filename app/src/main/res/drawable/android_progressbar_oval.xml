@@ -5,7 +5,7 @@
         <shape android:shape="rectangle">
             <corners android:radius="8dp"/>
             <size android:height="15dp" />
-            <solid android:color="#90caf9" />
+            <solid android:color="#C2FAF9" />
         </shape>
     </item>
     <item android:id="@android:id/secondaryProgress"
@@ -24,7 +24,7 @@
             <shape android:shape="rectangle">
                 <corners android:radius="10dp"/>
                 <size android:height="20dp" />
-                <solid android:color="#b9f6ca" />
+                <solid android:color="#00D6A2" />
             </shape>
         </scale>
     </item>

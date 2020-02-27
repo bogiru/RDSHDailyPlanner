@@ -95,7 +95,7 @@ class NoticeFragment : Fragment() {
         //val layoutManager = GridLayoutManager(activity, GRID_SPAN_COUNT, GridLayoutManager.HORIZONTAL, false)
         val options = getFirestoreRecyclerOptions()
         adapter = NoticeAdapter(options, noticeViewModel)
-        binding.recyclerViewNotice.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerViewNotice.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.recyclerViewNotice.adapter = adapter
     }
 

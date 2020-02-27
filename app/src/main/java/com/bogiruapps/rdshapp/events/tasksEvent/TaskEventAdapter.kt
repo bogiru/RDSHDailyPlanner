@@ -33,8 +33,8 @@ class TaskEventAdapter(
             binding.taskEvent = taskEvent
             binding.viewModel = viewModel
 
-            if (taskEvent.user!!.email == FirebaseAuth.getInstance().currentUser!!.email) {
-                binding.ckeckBoxTaskCompleted.visibility = View.GONE
+            if (taskEvent.user!!.email != FirebaseAuth.getInstance().currentUser!!.email) {
+                binding.ckeckBoxTaskCompleted.isEnabled = false
             }
 
             if (taskEvent.completed) {

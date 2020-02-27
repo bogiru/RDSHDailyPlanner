@@ -46,7 +46,8 @@
             tools:layout="@layout/fragment_event_edit">
         <action
                 android:id="@+id/action_eventEditFragment_to_eventsFragment"
-                app:destination="@id/eventsFragment" />
+                app:destination="@id/eventsFragment"
+                app:popUpTo="@+id/noticeFragment" />
     </fragment>
     <fragment
             android:id="@+id/noticeEditFragment"
@@ -96,10 +97,12 @@
                 app:destination="@id/eventEditFragment" />
         <action
                 android:id="@+id/action_eventDetailFragment_to_tasksEventFragment"
-                app:destination="@id/tasksEventFragment" />
+                app:destination="@id/tasksEventFragment"
+                app:popUpTo="@+id/eventsFragment" />
         <action
                 android:id="@+id/action_eventDetailFragment_to_eventsFragment"
-                app:destination="@id/eventsFragment" />
+                app:destination="@id/eventsFragment"
+                app:popUpTo="@+id/noticeFragment" />
     </fragment>
     <fragment
             android:id="@+id/usersFragment"

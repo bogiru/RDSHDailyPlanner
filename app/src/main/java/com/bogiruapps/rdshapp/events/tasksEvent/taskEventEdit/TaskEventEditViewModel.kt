@@ -19,17 +19,24 @@ class TaskEventEditViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _users = MutableLiveData<List<User?>>()
     val users: LiveData<List<User?>> = _users
 
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: MutableLiveData<String> = _showSnackbar
+
     val event = userRepository.currentEvent.value
 
     val taskEvent: TaskEvent = TaskEvent()
 
     fun createTaskEvent() {
-        viewModelScope.launch {
-            when(userRepository.createTaskEvent(taskEvent)) {
-                is Result.Success -> {
-                    userRepository.currentEvent.value!!.countTask++
-                    when(userRepository.updateEvent(userRepository.currentEvent.value!!)) {
-                        is Result.Success ->   showTaskEventFragment()
+        if (taskEvent.title == "" || taskEvent.description == "") {
+            _showSnackbar.value = "Не все поля заполнены"
+        } else {
+            viewModelScope.launch {
+                when (userRepository.createTaskEvent(taskEvent)) {
+                    is Result.Success -> {
+                        userRepository.currentEvent.value!!.countTask++
+                        when (userRepository.updateEvent(userRepository.currentEvent.value!!)) {
+                            is Result.Success -> showTaskEventFragment()
+                        }
                     }
                 }
             }

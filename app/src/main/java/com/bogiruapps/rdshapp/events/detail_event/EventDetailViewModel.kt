@@ -38,12 +38,8 @@ class EventDetailViewModel(val userRepository: UserRepository) : ViewModel() {
         }
     }
 
-    fun showEventFragment() {
-        _openEventFragmentEvent.value = Event(Unit)
-    }
-
     fun showEditEventFragment() {
-        if (userRepository.currentUser.value!!.name == userRepository.currentNotice.value!!.author) {
+        if (userRepository.currentUser.value!!.email == userRepository.currentEvent.value!!.author.email) {
             _openEventEditFragmentEvent.value = Event(Unit)
             userRepository.stateEvent.value = State.CREATE
         } else {
@@ -53,13 +49,12 @@ class EventDetailViewModel(val userRepository: UserRepository) : ViewModel() {
     }
 
     fun showDeleteEventFragment() {
-        if (userRepository.currentUser.value!!.name == userRepository.currentNotice.value!!.author)  {
+        if (userRepository.currentUser.value!!.name == userRepository.currentEvent.value!!.author.name)  {
             _openEventDeleteFragmentEvent.value = Event(Unit)
         } else {
             _showToast.value = Event("Право удаления предоставлено только автору объявления")
         }
 
     }
-
 
 }

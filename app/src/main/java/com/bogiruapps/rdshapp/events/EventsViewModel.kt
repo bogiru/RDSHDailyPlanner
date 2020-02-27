@@ -42,7 +42,6 @@ class EventsViewModel(private val userRepository: UserRepository) : ViewModel() 
     }
 
     fun showDetailEventFragment(event: SchoolEvent, v: View) {
-
         userRepository.currentEvent.value = event
         _openDetailEventFragment.value = Event(v)
     }

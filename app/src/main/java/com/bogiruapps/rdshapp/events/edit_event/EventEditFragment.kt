@@ -5,14 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.CalendarView
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentEventEditBinding
 import com.bogiruapps.rdshapp.events.edit_event.EventEditViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -41,11 +44,18 @@ class EventEditFragment : Fragment() {
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
 
+    private fun showSnackbar(message: String) {
+        Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
+    }
+
     private fun setupObserverViewModel() {
         eventEditViewModel.openSchoolEventFragment.observe(this, EventObserver {
-        findNavController().navigate(R.id.action_eventEditFragment_to_eventsFragment)
-    })
+            findNavController().navigate(R.id.action_eventEditFragment_to_eventsFragment)
+        })
 
+        eventEditViewModel.showSnackbar.observe(this, Observer {
+            showSnackbar(it)
+        })
 }
 
     private fun configureToolbar() {

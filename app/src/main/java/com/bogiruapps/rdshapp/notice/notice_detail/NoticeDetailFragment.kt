@@ -46,7 +46,7 @@ class NoticeDetailFragment : Fragment() {
             TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
-    private fun showSnackBar(message: String) {
+    private fun showSnackbar(message: String) {
         Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
     }
 
@@ -70,7 +70,7 @@ class NoticeDetailFragment : Fragment() {
         })
 
         noticeDetailViewModel.showToast.observe(this, EventObserver {
-            showSnackBar(it)
+            showSnackbar(it)
         })
 
     }

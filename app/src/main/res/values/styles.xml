@@ -19,6 +19,7 @@
 
     <style name="MyProgressBarTwo" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/android_progressbar_oval</item>
+
         <item name="android:minWidth">200dp</item>
     </style>
     

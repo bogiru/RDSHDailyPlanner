@@ -14,32 +14,8 @@
             android:id="@+id/frameLayout3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F5F5DC"
-            tools:context=".events.tasksEvent.taskEventEdit.TaskEventEditFragment" >
-
-        <View
-                android:id="@+id/view6"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="16dp"
-                android:background="#DADADA"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.581"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText5" />
-
-        <View
-                android:id="@+id/view7"
-                android:layout_width="0dp"
-                android:layout_height="2dp"
-                android:layout_marginTop="16dp"
-                android:background="#DADADA"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.581"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_task_event_edit" />
+            android:background="#D2DCFCFC"
+            tools:context=".events.tasksEvent.taskEventEdit.TaskEventEditFragment">
 
         <EditText
                 android:id="@+id/editText5"
@@ -48,12 +24,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
+                android:gravity="start"
                 android:hint="Введите текст объявления"
                 android:text="@={viewModel.taskEvent.description}"
-                android:textColor="#BA9C9C9C"
-                android:textColorHint="#BA9C9C9C"
-                android:textColorLink="#00FFFFFF"
-                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -61,19 +34,18 @@
 
         <EditText
                 android:id="@+id/editText3"
-                android:layout_width="304dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:gravity="center"
+                android:gravity="start"
                 android:hint="Введите название"
                 android:text="@={viewModel.taskEvent.title}"
-                android:textColor="#5A9FF1"
-                android:textColorHint="#A95A9FF1"
-                android:textColorLink="#00000000"
-                android:textSize="24sp"
-                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
@@ -92,22 +64,22 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="Ответсвенный:"
-                android:textStyle="bold"
+                android:text="Ответственный:"
+                android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/view6" />
+                app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/ext_fub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:id="@+id/ext_fub"
                 android:background="#5A9FF1"
-                android:text="Опубликовать"
                 android:onClick="@{(view) -> viewModel.createTaskEvent()}"
+                android:text="Опубликовать"
                 android:textColor="#FFFFFF"
                 app:backgroundTint="#5A9FF1"
                 app:icon="@drawable/enter_icon"

@@ -200,7 +200,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         return@withContext try {
             when (val result = schoolsCollection.document(school.id)
                 .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(TASKS_COLLECTION_NAME)
-                .orderBy(FIELD_COMPLETED, Query.Direction.DESCENDING).get().await()) {
+                .orderBy(FIELD_COMPLETED, Query.Direction.ASCENDING).get().await()) {
                 is Result.Success -> Result.Success(result.data.query)
                 is Result.Error -> Result.Error(result.exception)
                 is Result.Canceled -> Result.Error(result.exception)

@@ -9,7 +9,6 @@ import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
-import java.util.*
 
 class NoticeEditViewModel(private val userRepository: UserRepository) : ViewModel() {
 
@@ -22,13 +21,20 @@ class NoticeEditViewModel(private val userRepository: UserRepository) : ViewMode
     private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
 
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: MutableLiveData<String> = _showSnackbar
+
     val notice = userRepository.currentNotice
 
 
     fun updateNotice(notice: Notice) {
-        when (userRepository.stateNotice.value) {
-            State.EDIT -> editNotice(notice)
-            State.CREATE -> createNotice(notice)
+        if (notice.title == "" || notice.text == "") {
+            _showSnackbar.value = "Не все поля заполнены"
+        } else {
+            when (userRepository.stateNotice.value) {
+                State.EDIT -> editNotice(notice)
+                State.CREATE -> createNotice(notice)
+            }
         }
     }
 

@@ -95,6 +95,6 @@
         * Проведение образовательных программ по повышению квалификации инструкторского и педагогического состава, а также руководителей общественных организаций и военно-патриотических клубов. \n
         \n
     </string>
-    <string name="responsible" translatable="false">Ответсвенный: %1$s</string>
+    <string name="responsible" translatable="false">Ответственный: %1$s</string>
     <string name="score" translatable="false">Счет: %1$d</string>
 </resources>

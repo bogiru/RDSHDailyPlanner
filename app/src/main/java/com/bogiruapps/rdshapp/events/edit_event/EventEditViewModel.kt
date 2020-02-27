@@ -17,6 +17,9 @@ class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _openSchoolEventFragment = MutableLiveData<Event<Unit>>()
     val openSchoolEventFragment: LiveData<Event<Unit>> = _openSchoolEventFragment
 
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: MutableLiveData<String> = _showSnackbar
+
     val event = userRepository.currentEvent.value
 
     fun updateDate(year: Int, month: Int, dayOfMonth: Int) {
@@ -24,14 +27,19 @@ class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {
     }
 
     fun updateEvent(event: SchoolEvent) {
-        when (userRepository.stateEvent.value) {
-            State.CREATE -> createEvent(event)
-            State.EDIT -> editEvent(event)
+        if (event.title == "" || event.description == "") {
+            _showSnackbar.value = "Не все поля заполнены"
+        } else {
+            when (userRepository.stateEvent.value) {
+                State.CREATE -> createEvent(event)
+                State.EDIT -> editEvent(event)
+            }
         }
     }
 
     private fun createEvent(event: SchoolEvent) {
         viewModelScope.launch {
+            event.author = userRepository.currentUser.value!!
             when(userRepository.createEvent(event)) {
                 is Result.Success -> {
                     userRepository.currentEvent.value = event

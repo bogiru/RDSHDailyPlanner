@@ -35,8 +35,6 @@ class EventsAdapter(
 
         }
 
-
-
         companion object {
             fun from(parent: ViewGroup): EventsViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)

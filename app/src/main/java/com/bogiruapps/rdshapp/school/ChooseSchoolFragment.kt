@@ -14,6 +14,7 @@ import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentChooseSchoolBinding
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -96,6 +97,17 @@ class ChooseSchoolFragment : Fragment() {
         val schoolName = mutableListOf<String>()
         for (school in schools) schoolName.add(school.name)
         return schoolName
+    }
+
+    private fun configureToolbar() {
+        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+
+        activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
+        activity?.collapseToolbar?.title = ""
+        activity?.appBar?.setExpanded(false)
+        editItem?.isVisible = false
+        deleteItem?.isVisible = false
     }
 
     private fun hideProgress(/*view : View*/) {
