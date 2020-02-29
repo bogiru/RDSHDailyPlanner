@@ -8,16 +8,16 @@
         <item
                 android:id="@+id/btn_grid_plan"
                 android:title="План-сетка"
-                android:icon="@drawable/grid_plan_icon"
+                android:icon="@drawable/ic_grid_plan"
                 android:enabled="false" />
         <item
                 android:id="@+id/eventsFragment"
                 android:title="Мероприятия"
-                android:icon="@drawable/events_icon"/>
+                android:icon="@drawable/ic_events"/>
         <item
                 android:id="@+id/noticeFragment"
                 android:title="Объявления"
-                android:icon="@drawable/notice_icon"/>
+                android:icon="@drawable/ic_notice"/>
     </group>
     <group
             android:id="@+id/menu_bottom"
@@ -25,21 +25,15 @@
         <item
                 android:title="Рейтинг"
                 android:id="@+id/usersFragment"
-                android:icon="@drawable/rating_icon"/>
+                android:icon="@drawable/ic_rating"/>
         <item
                 android:title="Информация"
                 android:id="@+id/infoFragment"
-                android:icon="@drawable/info_icon"/>
-        <item
-                android:title="Поделиться"
-                android:id="@+id/btn_share"
-                android:icon="@drawable/share_icon"
-                android:enabled="false"
-                android:visible="false"/>
+                android:icon="@drawable/ic_info"/>
         <item
                 android:title="Настройки"
                 android:id="@+id/btn_settings"
-                android:icon="@drawable/settings_icon"
+                android:icon="@drawable/ic_settings"
                 android:enabled="false"/>
     </group>
     <group
@@ -48,7 +42,7 @@
         <item
                 android:title="Выйти"
                 android:id="@+id/btn_sign_out"
-                android:icon="@drawable/sign_out_icon"/>
+                android:icon="@drawable/ic_exit"/>
     </group>
 
 </menu>

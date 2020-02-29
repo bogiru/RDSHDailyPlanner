@@ -15,6 +15,7 @@ import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeBinding
 import com.bogiruapps.rdshapp.utils.GRID_SPAN_COUNT
+import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notice.*
@@ -32,13 +33,17 @@ class NoticeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         configureBinding(inflater, container)
         setupObserverViewModel()
         noticeViewModel.checkUserSchool()
         configureToolbar()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        this.hideKeyboard()
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
