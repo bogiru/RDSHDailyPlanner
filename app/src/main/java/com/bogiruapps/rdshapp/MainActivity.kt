@@ -3,11 +3,13 @@ package com.bogiruapps.rdshapp
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,6 +21,7 @@ import com.bogiruapps.rdshapp.utils.RC_SIGN_IN
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.jonliapps.rdshappfork.utils.ConnectionLiveData
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -37,9 +40,12 @@ class MainActivity : AppCompatActivity() {
         AuthUI.IdpConfig.EmailBuilder().build()
     )
 
+    private lateinit var isConnected: ConnectionLiveData
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         configureBinding()
+        checkConnectivity()
         setupObserverViewModel()
         configureFirebase()
         configureToolbar()
@@ -62,6 +68,10 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
     }
 
+    private fun checkConnectivity() {
+        isConnected = ConnectionLiveData(applicationContext)
+    }
+
     private fun setupObserverViewModel() {
         mainViewModel.openSignInActivityEvent.observe(this, EventObserver {
             openSignInActivity()
@@ -70,6 +80,28 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
             openNoticeFragment()
         })
+
+        isConnected.observe(this, Observer { isConnected ->
+            if (isConnected) {
+                connected()
+            } else {
+                disconnected()
+            }
+        })
+    }
+
+    private fun connected() {
+        binding.coordinatorLayout.visibility = View.VISIBLE
+        binding.imageNoInternet.visibility = View.INVISIBLE
+        binding.textViewNoInternet.visibility = View.INVISIBLE
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+    }
+
+    private fun disconnected() {
+        binding.coordinatorLayout.visibility = View.INVISIBLE
+        binding.imageNoInternet.visibility = View.VISIBLE
+        binding.textViewNoInternet.visibility = View.VISIBLE
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 
     private fun configureFirebase() {
@@ -92,14 +124,14 @@ class MainActivity : AppCompatActivity() {
         navViewBinding.lifecycleOwner = this
         binding.navView.addHeaderView(navViewBinding.root)
 
-        navController = findNavController(R.id.nav_host_fragment)
+        navController = findNavController(R.id.content_fragment)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         navView.setupWithNavController(navController)
         toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
+        val navController = findNavController(R.id.content_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
