@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">РДШ</string>
+    <string name="app_name">Ежедневник РДШ</string>
     <string name="action_sign_in">Войти или зарегистрироваться</string>
     <string name="action_sign_in_short">Войти</string>
     <string name="invalid_password">Пароль должен быть больше 5 символов</string>

@@ -13,6 +13,7 @@ class UsersAdapter (
 ) : FirestoreRecyclerAdapter<User, UsersAdapter.UserViewHolder>(options) {
 
     override fun onBindViewHolder(p0: UserViewHolder, p1: Int, p2: User) {
+        p2.score = viewModel.userRepository.currentUser.value!!.score
         p0.bind(viewModel, p2, p1 + 1)
 
     }

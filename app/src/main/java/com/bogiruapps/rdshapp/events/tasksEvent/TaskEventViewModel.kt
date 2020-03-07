@@ -59,7 +59,7 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
                             userRepository.currentUser.value!!.score++
                         }
                         userRepository.updateEvent(userRepository.currentEvent.value!!)
-                        userRepository.updateUserInSchool(userRepository.currentUser.value!!)
+                        userRepository.updateUser(userRepository.currentUser.value!!)
                     }
                 }
             }

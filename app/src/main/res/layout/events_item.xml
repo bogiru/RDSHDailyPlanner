@@ -25,7 +25,6 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/header"
                 android:longClickable="true"
                 android:onClick="@{(view) -> viewModel.showDetailEventFragment(event, view)}"
                 app:cardBackgroundColor="#E8FFFFFF"
@@ -100,8 +99,10 @@
                             android:id="@+id/date_text_view"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
                             android:fontFamily="sans-serif"
+                            android:gravity="right"
                             android:hint="Дедлайн: 17.04.2003"
                             android:text="@{event.deadline}"
                             android:textColor="#FFFFFF"
@@ -114,12 +115,15 @@
                             android:id="@+id/textView4"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:gravity="right"
                             android:text="Дедлайн:  "
                             android:textColor="#FFFFFF"
                             android:textStyle="bold"
+                            android:visibility="gone"
                             app:layout_constraintBottom_toBottomOf="@+id/date_text_view"
                             app:layout_constraintEnd_toStartOf="@+id/date_text_view"
-                            app:layout_constraintTop_toTopOf="@+id/date_text_view" />
+                            app:layout_constraintTop_toTopOf="@+id/date_text_view"
+                            app:layout_constraintVertical_bias="0.0" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

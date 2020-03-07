@@ -86,7 +86,7 @@
         <action
                 android:id="@+id/action_taskEventEditFragment_to_tasksEventFragment"
                 app:destination="@id/tasksEventFragment"
-                app:popUpTo="@+id/eventDetailFragment" />
+                app:popUpTo="@+id/eventsFragment" />
     </fragment>
     <fragment
             android:id="@+id/eventDetailFragment"

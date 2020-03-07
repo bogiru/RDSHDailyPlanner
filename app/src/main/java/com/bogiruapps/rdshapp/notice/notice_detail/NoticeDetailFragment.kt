@@ -100,7 +100,7 @@ class NoticeDetailFragment : Fragment() {
 
     @SuppressLint("ResourceType")
     private fun showAllertDialogDelete(){
-        val alertBuilder = AlertDialog.Builder(activity)
+        val alertBuilder = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
         alertBuilder.setTitle("Удалить объявление")
         alertBuilder.setMessage("Вы уверены, что хотите удалить объявление?")
         alertBuilder.setIconAttribute(R.drawable.rdsh_image)

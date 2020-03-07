@@ -24,7 +24,6 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/header"
                 android:longClickable="true"
                 android:onClick="@{(view) -> viewModel.showDetailNoticeFragment(notice)}"
                 app:cardBackgroundColor="#E8FFFFFF"

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RDSHApp</string>
+    <string name="app_name">Ежедневник РДШ</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -11,6 +11,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="hello_blank_fragment">hello</string>
     <string name="author" translatable="false">Автор: %1$s</string>
+    <string name="deadline" translatable="false">Дедлайн: %1$d</string>
     <string name="info_text1" translatable="false">
         Российское движение школьников (РДШ) — Общественно-государственная детско-юношеская организация,
         деятельность которой целиком сосредоточена на развитии и воспитании школьников.

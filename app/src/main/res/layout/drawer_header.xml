@@ -12,8 +12,8 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="160dp">
 
         <ImageView
                 android:id="@+id/imageView"
@@ -34,7 +34,7 @@
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:src="@drawable/rdsh_image"
                 app:civ_border_color="#FFF"
                 app:civ_border_width="3dp"
@@ -45,17 +45,14 @@
 
         <TextView
                 android:id="@+id/text_name"
-                android:text="@{viewModel.userRepository.currentUser.name}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:text="@{viewModel.userRepository.currentUser.name}"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="bold|italic"
                 app:layout_constraintBottom_toTopOf="@+id/text_family"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="@+id/text_family" />
 
         <TextView
                 android:id="@+id/text_family"
@@ -67,9 +64,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 android:textStyle="italic"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="Family: Barbolin" />
 
@@ -77,12 +72,11 @@
                 android:id="@+id/text_line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="_____________"
                 android:textColor="#FFFFFF"
                 app:layout_constraintBottom_toTopOf="@+id/text_name"
-                app:layout_constraintEnd_toEndOf="@+id/text_name"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/text_name"
+                app:layout_constraintStart_toStartOf="@+id/text_family"
                 app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

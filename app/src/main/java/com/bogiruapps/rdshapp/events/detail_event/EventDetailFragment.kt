@@ -1,6 +1,5 @@
 package com.bogiruapps.rdshapp.events.detail_event
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -10,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
 import com.bogiruapps.rdshapp.EventObserver
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.bogiruapps.rdshapp.R
@@ -71,12 +69,10 @@ class EventDetailFragment : Fragment() {
         })*/
     }
 
-    @SuppressLint("ResourceType")
     private fun showAllertDialogDelete(){
-        val alertBuilder = AlertDialog.Builder(activity)
+        val alertBuilder = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
         alertBuilder.setTitle("Удалить объявление")
         alertBuilder.setMessage("Вы уверены, что хотите удалить объявление?")
-        alertBuilder.setIconAttribute(R.drawable.rdsh_image)
         alertBuilder.setCancelable(true)
         alertBuilder.setPositiveButton(
             "Да"
@@ -85,8 +81,7 @@ class EventDetailFragment : Fragment() {
             findNavController().navigate(R.id.action_eventDetailFragment_to_eventsFragment)
         }
         alertBuilder.setNegativeButton(
-            "Нет"
-        ) { _: DialogInterface, _: Int ->
+            "Нет") { _: DialogInterface, _: Int ->
         }
         alertBuilder.show()
     }

@@ -1,4 +1,4 @@
-package com.jonliapps.rdshappfork.utils
+package com.bogiruapps.rdshapp.utils
 
 import android.annotation.TargetApi
 import android.content.BroadcastReceiver

@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.item_page_info.view.*
 class InfoViewPagerAdapter(val application: Application) : RecyclerView.Adapter<InfoViewPagerAdapter.InfoHolder>() {
 
     val pages = listOf<Page>(
-        Page(R.string.info_text1, R.drawable.rdsh_image6),
+        Page(R.string.info_text1, R.drawable.rdsh_image3),
         Page(R.string.info_text2, R.drawable.info_image21),
         Page(R.string.info_text3, R.drawable.info_image3),
         Page(R.string.info_text4, R.drawable.info_image4),
