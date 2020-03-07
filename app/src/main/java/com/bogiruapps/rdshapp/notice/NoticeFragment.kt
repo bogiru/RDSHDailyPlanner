@@ -95,7 +95,7 @@ class NoticeFragment : Fragment() {
 
     private fun openChooseSchoolFragment() {
         hideProgress()
-        findNavController().navigate(R.id.choseSchoolFragment)
+        findNavController().navigate(R.id.action_noticeFragment_to_choseSchoolFragment)
     }
 
     private fun configureRecyclerView() {

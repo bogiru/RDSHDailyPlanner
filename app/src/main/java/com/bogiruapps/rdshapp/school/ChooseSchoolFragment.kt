@@ -58,7 +58,7 @@ class ChooseSchoolFragment : Fragment() {
         })
 
         schoolViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
-            findNavController().navigate(R.id.noticeFragment)
+            findNavController().navigate(R.id.action_choseSchoolFragment_to_noticeFragment)
         })
     }
 

@@ -25,7 +25,12 @@
             android:id="@+id/choseSchoolFragment"
             android:name="com.bogiruapps.rdshapp.school.ChooseSchoolFragment"
             android:label="Выбор школы"
-            tools:layout="@layout/fragment_choose_school" />
+            tools:layout="@layout/fragment_choose_school" >
+        <action
+                android:id="@+id/action_choseSchoolFragment_to_noticeFragment"
+                app:destination="@id/noticeFragment"
+                app:popUpTo="@+id/navigation" />
+    </fragment>
     <fragment
             android:id="@+id/noticeFragment"
             android:name="com.bogiruapps.rdshapp.notice.NoticeFragment"
@@ -41,6 +46,10 @@
                 app:destination="@id/noticeEditFragment"
                 app:popUpTo="@+id/noticeFragment"
                 app:popUpToInclusive="false" />
+        <action
+                android:id="@+id/action_noticeFragment_to_choseSchoolFragment"
+                app:destination="@id/choseSchoolFragment"
+                app:popUpTo="@+id/navigation" />
     </fragment>
     <fragment
             android:id="@+id/eventEditFragment"
