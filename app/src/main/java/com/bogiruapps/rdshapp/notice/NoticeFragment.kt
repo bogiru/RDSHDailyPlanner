@@ -46,6 +46,8 @@ class NoticeFragment : Fragment() {
         this.hideKeyboard()
     }
 
+
+
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notice, container, false)
         binding.viewModel = noticeViewModel
