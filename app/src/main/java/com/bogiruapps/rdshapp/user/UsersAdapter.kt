@@ -4,8 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.databinding.UserItemBinding
+import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.DocumentSnapshot
 
 class UsersAdapter (
     options: FirestoreRecyclerOptions<User>,
@@ -13,9 +15,19 @@ class UsersAdapter (
 ) : FirestoreRecyclerAdapter<User, UsersAdapter.UserViewHolder>(options) {
 
     override fun onBindViewHolder(p0: UserViewHolder, p1: Int, p2: User) {
-        p2.score = viewModel.userRepository.currentUser.value!!.score
         p0.bind(viewModel, p2, p1 + 1)
 
+
+    }
+
+    override fun onChildChanged(
+        type: ChangeEventType,
+        snapshot: DocumentSnapshot,
+        newIndex: Int,
+        oldIndex: Int
+    ) {
+        super.onChildChanged(type, snapshot, newIndex, oldIndex)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -28,7 +40,7 @@ class UsersAdapter (
         fun bind(viewModel: UsersViewModel, user: User, numberUser: Int) {
             binding.user = user
             binding.viewModel = viewModel
-            binding.numberUser.text = numberUser.toString()
+            binding.place = numberUser
             binding.executePendingBindings()
         }
 

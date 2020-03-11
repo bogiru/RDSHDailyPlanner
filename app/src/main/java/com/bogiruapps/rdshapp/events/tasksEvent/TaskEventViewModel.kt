@@ -60,6 +60,7 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
                         }
                         userRepository.updateEvent(userRepository.currentEvent.value!!)
                         userRepository.updateUser(userRepository.currentUser.value!!)
+                        userRepository.updateUserInSchool(userRepository.currentUser.value!!)
                     }
                 }
             }

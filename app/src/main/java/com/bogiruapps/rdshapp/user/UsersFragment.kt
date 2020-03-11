@@ -75,6 +75,7 @@ class UsersFragment : Fragment() {
         adapter = UsersAdapter(options, usersViewModel)
         binding.recyclerViewUsers.layoutManager = LinearLayoutManager(activity)
         binding.recyclerViewUsers.adapter = adapter
+        adapter.notifyDataSetChanged()
     }
 
     private fun getFirestoreRecyclerOptions(query: Query): FirestoreRecyclerOptions<User> {
