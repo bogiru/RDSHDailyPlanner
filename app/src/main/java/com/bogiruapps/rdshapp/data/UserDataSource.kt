@@ -38,4 +38,6 @@ interface UserDataSource {
 
     suspend fun updateTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
 
+    suspend fun deleteTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
+
 }

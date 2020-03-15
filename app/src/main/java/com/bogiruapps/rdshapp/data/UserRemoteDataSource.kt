@@ -149,6 +149,11 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         ).await()
     }
 
+    override suspend fun deleteTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext db.collection(SCHOOL_COLLECTION_NAME).document(school.id)
+            .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(TASKS_COLLECTION_NAME).document(taskEvent.id).delete().await()
+    }
+
     suspend fun fetchFirestoreRecyclerQueryUser(school: School): Result<Query> = withContext(ioDispatcher) {
         return@withContext try {
             when (val result = schoolsCollection.document(school.id)

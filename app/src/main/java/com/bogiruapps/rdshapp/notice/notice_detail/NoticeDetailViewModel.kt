@@ -50,5 +50,4 @@ class NoticeDetailViewModel(private val userRepository: UserRepository) : ViewMo
         else _showToast.value = Event("Право удаления предоставлено только автору объявления")
 
     }
-
 }

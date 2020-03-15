@@ -51,11 +51,10 @@ class TaskEventAdapter(
                 numberClick++
             }
 
-            /* binding.cardView.setOnLongClickListener {
-                     viewModel.showAlertDialogDelete(taskEvent)
+             binding.cardView.setOnLongClickListener {
+                     viewModel.showDeleteTaskEventFragment(taskEvent)
                  return@setOnLongClickListener true
              }
-*/
             binding.executePendingBindings()
 
         }

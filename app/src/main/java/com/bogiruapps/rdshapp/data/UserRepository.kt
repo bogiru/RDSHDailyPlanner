@@ -52,6 +52,8 @@ interface UserRepository {
 
    /* suspend fun fetchNotices(school: School): Result<List<Notice>>*/
 
+    suspend fun deleteTaskEvent(taskEvent: TaskEvent): Result<Void?>
+
     suspend fun createNewNotice(notice: Notice): Result<Void?>
 
     suspend fun updateNotice(notice: Notice): Result<Void?>

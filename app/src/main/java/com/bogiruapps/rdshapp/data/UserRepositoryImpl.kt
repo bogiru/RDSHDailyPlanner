@@ -102,6 +102,11 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
+    override suspend fun deleteTaskEvent(taskEvent: TaskEvent): Result<Void?> = coroutineScope {
+        val task = async { dataSource.deleteTaskEvent(currentUser.value!!.school, currentEvent.value!!, taskEvent)}
+        return@coroutineScope task.await()
+    }
+
     override suspend fun createNewNotice(notice: Notice): Result<Void?> = coroutineScope {
         val task = async { dataSource.createNotice(currentUser.value!!.school, notice)}
         return@coroutineScope task.await()

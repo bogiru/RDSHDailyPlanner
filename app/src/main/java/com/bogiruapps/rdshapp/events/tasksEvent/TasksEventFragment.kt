@@ -1,6 +1,9 @@
 package com.bogiruapps.rdshapp.events.tasksEvent
 
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
@@ -15,9 +18,9 @@ import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentTasksEventBinding
-import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -53,6 +56,9 @@ class TasksEventFragment : Fragment() {
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
+    private fun showSnackbar(message: String) {
+        Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
+    }
 
     private fun setupObserverViewModel() {
         taskEventViewModel.openTaskEventEdit.observe(this, EventObserver {
@@ -69,6 +75,14 @@ class TasksEventFragment : Fragment() {
             } else {
                 binding.taskEventPb.visibility = View.INVISIBLE
             }
+        })
+
+        taskEventViewModel.openTaskEventDeleteFragmentEvent.observe(this, EventObserver {
+            showAllertDialogDelete(it)
+        })
+
+        taskEventViewModel.showSnackBar.observe(this, EventObserver {
+            showSnackbar(it)
         })
 
     }
@@ -107,4 +121,24 @@ class TasksEventFragment : Fragment() {
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }
+
+    @SuppressLint("ResourceType")
+    private fun showAllertDialogDelete(taskEvent: TaskEvent){
+        val alertBuilder = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
+        alertBuilder.setTitle("Удалить объявление")
+        alertBuilder.setMessage("Вы уверены, что хотите удалить объявление?")
+        alertBuilder.setIconAttribute(R.drawable.rdsh_image)
+        alertBuilder.setCancelable(true)
+        alertBuilder.setPositiveButton(
+            "Да"
+        ) { _: DialogInterface, _: Int ->
+            taskEventViewModel.deleteTaskEvent(taskEvent)
+        }
+        alertBuilder.setNegativeButton(
+            "Нет"
+        ) { _: DialogInterface, _: Int ->
+        }
+        alertBuilder.show()
+    }
+
 }

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.UserRepository
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
@@ -21,6 +20,12 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
+
+    private val _openTaskEventDeleteFragmentEvent = MutableLiveData<Event<TaskEvent>>()
+    val openTaskEventDeleteFragmentEvent: LiveData<Event<TaskEvent>> = _openTaskEventDeleteFragmentEvent
+
+    private val _showToast = MutableLiveData<Event<String>>()
+    val showSnackBar: LiveData<Event<String>> = _showToast
 
     val event = userRepository.currentEvent.value!!
 
@@ -64,6 +69,17 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
                     }
                 }
             }
+        }
+    }
+
+    fun showDeleteTaskEventFragment(taskEvent: TaskEvent) {
+        if (userRepository.currentUser.value!!.email == userRepository.currentEvent.value!!.author.email)  _openTaskEventDeleteFragmentEvent.value = Event(taskEvent)
+        else _showToast.value = Event("Право удаления предоставлено только автору объявления")
+    }
+
+    fun deleteTaskEvent(taskEvent: TaskEvent) {
+        viewModelScope.launch {
+            userRepository.deleteTaskEvent(taskEvent)
         }
     }
 
