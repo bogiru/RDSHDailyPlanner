@@ -41,7 +41,7 @@ class EventDetailViewModel(val userRepository: UserRepository) : ViewModel() {
     fun showEditEventFragment() {
         if (userRepository.currentUser.value!!.email == userRepository.currentEvent.value!!.author.email) {
             _openEventEditFragmentEvent.value = Event(Unit)
-            userRepository.stateEvent.value = State.CREATE
+            userRepository.stateEvent.value = State.EDIT
         } else {
             _showToast.value = Event("Право редактирование предоставлено только автору объявления")
         }

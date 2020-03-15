@@ -26,6 +26,7 @@ class NoticeEditViewModel(private val userRepository: UserRepository) : ViewMode
 
     val notice = userRepository.currentNotice
 
+    fun checkCreateNoticeStatus(): Boolean = userRepository.stateNotice.value == State.CREATE
 
     fun updateNotice(notice: Notice) {
         if (notice.title == "" || notice.text == "") {

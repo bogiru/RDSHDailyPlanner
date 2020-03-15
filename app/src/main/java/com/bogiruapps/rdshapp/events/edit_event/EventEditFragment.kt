@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.CalendarView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -14,7 +12,6 @@ import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentEventEditBinding
-import com.bogiruapps.rdshapp.events.edit_event.EventEditViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -63,7 +60,11 @@ class EventEditFragment : Fragment() {
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
         val image = activity!!.headerImage
 
-        activity?.collapseToolbar?.title = "Редактирование"
+        if (eventEditViewModel.checkCreateEventStatus()) {
+            activity?.collapseToolbar?.title = "Создание мероприятия"
+        } else  {
+            activity?.collapseToolbar?.title = "Редактирование мероприятия"
+        }
         activity?.appBar?.setExpanded(false)
         editItem?.isVisible = false
         deleteItem?.isVisible = false

@@ -38,7 +38,7 @@ class NoticeDetailViewModel(private val userRepository: UserRepository) : ViewMo
     fun showEditNoticeFragment() {
         if (userRepository.currentUser.value!!.name == userRepository.currentNotice.value!!.author) {
             _openNoticeEditFragmentEvent.value = Event(Unit)
-            userRepository.stateNotice.value = State.CREATE
+            userRepository.stateNotice.value = State.EDIT
         } else {
             _showToast.value = Event("Право редактирование предоставлено только автору объявления")
         }

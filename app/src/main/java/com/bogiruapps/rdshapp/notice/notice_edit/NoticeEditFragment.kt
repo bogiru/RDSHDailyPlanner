@@ -72,7 +72,13 @@ class NoticeEditFragment : Fragment() {
         val image = activity!!.headerImage
 
         activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
-        activity?.collapseToolbar?.title = "Редактирование"
+
+        if (noticeEditViewModel.checkCreateNoticeStatus()) {
+            activity?.collapseToolbar?.title = "Создание объявления"
+        } else  {
+            activity?.collapseToolbar?.title = "Редактирование объявления"
+        }
+
         activity?.appBar?.setExpanded(false)
         editItem?.isVisible = false
         deleteItem?.isVisible = false

@@ -22,6 +22,8 @@ class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {
 
     val event = userRepository.currentEvent.value
 
+    fun checkCreateEventStatus(): Boolean = userRepository.stateEvent.value == State.CREATE
+
     fun updateDate(year: Int, month: Int, dayOfMonth: Int) {
         userRepository.currentEvent.value!!.deadline = Date(year, month, dayOfMonth)
     }
