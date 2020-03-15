@@ -98,7 +98,8 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
             return@withContext db.collection(SCHOOL_COLLECTION_NAME)
                 .document(school.id).collection(NOTICE_COLLECTION_NAME).document(notice.id).update(
                     FIELD_TEXT, notice.text,
-                    FIELD_TITLE, notice.title
+                    FIELD_TITLE, notice.title,
+                    FIELD_VIEWS, notice.views
                 )
                 .await()
         }

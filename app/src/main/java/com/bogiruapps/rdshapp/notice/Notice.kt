@@ -7,5 +7,6 @@ data class Notice (
     var author: String= "",
     var date: Date = Calendar.getInstance().time,
     var text: String = "",
-    var title: String = ""
+    var title: String = "",
+    var views: MutableList<String> = mutableListOf()
 )

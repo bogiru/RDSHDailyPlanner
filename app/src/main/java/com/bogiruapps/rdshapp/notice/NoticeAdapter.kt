@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.notice
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ class NoticeAdapter(
 ) : FirestoreRecyclerAdapter<Notice, NoticeAdapter.NoticeViewHolder>(options) {
 
     override fun onBindViewHolder(p0: NoticeViewHolder, p1: Int, p2: Notice) {
+        viewModel.isLookNotice(p2)
         p0.bind(viewModel, p2)
 
     }

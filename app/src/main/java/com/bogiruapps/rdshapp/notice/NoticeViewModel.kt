@@ -46,6 +46,17 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
         }
     }
 
+    fun isLookNotice(notice: Notice) {
+        viewModelScope.launch {
+            if (!notice.views
+                    .contains(userRepository.currentUser.value!!.email)
+            ) {
+                notice.views.add(userRepository.currentUser.value!!.email!!)
+                userRepository.updateNotice(notice)
+            }
+        }
+    }
+
     private fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
             when (val result = userRepository.fetchFirestoreRecyclerQueryNotice()) {
