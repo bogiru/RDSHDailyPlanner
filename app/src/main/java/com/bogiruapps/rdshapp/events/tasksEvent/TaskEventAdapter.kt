@@ -20,11 +20,12 @@ class TaskEventAdapter(
         p0.bind(viewModel, p2)
 
     }
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskEventViewHolder {
         return TaskEventViewHolder.from(parent)
+    }
+
+    fun deleteItem(position: Int) {
+        snapshots.getSnapshot(position).reference.delete()
     }
 
     class TaskEventViewHolder(private val binding: TasksEventItemBinding) : RecyclerView.ViewHolder(binding.root) {

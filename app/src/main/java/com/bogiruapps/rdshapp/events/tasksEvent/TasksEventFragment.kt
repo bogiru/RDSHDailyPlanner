@@ -13,11 +13,14 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentTasksEventBinding
+import com.bogiruapps.rdshapp.utils.SwipeToDeleteCallback
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.snackbar.Snackbar
@@ -81,7 +84,7 @@ class TasksEventFragment : Fragment() {
             showAllertDialogDelete(it)
         })
 
-        taskEventViewModel.showSnackBar.observe(this, EventObserver {
+        taskEventViewModel.showSnackbar.observe(this, EventObserver {
             showSnackbar(it)
         })
 
@@ -90,17 +93,32 @@ class TasksEventFragment : Fragment() {
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tasks_event, container, false)
         binding.viewModel = taskEventViewModel
+
+        if (!taskEventViewModel.checkUserIsAuthorEvent()) {
+            binding.fubTaskEvent.visibility = View.INVISIBLE
+        }
+
         binding.lifecycleOwner = this.viewLifecycleOwner
-
-
     }
 
     private fun configureRecyclerView(query: Query) {
         adapter = TaskEventAdapter(getFirestoreRecyclerOptions(query), taskEventViewModel)
         binding.recyclerViewTasksEvent.layoutManager = LinearLayoutManager(activity)
         binding.recyclerViewTasksEvent.adapter = adapter
-        adapter.startListening()
 
+        val callback = object : SwipeToDeleteCallback(context!!) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                if (taskEventViewModel.checkUserIsAuthorEvent()) {
+                    adapter.deleteItem(viewHolder.adapterPosition)
+                } else {
+                    adapter.notifyItemChanged(viewHolder.adapterPosition)
+                    taskEventViewModel.showSnackbar("Право удаления предоставлено только автору мероприятия")
+                }
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(callback)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerViewTasksEvent)
     }
 
     private fun getFirestoreRecyclerOptions(query: Query): FirestoreRecyclerOptions<TaskEvent> {

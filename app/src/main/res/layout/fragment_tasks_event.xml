@@ -17,6 +17,7 @@
             tools:visibility="visible">
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/fub_taskEvent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

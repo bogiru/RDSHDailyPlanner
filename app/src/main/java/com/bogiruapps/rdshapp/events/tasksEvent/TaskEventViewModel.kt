@@ -24,14 +24,16 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
     private val _openTaskEventDeleteFragmentEvent = MutableLiveData<Event<TaskEvent>>()
     val openTaskEventDeleteFragmentEvent: LiveData<Event<TaskEvent>> = _openTaskEventDeleteFragmentEvent
 
-    private val _showToast = MutableLiveData<Event<String>>()
-    val showSnackBar: LiveData<Event<String>> = _showToast
+    private val _showSnackbar = MutableLiveData<Event<String>>()
+    val showSnackbar: LiveData<Event<String>> = _showSnackbar
 
     val event = userRepository.currentEvent.value!!
 
     init {
         fetchFirestoreRecyclerQuery()
     }
+
+    fun checkUserIsAuthorEvent() =  event.author.email == userRepository.currentUser.value!!.email
 
     fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
@@ -73,8 +75,11 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
     }
 
     fun showDeleteTaskEventFragment(taskEvent: TaskEvent) {
-        if (userRepository.currentUser.value!!.email == userRepository.currentEvent.value!!.author.email)  _openTaskEventDeleteFragmentEvent.value = Event(taskEvent)
-        else _showToast.value = Event("Право удаления предоставлено только автору объявления")
+        if (userRepository.currentUser.value!!.email == userRepository.currentEvent.value!!.author.email)  {
+            _openTaskEventDeleteFragmentEvent.value = Event(taskEvent)
+        } else {
+            _showSnackbar.value = Event("Право удаления предоставлено только автору мероприятия")
+        }
     }
 
     fun deleteTaskEvent(taskEvent: TaskEvent) {
@@ -85,6 +90,10 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
 
     fun showTaskEditEvent() {
         _openTaskEventEdit.value = Event(Unit)
+    }
+
+    fun showSnackbar(message: String) {
+        _showSnackbar.value = Event(message)
     }
 
 }
