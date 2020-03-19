@@ -44,11 +44,11 @@ class UsersFragment : Fragment() {
 
     private fun setupObserverViewModel() {
 
-        usersViewModel.query.observe(this, Observer {
+        usersViewModel.query.observe(viewLifecycleOwner, Observer {
             configureRecyclerView(it)
         })
 
-        usersViewModel.dataLoading.observe(this, Observer{ isShowProgress ->
+        usersViewModel.dataLoading.observe(viewLifecycleOwner, Observer{ isShowProgress ->
             if (isShowProgress) {
                 binding.usersPb.visibility = View.VISIBLE
             } else {

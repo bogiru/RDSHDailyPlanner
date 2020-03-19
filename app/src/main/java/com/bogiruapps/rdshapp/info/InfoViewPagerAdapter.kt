@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.R
-import kotlinx.android.synthetic.main.drawer_header.view.*
 import kotlinx.android.synthetic.main.item_page_info.view.*
 
-class InfoViewPagerAdapter(val application: Application) : RecyclerView.Adapter<InfoViewPagerAdapter.InfoHolder>() {
+class InfoViewPagerAdapter (val application: Application) : RecyclerView.Adapter<InfoViewPagerAdapter.InfoHolder>() {
 
     val pages = listOf<Page>(
         Page(R.string.info_text1, R.drawable.rdsh_image3),

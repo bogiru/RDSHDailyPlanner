@@ -46,11 +46,11 @@ class EventEditFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        eventEditViewModel.openSchoolEventFragment.observe(this, EventObserver {
+        eventEditViewModel.openSchoolEventFragment.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_eventEditFragment_to_eventsFragment)
         })
 
-        eventEditViewModel.showSnackbar.observe(this, Observer {
+        eventEditViewModel.showSnackbar.observe(viewLifecycleOwner, Observer {
             showSnackbar(it)
         })
 }

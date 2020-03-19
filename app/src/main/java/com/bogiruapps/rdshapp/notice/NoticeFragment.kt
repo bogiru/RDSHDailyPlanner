@@ -55,24 +55,24 @@ class NoticeFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        noticeViewModel.openChooseSchoolFragmentEvent.observe(this, EventObserver {
+        noticeViewModel.openChooseSchoolFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             openChooseSchoolFragment()
         })
 
-        noticeViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
+        noticeViewModel.openNoticeFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             configureRecyclerView()
         })
 
-        noticeViewModel.openNoticeEditFragmentEvent.observe(this, EventObserver {
+        noticeViewModel.openNoticeEditFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_noticeFragment_to_noticeEditFragment)
 
         })
 
-        noticeViewModel.openNoticeDetailFragmentEvent.observe(this, EventObserver {
+        noticeViewModel.openNoticeDetailFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             showNoticeDetail()
         })
 
-        noticeViewModel.dataLoading.observe(this, Observer{ isShowProgress ->
+        noticeViewModel.dataLoading.observe(viewLifecycleOwner, Observer{ isShowProgress ->
             if (isShowProgress) {
                 binding.pbNotice.visibility = View.VISIBLE
             } else {

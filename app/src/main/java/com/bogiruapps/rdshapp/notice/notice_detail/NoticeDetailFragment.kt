@@ -57,19 +57,19 @@ class NoticeDetailFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        noticeDetailViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
+        noticeDetailViewModel.openNoticeFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeFragment)
         })
 
-        noticeDetailViewModel.openNoticeEditFragmentEvent.observe(this, EventObserver {
+        noticeDetailViewModel.openNoticeEditFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeEditFragment)
         })
 
-        noticeDetailViewModel.openNoticeDeleteFragmentEvent.observe(this, EventObserver {
+        noticeDetailViewModel.openNoticeDeleteFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             showAllertDialogDelete()
         })
 
-        noticeDetailViewModel.showToast.observe(this, EventObserver {
+        noticeDetailViewModel.showToast.observe(viewLifecycleOwner, EventObserver {
             showSnackbar(it)
         })
 

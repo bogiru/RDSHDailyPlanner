@@ -53,19 +53,19 @@ class EventsFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        eventsViewModel.openTaskEventFragment.observe(this, EventObserver {
+        eventsViewModel.openTaskEventFragment.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_eventsFragment_to_eventDetailFragment)
         })
 
-        eventsViewModel.openEditEventFragment.observe(this, EventObserver {
+        eventsViewModel.openEditEventFragment.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_eventsFragment_to_eventEditFragment)
         })
 
-        eventsViewModel.showSchoolEventContent.observe(this, EventObserver {
+        eventsViewModel.showSchoolEventContent.observe(viewLifecycleOwner, EventObserver {
             configureRecyclerView()
         })
 
-        eventsViewModel.dataLoading.observe(this, Observer { isDataLoading ->
+        eventsViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->
             if (isDataLoading) {
                 binding.eventPb.visibility = View.VISIBLE
             } else {

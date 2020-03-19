@@ -44,23 +44,23 @@ class EventDetailFragment : Fragment() {
 
     private fun setupObserverViewModel() {
         /*showProgress()*/
-        eventDetailViewModel.openTaskEventRecyclerView.observe(this, EventObserver {
+        eventDetailViewModel.openTaskEventRecyclerView.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_eventDetailFragment_to_tasksEventFragment)
         })
 
-        eventDetailViewModel.openEventFragmentEvent.observe(this, EventObserver {
+        eventDetailViewModel.openEventFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_eventDetailFragment_to_eventsFragment)
         })
 
-        eventDetailViewModel.openEventEditFragmentEvent.observe(this, EventObserver {
+        eventDetailViewModel.openEventEditFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_eventDetailFragment_to_eventEditFragment)
         })
 
-        eventDetailViewModel.openEventDeleteFragmentEvent.observe(this, EventObserver {
+        eventDetailViewModel.openEventDeleteFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             showAllertDialogDelete()
         })
 
-        eventDetailViewModel.showToast.observe(this, EventObserver {
+        eventDetailViewModel.showToast.observe(viewLifecycleOwner, EventObserver {
             showSnackBar(it)
         })
 

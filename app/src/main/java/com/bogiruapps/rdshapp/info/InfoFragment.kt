@@ -2,36 +2,46 @@ package com.bogiruapps.rdshapp.info
 
 
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-
+import androidx.lifecycle.Observer
+import androidx.viewpager2.widget.ViewPager2
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentInfoBinding
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_info.*
+import org.koin.android.ext.android.bind
+import org.koin.android.viewmodel.ext.android.viewModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- *
- */
 class InfoFragment : Fragment() {
+
+    private val infoViewModel: InfoViewModel by viewModel()
+    private lateinit var binding: FragmentInfoBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = DataBindingUtil.inflate<FragmentInfoBinding>(inflater, R.layout.fragment_info, container, false)
-         binding.viewPager.adapter = activity?.application?.let { InfoViewPagerAdapter(it) }
+        configureBinding(inflater, container)
         configureToolbar()
+        setupObserverViewModel()
+
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.toolbar_menu, menu)
+    }
+
+    private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_info, container, false)
+        binding.viewModel = infoViewModel
+        binding.viewPager.adapter = InfoViewPagerAdapter(activity!!.application)
+        binding.viewPager.currentItem = 1
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun configureToolbar() {
@@ -46,4 +56,9 @@ class InfoFragment : Fragment() {
         deleteItem?.isVisible = false
     }
 
+    private fun setupObserverViewModel() {
+        infoViewModel.setupPageInfo.observe(viewLifecycleOwner, Observer {index ->
+            binding.viewPager.currentItem = index
+        })
+    }
 }

@@ -64,15 +64,15 @@ class TasksEventFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        taskEventViewModel.openTaskEventEdit.observe(this, EventObserver {
+        taskEventViewModel.openTaskEventEdit.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_tasksEventFragment_to_taskEventEditFragment)
         })
 
-        taskEventViewModel.query.observe(this, Observer {query ->
+        taskEventViewModel.query.observe(viewLifecycleOwner, Observer {query ->
             configureRecyclerView(query)
         })
 
-        taskEventViewModel.dataLoading.observe(this, Observer { isDataLoading ->
+        taskEventViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->
             if (isDataLoading) {
                 binding.taskEventPb.visibility = View.VISIBLE
             } else {
@@ -80,11 +80,11 @@ class TasksEventFragment : Fragment() {
             }
         })
 
-        taskEventViewModel.openTaskEventDeleteFragmentEvent.observe(this, EventObserver {
+        taskEventViewModel.openTaskEventDeleteFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             showAllertDialogDelete(it)
         })
 
-        taskEventViewModel.showSnackbar.observe(this, EventObserver {
+        taskEventViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver {
             showSnackbar(it)
         })
 

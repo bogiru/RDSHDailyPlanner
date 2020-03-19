@@ -49,19 +49,19 @@ class NoticeEditFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        noticeEditViewModel.openEditNotice.observe(this, EventObserver {
+        noticeEditViewModel.openEditNotice.observe(viewLifecycleOwner, EventObserver {
             showEditNotice()
         })
 
-        noticeEditViewModel.closeEditNotice.observe(this, EventObserver {
+        noticeEditViewModel.closeEditNotice.observe(viewLifecycleOwner, EventObserver {
             hideEditNotice()
         })
 
-        noticeEditViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
+        noticeEditViewModel.openNoticeFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_noticeEditFragment_to_noticeFragment)
         })
 
-        noticeEditViewModel.showSnackbar.observe(this, Observer {
+        noticeEditViewModel.showSnackbar.observe(viewLifecycleOwner, Observer {
             showSnackbar(it)
         })
     }
