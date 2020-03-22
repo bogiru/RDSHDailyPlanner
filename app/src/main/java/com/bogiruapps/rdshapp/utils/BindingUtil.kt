@@ -1,6 +1,7 @@
 package com.bogiruapps.rdshapp.utils
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
 import com.bumptech.glide.Glide

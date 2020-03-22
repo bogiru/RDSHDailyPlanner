@@ -40,12 +40,6 @@ class NoticeDetailFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        sharedElementEnterTransition =
-            TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-    }
-
     private fun showSnackbar(message: String) {
         Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
     }

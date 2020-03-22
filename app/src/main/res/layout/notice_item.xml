@@ -53,12 +53,11 @@
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:scaleType="centerCrop"
-                            android:transitionName="imageViewNotice"
+                            imageDrawable="@{@drawable/header9}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/header9" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                             android:id="@+id/title_task_event"

@@ -20,10 +20,30 @@
                 android:id="@+id/view_pager"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintBottom_toTopOf="@+id/spring_dots_indicator"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+                android:id="@+id/spring_dots_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:foregroundGravity="center"
+                app:dampingRatio="0.5"
+                app:dotsColor="#90caf9"
+                app:dotsCornerRadius="50dp"
+                app:dotsSize="12dp"
+                app:dotsSpacing="6dp"
+                app:dotsStrokeColor="#707070"
+                app:dotsStrokeWidth="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:stiffness="300" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

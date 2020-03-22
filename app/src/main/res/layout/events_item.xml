@@ -58,7 +58,6 @@
                         android:id="@+id/constraintLayout"
                         android:layout_width="0dp"
                         android:layout_height="73dp"
-                        android:background="@drawable/header2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -124,6 +123,16 @@
                             app:layout_constraintEnd_toStartOf="@+id/date_text_view"
                             app:layout_constraintTop_toTopOf="@+id/date_text_view"
                             app:layout_constraintVertical_bias="0.0" />
+
+                    <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="271dp"
+                            android:layout_height="80dp"
+                            imageDrawable="@{@drawable/header2}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

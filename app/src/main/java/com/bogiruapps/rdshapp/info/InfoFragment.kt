@@ -26,6 +26,7 @@ class InfoFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         configureToolbar()
+        configureDotsIndicator()
         setupObserverViewModel()
 
         return binding.root
@@ -39,8 +40,6 @@ class InfoFragment : Fragment() {
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_info, container, false)
         binding.viewModel = infoViewModel
-        binding.viewPager.adapter = InfoViewPagerAdapter(activity!!.application)
-        binding.viewPager.currentItem = 1
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
@@ -60,5 +59,13 @@ class InfoFragment : Fragment() {
         infoViewModel.setupPageInfo.observe(viewLifecycleOwner, Observer {index ->
             binding.viewPager.currentItem = index
         })
+    }
+
+    private fun configureDotsIndicator() {
+        val wormDotsIndicator = binding.springDotsIndicator
+        val viewPager = binding.viewPager
+        val adapter = InfoViewPagerAdapter()
+        viewPager.adapter = adapter
+        wormDotsIndicator.setViewPager2(viewPager)
     }
 }

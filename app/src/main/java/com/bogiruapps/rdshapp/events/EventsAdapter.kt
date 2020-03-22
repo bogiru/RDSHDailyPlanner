@@ -15,7 +15,6 @@ class EventsAdapter(
 
     override fun onBindViewHolder(p0: EventsViewHolder, p1: Int, p2: SchoolEvent) {
         p0.bind(viewModel, p2)
-
     }
 
 

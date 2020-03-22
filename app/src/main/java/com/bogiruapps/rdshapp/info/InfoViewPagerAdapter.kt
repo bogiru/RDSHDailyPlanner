@@ -1,46 +1,57 @@
 package com.bogiruapps.rdshapp.info
 
-import android.app.Application
-import android.os.Build
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.RecyclerView
-import com.bogiruapps.rdshapp.R
-import kotlinx.android.synthetic.main.item_page_info.view.*
+    import android.app.Application
+    import android.os.Build
+    import android.view.LayoutInflater
+    import android.view.View
+    import android.view.ViewGroup
+    import androidx.annotation.RequiresApi
+    import androidx.fragment.app.FragmentManager
+    import androidx.recyclerview.widget.RecyclerView
+    import com.bogiruapps.rdshapp.R
+    import com.bogiruapps.rdshapp.databinding.EventsItemBinding
+    import com.bogiruapps.rdshapp.databinding.FragmentInfoBinding
+    import com.bogiruapps.rdshapp.databinding.ItemPageInfoBinding
+    import com.bogiruapps.rdshapp.events.EventsAdapter
+    import com.bogiruapps.rdshapp.events.EventsViewModel
+    import com.bogiruapps.rdshapp.events.SchoolEvent
+    import kotlinx.android.synthetic.main.item_page_info.view.*
 
-class InfoViewPagerAdapter (val application: Application) : RecyclerView.Adapter<InfoViewPagerAdapter.InfoHolder>() {
+class InfoViewPagerAdapter () : RecyclerView.Adapter<InfoViewPagerAdapter.InfoHolder>() {
 
-    val pages = listOf<Page>(
-        Page(R.string.info_text1, R.drawable.rdsh_image3),
-        Page(R.string.info_text2, R.drawable.info_image21),
-        Page(R.string.info_text3, R.drawable.info_image3),
-        Page(R.string.info_text4, R.drawable.info_image4),
-        Page(R.string.info_text5, R.drawable.info_image5)
+    private val pages = listOf(
+        InfoPage(R.string.info_text1, "Российское движение школьников"),
+        InfoPage(R.string.info_text2, "Личностное развитие"),
+        InfoPage(R.string.info_text3, "Гражданская активность"),
+        InfoPage(R.string.info_text4, "Медийное направление"),
+        InfoPage(R.string.info_text5, "Военно-патриотическое направление")
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InfoHolder {
-       val view = LayoutInflater.from(parent.context).inflate(R.layout.item_page_info, parent, false)
-        return InfoHolder(view)
+        return InfoHolder.from(parent)
     }
 
     override fun getItemCount(): Int {
         return pages.size
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: InfoHolder, position: Int) {
-        holder.itemView.info_text_view.text = application.resources.getString(pages[position].indexText)
-        holder.itemView.info_image.setImageDrawable(application.getDrawable(pages[position].image_src))
+        holder.bind(pages[position])
     }
 
-    class InfoHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class InfoHolder(private val binding: ItemPageInfoBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(page: InfoPage) {
+            binding.page = page
+            binding.executePendingBindings()
+        }
 
-    data class Page(
-        val indexText: Int,
-        val image_src: Int
-    )
+        companion object {
+            fun from(parent: ViewGroup): InfoHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemPageInfoBinding.inflate(layoutInflater, parent, false)
+                return InfoViewPagerAdapter.InfoHolder(binding)
+            }
+        }
+    }
 
 }

@@ -115,10 +115,7 @@ class NoticeFragment : Fragment() {
     }
 
     private fun showNoticeDetail() {
-        val extras = FragmentNavigatorExtras(
-            imageViewNotice to "imageViewNotice"
-        )
-        findNavController().navigate(R.id.action_noticeFragment_to_noticeDetailFragment, null, null, extras)
+        findNavController().navigate(R.id.action_noticeFragment_to_noticeDetailFragment)
     }
 
     private fun hideProgress() {
