@@ -126,13 +126,14 @@
 
                     <ImageView
                             android:id="@+id/imageView3"
-                            android:layout_width="271dp"
-                            android:layout_height="80dp"
                             imageDrawable="@{@drawable/header2}"
+                            android:layout_width="0dp"
+                            android:scaleType="centerCrop"
+                            android:layout_height="0dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"/>
+                            app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
