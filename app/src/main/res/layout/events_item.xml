@@ -62,6 +62,17 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
+                    <ImageView
+                            android:id="@+id/imageView3"
+                            imageDrawable="@{@drawable/header2}"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
                             android:id="@+id/title_task_event"
                             android:layout_width="0dp"
@@ -123,17 +134,6 @@
                             app:layout_constraintEnd_toStartOf="@+id/date_text_view"
                             app:layout_constraintTop_toTopOf="@+id/date_text_view"
                             app:layout_constraintVertical_bias="0.0" />
-
-                    <ImageView
-                            android:id="@+id/imageView3"
-                            imageDrawable="@{@drawable/header2}"
-                            android:layout_width="0dp"
-                            android:scaleType="centerCrop"
-                            android:layout_height="0dp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
