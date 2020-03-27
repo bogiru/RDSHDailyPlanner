@@ -82,26 +82,22 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
-                <LinearLayout
-                        android:id="@+id/linearLayout2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                <CalendarView
+                        android:id="@+id/calendar_view_event"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_marginTop="8dp"
-                        android:orientation="vertical"
+                        android:layout_marginBottom="8dp"
+                        android:selectedWeekBackgroundColor="#00FFFFFF"
+                        android:unfocusedMonthDateColor="#FFEEEE"
+                        android:visibility="visible"
+                        android:weekNumberColor="#FFFFFF"
+                        android:weekSeparatorLineColor="#FFFFFF"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView12">
+                        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
-                    <CalendarView
-                            android:id="@+id/calendar_view_event"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:selectedWeekBackgroundColor="#00FFFFFF"
-                            android:unfocusedMonthDateColor="#FFEEEE"
-                            android:visibility="visible"
-                            android:weekNumberColor="#FFFFFF"
-                            android:weekSeparatorLineColor="#FFFFFF" />
-                </LinearLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

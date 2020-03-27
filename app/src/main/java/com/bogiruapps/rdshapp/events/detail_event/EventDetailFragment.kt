@@ -14,6 +14,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.EventDetailFragmentBinding
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -70,7 +71,7 @@ class EventDetailFragment : Fragment() {
     }
 
     private fun showAllertDialogDelete(){
-        val alertBuilder = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
+        val alertBuilder = MaterialAlertDialogBuilder(activity, R.style.AlertDialogTheme)
         alertBuilder.setTitle("Удалить объявление")
         alertBuilder.setMessage("Вы уверены, что хотите удалить объявление?")
         alertBuilder.setCancelable(true)

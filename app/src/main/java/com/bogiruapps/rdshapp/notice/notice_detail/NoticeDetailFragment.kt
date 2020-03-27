@@ -17,6 +17,7 @@ import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeDetailBinding
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -94,7 +95,7 @@ class NoticeDetailFragment : Fragment() {
 
     @SuppressLint("ResourceType")
     private fun showAllertDialogDelete(){
-        val alertBuilder = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
+        val alertBuilder = MaterialAlertDialogBuilder(activity, R.style.AlertDialogTheme)
         alertBuilder.setTitle("Удалить объявление")
         alertBuilder.setMessage("Вы уверены, что хотите удалить объявление?")
         alertBuilder.setIconAttribute(R.drawable.rdsh_image)

@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.graphics.drawable.ColorDrawable
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,7 @@ import com.bogiruapps.rdshapp.R
 
 abstract class SwipeToDeleteCallback(context: Context) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
-    private val deleteIcon = ContextCompat.getDrawable(context, R.drawable.ic_delete_black_48dp)
+    private val deleteIcon = AppCompatResources.getDrawable(context, R.drawable.ic_delete_black_48dp)
     private val intrinsicWidth = deleteIcon!!.intrinsicWidth
     private val intrinsicHeight = deleteIcon!!.intrinsicHeight
     private val background = ColorDrawable()
