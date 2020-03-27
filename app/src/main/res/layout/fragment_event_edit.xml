@@ -88,6 +88,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
+                        android:minHeight="300dp"
                         android:selectedWeekBackgroundColor="#00FFFFFF"
                         android:unfocusedMonthDateColor="#FFEEEE"
                         android:visibility="visible"
