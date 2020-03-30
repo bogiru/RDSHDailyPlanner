@@ -31,27 +31,18 @@
 
                 <ImageView
                         android:id="@+id/info_image"
+                        imageDrawable="@{page.indexImage}"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="150dp"
                         android:layout_marginBottom="16dp"
                         android:paddingTop="0dp"
-                        android:scaleType="fitXY"
-                        app:srcCompat="@drawable/background_info" />
-
-                <TextView
-                        android:id="@+id/textView17"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="16dp"
-                        android:text="@{page.title}"
-                        android:textColor="#239FDF"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:scaleType="centerCrop"/>
 
                 <TextView
                         android:id="@+id/info_text_view"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:text="@{page.indexText}"

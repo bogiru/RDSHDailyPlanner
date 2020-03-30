@@ -17,7 +17,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class InfoFragment : Fragment() {
 
-    private val infoViewModel: InfoViewModel by viewModel()
     private lateinit var binding: FragmentInfoBinding
 
     override fun onCreateView(
@@ -27,7 +26,6 @@ class InfoFragment : Fragment() {
         configureBinding(inflater, container)
         configureToolbar()
         configureDotsIndicator()
-        setupObserverViewModel()
 
         return binding.root
     }
@@ -39,7 +37,6 @@ class InfoFragment : Fragment() {
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_info, container, false)
-        binding.viewModel = infoViewModel
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
@@ -49,16 +46,10 @@ class InfoFragment : Fragment() {
         val image = activity!!.headerImage
 
         activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
-        activity?.collapseToolbar?.title = "Информация"
+        activity?.collapseToolbar?.title = ""
         activity?.appBar?.setExpanded(false)
         editItem?.isVisible = false
         deleteItem?.isVisible = false
-    }
-
-    private fun setupObserverViewModel() {
-        infoViewModel.setupPageInfo.observe(viewLifecycleOwner, Observer {index ->
-            binding.viewPager.currentItem = index
-        })
     }
 
     private fun configureDotsIndicator() {
