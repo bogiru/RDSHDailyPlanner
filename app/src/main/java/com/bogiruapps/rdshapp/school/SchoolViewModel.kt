@@ -29,8 +29,9 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
     fun updateSchool(firebaseUser: FirebaseUser, school: School) {
             viewModelScope.launch {
                 val user = User(
-                    firebaseUser.displayName,
-                    firebaseUser.email,
+                    userRepository.currentUser.value!!.name,
+                    userRepository.currentUser.value!!.email,
+                    userRepository.currentUser.value!!.avatar,
                     school
                 )
                 when (userRepository.updateUser(user)) {

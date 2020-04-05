@@ -1,4 +1,5 @@
 package com.bogiruapps.rdshapp.data
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
@@ -9,6 +10,7 @@ import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.utils.State
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.UploadTask
 
 interface UserRepository {
 
@@ -60,5 +62,5 @@ interface UserRepository {
 
     suspend fun deleteNotice(): Result<Void?>
 
-
+    suspend fun loadAvatar(image: Bitmap)
 }

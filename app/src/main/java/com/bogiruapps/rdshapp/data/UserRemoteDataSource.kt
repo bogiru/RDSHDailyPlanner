@@ -1,5 +1,7 @@
 package com.bogiruapps.rdshapp.data
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
@@ -10,8 +12,10 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.core.OrderBy
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.ByteArrayOutputStream
 
 
 class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
@@ -215,5 +219,15 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
             Result.Error(e)
         }
     }
+
+    suspend fun loadImage(image: Bitmap, url: String) = withContext(ioDispatcher) {
+        val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(url)
+        val baos = ByteArrayOutputStream()
+        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+        storageRef.putBytes(data)
+
+    }
+
 }
 

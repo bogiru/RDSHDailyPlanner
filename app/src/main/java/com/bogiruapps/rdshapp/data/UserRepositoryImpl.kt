@@ -1,4 +1,5 @@
 package com.bogiruapps.rdshapp.data
+import android.graphics.Bitmap
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
@@ -10,6 +11,7 @@ import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.utils.State
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
@@ -120,5 +122,9 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
     override suspend fun deleteNotice(): Result<Void?> = coroutineScope {
         val task = async { dataSource.deleteNotice(currentUser.value!!.school, currentNotice.value!!)}
         return@coroutineScope task.await()
+    }
+
+    override suspend fun loadAvatar(image: Bitmap) = coroutineScope {
+        val task = async { dataSource.loadImage(image, currentUser.value!!.avatar!!) }
     }
 }

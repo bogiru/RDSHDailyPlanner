@@ -36,7 +36,7 @@ val modules = module {
     }
 
     // ViewModels
-    viewModel { MainActivityViewModel(userRepository = get()) }
+    viewModel { MainActivityViewModel(application = get(), userRepository = get()) }
     viewModel { NoticeViewModel(userRepository = get()) }
     viewModel { SchoolViewModel(userRepository = get()) }
     viewModel { NoticeEditViewModel(userRepository = get()) }

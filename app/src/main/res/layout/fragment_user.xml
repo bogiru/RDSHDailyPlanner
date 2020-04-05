@@ -138,12 +138,10 @@
                 android:layout_height="117dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:src="@drawable/p4"
                 app:civ_border_color="#FFF"
                 app:civ_border_width="3dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/p4" />
+                app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
                 android:id="@+id/add_avatar"
