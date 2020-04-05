@@ -4,6 +4,11 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+                name="imageId"
+                type="String" />
+
         <variable
                 name="event"
                 type="com.bogiruapps.rdshapp.events.SchoolEvent" />
@@ -21,14 +26,14 @@
         <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
                 android:layout_width="0dp"
-                android:layout_height="118dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="16dp"
+                android:layout_height="125dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 android:longClickable="true"
                 android:onClick="@{(view) -> viewModel.showDetailEventFragment(event, view)}"
                 app:cardBackgroundColor="#E8FFFFFF"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -36,106 +41,82 @@
                 app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraintLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                <ProgressBar
-                        android:id="@+id/progressBar2"
-                        style="@style/MyProgressBarTwo"
+                <ImageView
+                        android:id="@+id/imageView3"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="8dp"
+                        android:layout_height="0dp"
+                        android:cropToPadding="true"
+                        android:scaleType="centerCrop"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-                        tools:layout_conversion_absoluteHeight="16dp"
-                        tools:layout_conversion_absoluteWidth="379dp" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0" />
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout"
+                <TextView
+                        android:id="@+id/title_task_event"
                         android:layout_width="0dp"
-                        android:layout_height="73dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif"
+                        android:hint="dsfdsfdsfsdf"
+                        android:text="@{event.title}"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#FFFFFF"
+                        android:textColorLink="#2196F3"
+                        android:textSize="24sp"
+
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
-                            android:id="@+id/imageView3"
-                            imageDrawable="@{@drawable/header2}"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:scaleType="centerCrop"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                        android:id="@+id/date_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="sans-serif"
+                        android:hint="Дедлайн: 17.04.2003"
+                        android:text="@{event.deadline}"
+                        android:textColor="#FFFFFF"
+                        android:textColorHint="#FFFFFF"
+                        android:visibility="invisible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/title_task_event" />
 
-                    <TextView
-                            android:id="@+id/title_task_event"
-                            android:layout_width="0dp"
-                            android:layout_height="25dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="8dp"
-                            android:fontFamily="sans-serif"
-                            android:hint="dsfdsfdsfsdf"
-                            android:text="@{event.title}"
-                            android:textColor="#FFFFFF"
-                            android:textColorHint="#FFFFFF"
-                            android:textColorLink="#2196F3"
-                            android:textSize="18sp"
+                <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="right"
+                        android:text="Дедлайн:  "
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="@+id/date_text_view"
+                        app:layout_constraintEnd_toStartOf="@+id/date_text_view"
+                        app:layout_constraintTop_toTopOf="@+id/date_text_view"
+                        app:layout_constraintVertical_bias="0.0" />
 
-                            android:textStyle="bold"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                    <ProgressBar
-                            android:id="@+id/dividingLine"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="237dp"
-                            android:layout_height="8dp"
-                            android:layout_marginTop="16dp"
-                            android:progress="100"
-                            android:visibility="gone"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/date_text_view" />
-
-                    <TextView
-                            android:id="@+id/date_text_view"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:fontFamily="sans-serif"
-                            android:gravity="right"
-                            android:hint="Дедлайн: 17.04.2003"
-                            android:text="@{event.deadline}"
-                            android:textColor="#FFFFFF"
-                            android:textColorHint="#FFFFFF"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent" />
-
-                    <TextView
-                            android:id="@+id/textView4"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="right"
-                            android:text="Дедлайн:  "
-                            android:textColor="#FFFFFF"
-                            android:textStyle="bold"
-                            android:visibility="gone"
-                            app:layout_constraintBottom_toBottomOf="@+id/date_text_view"
-                            app:layout_constraintEnd_toStartOf="@+id/date_text_view"
-                            app:layout_constraintTop_toTopOf="@+id/date_text_view"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                <com.github.lzyzsd.circleprogress.DonutProgress
+                        android:id="@+id/event_progress_bar"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:donut_finished_color="#FFFFFF"
+                        app:donut_progress="30"
+                        app:donut_text_color="#FFFFFF"
+                        app:donut_text_size="9sp"
+                        app:donut_unfinished_color="#ABFFFFFF"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
