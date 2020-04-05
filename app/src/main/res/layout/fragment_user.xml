@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="viewModel"
+                type="com.bogiruapps.rdshapp.user.UserViewModel" />
+        <variable
+                name="user"
+                type="com.bogiruapps.rdshapp.user.User" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/user_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".user.UserFragment">
+
+        <ImageView
+                android:id="@+id/user_name_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:srcCompat="@drawable/ic_account_circle_24px"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profile_image" />
+
+        <TextView
+                android:id="@+id/user_name_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{user.name}"
+                app:layout_constraintBottom_toBottomOf="@+id/user_name_icon"
+                app:layout_constraintStart_toEndOf="@+id/user_name_icon"
+                app:layout_constraintTop_toTopOf="@+id/user_name_icon" />
+
+        <ImageView
+                android:id="@+id/user_email_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:srcCompat="@drawable/ic_email_24px"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_name_icon" />
+
+        <TextView
+                android:id="@+id/user_email_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{user.email}"
+                app:layout_constraintBottom_toBottomOf="@+id/user_email_icon"
+                app:layout_constraintStart_toEndOf="@+id/user_email_icon"
+                app:layout_constraintTop_toTopOf="@+id/user_email_icon" />
+
+        <ImageView
+                android:id="@+id/user_direction_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:srcCompat="@drawable/ic_star_24px"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_email_icon" />
+
+        <ImageView
+                android:id="@+id/user_shool_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:srcCompat="@drawable/ic_school_24px"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_direction_icon" />
+
+        <ImageView
+                android:id="@+id/user_score_icon"
+                android:layout_width="26dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                app:srcCompat="@drawable/ic_rating"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_shool_icon" />
+
+        <TextView
+                android:id="@+id/user_star_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Личностное развитие"
+                app:layout_constraintBottom_toBottomOf="@+id/user_direction_icon"
+                app:layout_constraintStart_toEndOf="@+id/user_direction_icon"
+                app:layout_constraintTop_toTopOf="@+id/user_direction_icon" />
+
+        <TextView
+                android:id="@+id/user_school_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{user.school.name}"
+                app:layout_constraintBottom_toBottomOf="@+id/user_shool_icon"
+                app:layout_constraintStart_toEndOf="@+id/user_shool_icon"
+                app:layout_constraintTop_toTopOf="@+id/user_shool_icon" />
+
+        <TextView
+                android:id="@+id/user_score_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@{String.valueOf(user.score)}"
+                app:layout_constraintBottom_toBottomOf="@+id/user_score_icon"
+                app:layout_constraintStart_toEndOf="@+id/user_score_icon"
+                app:layout_constraintTop_toTopOf="@+id/user_score_icon" />
+
+        <TextView
+                android:id="@+id/user_exit_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:text="Выход"
+                android:textColor="#910000"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_score_icon" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                imageDrawable="@{user.avatar}"
+                android:layout_width="101dp"
+                android:layout_height="117dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:src="@drawable/p4"
+                app:civ_border_color="#FFF"
+                app:civ_border_width="3dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/p4" />
+
+        <ImageView
+                android:id="@+id/add_avatar"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:onClick="@{(view) -> viewModel.openActionPickActivity()}"
+                app:layout_constraintBottom_toBottomOf="@+id/profile_image"
+                app:layout_constraintEnd_toEndOf="@+id/profile_image"
+                app:srcCompat="@drawable/ic_add_blue_circle_24px" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

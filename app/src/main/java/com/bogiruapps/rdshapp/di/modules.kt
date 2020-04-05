@@ -13,7 +13,8 @@ import com.bogiruapps.rdshapp.notice.NoticeViewModel
 import com.bogiruapps.rdshapp.notice.notice_detail.NoticeDetailViewModel
 import com.bogiruapps.rdshapp.notice.notice_edit.NoticeEditViewModel
 import com.bogiruapps.rdshapp.school.SchoolViewModel
-import com.bogiruapps.rdshapp.user.UsersViewModel
+import com.bogiruapps.rdshapp.rating.RatingViewModel
+import com.bogiruapps.rdshapp.user.UserViewModel
 import com.google.firebase.firestore.FirebaseFirestore
 
 import org.koin.android.viewmodel.dsl.viewModel
@@ -45,6 +46,7 @@ val modules = module {
     viewModel { EventEditViewModel(userRepository = get()) }
     viewModel { TaskEventViewModel(userRepository = get()) }
     viewModel { TaskEventEditViewModel(userRepository = get()) }
-    viewModel { UsersViewModel(userRepository = get()) }
+    viewModel { RatingViewModel(userRepository = get()) }
+    viewModel { UserViewModel(userRepository = get()) }
 
 }

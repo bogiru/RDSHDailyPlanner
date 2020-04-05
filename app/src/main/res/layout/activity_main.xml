@@ -48,6 +48,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:statusBarBackground="#00000000"
                     tools:visibility="visible">
 
                 <com.google.android.material.appbar.AppBarLayout
@@ -61,8 +62,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="center_horizontal"
-                            android:background="@color/colorPrimary"
-                            app:contentScrim="?attr/colorPrimary"
                             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                             app:titleEnabled="true">
 
@@ -86,7 +85,9 @@
                                 android:longClickable="false"
                                 android:visibility="visible"
                                 app:layout_collapseMode="pin"
-                                app:titleMarginStart="8dp" />
+                                app:subtitleTextColor="#000000"
+                                app:titleMarginStart="8dp"
+                                app:titleTextColor="#000000" />
 
                     </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -96,7 +97,6 @@
                         android:id="@+id/constraintLayout2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="#D2DCFCFC"
                         app:layout_behavior="@string/appbar_scrolling_view_behavior"
                         tools:context=".MainActivity">
 

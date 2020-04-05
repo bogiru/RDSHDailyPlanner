@@ -8,5 +8,6 @@ data class User(
     var name: String? = "",
     var email: String? = "",
     var school: School = School("", ""),
-    var score: Int = 0
+    var score: Int = 0,
+    var avatar: String? = ""
 )

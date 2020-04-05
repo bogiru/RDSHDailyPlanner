@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.user
+package com.bogiruapps.rdshapp.rating
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import com.bogiruapps.rdshapp.utils.Result
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
-class UsersViewModel(val userRepository: UserRepository) : ViewModel() {
+class RatingViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 

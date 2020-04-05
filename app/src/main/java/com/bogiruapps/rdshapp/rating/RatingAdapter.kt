@@ -1,20 +1,21 @@
-package com.bogiruapps.rdshapp.user
+package com.bogiruapps.rdshapp.rating
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bogiruapps.rdshapp.databinding.UserItemBinding
+import com.bogiruapps.rdshapp.databinding.RatingItemBinding
+import com.bogiruapps.rdshapp.user.User
 import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 
-class UsersAdapter (
+class RatingAdapter (
     options: FirestoreRecyclerOptions<User>,
-    private val viewModel: UsersViewModel
-) : FirestoreRecyclerAdapter<User, UsersAdapter.UserViewHolder>(options) {
+    private val viewModel: RatingViewModel
+) : FirestoreRecyclerAdapter<User, RatingAdapter.RatingViewHolder>(options) {
 
-    override fun onBindViewHolder(p0: UserViewHolder, p1: Int, p2: User) {
+    override fun onBindViewHolder(p0: RatingViewHolder, p1: Int, p2: User) {
         p0.bind(viewModel, p2, p1 + 1)
 
 
@@ -30,14 +31,14 @@ class UsersAdapter (
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        return UserViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatingViewHolder {
+        return RatingViewHolder.from(parent)
     }
 
-    class UserViewHolder(private val binding: UserItemBinding) :
+    class RatingViewHolder(private val binding: RatingItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: UsersViewModel, user: User, numberUser: Int) {
+        fun bind(viewModel: RatingViewModel, user: User, numberUser: Int) {
             binding.user = user
             binding.viewModel = viewModel
             binding.place = numberUser
@@ -45,10 +46,10 @@ class UsersAdapter (
         }
 
         companion object {
-            fun from(parent: ViewGroup): UserViewHolder {
+            fun from(parent: ViewGroup): RatingViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = UserItemBinding.inflate(layoutInflater, parent, false)
-                return UserViewHolder(binding)
+                val binding = RatingItemBinding.inflate(layoutInflater, parent, false)
+                return RatingViewHolder(binding)
             }
         }
     }

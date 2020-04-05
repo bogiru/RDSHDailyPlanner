@@ -1,6 +1,7 @@
 package com.bogiruapps.rdshapp.utils
 
 const val RC_SIGN_IN = 101
+const val RC_PICK_FROM_GALLERY = 100
 
 const val USERS_COLLECTION_NAME = "users"
 const val SCHOOL_COLLECTION_NAME = "schools"

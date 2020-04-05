@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.user
+package com.bogiruapps.rdshapp.rating
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,19 +10,19 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.databinding.UsersFragmentBinding
-import com.bogiruapps.rdshapp.utils.GRID_SPAN_COUNT
+import com.bogiruapps.rdshapp.databinding.RatingFragmentBinding
+import com.bogiruapps.rdshapp.user.User
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class UsersFragment : Fragment() {
+class RatingFragment : Fragment() {
 
-    private val usersViewModel: UsersViewModel by viewModel()
+    private val ratingViewModel: RatingViewModel by viewModel()
 
-    private lateinit var adapter: UsersAdapter
-    private lateinit var binding: UsersFragmentBinding
+    private lateinit var adapter: RatingAdapter
+    private lateinit var binding: RatingFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,23 +32,23 @@ class UsersFragment : Fragment() {
         configureBinding(inflater, container)
         setupObserverViewModel()
         configureToolbar()
-        usersViewModel.fetchFirestoreRecyclerQuery()
+        ratingViewModel.fetchFirestoreRecyclerQuery()
         return binding.root
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.users_fragment, container, false)
-        binding.viewModel = usersViewModel
+        binding = DataBindingUtil.inflate(inflater, R.layout.rating_fragment, container, false)
+        binding.viewModel = ratingViewModel
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun setupObserverViewModel() {
 
-        usersViewModel.query.observe(viewLifecycleOwner, Observer {
+        ratingViewModel.query.observe(viewLifecycleOwner, Observer {
             configureRecyclerView(it)
         })
 
-        usersViewModel.dataLoading.observe(viewLifecycleOwner, Observer{ isShowProgress ->
+        ratingViewModel.dataLoading.observe(viewLifecycleOwner, Observer{ isShowProgress ->
             if (isShowProgress) {
                 binding.usersPb.visibility = View.VISIBLE
             } else {
@@ -72,7 +72,7 @@ class UsersFragment : Fragment() {
     private fun configureRecyclerView(query: Query) {
        // val layoutManager = GridLayoutManager(activity, GRID_SPAN_COUNT, GridLayoutManager.HORIZONTAL, false)
         val options = getFirestoreRecyclerOptions(query)
-        adapter = UsersAdapter(options, usersViewModel)
+        adapter = RatingAdapter(options, ratingViewModel)
         binding.recyclerViewUsers.layoutManager = LinearLayoutManager(activity)
         binding.recyclerViewUsers.adapter = adapter
         adapter.notifyDataSetChanged()

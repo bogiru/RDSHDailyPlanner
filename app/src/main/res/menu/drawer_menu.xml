@@ -6,10 +6,16 @@
             android:checkableBehavior="none">
 
         <item
+                android:id="@+id/userFragment"
+                android:title="Профиль"
+                android:icon="@drawable/ic_account_circle_24px" />
+
+        <item
                 android:id="@+id/btn_grid_plan"
                 android:title="План-сетка"
                 android:icon="@drawable/ic_grid_plan"
-                android:enabled="false" />
+                android:enabled="false"
+                android:visible="false"/>
         <item
                 android:id="@+id/eventsFragment"
                 android:title="Мероприятия"

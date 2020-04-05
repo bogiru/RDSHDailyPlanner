@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.user.UsersViewModel" />
+                type="com.bogiruapps.rdshapp.rating.RatingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,7 +24,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"
-                tools:listitem="@layout/user_item" />
+                tools:listitem="@layout/rating_item" />
 
         <ProgressBar
                 android:id="@+id/users_pb"

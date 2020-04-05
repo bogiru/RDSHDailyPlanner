@@ -12,7 +12,7 @@
                 type="com.bogiruapps.rdshapp.user.User" />
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.user.UsersViewModel" />
+                type="com.bogiruapps.rdshapp.rating.RatingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
