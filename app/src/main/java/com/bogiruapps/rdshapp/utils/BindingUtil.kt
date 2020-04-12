@@ -5,6 +5,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
 import com.bogiruapps.rdshapp.R
 import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.RuntimeExecutionException
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.StorageReference
@@ -29,12 +30,10 @@ fun bindImage(view: ImageView, avatar: String?) {
         val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(avatar)
         storageReference.downloadUrl.addOnCompleteListener {
             try {
-                Glide.with(view.context).load(it.result).into(view)
-            }catch (e: Exception) {
+                Glide.with(view.context).load(it.result).error(R.drawable.noavatar).into(view)
+            }catch (e: RuntimeExecutionException) {
                 Glide.with(view.context).load(R.drawable.noavatar).into(view)
             }
         }
-
     }
-
 }

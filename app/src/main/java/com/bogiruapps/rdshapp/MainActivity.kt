@@ -73,18 +73,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        for (fragment in supportFragmentManager.fragments) {
+            fragment.onActivityResult(requestCode, resultCode, data)
+        }
+
         when(requestCode) {
             RC_SIGN_IN ->
                 mainViewModel.handleSignInActivityResult(resultCode, data, authFirebase.currentUser)
-
-            RC_PICK_FROM_GALLERY -> {
-                if (resultCode == RESULT_OK) {
-                    val imageUri = data?.data
-                    val imageStream = contentResolver.openInputStream(imageUri!!)
-                    val selectedImage = BitmapFactory.decodeStream(imageStream)
-                    mainViewModel.loadAvatar(selectedImage)
-                }
-            }
         }
     }
     private fun configureBinding() {

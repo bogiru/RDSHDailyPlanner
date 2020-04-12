@@ -14,23 +14,20 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
-                android:layout_width="0dp"
-                android:layout_height="225dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_width="269dp"
+                android:layout_height="119dp"
+                android:layout_marginStart="8dp"
                 android:longClickable="true"
                 android:onClick="@{(view) -> viewModel.showDetailNoticeFragment(notice)}"
                 app:cardBackgroundColor="#E8FFFFFF"
-                app:cardCornerRadius="5dp"
+                app:cardCornerRadius="10dp"
                 app:cardElevation="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -42,7 +39,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout"
                         android:layout_width="0dp"
-                        android:layout_height="114dp"
+                        android:layout_height="67dp"
                         android:background="@drawable/header9"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -50,10 +47,10 @@
 
                     <ImageView
                             android:id="@+id/imageViewNotice"
+                            imageDrawable="@{@drawable/header9}"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:scaleType="centerCrop"
-                            imageDrawable="@{@drawable/header9}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"

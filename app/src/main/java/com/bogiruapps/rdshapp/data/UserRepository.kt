@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.data
 import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
@@ -62,5 +63,5 @@ interface UserRepository {
 
     suspend fun deleteNotice(): Result<Void?>
 
-    suspend fun loadAvatar(image: Bitmap)
+    suspend fun updateUserPicture(user: User, internalUri: Uri): Result<Uri?>
 }

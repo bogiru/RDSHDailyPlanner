@@ -2,6 +2,7 @@ package com.bogiruapps.rdshapp.data
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
@@ -13,12 +14,17 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.core.OrderBy
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 
 
-class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
+class UserRemoteDataSource(
+    private val db: FirebaseFirestore,
+    private val storage: FirebaseStorage
+) : UserDataSource {
+
     private val ioDispatcher = Dispatchers.IO
 
     private val userCollection = db.collection(USERS_COLLECTION_NAME)
@@ -37,6 +43,7 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
             FIELD_NAME, user.name,
             FIELD_EMAIL, user.email,
             FIELD_SCHOOL, user.school,
+            FIELD_IMAGE_URL, user.imageUrl,
             FIELD_SCORE, user.score
         ).await()
     }
@@ -220,14 +227,26 @@ class UserRemoteDataSource(val db: FirebaseFirestore) : UserDataSource {
         }
     }
 
-    suspend fun loadImage(image: Bitmap, url: String) = withContext(ioDispatcher) {
-        val storageRef = FirebaseStorage.getInstance().getReferenceFromUrl(url)
-        val baos = ByteArrayOutputStream()
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
-        storageRef.putBytes(data)
-
+    suspend fun createNewPictureInStorage(userId: String, internalUri: Uri): Result<Uri> {
+        return try {
+            uploadPictureToStorage(userId, internalUri)
+            fetchPictureUriFromStorage(userId)
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
     }
 
+    private suspend fun uploadPictureToStorage(imageUrlFirebase: String, internalUri: Uri) =
+        withContext(ioDispatcher) {
+            getReferenceStorage(imageUrlFirebase).putFile(internalUri).await<UploadTask.TaskSnapshot>()
+        }
+
+    private suspend fun fetchPictureUriFromStorage(imageUrlFirebase: String): Result<Uri> =
+        withContext(ioDispatcher) {
+            return@withContext getReferenceStorage(imageUrlFirebase).downloadUrl.await()
+        }
+
+    private fun getReferenceStorage(imageUrlFirebase: String) =
+        storage.getReferenceFromUrl(imageUrlFirebase)
 }
 

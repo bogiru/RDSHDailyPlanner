@@ -64,13 +64,6 @@ class MainActivityViewModel(val application: Application, val userRepository: Us
         }
     }
 
-    fun loadAvatar(image: Bitmap) {
-        viewModelScope.launch {
-            userRepository.loadAvatar(image)
-            _changeAvatar.value = Event(Unit)
-        }
-    }
-
     private fun fetchCurrentUserInformation(firebaseUser: FirebaseUser) {
         viewModelScope.launch {
             when (val result = userRepository.fetchUser(firebaseUser.email.toString())) {
@@ -87,7 +80,7 @@ class MainActivityViewModel(val application: Application, val userRepository: Us
     }
 
     private fun createUserToDb(firebaseUser: FirebaseUser) {
-        val user = User(firebaseUser.displayName, firebaseUser.email!!, "gs://rdsh-daily-planner.appspot.com/avatars/${UUID.randomUUID()}")
+        val user = User(firebaseUser.displayName, firebaseUser.email!!)
         viewModelScope.launch {
             when (userRepository.createNewUser(user)) {
                 is Result.Success -> fetchCurrentUserInformation(firebaseUser)

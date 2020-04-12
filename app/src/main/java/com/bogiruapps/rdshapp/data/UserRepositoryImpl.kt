@@ -1,5 +1,5 @@
 package com.bogiruapps.rdshapp.data
-import android.graphics.Bitmap
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
@@ -9,9 +9,7 @@ import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.utils.returnSuccessOrError
 import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.utils.State
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
-import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
@@ -124,7 +122,20 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         return@coroutineScope task.await()
     }
 
-    override suspend fun loadAvatar(image: Bitmap) = coroutineScope {
-        val task = async { dataSource.loadImage(image, currentUser.value!!.avatar!!) }
+    override suspend fun updateUserPicture(user: User, internalUri: Uri): Result<Uri?> {
+        val uri = dataSource.createNewPictureInStorage(user.imageUrl, internalUri)
+
+        when (uri) {
+            is Result.Success -> {
+                val uriPicture = uri.data.toString()
+                user.imageUrl = uriPicture
+                when (updateUser(user)) {
+                    is Result.Error, is Result.Canceled -> {
+                        return Result.Error(Exception("Ошибка при обновлении информации пользователя"))
+                    }
+                }
+            }
+        }
+        return uri
     }
 }

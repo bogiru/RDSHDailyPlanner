@@ -31,7 +31,6 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
                 val user = User(
                     userRepository.currentUser.value!!.name,
                     userRepository.currentUser.value!!.email,
-                    userRepository.currentUser.value!!.avatar,
                     school
                 )
                 when (userRepository.updateUser(user)) {

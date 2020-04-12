@@ -104,5 +104,9 @@ dependencies {
     // Dots indicator
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
 
+    //Circle progress
     implementation 'com.github.lzyzsd:circleprogress:1.2.1'
+
+    // EasyPermissions
+    implementation 'pub.devrel:easypermissions:3.0.0'
 }

@@ -16,6 +16,7 @@ import com.bogiruapps.rdshapp.school.SchoolViewModel
 import com.bogiruapps.rdshapp.rating.RatingViewModel
 import com.bogiruapps.rdshapp.user.UserViewModel
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -24,9 +25,10 @@ val modules = module {
 
     //Firebase
     single { FirebaseFirestore.getInstance() }
+    single { FirebaseStorage.getInstance() }
 
     // Data source
-    single { UserRemoteDataSource(db = get()) }
+    single { UserRemoteDataSource(db = get(), storage = get()) }
 
     // Repository
     single<UserRepository> {
