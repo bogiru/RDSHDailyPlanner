@@ -10,5 +10,6 @@ data class SchoolEvent (
     var deadline: Date = Calendar.getInstance().time,
     var countTask: Int = 0,
     var countCompletedTask: Int = 0,
-    var author: User = User()
+    var author: User = User(),
+    var indexImage: Int = Random().nextInt(23)
 )

@@ -37,3 +37,16 @@ fun bindImage(view: ImageView, avatar: String?) {
         }
     }
 }
+
+@BindingAdapter("loadImageEvent")
+fun loadImageEvent(view: ImageView, indexImage: Int) {
+    val storageReference =
+        FirebaseStorage.getInstance().reference.child("backgroundEvents/$indexImage.png")
+    storageReference.downloadUrl.addOnCompleteListener {
+        try {
+            Glide.with(view.context).load(it.result).error(R.drawable.noavatar).into(view)
+        } catch (e: RuntimeExecutionException) {
+            Glide.with(view.context).load(R.drawable.noavatar).into(view)
+        }
+    }
+}

@@ -25,31 +25,9 @@ class EventsAdapter(
 
     class EventsViewHolder(private val binding: EventsItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        val images = listOf(
-            R.drawable.p2,
-            R.drawable.p3,
-            R.drawable.p7,
-            R.drawable.p8,
-            R.drawable.p9,
-            R.drawable.p10,
-            R.drawable.p11,
-            R.drawable.p12,
-            R.drawable.p13,
-            R.drawable.p14,
-            R.drawable.p15,
-            R.drawable.p16,
-            R.drawable.p17,
-            R.drawable.p18,
-            R.drawable.p19,
-            R.drawable.p20,
-            R.drawable.p21
-        )
-
-
         fun bind(viewModel: EventsViewModel, schoolEvent: SchoolEvent) {
             binding.event = schoolEvent
             binding.viewModel = viewModel
-            binding.imageView3.setImageResource(images.random())
            if (schoolEvent.countTask == 0) {
                binding.eventProgressBar.setDonut_progress("0")
            } else {
