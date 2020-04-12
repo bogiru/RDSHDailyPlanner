@@ -9,6 +9,7 @@ import com.google.android.gms.tasks.RuntimeExecutionException
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageException
 import com.google.firebase.storage.StorageReference
+import java.lang.Error
 import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
@@ -27,13 +28,13 @@ fun bindImage(view: ImageView, img: Int) {
 @BindingAdapter("imageDrawable")
 fun bindImage(view: ImageView, avatar: String?) {
     avatar?.let {
-        val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(avatar)
-        storageReference.downloadUrl.addOnCompleteListener {
-            try {
+        try {
+            val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(avatar)
+            storageReference.downloadUrl.addOnCompleteListener {
                 Glide.with(view.context).load(it.result).error(R.drawable.noavatar).into(view)
-            }catch (e: RuntimeExecutionException) {
-                Glide.with(view.context).load(R.drawable.noavatar).into(view)
-            }
+             }
+        }catch (e: Throwable) {
+            Glide.with(view.context).load(R.drawable.noavatar).into(view)
         }
     }
 }

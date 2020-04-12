@@ -11,6 +11,7 @@ const val SCHOOL_COLLECTION_NAME = "schools"
 const val EVENTS_COLLECTION_NAME = "events"
 const val NOTICE_COLLECTION_NAME = "notices"
 const val TASKS_COLLECTION_NAME = "tasks"
+const val MESSAGES_COLLECTION_NAME = "messages"
 
 const val FIELD_SCORE = "score"
 const val FIELD_NAME = "name"

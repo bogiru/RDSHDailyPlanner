@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.events.chat_room_event.Message
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.utils.returnSuccessOrError
@@ -77,6 +78,11 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         return@coroutineScope (task.await())
     }
 
+    override suspend fun fetchFirestoreRecyclerQueryEventMessage(): Result<Query> = coroutineScope {
+        val task = async { dataSource.fetchFirestoreRecyclerQueryEventMessage(currentUser.value!!.school, currentEvent.value!!) }
+        return@coroutineScope (task.await())
+    }
+
     override suspend fun createEvent(event: SchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.createEvent(currentUser.value!!.school,  event) }
         return@coroutineScope returnSuccessOrError(task.await())
@@ -105,6 +111,11 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
     override suspend fun deleteTaskEvent(taskEvent: TaskEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.deleteTaskEvent(currentUser.value!!.school, currentEvent.value!!, taskEvent)}
         return@coroutineScope task.await()
+    }
+
+    override suspend fun createEventMessage(message: Message): Result<Void?> = coroutineScope {
+        val task = async { dataSource.createEventMessage(currentUser.value!!.school,  currentEvent.value!!, message) }
+        return@coroutineScope returnSuccessOrError(task.await())
     }
 
     override suspend fun createNewNotice(notice: Notice): Result<Void?> = coroutineScope {

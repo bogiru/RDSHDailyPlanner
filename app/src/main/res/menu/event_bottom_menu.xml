@@ -10,6 +10,7 @@
             android:icon="@drawable/ic_star_24px"
             android:title="Задачи" />
     <item
+            android:id="@+id/eventChatRoomFragment"
             android:icon="@drawable/ic_email_24px"
             android:title="Чат" />
 </menu>

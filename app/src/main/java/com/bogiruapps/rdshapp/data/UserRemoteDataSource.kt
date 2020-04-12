@@ -1,23 +1,19 @@
 package com.bogiruapps.rdshapp.data
 
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.events.chat_room_event.Message
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.*
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.core.OrderBy
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
 
 
 class UserRemoteDataSource(
@@ -166,6 +162,11 @@ class UserRemoteDataSource(
             .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(TASKS_COLLECTION_NAME).document(taskEvent.id).delete().await()
     }
 
+    suspend fun createEventMessage(school: School, event: SchoolEvent, message: Message): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext schoolsCollection.document(school.id).collection(EVENTS_COLLECTION_NAME)
+            .document(event.id).collection(MESSAGES_COLLECTION_NAME).document().set(message).await()
+    }
+
     suspend fun fetchFirestoreRecyclerQueryUser(school: School): Result<Query> = withContext(ioDispatcher) {
         return@withContext try {
             when (val result = schoolsCollection.document(school.id)
@@ -218,6 +219,21 @@ class UserRemoteDataSource(
             when (val result = schoolsCollection.document(school.id)
                 .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(TASKS_COLLECTION_NAME)
                 .orderBy(FIELD_COMPLETED, Query.Direction.ASCENDING).get().await()) {
+                is Result.Success -> Result.Success(result.data.query)
+                is Result.Error -> Result.Error(result.exception)
+                is Result.Canceled -> Result.Error(result.exception)
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    suspend fun fetchFirestoreRecyclerQueryEventMessage(school: School, event: SchoolEvent): Result<Query> = withContext(ioDispatcher) {
+        return@withContext try {
+            when (val result = schoolsCollection.document(school.id)
+                .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(
+                    MESSAGES_COLLECTION_NAME)
+                .orderBy(FIELD_DATE, Query.Direction.ASCENDING).get().await()) {
                 is Result.Success -> Result.Success(result.data.query)
                 is Result.Error -> Result.Error(result.exception)
                 is Result.Canceled -> Result.Error(result.exception)

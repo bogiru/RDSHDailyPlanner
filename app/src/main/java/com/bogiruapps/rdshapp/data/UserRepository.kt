@@ -5,13 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.events.chat_room_event.Message
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.utils.State
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
-import com.google.firebase.storage.UploadTask
 
 interface UserRepository {
 
@@ -43,6 +42,8 @@ interface UserRepository {
 
     suspend fun fetchFirestoreRecyclerQueryTasksEvent():  Result<Query>
 
+    suspend fun fetchFirestoreRecyclerQueryEventMessage(): Result<Query>
+
     suspend fun createTaskEvent(event: TaskEvent): Result<Void?>
 
     suspend fun createEvent(event: SchoolEvent): Result<Void?>
@@ -56,6 +57,8 @@ interface UserRepository {
    /* suspend fun fetchNotices(school: School): Result<List<Notice>>*/
 
     suspend fun deleteTaskEvent(taskEvent: TaskEvent): Result<Void?>
+
+    suspend fun createEventMessage(message: Message): Result<Void?>
 
     suspend fun createNewNotice(notice: Notice): Result<Void?>
 
