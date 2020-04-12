@@ -91,9 +91,9 @@ class EventDetailFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.event_detail_fragment, container, false)
         binding.viewModel = eventDetailViewModel
         if (eventDetailViewModel.event.countTask == 0) {
-            binding.progressBar.progress = 0
+            //binding.progressBar.setDonut_progress("0")
         } else {
-            binding.progressBar.progress = eventDetailViewModel.event.countCompletedTask * 100 / eventDetailViewModel.event.countTask
+           // binding.progressBar.setDonut_progress("${eventDetailViewModel.event.countCompletedTask * 100 / eventDetailViewModel.event.countTask}")
         }
         binding.lifecycleOwner = this.viewLifecycleOwner
 
@@ -115,11 +115,12 @@ class EventDetailFragment : Fragment() {
             return@setOnMenuItemClickListener true
         }
 
+        activity?.bottomNavigationView?.visibility = View.VISIBLE
         editItem?.isVisible = true
         deleteItem?.isVisible = true
-        Glide.with(this).load(R.drawable.header2).into(image)
-        activity?.collapseToolbar?.title = eventDetailViewModel.event.title
-        activity?.appBar?.setExpanded(true)
+        //Glide.with(this).load(R.drawable.header2).into(image)
+        activity?.collapseToolbar?.title = ""
+        //activity?.appBar?.setExpanded(true)
 
     }
 }

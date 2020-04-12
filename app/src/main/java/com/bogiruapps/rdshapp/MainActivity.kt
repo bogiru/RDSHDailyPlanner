@@ -152,6 +152,9 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         navView.setupWithNavController(navController)
         toolbar.setupWithNavController(navController, appBarConfiguration)
+
+        binding.bottomNavigationView.setupWithNavController(navController)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {

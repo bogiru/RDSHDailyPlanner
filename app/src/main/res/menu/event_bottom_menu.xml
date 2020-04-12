@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/eventDetailFragment"
+            android:icon="@drawable/ic_info"
+            android:title="Описание" />
+    <item
+            android:id="@+id/tasksEventFragment"
+            android:icon="@drawable/ic_star_24px"
+            android:title="Задачи" />
+    <item
+            android:icon="@drawable/ic_email_24px"
+            android:title="Чат" />
+</menu>
