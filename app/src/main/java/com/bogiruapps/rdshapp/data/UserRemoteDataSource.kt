@@ -233,7 +233,7 @@ class UserRemoteDataSource(
             when (val result = schoolsCollection.document(school.id)
                 .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(
                     MESSAGES_COLLECTION_NAME)
-                .orderBy(FIELD_DATE, Query.Direction.ASCENDING).get().await()) {
+                .orderBy(FIELD_DATE, Query.Direction.DESCENDING).get().await()) {
                 is Result.Success -> Result.Success(result.data.query)
                 is Result.Error -> Result.Error(result.exception)
                 is Result.Canceled -> Result.Error(result.exception)

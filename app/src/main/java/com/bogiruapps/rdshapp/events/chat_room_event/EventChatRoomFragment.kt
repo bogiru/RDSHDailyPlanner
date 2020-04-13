@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
@@ -20,6 +21,7 @@ import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notice.*
+import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -60,6 +62,23 @@ class EventChatRoomFragment : Fragment() {
         eventChatRoomViewModel.showEventChatRoomContent.observe(viewLifecycleOwner, EventObserver {
             configureRecyclerView()
         })
+
+        eventChatRoomViewModel.updateEventChatRoomRecyclerView.observe(viewLifecycleOwner, EventObserver {
+            binding.eventChatRoomRecyclerView.smoothScrollToPosition(0)
+        })
+
+        eventChatRoomViewModel.clearEventChatRoomEdtText.observe(viewLifecycleOwner, EventObserver {
+            binding.eventChatRoomEdtText.text.clear()
+            this.hideKeyboard()
+        })
+
+        eventChatRoomViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->
+            if (isDataLoading) {
+                binding.eventChatRoomPb.visibility = View.VISIBLE
+            } else {
+                binding.eventChatRoomPb.visibility = View.INVISIBLE
+            }
+        })
     }
     private fun configureToolbar() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
@@ -73,10 +92,12 @@ class EventChatRoomFragment : Fragment() {
     }
 
     private fun configureRecyclerView() {
-        adapter = EventChatRoomAdapter(getFirestoreRecyclerOptions(), eventChatRoomViewModel)
-        binding.eventChatRoomRecyclerView.layoutManager = LinearLayoutManager(activity)
-        binding.eventChatRoomRecyclerView.adapter = adapter
+        val layoutManager = LinearLayoutManager(activity)
+        layoutManager.reverseLayout = true
 
+        adapter = EventChatRoomAdapter(getFirestoreRecyclerOptions(), eventChatRoomViewModel)
+        binding.eventChatRoomRecyclerView.layoutManager = layoutManager
+        binding.eventChatRoomRecyclerView.adapter = adapter
     }
 
     private fun getFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Message> {

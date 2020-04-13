@@ -5,8 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.databinding.EventChatRoomItemBinding
 import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.DocumentSnapshot
 
 class EventChatRoomAdapter(
     options : FirestoreRecyclerOptions<Message>,
@@ -16,6 +18,17 @@ class EventChatRoomAdapter(
 
     override fun onBindViewHolder(p0: EventsChatRoomViewHolder, p1: Int, p2: Message) {
         p0.bind(viewModel, p2)
+
+    }
+
+    override fun onChildChanged(
+        type: ChangeEventType,
+        snapshot: DocumentSnapshot,
+        newIndex: Int,
+        oldIndex: Int
+    ) {
+        super.onChildChanged(type, snapshot, newIndex, oldIndex)
+        viewModel.updateEventChatRoomRecyclerView()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsChatRoomViewHolder {
