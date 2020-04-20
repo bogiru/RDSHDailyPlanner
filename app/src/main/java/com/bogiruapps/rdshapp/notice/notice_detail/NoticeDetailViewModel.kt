@@ -36,7 +36,7 @@ class NoticeDetailViewModel(private val userRepository: UserRepository) : ViewMo
     }
 
     fun showEditNoticeFragment() {
-        if (userRepository.currentUser.value!!.name == userRepository.currentNotice.value!!.author) {
+        if (userRepository.currentUser.value!!.email == userRepository.currentNotice.value!!.author!!.email) {
             _openNoticeEditFragmentEvent.value = Event(Unit)
             userRepository.stateNotice.value = State.EDIT
         } else {
@@ -46,7 +46,7 @@ class NoticeDetailViewModel(private val userRepository: UserRepository) : ViewMo
     }
 
     fun showDeleteNoticeFragment() {
-        if (userRepository.currentUser.value!!.name == userRepository.currentNotice.value!!.author)  _openNoticeDeleteFragmentEvent.value = Event(Unit)
+        if (userRepository.currentUser.value!!.email  == userRepository.currentNotice.value!!.author!!.email)  _openNoticeDeleteFragmentEvent.value = Event(Unit)
         else _showToast.value = Event("Право удаления предоставлено только автору объявления")
 
     }

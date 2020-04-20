@@ -45,7 +45,7 @@ class TaskEventAdapter(
             }
             var numberClick = 1
 
-            binding.cardView.setOnClickListener {
+           /* binding.cardView.setOnClickListener {
                 if (numberClick % 2 == 0) hideDetailEvent(viewModel)
                 else showDetailEvent(viewModel, taskEvent)
 
@@ -57,7 +57,7 @@ class TaskEventAdapter(
                  return@setOnLongClickListener true
              }
             binding.executePendingBindings()
-
+*/
         }
 
         private fun showDetailEvent(viewModel: TaskEventViewModel, taskEvent: TaskEvent) {

@@ -40,7 +40,7 @@ class NoticeEditViewModel(private val userRepository: UserRepository) : ViewMode
     }
 
     private fun createNotice(notice: Notice) {
-        notice.author = userRepository.currentUser.value!!.name.toString()
+        notice.author = userRepository.currentUser.value!!
 
         viewModelScope.launch {
             userRepository.createNewNotice(notice)

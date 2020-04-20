@@ -14,12 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeBinding
-import com.bogiruapps.rdshapp.utils.GRID_SPAN_COUNT
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_notice.*
-import kotlinx.android.synthetic.main.notice_item.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NoticeFragment : Fragment() {
@@ -99,10 +97,9 @@ class NoticeFragment : Fragment() {
     }
 
     private fun configureRecyclerView() {
-        //val layoutManager = GridLayoutManager(activity, GRID_SPAN_COUNT, GridLayoutManager.HORIZONTAL, false)
         val options = getFirestoreRecyclerOptions()
         adapter = NoticeAdapter(options, noticeViewModel)
-        binding.recyclerViewNotice.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewNotice.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewNotice.adapter = adapter
     }
 

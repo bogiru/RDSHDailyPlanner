@@ -51,6 +51,7 @@ class EventChatRoomFragment : Fragment() {
         this.hideKeyboard()
     }
 
+
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_chat_room, container, false)
         binding.viewModel = eventChatRoomViewModel

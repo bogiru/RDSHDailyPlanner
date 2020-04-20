@@ -1,16 +1,13 @@
 package com.bogiruapps.rdshapp.utils
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
 import com.bogiruapps.rdshapp.R
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.RuntimeExecutionException
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageException
-import com.google.firebase.storage.StorageReference
-import java.lang.Error
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,6 +15,13 @@ import java.util.*
 fun convertDateToString(date: Date): String {
     val dateFormat = SimpleDateFormat("dd.MM.yyyy. HH:mm", Locale.ENGLISH)
     return dateFormat.format(date)
+}
+
+@BindingAdapter("setDateNoticeItem")
+fun setDateNoticeItem(view: TextView, date: Date) {
+    val dateFormat = SimpleDateFormat("dd MMM", Locale("Ru"))
+
+    view.text = dateFormat.format(date).toString()
 }
 
 @BindingAdapter("imageDrawable")
