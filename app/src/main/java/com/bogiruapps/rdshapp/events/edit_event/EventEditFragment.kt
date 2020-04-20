@@ -32,6 +32,7 @@ class EventEditFragment : Fragment() {
         setupObserverViewModel()
         setClickListenerOnCalendarView()
         configureToolbar()
+        configureBottomNavigation()
         return binding.root
     }
 
@@ -66,6 +67,10 @@ class EventEditFragment : Fragment() {
         }
         editItem?.isVisible = false
         deleteItem?.isVisible = false
+    }
+
+    private fun configureBottomNavigation() {
+        activity!!.bottomNavigationView.visibility = View.GONE
     }
 
     private fun setClickListenerOnCalendarView() {

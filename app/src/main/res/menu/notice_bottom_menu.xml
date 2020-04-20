@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/noticeDetailFragment"
+            android:icon="@drawable/ic_info"
+            android:title="Описание" />
+    <item
+            android:icon="@drawable/ic_email_24px"
+            android:title="Комментарии" />
+    <item
+            android:icon="@drawable/ic_eye"
+            android:title="Просмотры" />
+</menu>

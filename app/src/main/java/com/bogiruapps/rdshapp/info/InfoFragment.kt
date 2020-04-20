@@ -25,6 +25,7 @@ class InfoFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         configureToolbar()
+        configureBottomNavigation()
         configureDotsIndicator()
 
         return binding.root
@@ -47,6 +48,10 @@ class InfoFragment : Fragment() {
         activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
         editItem?.isVisible = false
         deleteItem?.isVisible = false
+    }
+
+    private fun configureBottomNavigation() {
+        activity!!.bottomNavigationView.visibility = View.GONE
     }
 
     private fun configureDotsIndicator() {

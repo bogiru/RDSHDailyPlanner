@@ -29,6 +29,7 @@ class UserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         configureToolbar()
+        configureBottomNavigation()
         configureBinding(inflater, container)
         setupObserverViewModel()
 
@@ -51,6 +52,10 @@ class UserFragment : Fragment() {
     private fun configureToolbar() {
         activity?.toolbar?.title = "Профиль"
 
+    }
+
+    private fun configureBottomNavigation() {
+        activity!!.bottomNavigationView.visibility = View.GONE
     }
 
     private fun setupObserverViewModel() {

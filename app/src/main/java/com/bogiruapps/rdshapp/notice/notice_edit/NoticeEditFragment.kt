@@ -35,6 +35,8 @@ class NoticeEditFragment : Fragment() {
         configureBinding(inflater, container)
         setupObserverViewModel()
         configureToolbar()
+        configureBottomNavigation()
+
         return binding.root
     }
 
@@ -70,7 +72,6 @@ class NoticeEditFragment : Fragment() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
 
-        activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
 
         if (noticeEditViewModel.checkCreateNoticeStatus()) {
             activity?.toolbar?.title = "Создание объявления"
@@ -82,7 +83,9 @@ class NoticeEditFragment : Fragment() {
         deleteItem?.isVisible = false
     }
 
-
+    private fun configureBottomNavigation() {
+        activity!!.bottomNavigationView.visibility = View.GONE
+    }
 
     private fun showEditNotice() {
         binding.editNoticeLayout.visibility = View.VISIBLE

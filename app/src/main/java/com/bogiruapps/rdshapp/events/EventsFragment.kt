@@ -35,6 +35,7 @@ class EventsFragment : Fragment() {
         setupObserverViewModel()
         eventsViewModel.fetchFirestoreRecyclerQuery()
         configureToolbar()
+        configureBottomNavigation()
 
         return binding.root
     }
@@ -81,6 +82,10 @@ class EventsFragment : Fragment() {
         activity?.toolbar?.title = "Мероприятия"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
+    }
+
+    private fun configureBottomNavigation() {
+        activity!!.bottomNavigationView.visibility = View.GONE
     }
 
     private fun configureRecyclerView() {

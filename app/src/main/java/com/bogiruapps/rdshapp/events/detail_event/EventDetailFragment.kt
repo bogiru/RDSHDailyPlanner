@@ -34,6 +34,7 @@ class EventDetailFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         configureToolbar()
+        configureBottomNavigation()
         setupObserverViewModel()
 
         return binding.root
@@ -114,12 +115,18 @@ class EventDetailFragment : Fragment() {
             return@setOnMenuItemClickListener true
         }
 
-        activity?.bottomNavigationView?.visibility = View.VISIBLE
         editItem?.isVisible = true
         deleteItem?.isVisible = true
         //Glide.with(this).load(R.drawable.header2).into(image)
-        activity?.toolbar?.title = "Подробности"
+        activity?.toolbar?.title = "Описание"
         //activity?.appBar?.setExpanded(true)
 
     }
+
+    private fun configureBottomNavigation() {
+        activity!!.bottomNavigationView.menu.clear()
+        activity!!.bottomNavigationView.inflateMenu(R.menu.event_bottom_menu)
+        activity!!.bottomNavigationView.visibility = View.VISIBLE
+    }
+
 }

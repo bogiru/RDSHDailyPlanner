@@ -5,12 +5,12 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.view.*
+import androidx.appcompat.view.menu.MenuBuilder
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.setupWithNavController
 import androidx.transition.TransitionInflater
 import com.bogiruapps.rdshapp.EventObserver
 
@@ -38,6 +38,7 @@ class NoticeDetailFragment : Fragment() {
         configureBinding(inflater, container)
         setupObserverViewModel()
         configureToolbar()
+        configureBottomNavigation()
         return binding.root
     }
 
@@ -87,6 +88,12 @@ class NoticeDetailFragment : Fragment() {
         editItem?.isVisible = true
         deleteItem?.isVisible = true
 
+    }
+
+    private fun configureBottomNavigation() {
+        activity!!.bottomNavigationView.menu.clear()
+        activity!!.bottomNavigationView.inflateMenu(R.menu.notice_bottom_menu)
+        activity!!.bottomNavigationView.visibility = View.VISIBLE
     }
 
     @SuppressLint("ResourceType")

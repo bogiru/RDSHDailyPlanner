@@ -32,6 +32,7 @@ class RatingFragment : Fragment() {
         configureBinding(inflater, container)
         setupObserverViewModel()
         configureToolbar()
+        configureBottomNavigation()
         ratingViewModel.fetchFirestoreRecyclerQuery()
         return binding.root
     }
@@ -65,6 +66,10 @@ class RatingFragment : Fragment() {
         activity?.toolbar?.title = "Рейтинг"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
+    }
+
+    private fun configureBottomNavigation() {
+        activity!!.bottomNavigationView.visibility = View.GONE
     }
 
     private fun configureRecyclerView(query: Query) {
