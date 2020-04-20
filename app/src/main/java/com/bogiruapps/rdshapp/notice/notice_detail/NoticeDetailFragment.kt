@@ -73,7 +73,6 @@ class NoticeDetailFragment : Fragment() {
     private fun configureToolbar() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
-        val image = activity!!.headerImage
 
         editItem?.setOnMenuItemClickListener {
             noticeDetailViewModel.showEditNoticeFragment()
@@ -87,7 +86,6 @@ class NoticeDetailFragment : Fragment() {
 
         editItem?.isVisible = true
         deleteItem?.isVisible = true
-        activity?.appBar?.setExpanded(false)
 
     }
 

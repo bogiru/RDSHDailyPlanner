@@ -49,9 +49,7 @@ class UserFragment : Fragment() {
     }
 
     private fun configureToolbar() {
-        val image = activity!!.headerImage
-        activity?.collapseToolbar?.title = "Профиль"
-        activity?.appBar?.setExpanded(false)
+        activity?.toolbar?.title = "Профиль"
 
     }
 

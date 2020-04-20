@@ -60,11 +60,9 @@ class RatingFragment : Fragment() {
     private fun configureToolbar() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
-        val image = activity!!.headerImage
 
         activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
-        activity?.collapseToolbar?.title = "Рейтинг"
-        activity?.appBar?.setExpanded(false)
+        activity?.toolbar?.title = "Рейтинг"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }

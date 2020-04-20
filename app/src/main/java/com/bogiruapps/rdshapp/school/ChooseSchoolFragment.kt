@@ -104,8 +104,7 @@ class ChooseSchoolFragment : Fragment() {
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
 
         activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
-        activity?.collapseToolbar?.title = ""
-        activity?.appBar?.setExpanded(false)
+        activity?.toolbar?.title = ""
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }

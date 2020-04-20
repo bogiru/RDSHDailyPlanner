@@ -37,6 +37,7 @@
             android:name="com.bogiruapps.rdshapp.notice.NoticeFragment"
             android:label="Объявления" >
         <action
+                android:label="Подробности"
                 android:id="@+id/action_noticeFragment_to_noticeDetailFragment"
                 app:destination="@id/noticeDetailFragment"
                 app:launchSingleTop="false"
@@ -82,8 +83,7 @@
     </fragment>
     <fragment
             android:id="@+id/noticeDetailFragment"
-            android:name="com.bogiruapps.rdshapp.notice.notice_detail.NoticeDetailFragment"
-            android:label="Подробности">
+            android:name="com.bogiruapps.rdshapp.notice.notice_detail.NoticeDetailFragment">
         <action
                 android:id="@+id/action_noticeDetailFragment_to_noticeEditFragment"
                 app:destination="@id/noticeEditFragment"

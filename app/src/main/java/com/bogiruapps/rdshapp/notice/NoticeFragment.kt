@@ -85,7 +85,6 @@ class NoticeFragment : Fragment() {
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
 
         activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
-        activity?.appBar?.setExpanded(false)
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }

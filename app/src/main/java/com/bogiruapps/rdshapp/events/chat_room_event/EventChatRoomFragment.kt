@@ -84,10 +84,8 @@ class EventChatRoomFragment : Fragment() {
     private fun configureToolbar() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
-        val image = activity!!.headerImage
 
-        activity?.collapseToolbar?.title = "Чат"
-        activity?.appBar?.setExpanded(false)
+        activity?.toolbar?.title = "Чат"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }

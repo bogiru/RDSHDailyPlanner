@@ -103,7 +103,6 @@ class EventDetailFragment : Fragment() {
     private fun configureToolbar() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
-        val image = activity!!.headerImage
 
         editItem?.setOnMenuItemClickListener {
             eventDetailViewModel.showEditEventFragment()
@@ -119,7 +118,7 @@ class EventDetailFragment : Fragment() {
         editItem?.isVisible = true
         deleteItem?.isVisible = true
         //Glide.with(this).load(R.drawable.header2).into(image)
-        activity?.collapseToolbar?.title = ""
+        activity?.toolbar?.title = "Подробности"
         //activity?.appBar?.setExpanded(true)
 
     }
