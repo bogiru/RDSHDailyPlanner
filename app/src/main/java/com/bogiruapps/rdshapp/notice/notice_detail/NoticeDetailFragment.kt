@@ -87,9 +87,7 @@ class NoticeDetailFragment : Fragment() {
 
         editItem?.isVisible = true
         deleteItem?.isVisible = true
-        Glide.with(this).load(R.drawable.header9).into(image)
-        activity?.collapseToolbar?.title = noticeDetailViewModel.notice.value?.title
-        activity?.appBar?.setExpanded(true)
+        activity?.appBar?.setExpanded(false)
 
     }
 
