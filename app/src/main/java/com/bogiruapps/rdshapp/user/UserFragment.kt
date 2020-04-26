@@ -50,6 +50,7 @@ class UserFragment : Fragment() {
     }
 
     private fun configureToolbar() {
+        //activity?.toolbar?.menu?.findItem(R.id.item_edit)?.isVisible = true
         activity?.toolbar?.title = "Профиль"
 
     }
@@ -65,10 +66,8 @@ class UserFragment : Fragment() {
 
         userViewModel.dataLoading.observe(viewLifecycleOwner, Observer {
             if (it) {
-                binding.loadLayout.visibility = View.VISIBLE
                 binding.userPb.visibility = View.VISIBLE
             } else {
-                binding.loadLayout.visibility = View.INVISIBLE
                 binding.userPb.visibility = View.INVISIBLE
             }
         })
