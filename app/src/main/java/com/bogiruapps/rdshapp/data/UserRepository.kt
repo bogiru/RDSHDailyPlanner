@@ -32,6 +32,8 @@ interface UserRepository {
 
     suspend fun addUserToSchool(): Result<Void?>
 
+    suspend fun deleteUserFromSchool(): Result<Void?>
+
     suspend fun fetchUsers(): Result<List<User?>>
 
     suspend fun fetchFirestoreRecyclerQueryUser():  Result<Query>

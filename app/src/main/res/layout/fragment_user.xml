@@ -19,7 +19,7 @@
             tools:context=".user.UserFragment">
 
         <androidx.cardview.widget.CardView
-                android:id="@+id/cardView3"
+                android:id="@+id/user_main_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -68,7 +68,7 @@
                         app:layout_constraintTop_toTopOf="@+id/profile_image" />
 
                 <ImageView
-                        android:id="@+id/imageView8"
+                        android:id="@+id/btn_add_avatar"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         app:layout_constraintBottom_toBottomOf="@+id/profile_image"
@@ -76,7 +76,7 @@
                         app:srcCompat="@drawable/ic_add_blue_circle_24px" />
 
                 <ImageView
-                        android:id="@+id/imageView9"
+                        android:id="@+id/btn_edit_name"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginEnd="8dp"
@@ -95,12 +95,12 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:cardCornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView5">
+                app:layout_constraintTop_toBottomOf="@+id/user_info_card">
 
             <ImageView
                     android:id="@+id/imageView6"
@@ -118,33 +118,46 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.31" />
+                app:layout_constraintVertical_bias="0.45" />
+
+        <TextView
+                android:id="@+id/load_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Загрузка изображения"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_pb" />
 
         <androidx.cardview.widget.CardView
-                android:id="@+id/cardView5"
+                android:id="@+id/user_info_card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardView3">
+                app:layout_constraintTop_toBottomOf="@+id/user_main_card">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                 <ImageView
-                        android:id="@+id/imageView12"
+                        android:id="@+id/btn_edit_school"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_marginEnd="8dp"
+                        android:onClick="@{(view) -> viewModel.showAllertDialogEditSchool()}"
                         android:layout_marginBottom="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView3"
+                        app:layout_constraintTop_toBottomOf="@+id/user_title_school"
                         app:srcCompat="@drawable/ic_edit_black_18dp" />
 
                 <TextView
@@ -176,7 +189,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/divider3" />
 
                 <TextView
-                        android:id="@+id/textView6"
+                        android:id="@+id/user_title_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Счет"
@@ -192,10 +205,10 @@
                         android:background="?android:attr/listDivider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+                        app:layout_constraintTop_toBottomOf="@+id/user_title_score" />
 
                 <TextView
-                        android:id="@+id/textView2"
+                        android:id="@+id/user_title_email"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="почта"
@@ -225,10 +238,10 @@
                         android:background="?android:attr/listDivider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                        app:layout_constraintTop_toBottomOf="@+id/user_title_email" />
 
                 <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/user_title_school"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="школа"
@@ -247,7 +260,7 @@
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView3"
+                        app:layout_constraintTop_toBottomOf="@+id/user_title_school"
                         tools:visibility="gone" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

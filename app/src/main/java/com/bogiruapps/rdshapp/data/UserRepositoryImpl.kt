@@ -11,6 +11,7 @@ import com.bogiruapps.rdshapp.utils.returnSuccessOrError
 import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.utils.State
 import com.google.firebase.firestore.Query
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
@@ -50,6 +51,11 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
 
     override suspend fun addUserToSchool(): Result<Void?> = coroutineScope {
         val task = async { dataSource.addUserToSchool(currentUser.value!!.school, currentUser.value!!)}
+        return@coroutineScope task.await()
+    }
+
+    override suspend fun deleteUserFromSchool(): Result<Void?> = coroutineScope {
+        val task = async { dataSource.deleteUserFromSchool(currentUser.value!!.school, currentUser.value!!) }
         return@coroutineScope task.await()
     }
 
@@ -139,7 +145,7 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         when (uri) {
             is Result.Success -> {
                 val uriPicture = uri.data.toString()
-                user.imageUrl = uriPicture
+                user.imageUrl = user.imageUrl
                 when (updateUser(user)) {
                     is Result.Error, is Result.Canceled -> {
                         return Result.Error(Exception("Ошибка при обновлении информации пользователя"))

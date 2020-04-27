@@ -92,6 +92,11 @@ class UserRemoteDataSource(
                 .document(user.email.toString()).set(user).await()
         }
 
+    override suspend fun deleteUserFromSchool(school: School, user: User): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext schoolsCollection.document(school.id).collection(USERS_COLLECTION_NAME)
+            .document(user.email.toString()).delete().await()
+    }
+
     override suspend fun createNotice(school: School, notice: Notice): Result<Void> = withContext(ioDispatcher) {
             return@withContext try {
                 schoolsCollection.document(school.id).collection(NOTICE_COLLECTION_NAME).document(notice.id).set(notice)
@@ -263,6 +268,6 @@ class UserRemoteDataSource(
         }
 
     private fun getReferenceStorage(imageUrlFirebase: String) =
-        storage.getReferenceFromUrl(imageUrlFirebase)
+        storage.reference.child(imageUrlFirebase)
 }
 

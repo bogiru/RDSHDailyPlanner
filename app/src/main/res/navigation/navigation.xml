@@ -129,7 +129,11 @@
             android:id="@+id/userFragment"
             android:name="com.bogiruapps.rdshapp.user.UserFragment"
             android:label="fragment_user"
-            tools:layout="@layout/fragment_user" />
+            tools:layout="@layout/fragment_user" >
+        <action
+                android:id="@+id/action_userFragment_to_choseSchoolFragment"
+                app:destination="@id/choseSchoolFragment" />
+    </fragment>
     <fragment
             android:id="@+id/eventChatRoomFragment"
             android:name="com.bogiruapps.rdshapp.events.chat_room_event.EventChatRoomFragment"

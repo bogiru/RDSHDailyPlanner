@@ -115,14 +115,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun connected() {
-        binding.imageNoInternet.visibility = View.INVISIBLE
-        binding.textViewNoInternet.visibility = View.INVISIBLE
+        binding.noInthernetLayout.visibility = View.INVISIBLE
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
     private fun disconnected() {
-        binding.imageNoInternet.visibility = View.VISIBLE
-        binding.textViewNoInternet.visibility = View.VISIBLE
+        binding.noInthernetLayout.visibility = View.VISIBLE
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
     }
 

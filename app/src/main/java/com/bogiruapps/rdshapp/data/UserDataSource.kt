@@ -22,6 +22,8 @@ interface UserDataSource {
 
     suspend fun addUserToSchool(school: School, user: User): Result<Void?>
 
+    suspend fun deleteUserFromSchool(school: School, user: User): Result<Void?>
+
     suspend fun createNotice(school: School, notice: Notice): Result<Void>
 
     suspend fun updateNotice(school: School, notice: Notice): Result<Void?>

@@ -45,7 +45,7 @@ class InfoFragment : Fragment() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
 
-        activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
+        activity?.toolbar?.title = " "
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }

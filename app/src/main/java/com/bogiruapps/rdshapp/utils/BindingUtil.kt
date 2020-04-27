@@ -32,14 +32,16 @@ fun bindImage(view: ImageView, img: Int) {
 @BindingAdapter("imageDrawable")
 fun bindImage(view: ImageView, avatar: String?) {
     avatar?.let {
-        try {
-            val storageReference = FirebaseStorage.getInstance().getReferenceFromUrl(avatar)
+
+            val storageReference = FirebaseStorage.getInstance().reference.child(avatar)
             storageReference.downloadUrl.addOnCompleteListener {
-                Glide.with(view.context).load(it.result).error(R.drawable.noavatar).into(view)
+                try {
+                    Glide.with(view.context).load(it.result).error(R.drawable.noavatar).into(view)
+                }catch (e: Exception) {
+                    Glide.with(view.context).load(R.drawable.noavatar).into(view)
+                }
              }
-        }catch (e: Throwable) {
-            Glide.with(view.context).load(R.drawable.noavatar).into(view)
-        }
+
     }
 }
 
