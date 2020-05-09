@@ -14,6 +14,8 @@ const val TASKS_COLLECTION_NAME = "tasks"
 const val MESSAGES_COLLECTION_NAME = "messages"
 
 const val FIELD_SCORE = "score"
+const val FIELD_ADMIN = "admin"
+const val FIELD_ID = "id"
 const val FIELD_NAME = "name"
 const val FIELD_EMAIL = "email"
 const val FIELD_SCHOOL = "school"
@@ -28,6 +30,8 @@ const val FIELD_DEADLINE = "deadline"
 const val FIELD_USER = "user"
 const val FIELD_COMPLETED = "completed"
 const val FIELD_DATE = "date"
+
+const val USER_PICTURE_REFERENCE = "images/userPicture/"
 
 const val PERMS_EXT_STORAGE = Manifest.permission.WRITE_EXTERNAL_STORAGE
 

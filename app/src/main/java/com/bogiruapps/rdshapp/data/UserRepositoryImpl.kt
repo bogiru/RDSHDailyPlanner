@@ -140,12 +140,12 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
     }
 
     override suspend fun updateUserPicture(user: User, internalUri: Uri): Result<Uri?> {
-        val uri = dataSource.createNewPictureInStorage(user.imageUrl, internalUri)
+        val uri = dataSource.createNewPictureInStorage(user.id, internalUri)
 
         when (uri) {
             is Result.Success -> {
                 val uriPicture = uri.data.toString()
-                user.imageUrl = user.imageUrl
+                user.pictureUrl = uriPicture
                 when (updateUser(user)) {
                     is Result.Error, is Result.Canceled -> {
                         return Result.Error(Exception("Ошибка при обновлении информации пользователя"))

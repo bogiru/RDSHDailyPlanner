@@ -35,7 +35,7 @@ class UserViewModel(val userRepository: UserRepository) : ViewModel() {
 
     init {
         _dataLoadingImage.value = true
-        _pictureUrlLiveData.value = user.imageUrl
+        _pictureUrlLiveData.value = user.pictureUrl
         _dataLoadingImage.value = false
     }
 
@@ -52,7 +52,7 @@ class UserViewModel(val userRepository: UserRepository) : ViewModel() {
         viewModelScope.launch {
             when(userRepository.deleteUserFromSchool()) {
                 is Result.Success -> {
-                    val tempUser = User(user.name, user.email, School("", ""), user.imageUrl, user.score)
+                    val tempUser = User(user.name, user.email, School("", ""), user.score, user.pictureUrl, user.admin, user.id)
 
                     when (userRepository.updateUser(tempUser)) {
                         is Result.Success -> {
@@ -67,16 +67,15 @@ class UserViewModel(val userRepository: UserRepository) : ViewModel() {
 
     private fun downloadPictureToStorage(uriPicture: Uri) {
         viewModelScope.launch {
-            when (val uriStorage = userRepository.updateUserPicture(user, uriPicture)) {
+            when (val uriStorage = userRepository.updateUserPicture(userRepository.currentUser.value!!, uriPicture)) {
                 is Result.Success -> {
                     uriStorage.data?.let { uri ->
-                        user.imageUrl = uri.toString()
-                        userRepository.currentUser.value = user
-                        _pictureUrlLiveData.value = user.imageUrl
+                        user.pictureUrl = uri.toString()
+                        _pictureUrlLiveData.value = user.pictureUrl
                     }
+                    _dataLoadingImage.value = false
                 }
             }
-            _dataLoadingImage.value = false
         }
     }
 

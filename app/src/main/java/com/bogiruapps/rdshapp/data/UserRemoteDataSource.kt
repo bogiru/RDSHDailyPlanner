@@ -39,8 +39,10 @@ class UserRemoteDataSource(
             FIELD_NAME, user.name,
             FIELD_EMAIL, user.email,
             FIELD_SCHOOL, user.school,
-            FIELD_IMAGE_URL, user.imageUrl,
-            FIELD_SCORE, user.score
+            FIELD_SCORE, user.score,
+            FIELD_IMAGE_URL, user.pictureUrl,
+            FIELD_ADMIN, user.admin,
+            FIELD_ID, user.id
         ).await()
     }
 
@@ -257,17 +259,16 @@ class UserRemoteDataSource(
         }
     }
 
-    private suspend fun uploadPictureToStorage(imageUrlFirebase: String, internalUri: Uri) =
+    private suspend fun uploadPictureToStorage(userId: String, internalUri: Uri) =
         withContext(ioDispatcher) {
-            getReferenceStorage(imageUrlFirebase).putFile(internalUri).await<UploadTask.TaskSnapshot>()
+            getReferenceStorage(userId).putFile(internalUri).await<UploadTask.TaskSnapshot>()
         }
 
-    private suspend fun fetchPictureUriFromStorage(imageUrlFirebase: String): Result<Uri> =
+    private suspend fun fetchPictureUriFromStorage(userId: String): Result<Uri> =
         withContext(ioDispatcher) {
-            return@withContext getReferenceStorage(imageUrlFirebase).downloadUrl.await()
+            return@withContext getReferenceStorage(userId).downloadUrl.await()
         }
 
-    private fun getReferenceStorage(imageUrlFirebase: String) =
-        storage.reference.child(imageUrlFirebase)
+    private fun getReferenceStorage(userId: String) =
+        storage.reference.child("$USER_PICTURE_REFERENCE$userId")
 }
-

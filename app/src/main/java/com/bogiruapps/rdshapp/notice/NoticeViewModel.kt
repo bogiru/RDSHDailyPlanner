@@ -13,9 +13,6 @@ import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
 class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() {
-
-    val user: LiveData<User> = userRepository.currentUser
-
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 

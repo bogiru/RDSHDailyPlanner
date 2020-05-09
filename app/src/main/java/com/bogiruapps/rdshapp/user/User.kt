@@ -8,6 +8,8 @@ data class User(
     var name: String? = "",
     var email: String? = "",
     var school: School = School("", ""),
-    var imageUrl: String = "avatars/${UUID.randomUUID()}",
-    var score: Int = 0
+    var score: Int = 0,
+    var pictureUrl: String? = "",
+    var admin: Boolean? = false,
+    var id: String = UUID.randomUUID().toString()
 )

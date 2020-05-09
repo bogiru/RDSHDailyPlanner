@@ -3,8 +3,10 @@ package com.bogiruapps.rdshapp.notice
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.databinding.NoticeItemBinding
+import com.bogiruapps.rdshapp.user.User
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
@@ -16,7 +18,6 @@ class NoticeAdapter(
     override fun onBindViewHolder(p0: NoticeViewHolder, p1: Int, p2: Notice) {
         viewModel.isLookNotice(p2)
         p0.bind(viewModel, p2)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
@@ -31,7 +32,6 @@ class NoticeAdapter(
             binding.viewModel = viewModel
             binding.executePendingBindings()
         }
-
         companion object {
             fun from(parent: ViewGroup): NoticeViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
