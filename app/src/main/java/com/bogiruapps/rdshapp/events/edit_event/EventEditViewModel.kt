@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.events.chat_room_event.Message
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 import java.util.*
@@ -44,8 +46,14 @@ class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {
             event.author = userRepository.currentUser.value!!
             when(userRepository.createEvent(event)) {
                 is Result.Success -> {
-                    userRepository.currentEvent.value = event
-                    openSchoolEventFragment()
+                    val chat = Chat(event.id, event.title, Message("Сообщений нет"), event.indexImage)
+                    when (userRepository.createChat(chat)) {
+                        is Result.Success -> {
+                            userRepository.currentEvent.value = event
+                            openSchoolEventFragment()
+                        }
+                    }
+
                 }
             }
         }

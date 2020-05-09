@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.data
 
+import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
@@ -35,6 +36,8 @@ interface UserDataSource {
     suspend fun updateEvent(school: School, event: SchoolEvent): Result<Void?>
 
     suspend fun deleteEvent(school: School, event: SchoolEvent): Result<Void?>
+
+    suspend fun createChat(school: School, chat: Chat): Result<Void?>
 
     suspend fun createTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
 

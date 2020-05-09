@@ -1,6 +1,7 @@
 package com.bogiruapps.rdshapp.data
 
 import android.net.Uri
+import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.events.chat_room_event.Message
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
@@ -169,6 +170,11 @@ class UserRemoteDataSource(
             .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(TASKS_COLLECTION_NAME).document(taskEvent.id).delete().await()
     }
 
+    override suspend fun createChat(school: School, chat: Chat): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext schoolsCollection.document(school.id)
+            .collection(CHATS_COLLECTION_NAME).document(chat.id).set(chat).await()
+    }
+
     suspend fun createEventMessage(school: School, event: SchoolEvent, message: Message): Result<Void?> = withContext(ioDispatcher) {
         return@withContext schoolsCollection.document(school.id).collection(EVENTS_COLLECTION_NAME)
             .document(event.id).collection(MESSAGES_COLLECTION_NAME).document().set(message).await()
@@ -226,6 +232,19 @@ class UserRemoteDataSource(
             when (val result = schoolsCollection.document(school.id)
                 .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(TASKS_COLLECTION_NAME)
                 .orderBy(FIELD_COMPLETED, Query.Direction.ASCENDING).get().await()) {
+                is Result.Success -> Result.Success(result.data.query)
+                is Result.Error -> Result.Error(result.exception)
+                is Result.Canceled -> Result.Error(result.exception)
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
+    suspend fun fetchFirestoreRecyclerQueryChats(school: School): Result<Query> = withContext(ioDispatcher) {
+        return@withContext try {
+            when (val result = schoolsCollection.document(school.id).collection(CHATS_COLLECTION_NAME)
+                .get().await()) {
                 is Result.Success -> Result.Success(result.data.query)
                 is Result.Error -> Result.Error(result.exception)
                 is Result.Canceled -> Result.Error(result.exception)

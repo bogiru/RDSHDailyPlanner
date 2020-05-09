@@ -25,6 +25,16 @@ fun setDateNoticeItem(view: TextView, date: Date) {
     view.text = dateFormat.format(date).toString()
 }
 
+@BindingAdapter("setAuthorChatsItem")
+fun setAuthorChatsItem(view: TextView, authorName: String) {
+    view.text = authorName.split(" ")[0]
+}
+
+@BindingAdapter("setTitleLetterToImage")
+fun setTitleLetterToImage(view: TextView, titleChat: String) {
+    view.text = titleChat[0].toString().toUpperCase()
+}
+
 @BindingAdapter("imageDrawable")
 fun bindImage(view: ImageView, img: Int) {
     Glide.with(view.context).load(img).centerCrop().into(view)

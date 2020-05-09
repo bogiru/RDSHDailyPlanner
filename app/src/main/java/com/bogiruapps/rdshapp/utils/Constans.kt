@@ -9,6 +9,7 @@ const val RC_IMAGE_PERMS = 301
 const val USERS_COLLECTION_NAME = "users"
 const val SCHOOL_COLLECTION_NAME = "schools"
 const val EVENTS_COLLECTION_NAME = "events"
+const val CHATS_COLLECTION_NAME = "chats"
 const val NOTICE_COLLECTION_NAME = "notices"
 const val TASKS_COLLECTION_NAME = "tasks"
 const val MESSAGES_COLLECTION_NAME = "messages"

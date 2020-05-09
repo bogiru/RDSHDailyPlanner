@@ -138,4 +138,8 @@
             android:id="@+id/eventChatRoomFragment"
             android:name="com.bogiruapps.rdshapp.events.chat_room_event.EventChatRoomFragment"
             android:label="EventChatRoomFragment" />
+    <fragment
+            android:id="@+id/chatsFragment"
+            android:name="com.bogiruapps.rdshapp.chats.ChatsFragment"
+            android:label="Чаты" />
 </navigation>

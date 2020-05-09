@@ -28,6 +28,12 @@
     <group
             android:id="@+id/menu_bottom"
             android:checkableBehavior="single">
+
+        <item
+                android:id="@+id/chatsFragment"
+                android:icon="@drawable/ic_chats_24px"
+                android:title="Чаты" />
+
         <item
                 android:title="Рейтинг"
                 android:id="@+id/usersFragment"
@@ -36,11 +42,6 @@
                 android:title="Информация"
                 android:id="@+id/infoFragment"
                 android:icon="@drawable/ic_info"/>
-        <item
-                android:title="Настройки"
-                android:id="@+id/btn_settings"
-                android:icon="@drawable/ic_settings"
-                android:enabled="false"/>
     </group>
     <group
             android:id="@+id/menu_sing_out"

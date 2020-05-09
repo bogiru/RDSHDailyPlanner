@@ -1,6 +1,7 @@
 package com.bogiruapps.rdshapp.di
 
 import com.bogiruapps.rdshapp.MainActivityViewModel
+import com.bogiruapps.rdshapp.chats.ChatsViewModel
 import com.bogiruapps.rdshapp.data.UserRemoteDataSource
 import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.data.UserRepositoryImpl
@@ -53,5 +54,6 @@ val modules = module {
     viewModel { RatingViewModel(userRepository = get()) }
     viewModel { UserViewModel(userRepository = get()) }
     viewModel { EventChatRoomViewModel(userRepository = get()) }
+    viewModel { ChatsViewModel(userRepository = get()) }
 
 }

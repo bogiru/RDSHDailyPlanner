@@ -2,6 +2,7 @@ package com.bogiruapps.rdshapp.data
 import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
+import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.events.SchoolEvent
@@ -44,11 +45,15 @@ interface UserRepository {
 
     suspend fun fetchFirestoreRecyclerQueryTasksEvent():  Result<Query>
 
+    suspend fun fetchFirestoreRecyclerQueryChats(): Result<Query>
+
     suspend fun fetchFirestoreRecyclerQueryEventMessage(): Result<Query>
 
     suspend fun createTaskEvent(event: TaskEvent): Result<Void?>
 
     suspend fun createEvent(event: SchoolEvent): Result<Void?>
+
+    suspend fun createChat(chat: Chat): Result<Void?>
 
     suspend fun updateEvent(event: SchoolEvent): Result<Void?>
 
