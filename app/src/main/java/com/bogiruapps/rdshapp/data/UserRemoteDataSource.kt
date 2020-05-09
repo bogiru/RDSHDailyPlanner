@@ -1,9 +1,10 @@
 package com.bogiruapps.rdshapp.data
 
 import android.net.Uri
+import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.events.SchoolEvent
-import com.bogiruapps.rdshapp.events.chat_room_event.Message
+import com.bogiruapps.rdshapp.chats.chat_room_event.Message
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.school.School
@@ -127,6 +128,19 @@ class UserRemoteDataSource(
 
         }
 
+    override suspend fun fetchEvent(school: School, eventId: String): Result<SchoolEvent?> = withContext(ioDispatcher) {
+        return@withContext try {
+            when (val resultDocumentSnapshot = schoolsCollection.document(school.id)
+                .collection(EVENTS_COLLECTION_NAME).document(eventId).get().await()) {
+                is Result.Success -> Result.Success(resultDocumentSnapshot.data.toEvent())
+                is Result.Error -> Result.Error(resultDocumentSnapshot.exception)
+                is Result.Canceled -> Result.Canceled(resultDocumentSnapshot.exception)
+            }
+        } catch (e: Exception) {
+            Result.Error(e)
+        }
+    }
+
     override suspend fun createEvent(school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext schoolsCollection.document(school.id)
             .collection(EVENTS_COLLECTION_NAME).document(event.id).set(event).await()
@@ -173,6 +187,16 @@ class UserRemoteDataSource(
     override suspend fun createChat(school: School, chat: Chat): Result<Void?> = withContext(ioDispatcher) {
         return@withContext schoolsCollection.document(school.id)
             .collection(CHATS_COLLECTION_NAME).document(chat.id).set(chat).await()
+    }
+
+    override suspend fun updateChat(school: School, chat: Chat): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext db.collection(SCHOOL_COLLECTION_NAME).document(school.id)
+            .collection(CHATS_COLLECTION_NAME).document(chat.id)
+            .update(
+                FIELD_TITLE, chat.title,
+                FIELD_LAST_MESSAGE, chat.lastMessage
+            )
+            .await()
     }
 
     suspend fun createEventMessage(school: School, event: SchoolEvent, message: Message): Result<Void?> = withContext(ioDispatcher) {

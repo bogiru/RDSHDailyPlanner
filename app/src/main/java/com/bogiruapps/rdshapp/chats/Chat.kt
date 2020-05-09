@@ -1,6 +1,6 @@
 package com.bogiruapps.rdshapp.chats
 
-import com.bogiruapps.rdshapp.events.chat_room_event.Message
+import com.bogiruapps.rdshapp.chats.chat_room_event.Message
 import java.util.*
 
 data class Chat(

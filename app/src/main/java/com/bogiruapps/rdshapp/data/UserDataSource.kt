@@ -31,6 +31,8 @@ interface UserDataSource {
 
     suspend fun deleteNotice(school: School, notice: Notice): Result<Void?>
 
+    suspend fun fetchEvent(school: School, userId: String): Result<SchoolEvent?>
+
     suspend fun createEvent(school: School, event: SchoolEvent): Result<Void?>
 
     suspend fun updateEvent(school: School, event: SchoolEvent): Result<Void?>
@@ -38,6 +40,8 @@ interface UserDataSource {
     suspend fun deleteEvent(school: School, event: SchoolEvent): Result<Void?>
 
     suspend fun createChat(school: School, chat: Chat): Result<Void?>
+
+    suspend fun updateChat(school: School, chat: Chat): Result<Void?>
 
     suspend fun createTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
 

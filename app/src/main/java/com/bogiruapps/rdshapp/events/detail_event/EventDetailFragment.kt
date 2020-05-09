@@ -18,7 +18,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
-class EventDetailFragment : Fragment() {
+class  EventDetailFragment : Fragment() {
 
     companion object {
         fun newInstance() = EventDetailFragment()

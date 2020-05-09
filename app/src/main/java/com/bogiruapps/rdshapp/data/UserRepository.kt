@@ -1,12 +1,11 @@
 package com.bogiruapps.rdshapp.data
-import android.graphics.Bitmap
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.events.SchoolEvent
-import com.bogiruapps.rdshapp.events.chat_room_event.Message
+import com.bogiruapps.rdshapp.chats.chat_room_event.Message
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.school.School
@@ -51,9 +50,9 @@ interface UserRepository {
 
     suspend fun createTaskEvent(event: TaskEvent): Result<Void?>
 
-    suspend fun createEvent(event: SchoolEvent): Result<Void?>
+    suspend fun fetchEvent(userId: String): Result<SchoolEvent?>
 
-    suspend fun createChat(chat: Chat): Result<Void?>
+    suspend fun createEvent(event: SchoolEvent): Result<Void?>
 
     suspend fun updateEvent(event: SchoolEvent): Result<Void?>
 
@@ -64,6 +63,10 @@ interface UserRepository {
    /* suspend fun fetchNotices(school: School): Result<List<Notice>>*/
 
     suspend fun deleteTaskEvent(taskEvent: TaskEvent): Result<Void?>
+
+    suspend fun createChat(chat: Chat): Result<Void?>
+
+    suspend fun updateChat(chat: Chat): Result<Void?>
 
     suspend fun createEventMessage(message: Message): Result<Void?>
 

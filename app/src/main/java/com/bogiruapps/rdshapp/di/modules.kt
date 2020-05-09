@@ -6,8 +6,7 @@ import com.bogiruapps.rdshapp.data.UserRemoteDataSource
 import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.data.UserRepositoryImpl
 import com.bogiruapps.rdshapp.events.EventsViewModel
-import com.bogiruapps.rdshapp.events.chat_room_event.EventChatRoomFragment
-import com.bogiruapps.rdshapp.events.chat_room_event.EventChatRoomViewModel
+import com.bogiruapps.rdshapp.chats.chat_room_event.EventChatRoomViewModel
 import com.bogiruapps.rdshapp.events.detail_event.EventDetailViewModel
 import com.bogiruapps.rdshapp.events.edit_event.EventEditViewModel
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEventViewModel

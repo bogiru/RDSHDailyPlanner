@@ -6,10 +6,10 @@
     <data>
         <variable
                 name="message"
-                type="com.bogiruapps.rdshapp.events.chat_room_event.Message" />
+                type="com.bogiruapps.rdshapp.chats.chat_room_event.Message" />
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.events.chat_room_event.EventChatRoomViewModel" />
+                type="com.bogiruapps.rdshapp.chats.chat_room_event.EventChatRoomViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

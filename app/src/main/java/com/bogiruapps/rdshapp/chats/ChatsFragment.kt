@@ -67,6 +67,10 @@ class ChatsFragment : Fragment() {
         chatsViewModel.showChatsContent.observe(viewLifecycleOwner, Observer {
             configureRecyclerView()
         })
+
+        chatsViewModel.openChatRoomEvent.observe(viewLifecycleOwner, EventObserver {
+            findNavController().navigate(R.id.action_chatsFragment_to_eventChatRoomFragment)
+        })
     }
 
     private fun configureToolbar() {

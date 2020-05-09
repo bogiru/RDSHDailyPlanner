@@ -1,10 +1,9 @@
-package com.bogiruapps.rdshapp.events.chat_room_event
+package com.bogiruapps.rdshapp.chats.chat_room_event
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.databinding.EventChatRoomItemBinding
-import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions

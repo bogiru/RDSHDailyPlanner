@@ -136,10 +136,15 @@
     </fragment>
     <fragment
             android:id="@+id/eventChatRoomFragment"
-            android:name="com.bogiruapps.rdshapp.events.chat_room_event.EventChatRoomFragment"
+            android:name="com.bogiruapps.rdshapp.chats.chat_room_event.EventChatRoomFragment"
             android:label="EventChatRoomFragment" />
     <fragment
             android:id="@+id/chatsFragment"
             android:name="com.bogiruapps.rdshapp.chats.ChatsFragment"
-            android:label="Чаты" />
+            android:label="Чаты" >
+        <action
+                android:id="@+id/action_chatsFragment_to_eventChatRoomFragment"
+                app:destination="@id/eventChatRoomFragment"
+                app:enterAnim="@anim/fui_slide_in_right" />
+    </fragment>
 </navigation>

@@ -9,7 +9,7 @@ import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.events.SchoolEvent
-import com.bogiruapps.rdshapp.events.chat_room_event.Message
+import com.bogiruapps.rdshapp.chats.chat_room_event.Message
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 import java.util.*

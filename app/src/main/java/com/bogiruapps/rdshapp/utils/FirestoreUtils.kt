@@ -1,4 +1,5 @@
 package com.bogiruapps.rdshapp.utils
+import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.school.School
 import com.google.android.gms.tasks.Task
@@ -122,6 +123,8 @@ fun returnSuccessOrError(result: Result<Void?>): Result<Void?> {
 }
 
 fun DocumentSnapshot.toUser(): User? = this.toObject(User::class.java)
+
+fun DocumentSnapshot.toEvent(): SchoolEvent? = this.toObject(SchoolEvent::class.java)
 
 fun QuerySnapshot.toSchoolList(): List<School> = this.map { item ->
     School(item.data["name"].toString(), item.id)

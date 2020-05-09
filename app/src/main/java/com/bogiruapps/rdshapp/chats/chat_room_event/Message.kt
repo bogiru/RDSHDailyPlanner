@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events.chat_room_event
+package com.bogiruapps.rdshapp.chats.chat_room_event
 
 import com.bogiruapps.rdshapp.user.User
 import java.util.*

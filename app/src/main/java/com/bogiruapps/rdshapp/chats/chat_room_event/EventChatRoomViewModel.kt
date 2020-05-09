@@ -1,12 +1,12 @@
-package com.bogiruapps.rdshapp.events.chat_room_event
+package com.bogiruapps.rdshapp.chats.chat_room_event
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.data.UserRepository
-import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.utils.Result
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
@@ -47,6 +47,13 @@ class EventChatRoomViewModel(val userRepository: UserRepository) : ViewModel() {
             val message = Message(textMessage, userRepository.currentUser.value!!)
             when(userRepository.createEventMessage(message)) {
                 is Result.Success -> {
+                    val chat = Chat(userRepository.currentEvent.value!!.id,
+                        userRepository.currentEvent.value!!.title,
+                        message,
+                        userRepository.currentEvent.value!!.indexImage)
+                    when (userRepository.updateChat(chat)) {
+                        is Result.Success -> {}
+                    }
                 }
             }
         }

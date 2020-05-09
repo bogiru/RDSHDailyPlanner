@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events.chat_room_event
+package com.bogiruapps.rdshapp.chats.chat_room_event
 
 
 import android.os.Bundle
@@ -8,20 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentEventChatRoomBinding
-import com.bogiruapps.rdshapp.events.EventsAdapter
-import com.bogiruapps.rdshapp.events.EventsViewModel
-import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_notice.*
-import org.koin.android.ext.android.bind
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -42,6 +36,7 @@ class EventChatRoomFragment : Fragment() {
         setupObserverViewModel()
         eventChatRoomViewModel.fetchFirestoreRecyclerQuery()
         configureToolbar()
+        configureBottomNavigation()
 
         return binding.root
     }
@@ -81,6 +76,7 @@ class EventChatRoomFragment : Fragment() {
             }
         })
     }
+
     private fun configureToolbar() {
         val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
@@ -88,6 +84,12 @@ class EventChatRoomFragment : Fragment() {
         activity?.toolbar?.title = "Чат"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
+    }
+
+    private fun configureBottomNavigation() {
+        activity!!.bottomNavigationView.menu.clear()
+        activity!!.bottomNavigationView.inflateMenu(R.menu.event_bottom_menu)
+        activity!!.bottomNavigationView.visibility = View.VISIBLE
     }
 
     private fun configureRecyclerView() {

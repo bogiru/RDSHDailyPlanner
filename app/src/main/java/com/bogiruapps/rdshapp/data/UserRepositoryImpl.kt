@@ -5,14 +5,13 @@ import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.events.SchoolEvent
-import com.bogiruapps.rdshapp.events.chat_room_event.Message
+import com.bogiruapps.rdshapp.chats.chat_room_event.Message
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.utils.returnSuccessOrError
 import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.utils.State
 import com.google.firebase.firestore.Query
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
@@ -95,6 +94,11 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         return@coroutineScope (task.await())
     }
 
+    override suspend fun fetchEvent(userId: String): Result<SchoolEvent?> = coroutineScope {
+        val task = async { dataSource.fetchEvent(currentUser.value!!.school,userId) }
+        return@coroutineScope task.await()
+    }
+
     override suspend fun createEvent(event: SchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.createEvent(currentUser.value!!.school,  event) }
         return@coroutineScope returnSuccessOrError(task.await())
@@ -127,6 +131,11 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
 
     override suspend fun createChat(chat: Chat): Result<Void?> = coroutineScope {
         val task = async { dataSource.createChat(currentUser.value!!.school,  chat) }
+        return@coroutineScope returnSuccessOrError(task.await())
+    }
+
+    override suspend fun updateChat(chat: Chat): Result<Void?> = coroutineScope {
+        val task = async { dataSource.updateChat(currentUser.value!!.school, chat) }
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
