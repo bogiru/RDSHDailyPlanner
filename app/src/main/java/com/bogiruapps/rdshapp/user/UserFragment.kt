@@ -59,8 +59,12 @@ class UserFragment : Fragment() {
     }
 
     private fun configureToolbar() {
-        activity?.toolbar?.title = "Профиль"
+        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
 
+        activity?.toolbar?.title = "Профиль"
+        editItem?.isVisible = false
+        deleteItem?.isVisible = false
     }
 
     private fun configureBottomNavigation() {
@@ -92,22 +96,14 @@ class UserFragment : Fragment() {
     }
 
     private fun showLoadPb(textLoad: String) {
-        binding.userPb.visibility = View.VISIBLE
-
         binding.loadTextView.text = textLoad
-        binding.loadTextView.visibility = View.VISIBLE
 
-        binding.cardView6.visibility = View.INVISIBLE
-        binding.userInfoCard.visibility = View.INVISIBLE
-        binding.userMainCard.visibility = View.INVISIBLE
+        binding.userLoadLayout.visibility = View.VISIBLE
+
     }
 
     private fun hideLoadPb() {
-        binding.userPb.visibility = View.INVISIBLE
-        binding.loadTextView.visibility = View.INVISIBLE
-        binding.cardView6.visibility = View.VISIBLE
-        binding.userInfoCard.visibility = View.VISIBLE
-        binding.userMainCard.visibility = View.VISIBLE
+        binding.userLoadLayout.visibility = View.INVISIBLE
     }
 
     private fun pickImageFromGallery() {
