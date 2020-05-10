@@ -1,6 +1,7 @@
 package com.bogiruapps.rdshapp.chats.chat_room_event
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -36,7 +37,6 @@ class EventChatRoomFragment : Fragment() {
         setupObserverViewModel()
         eventChatRoomViewModel.fetchFirestoreRecyclerQuery()
         configureToolbar()
-        configureBottomNavigation()
 
         return binding.root
     }
@@ -84,12 +84,6 @@ class EventChatRoomFragment : Fragment() {
         activity?.toolbar?.title = "Чат"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
-    }
-
-    private fun configureBottomNavigation() {
-        activity!!.bottomNavigationView.menu.clear()
-        activity!!.bottomNavigationView.inflateMenu(R.menu.event_bottom_menu)
-        activity!!.bottomNavigationView.visibility = View.VISIBLE
     }
 
     private fun configureRecyclerView() {

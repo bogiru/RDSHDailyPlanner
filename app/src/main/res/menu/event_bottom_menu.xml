@@ -11,6 +11,6 @@
             android:title="Задачи" />
     <item
             android:id="@+id/eventChatRoomFragment"
-            android:icon="@drawable/ic_email_24px"
+            android:icon="@drawable/ic_chats_24px"
             android:title="Чат" />
 </menu>

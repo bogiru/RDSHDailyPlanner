@@ -31,7 +31,11 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
                 val user = User(
                     userRepository.currentUser.value!!.name,
                     userRepository.currentUser.value!!.email,
-                    school
+                    school,
+                    0,
+                    userRepository.currentUser.value!!.pictureUrl,
+                    userRepository.currentUser.value!!.admin,
+                    userRepository.currentUser.value!!.id
                 )
                 when (userRepository.updateUser(user)) {
                     is Result.Success -> {
