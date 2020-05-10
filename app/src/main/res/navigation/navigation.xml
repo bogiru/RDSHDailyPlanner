@@ -58,7 +58,7 @@
     <fragment
             android:id="@+id/eventEditFragment"
             android:name="com.bogiruapps.rdshapp.events.edit_event.EventEditFragment"
-            android:label="Выбор школы"
+            android:label="Редактирование"
             tools:layout="@layout/fragment_event_edit">
         <action
                 android:id="@+id/action_eventEditFragment_to_eventsFragment"

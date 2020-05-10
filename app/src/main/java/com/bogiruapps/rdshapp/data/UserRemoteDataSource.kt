@@ -154,7 +154,8 @@ class UserRemoteDataSource(
                     FIELD_TITLE, event.title,
                     FIELD_COUNT_COMPLETED_TASK, event.countCompletedTask,
                     FIELD_COUNT_TASK, event.countTask,
-                    FIELD_DEADLINE, event.deadline
+                    FIELD_DEADLINE, event.deadline,
+                    FIELD_INDEX_IMAGE, event.indexImage
                 )
                 .await()
         }

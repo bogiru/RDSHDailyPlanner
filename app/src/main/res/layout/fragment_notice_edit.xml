@@ -34,7 +34,7 @@
                     android:paddingBottom="32dp">
 
                 <EditText
-                        android:id="@+id/editText"
+                        android:id="@+id/event_edit_title_editText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -49,7 +49,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                        android:id="@+id/editText2"
+                        android:id="@+id/event_edit_description_editText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -61,7 +61,7 @@
                         android:textStyle="normal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/editText" />
+                        app:layout_constraintTop_toBottomOf="@id/event_edit_title_editText" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

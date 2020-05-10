@@ -109,4 +109,8 @@ dependencies {
 
     // EasyPermissions
     implementation 'pub.devrel:easypermissions:3.0.0'
+
+
+    //SublimePicker
+    implementation 'com.appeaser.sublimepickerlibrary:sublimepickerlibrary:2.1.2'
 }

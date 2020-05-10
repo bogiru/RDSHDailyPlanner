@@ -51,11 +51,6 @@ class TaskEventAdapter(
 
                 numberClick++
             }
-
-             binding.taskEventItemCardView.setOnLongClickListener {
-                     viewModel.showDeleteTaskEventFragment(taskEvent)
-                 return@setOnLongClickListener true
-             }
             binding.executePendingBindings()
         }
 

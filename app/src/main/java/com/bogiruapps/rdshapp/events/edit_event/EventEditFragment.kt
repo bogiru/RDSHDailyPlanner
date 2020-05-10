@@ -15,6 +15,14 @@ import com.bogiruapps.rdshapp.databinding.FragmentEventEditBinding
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import android.app.DatePickerDialog
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.bumptech.glide.Glide
+import com.google.android.gms.tasks.RuntimeExecutionException
+import com.google.firebase.storage.FirebaseStorage
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class EventEditFragment : Fragment() {
@@ -24,6 +32,7 @@ class EventEditFragment : Fragment() {
 
 
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +63,14 @@ class EventEditFragment : Fragment() {
         eventEditViewModel.showSnackbar.observe(viewLifecycleOwner, Observer {
             showSnackbar(it)
         })
+
+        eventEditViewModel.showDatePickerDialog.observe(viewLifecycleOwner, Observer {
+            showDatePickerDialog()
+        })
+
+        eventEditViewModel.indexImage.observe(viewLifecycleOwner, Observer {
+            loadImage(it)
+        })
 }
 
     private fun configureToolbar() {
@@ -61,9 +78,9 @@ class EventEditFragment : Fragment() {
         val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
 
         if (eventEditViewModel.checkCreateEventStatus()) {
-            activity?.toolbar?.title = "Создание мероприятия"
+            activity?.toolbar?.title = "Создание"
         } else  {
-            activity?.toolbar?.title = "Редактирование мероприятия"
+            activity?.toolbar?.title = "Редактирование"
         }
         editItem?.isVisible = false
         deleteItem?.isVisible = false
@@ -74,8 +91,35 @@ class EventEditFragment : Fragment() {
     }
 
     private fun setClickListenerOnCalendarView() {
-        binding.calendarViewEvent.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            eventEditViewModel.updateDate(year - 1900, month, dayOfMonth)
+       /* binding.calendarViewEvent.setOnDateChangeListener { view, year, month, dayOfMonth ->
+
+        }*/
+    }
+
+    private fun loadImage(indexImage: Int) {
+        val storageReference =
+            FirebaseStorage.getInstance().reference.child("backgroundEvents/$indexImage.png")
+        storageReference.downloadUrl.addOnCompleteListener {
+            try {
+                Glide.with(binding.eventEditImage).load(it.result).error(R.drawable.noavatar).into(binding.eventEditImage)
+            } catch (e: RuntimeExecutionException) {
+                Glide.with(binding.eventEditImage).load(R.drawable.noavatar).into(binding.eventEditImage)
+            }
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.N)
+    fun showDatePickerDialog() {
+        val datePicker = DatePickerDialog(activity!!)
+        datePicker.show()
+
+        datePicker.setOnDateSetListener { view, year, month, dayOfMonth ->
+            eventEditViewModel.updateDate(year - 1900, month, dayOfMonth)
+
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+            binding.eventEditDeadlineTextView.text = dateFormat.format(eventEditViewModel.event!!.deadline)
+
+        }
+    }
+
 }
