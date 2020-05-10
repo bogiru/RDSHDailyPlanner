@@ -54,16 +54,6 @@ fun loadIdInCircle(view: ImageView, userId: String?) {
     }
 }
 
-@BindingAdapter("loadUrlInCircle")
-fun loadUrlInCircle(view: ImageView, url: String?) {
-    val glide = Glide.with(view.context)
-    glide
-        .load(url)
-        .apply(RequestOptions.circleCropTransform())
-        .error(glide.load(R.drawable.noavatar))
-        .into(view)
-}
-
 @BindingAdapter("loadImageEvent")
 fun loadImageEvent(view: ImageView, indexImage: Int) {
     val storageReference =

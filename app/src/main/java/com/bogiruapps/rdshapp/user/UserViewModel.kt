@@ -16,11 +16,8 @@ class UserViewModel(val userRepository: UserRepository) : ViewModel() {
 
     fun fetchCurrentUser() = userRepository.currentUser.value
 
-    private val _pictureUrlLiveData = MutableLiveData<String>()
-    val pictureUrlLiveData: LiveData<String> = _pictureUrlLiveData
-
     private val _dataLoadingImage = MutableLiveData<Boolean>()
-    val dataLoading: LiveData<Boolean> = _dataLoadingImage
+    val dataLoadingImage: LiveData<Boolean> = _dataLoadingImage
 
     private val _openChooseSchoolFragmentEvent = MutableLiveData<Event<Unit>>()
     val openChooseSchoolFragmentEvent: LiveData<Event<Unit>> = _openChooseSchoolFragmentEvent
@@ -32,12 +29,6 @@ class UserViewModel(val userRepository: UserRepository) : ViewModel() {
     val showActionPickActivity: LiveData<Event<Unit>> = _showActionPickActivity
 
     val user = userRepository.currentUser.value!!
-
-    init {
-        _dataLoadingImage.value = true
-        _pictureUrlLiveData.value = user.pictureUrl
-        _dataLoadingImage.value = false
-    }
 
     fun fetchPictureByUser(resultCode: Int, uri: Uri?) {
         _dataLoadingImage.value = true
@@ -71,7 +62,6 @@ class UserViewModel(val userRepository: UserRepository) : ViewModel() {
                 is Result.Success -> {
                     uriStorage.data?.let { uri ->
                         user.pictureUrl = uri.toString()
-                        _pictureUrlLiveData.value = user.pictureUrl
                     }
                     _dataLoadingImage.value = false
                 }

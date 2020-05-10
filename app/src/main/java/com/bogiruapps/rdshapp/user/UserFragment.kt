@@ -14,18 +14,16 @@ import com.bogiruapps.rdshapp.databinding.FragmentUserBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import android.content.Intent
+import android.widget.ImageView
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.utils.*
+import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
-import org.koin.android.ext.android.bind
-import androidx.core.os.HandlerCompat.postDelayed
-import android.os.Handler
-import android.util.Log
-import android.widget.Toast
+import com.google.firebase.storage.FirebaseStorage
 
 
 class UserFragment : Fragment() {
@@ -71,6 +69,10 @@ class UserFragment : Fragment() {
         activity!!.bottomNavigationView.visibility = View.GONE
     }
 
+    private fun showSnackbar(message: String) {
+        Snackbar.make(view!!, message, Snackbar.LENGTH_LONG).show()
+    }
+
     private fun setupObserverViewModel() {
         userViewModel.showActionPickActivity.observe(viewLifecycleOwner, EventObserver {
             pickImageFromGallery()
@@ -85,14 +87,37 @@ class UserFragment : Fragment() {
             findNavController().navigate(R.id.action_userFragment_to_choseSchoolFragment)
         })
 
-        userViewModel.dataLoading.observe(viewLifecycleOwner, Observer {
+        userViewModel.dataLoadingImage.observe(viewLifecycleOwner, Observer {
             if (it) {
                 showLoadPb("Загрузка изображения")
-
             } else {
+                showSnackbar("Изменение изображения профиля может занять несколько минут")
+                setImageToView()
                 hideLoadPb()
             }
         })
+    }
+
+    private fun setImageToView() {
+        val profileImageView = activity!!.findViewById<ImageView>(R.id.drawer_header_profile_image)
+        val storageReference =
+            FirebaseStorage.getInstance().reference.child("images/userPicture/${userViewModel.user.id}")
+
+        storageReference.downloadUrl.addOnSuccessListener { result ->
+            val glideHeader = Glide.with(profileImageView)
+            val glideUser = Glide.with(binding.profileImage)
+
+            glideHeader
+                .load(result)
+                .error(glideHeader.load(R.drawable.noavatar))
+                .into(profileImageView)
+
+            glideUser
+                .load(result)
+                .error(glideHeader.load(R.drawable.noavatar))
+                .into((binding.profileImage))
+        }
+
     }
 
     private fun showLoadPb(textLoad: String) {
