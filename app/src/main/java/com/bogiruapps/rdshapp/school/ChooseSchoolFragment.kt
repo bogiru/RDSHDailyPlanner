@@ -37,8 +37,6 @@ class ChooseSchoolFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         setupObserverViewModel()
-        configureFirebase()
-        setupChooseButton()
     return binding.root
 }
 
@@ -46,73 +44,86 @@ class ChooseSchoolFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_choose_school, container, false)
         binding.viewModel = schoolViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
-        btnChoose = binding.btnChoose
-        spinner = binding.spinner
+        btnChoose = binding.btnNext
         progressBar = binding.chooseProgressBar
     }
 
     private fun setupObserverViewModel() {
-        schoolViewModel.schools.observe(this, Observer {
-            val schools = it
-            setupSpinner(schools)
+        schoolViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isLoad ->
+            if (isLoad) {
+                progressBar.visibility = View.VISIBLE
+            } else {
+                progressBar.visibility = View.INVISIBLE
+            }
         })
 
-        schoolViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
+        schoolViewModel.regions.observe(viewLifecycleOwner, Observer { regions ->
+            showRegionAutoCompleteTextView(regions)
+        })
+
+        schoolViewModel.cities.observe(viewLifecycleOwner, Observer { cities ->
+            showCitiesAutoCompleteTextView(cities)
+        })
+
+        schoolViewModel.schools.observe(viewLifecycleOwner, Observer { schools ->
+            showSchoolsAutoCompleteTextView(schools)
+        })
+
+        schoolViewModel.showNextButton.observe(viewLifecycleOwner, EventObserver {
+            binding.btnNext.visibility = View.VISIBLE
+        })
+
+        schoolViewModel.openNoticeFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_choseSchoolFragment_to_noticeFragment)
         })
     }
 
-    private fun configureFirebase() {}
+    private fun showRegionAutoCompleteTextView(regions: List<Region>) {
+        val regionsAutoCompleteTV = binding.regionAutoCompleteTextView
+        val regionNames = mutableListOf<String>()
+        for (region in regions) regionNames.add(region.name)
+        val regionsAdapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_dropdown_item_1line, regionNames)
 
-    private fun setupChooseButton() {
-        btnChoose.setOnClickListener {
-            val auth = FirebaseAuth.getInstance()
-            schoolViewModel.updateSchool(auth.currentUser!!, chosenSchool)
+        regionsAutoCompleteTV.setAdapter(regionsAdapter)
+
+        regionsAutoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener{
+                parent, view, position, id ->
+            schoolViewModel.updateUserRegion(regions[position])
+            regionsAutoCompleteTV.isEnabled = false
         }
     }
 
-    private fun setupSpinner(items: List<School>) {
-        val spinnerAdapter: ArrayAdapter<String> =
-            ArrayAdapter(context!!, android.R.layout.simple_spinner_item, getSchoolNames(items))
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = spinnerAdapter
-        hideProgress()
+    private fun showCitiesAutoCompleteTextView(cities: List<City>) {
+        val citiesAutoCompleteTV = binding.cityAutoCompleteTextView
+        val cityNames = mutableListOf<String>()
+        for (city in cities) cityNames.add(city.name)
+        val citiesAdapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_dropdown_item_1line, cityNames)
 
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                chosenSchool = items[position]
-            }
+        citiesAutoCompleteTV.isFocusable = true
+        citiesAutoCompleteTV.isEnabled = true
+        citiesAutoCompleteTV.setAdapter(citiesAdapter)
 
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-            }
+        citiesAutoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener {
+                parent, view, position, id ->
+            schoolViewModel.updateUserCity(cities[position])
+            citiesAutoCompleteTV.isEnabled = false
         }
     }
 
-    private fun getSchoolNames(schools: List<School>): List<String> {
-        val schoolName = mutableListOf<String>()
-        for (school in schools) schoolName.add(school.name)
-        return schoolName
+    private fun showSchoolsAutoCompleteTextView(schools: List<School>) {
+        val schoolsAutoCompleteTV = binding.schoolAutoCompleteTextView
+        val schoolNames = mutableListOf<String>()
+        for (school in schools) schoolNames.add(school.name)
+        val schoolAdapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_dropdown_item_1line, schoolNames)
+
+        schoolsAutoCompleteTV.isFocusable = true
+        schoolsAutoCompleteTV.isEnabled = true
+        schoolsAutoCompleteTV.setAdapter(schoolAdapter)
+
+        schoolsAutoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener {
+                parent, view, position, id ->
+            schoolsAutoCompleteTV.isEnabled = false
+            schoolViewModel.updateUserSchool(schools[position])
+        }
     }
-
-    private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
-
-        activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
-        activity?.toolbar?.title = ""
-        editItem?.isVisible = false
-        deleteItem?.isVisible = false
-    }
-
-    private fun hideProgress(/*view : View*/) {
-        spinner.visibility = View.VISIBLE
-        btnChoose.visibility = View.VISIBLE
-        progressBar.visibility = View.INVISIBLE
-    }
-
 }

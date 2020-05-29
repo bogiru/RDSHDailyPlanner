@@ -91,9 +91,9 @@ class NoticeDetailFragment : Fragment() {
     }
 
     private fun configureBottomNavigation() {
-        activity!!.bottomNavigationView.menu.clear()
-        activity!!.bottomNavigationView.inflateMenu(R.menu.notice_bottom_menu)
-        activity!!.bottomNavigationView.visibility = View.VISIBLE
+        //activity!!.bottomNavigationView.menu.clear()
+        //activity!!.bottomNavigationView.inflateMenu(R.menu.notice_bottom_menu)
+        //activity!!.bottomNavigationView.visibility = View.VISIBLE
     }
 
     @SuppressLint("ResourceType")

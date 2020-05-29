@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.school.City
+import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.school.School
 import kotlinx.coroutines.launch
 import com.bogiruapps.rdshapp.utils.Result
@@ -43,7 +45,7 @@ class UserViewModel(val userRepository: UserRepository) : ViewModel() {
         viewModelScope.launch {
             when(userRepository.deleteUserFromSchool()) {
                 is Result.Success -> {
-                    val tempUser = User(user.name, user.email, School("", ""), user.score, user.pictureUrl, user.admin, user.id)
+                    val tempUser = User(user.name, user.email, Region("", ""), City("", ""), School("", ""), user.score, user.pictureUrl, user.admin, user.id)
 
                     when (userRepository.updateUser(tempUser)) {
                         is Result.Success -> {

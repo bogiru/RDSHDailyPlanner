@@ -1,5 +1,7 @@
 package com.bogiruapps.rdshapp.utils
 import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.school.City
+import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.school.School
 import com.google.android.gms.tasks.Task
@@ -126,8 +128,10 @@ fun DocumentSnapshot.toUser(): User? = this.toObject(User::class.java)
 
 fun DocumentSnapshot.toEvent(): SchoolEvent? = this.toObject(SchoolEvent::class.java)
 
-fun QuerySnapshot.toSchoolList(): List<School> = this.map { item ->
-    School(item.data["name"].toString(), item.id)
-}
+fun QuerySnapshot.toRegionList(): List<Region> = this.map { item -> item.toObject(Region::class.java) }
+
+fun QuerySnapshot.toCityList(): List<City> = this.map { item -> item.toObject(City::class.java) }
+
+fun QuerySnapshot.toSchoolList(): List<School> = this.map { item -> item.toObject(School::class.java) }
 
 fun QuerySnapshot.toUserList(): List<User> = this.map { item -> item.toObject(User::class.java) }

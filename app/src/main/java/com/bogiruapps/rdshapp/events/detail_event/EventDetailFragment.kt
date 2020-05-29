@@ -92,9 +92,9 @@ class  EventDetailFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.event_detail_fragment, container, false)
         binding.viewModel = eventDetailViewModel
         if (eventDetailViewModel.event.countTask == 0) {
-            //binding.progressBar.setDonut_progress("0")
+            binding.eventProgressBar.setDonut_progress("0")
         } else {
-           // binding.progressBar.setDonut_progress("${eventDetailViewModel.event.countCompletedTask * 100 / eventDetailViewModel.event.countTask}")
+           binding.eventProgressBar.setDonut_progress("${eventDetailViewModel.event.countCompletedTask * 100 / eventDetailViewModel.event.countTask}")
         }
         binding.lifecycleOwner = this.viewLifecycleOwner
 

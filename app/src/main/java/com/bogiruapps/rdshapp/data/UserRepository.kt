@@ -8,6 +8,8 @@ import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.chats.chat_room_event.Message
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
+import com.bogiruapps.rdshapp.school.City
+import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.utils.State
 import com.google.firebase.firestore.Query
@@ -27,6 +29,10 @@ interface UserRepository {
     suspend fun fetchUser(userId: String): Result<User?>
 
     suspend fun updateUserInSchool(user: User): Result<Void?>
+
+    suspend fun fetchRegions(): Result<List<Region>>
+
+    suspend fun fetchCities(): Result<List<City>>
 
     suspend fun fetchSchools(): Result<List<School>>
 

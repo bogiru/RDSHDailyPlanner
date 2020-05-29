@@ -4,6 +4,8 @@ import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
+import com.bogiruapps.rdshapp.school.City
+import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
@@ -17,36 +19,40 @@ interface UserDataSource {
 
     suspend fun fetchUser(userId: String): Result<User?>
 
-    suspend fun fetchUsers(school: School): Result<List<User>>
+    suspend fun fetchUsers(region: Region, city: City, school: School): Result<List<User>>
 
-    suspend fun fetchSchools(): Result<List<School>>
+    suspend fun fetchRegions(): Result<List<Region>>
 
-    suspend fun addUserToSchool(school: School, user: User): Result<Void?>
+    suspend fun fetchCities(regionId: String): Result<List<City>>
 
-    suspend fun deleteUserFromSchool(school: School, user: User): Result<Void?>
+    suspend fun fetchSchools(regionId: String, cityId: String): Result<List<School>>
 
-    suspend fun createNotice(school: School, notice: Notice): Result<Void>
+    suspend fun addUserToSchool(region: Region, city: City, school: School, user: User): Result<Void?>
 
-    suspend fun updateNotice(school: School, notice: Notice): Result<Void?>
+    suspend fun deleteUserFromSchool(region: Region, city: City, school: School, user: User): Result<Void?>
 
-    suspend fun deleteNotice(school: School, notice: Notice): Result<Void?>
+    suspend fun createNotice(region: Region, city: City, school: School, notice: Notice): Result<Void>
 
-    suspend fun fetchEvent(school: School, userId: String): Result<SchoolEvent?>
+    suspend fun updateNotice(region: Region, city: City, school: School, notice: Notice): Result<Void?>
 
-    suspend fun createEvent(school: School, event: SchoolEvent): Result<Void?>
+    suspend fun deleteNotice(region: Region, city: City, school: School, notice: Notice): Result<Void?>
 
-    suspend fun updateEvent(school: School, event: SchoolEvent): Result<Void?>
+    suspend fun fetchEvent(region: Region, city: City, school: School, userId: String): Result<SchoolEvent?>
 
-    suspend fun deleteEvent(school: School, event: SchoolEvent): Result<Void?>
+    suspend fun createEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?>
 
-    suspend fun createChat(school: School, chat: Chat): Result<Void?>
+    suspend fun updateEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?>
 
-    suspend fun updateChat(school: School, chat: Chat): Result<Void?>
+    suspend fun deleteEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?>
 
-    suspend fun createTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
+    suspend fun createChat(region: Region, city: City, school: School, chat: Chat): Result<Void?>
 
-    suspend fun updateTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
+    suspend fun updateChat(region: Region, city: City, school: School, chat: Chat): Result<Void?>
 
-    suspend fun deleteTaskEvent(school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
+    suspend fun createTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
+
+    suspend fun updateTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
+
+    suspend fun deleteTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
 
 }

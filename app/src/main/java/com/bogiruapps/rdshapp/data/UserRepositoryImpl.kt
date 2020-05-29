@@ -8,6 +8,8 @@ import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.chats.chat_room_event.Message
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import com.bogiruapps.rdshapp.notice.Notice
+import com.bogiruapps.rdshapp.school.City
+import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.utils.returnSuccessOrError
 import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.utils.State
@@ -44,118 +46,232 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         return@coroutineScope task.await()
     }
 
+    override suspend fun fetchRegions(): Result<List<Region>> = coroutineScope {
+        val task = async { dataSource.fetchRegions() }
+        return@coroutineScope task.await()
+    }
+
+    override suspend fun fetchCities(): Result<List<City>> = coroutineScope {
+        val task = async { dataSource.fetchCities(currentUser.value!!.region.id) }
+        return@coroutineScope task.await()
+    }
+
     override suspend fun fetchSchools(): Result<List<School>> = coroutineScope {
-        val task = async { dataSource.fetchSchools() }
+        val task = async { dataSource.fetchSchools(
+            currentUser.value!!.region.id,
+            currentUser.value!!.city.id
+        ) }
         return@coroutineScope task.await()
     }
 
     override suspend fun addUserToSchool(): Result<Void?> = coroutineScope {
-        val task = async { dataSource.addUserToSchool(currentUser.value!!.school, currentUser.value!!)}
+        val task = async { dataSource.addUserToSchool(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            currentUser.value!!)}
         return@coroutineScope task.await()
     }
 
     override suspend fun deleteUserFromSchool(): Result<Void?> = coroutineScope {
-        val task = async { dataSource.deleteUserFromSchool(currentUser.value!!.school, currentUser.value!!) }
+        val task = async { dataSource.deleteUserFromSchool(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            currentUser.value!!) }
         return@coroutineScope task.await()
     }
 
     override suspend fun fetchUsers(): Result<List<User>> = coroutineScope {
-        val task = async { dataSource.fetchUsers(currentUser.value!!.school)}
+        val task = async { dataSource.fetchUsers(currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school
+        )}
         return@coroutineScope task.await()
     }
 
     override suspend fun fetchFirestoreRecyclerQueryUser(): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryUser(currentUser.value!!.school) }
+        val task = async { dataSource.fetchFirestoreRecyclerQueryUser(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school
+        )}
         return@coroutineScope (task.await())
     }
 
     override suspend fun fetchFirestoreRecyclerQueryEvents(): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryEvent(currentUser.value!!.school) }
+        val task = async { dataSource.fetchFirestoreRecyclerQueryEvent(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school
+        )}
         return@coroutineScope (task.await())
     }
 
     override suspend fun fetchFirestoreRecyclerQueryNotice(): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryNotice(currentUser.value!!.school) }
+        val task = async { dataSource.fetchFirestoreRecyclerQueryNotice(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school
+            )}
         return@coroutineScope (task.await())
     }
 
     override suspend fun fetchFirestoreRecyclerQueryTasksEvent(): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryTaskEvent(currentUser.value!!.school, currentEvent.value!!) }
+        val task = async { dataSource.fetchFirestoreRecyclerQueryTaskEvent(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            currentEvent.value!!
+        )}
         return@coroutineScope (task.await())
     }
 
     override suspend fun fetchFirestoreRecyclerQueryChats(): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryChats(currentUser.value!!.school) }
+        val task = async { dataSource.fetchFirestoreRecyclerQueryChats(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school
+            )}
         return@coroutineScope (task.await())
     }
 
     override suspend fun fetchFirestoreRecyclerQueryEventMessage(): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryEventMessage(currentUser.value!!.school, currentEvent.value!!) }
+        val task = async { dataSource.fetchFirestoreRecyclerQueryEventMessage(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            currentEvent.value!!
+        )}
         return@coroutineScope (task.await())
     }
 
     override suspend fun fetchEvent(userId: String): Result<SchoolEvent?> = coroutineScope {
-        val task = async { dataSource.fetchEvent(currentUser.value!!.school,userId) }
-        return@coroutineScope task.await()
+        val task = async { dataSource.fetchEvent(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            userId
+        )}
+    return@coroutineScope task.await()
     }
 
     override suspend fun createEvent(event: SchoolEvent): Result<Void?> = coroutineScope {
-        val task = async { dataSource.createEvent(currentUser.value!!.school,  event) }
+        val task = async { dataSource.createEvent(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            event
+        )}
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
     override suspend fun updateEvent(event: SchoolEvent): Result<Void?> = coroutineScope {
-        val task = async { dataSource.updateEvent(currentUser.value!!.school, event) }
+        val task = async { dataSource.updateEvent(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            event
+        )}
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
     override suspend fun deleteEvent(): Result<Void?> = coroutineScope {
-        val task = async { dataSource.deleteEvent(currentUser.value!!.school, currentEvent.value!!)}
+        val task = async { dataSource.deleteEvent(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            currentEvent.value!!
+        )}
         return@coroutineScope task.await()
     }
 
     override suspend fun createTaskEvent(taskEvent: TaskEvent): Result<Void?> = coroutineScope {
-        val task = async { dataSource.createTaskEvent(currentUser.value!!.school,  currentEvent.value!!, taskEvent) }
+        val task = async { dataSource.createTaskEvent(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            currentEvent.value!!, taskEvent
+        )}
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
     override suspend fun updateTaskEvent(taskEvent: TaskEvent): Result<Void?> = coroutineScope {
-        val task = async { dataSource.updateTaskEvent(currentUser.value!!.school,  currentEvent.value!!, taskEvent) }
+        val task = async { dataSource.updateTaskEvent(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            currentEvent.value!!, taskEvent
+        )}
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
     override suspend fun deleteTaskEvent(taskEvent: TaskEvent): Result<Void?> = coroutineScope {
-        val task = async { dataSource.deleteTaskEvent(currentUser.value!!.school, currentEvent.value!!, taskEvent)}
+        val task = async { dataSource.deleteTaskEvent(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            currentEvent.value!!, taskEvent
+        )}
         return@coroutineScope task.await()
     }
 
     override suspend fun createChat(chat: Chat): Result<Void?> = coroutineScope {
-        val task = async { dataSource.createChat(currentUser.value!!.school,  chat) }
+        val task = async { dataSource.createChat(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            chat
+        )}
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
     override suspend fun updateChat(chat: Chat): Result<Void?> = coroutineScope {
-        val task = async { dataSource.updateChat(currentUser.value!!.school, chat) }
+        val task = async { dataSource.updateChat(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            chat
+        )}
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
     override suspend fun createEventMessage(message: Message): Result<Void?> = coroutineScope {
-        val task = async { dataSource.createEventMessage(currentUser.value!!.school,  currentEvent.value!!, message) }
+        val task = async { dataSource.createEventMessage(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            currentEvent.value!!, message
+        )}
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
     override suspend fun createNewNotice(notice: Notice): Result<Void?> = coroutineScope {
-        val task = async { dataSource.createNotice(currentUser.value!!.school, notice)}
+        val task = async { dataSource.createNotice(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            notice
+        )}
         return@coroutineScope task.await()
     }
 
     override suspend fun updateNotice(notice: Notice): Result<Void?> = coroutineScope {
-        val task = async { dataSource.updateNotice(currentUser.value!!.school, notice)}
+        val task = async { dataSource.updateNotice(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            notice
+        )}
         return@coroutineScope task.await()
     }
 
     override suspend fun deleteNotice(): Result<Void?> = coroutineScope {
-        val task = async { dataSource.deleteNotice(currentUser.value!!.school, currentNotice.value!!)}
+        val task = async { dataSource.deleteNotice(
+            currentUser.value!!.region,
+            currentUser.value!!.city,
+            currentUser.value!!.school,
+            currentNotice.value!!)}
         return@coroutineScope task.await()
     }
 

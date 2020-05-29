@@ -7,6 +7,8 @@ const val RC_PICK_FROM_GALLERY = 100
 const val RC_IMAGE_PERMS = 301
 
 const val USERS_COLLECTION_NAME = "users"
+const val REGION_COLLECTION_NAME = "regions"
+const val CITY_COLLECTION_NAME = "cities"
 const val SCHOOL_COLLECTION_NAME = "schools"
 const val EVENTS_COLLECTION_NAME = "events"
 const val CHATS_COLLECTION_NAME = "chats"
@@ -19,6 +21,8 @@ const val FIELD_ADMIN = "admin"
 const val FIELD_ID = "id"
 const val FIELD_NAME = "name"
 const val FIELD_EMAIL = "email"
+const val FIELD_REGION = "region"
+const val FIELD_CITY = "city"
 const val FIELD_SCHOOL = "school"
 const val FIELD_IMAGE_URL = "imageUrl"
 const val FIELD_TEXT = "text"
