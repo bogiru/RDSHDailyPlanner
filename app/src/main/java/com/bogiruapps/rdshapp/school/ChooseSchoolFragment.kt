@@ -73,6 +73,10 @@ class ChooseSchoolFragment : Fragment() {
             binding.btnNext.visibility = View.VISIBLE
         })
 
+        schoolViewModel.resetAdress.observe(viewLifecycleOwner, EventObserver {
+            resetAutoCompleteTextView()
+        })
+
         schoolViewModel.openNoticeFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_choseSchoolFragment_to_noticeFragment)
         })
@@ -80,50 +84,72 @@ class ChooseSchoolFragment : Fragment() {
 
     private fun showRegionAutoCompleteTextView(regions: List<Region>) {
         val regionsAutoCompleteTV = binding.regionAutoCompleteTextView
-        val regionNames = mutableListOf<String>()
-        for (region in regions) regionNames.add(region.name)
-        val regionsAdapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_dropdown_item_1line, regionNames)
+        val regionsAdapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_dropdown_item_1line, regions)
 
         regionsAutoCompleteTV.setAdapter(regionsAdapter)
 
         regionsAutoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener{
                 parent, view, position, id ->
-            schoolViewModel.updateUserRegion(regions[position])
+            val currentRegion = parent.getItemAtPosition(position) as Region
+            schoolViewModel.updateUserRegion(currentRegion)
             regionsAutoCompleteTV.isEnabled = false
         }
     }
 
     private fun showCitiesAutoCompleteTextView(cities: List<City>) {
         val citiesAutoCompleteTV = binding.cityAutoCompleteTextView
-        val cityNames = mutableListOf<String>()
-        for (city in cities) cityNames.add(city.name)
-        val citiesAdapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_dropdown_item_1line, cityNames)
+        val citiesAdapter = ArrayAdapter(
+            activity!!.applicationContext,
+            android.R.layout.simple_dropdown_item_1line,
+            cities
+        )
 
-        citiesAutoCompleteTV.isFocusable = true
-        citiesAutoCompleteTV.isEnabled = true
+        citiesAutoCompleteTV.visibility = View.VISIBLE
+        binding.btnResetAdress.visibility = View.VISIBLE
         citiesAutoCompleteTV.setAdapter(citiesAdapter)
 
         citiesAutoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener {
                 parent, view, position, id ->
-            schoolViewModel.updateUserCity(cities[position])
+            val ida = id
+            val currentCity = parent.getItemAtPosition(position) as City
+            schoolViewModel.updateUserCity(currentCity)
             citiesAutoCompleteTV.isEnabled = false
         }
     }
 
     private fun showSchoolsAutoCompleteTextView(schools: List<School>) {
         val schoolsAutoCompleteTV = binding.schoolAutoCompleteTextView
-        val schoolNames = mutableListOf<String>()
-        for (school in schools) schoolNames.add(school.name)
-        val schoolAdapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_dropdown_item_1line, schoolNames)
+        val schoolAdapter = ArrayAdapter(
+            activity!!.applicationContext,
+            android.R.layout.simple_dropdown_item_1line,
+            schools
+        )
 
-        schoolsAutoCompleteTV.isFocusable = true
-        schoolsAutoCompleteTV.isEnabled = true
+        schoolsAutoCompleteTV.visibility = View.VISIBLE
         schoolsAutoCompleteTV.setAdapter(schoolAdapter)
 
         schoolsAutoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener {
                 parent, view, position, id ->
             schoolsAutoCompleteTV.isEnabled = false
-            schoolViewModel.updateUserSchool(schools[position])
+            val currentSchool = parent.getItemAtPosition(position) as School
+            schoolViewModel.updateUserSchool(currentSchool)
         }
     }
+
+    private fun resetAutoCompleteTextView() {
+        binding.schoolAutoCompleteTextView.setText("")
+        binding.cityAutoCompleteTextView.setText("")
+        binding.regionAutoCompleteTextView.setText("")
+
+        binding.schoolAutoCompleteTextView.visibility = View.GONE
+        binding.cityAutoCompleteTextView.visibility = View.GONE
+
+        binding.regionAutoCompleteTextView.isEnabled = true
+        binding.cityAutoCompleteTextView.isEnabled = true
+        binding.schoolAutoCompleteTextView.isEnabled = true
+
+        binding.btnNext.visibility = View.INVISIBLE
+        binding.btnNext.visibility = View.INVISIBLE
+    }
+
 }

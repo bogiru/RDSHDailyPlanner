@@ -32,19 +32,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/school_autoCompleteTextView" />
 
-        <ImageView
-                android:id="@+id/imageView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@+id/btn_choose"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:srcCompat="@drawable/rdsh_image3" />
-
         <TextView
-                android:id="@+id/region_textView"
+                android:id="@+id/title_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -76,10 +65,10 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
                 android:completionThreshold="1"
-                android:hint="Регион"
+                android:hint="Введите название региона"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/region_textView" />
+                app:layout_constraintTop_toBottomOf="@+id/title_textView" />
 
         <AutoCompleteTextView
                 android:id="@+id/city_autoCompleteTextView"
@@ -89,9 +78,9 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
                 android:completionThreshold="1"
-                android:enabled="false"
-                android:hint="Город"
-                android:visibility="visible"
+                android:enabled="true"
+                android:hint="Введите название города"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/region_autoCompleteTextView" />
@@ -104,11 +93,27 @@
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
                 android:completionThreshold="1"
-                android:enabled="false"
-                android:hint="Школа"
+                android:enabled="true"
+                android:hint="Введите название школы"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/city_autoCompleteTextView" />
+
+        <Button
+                android:id="@+id/btn_reset_adress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:visibility="invisible"
+                android:background="#636363"
+                android:onClick="@{(view) -> viewModel.resetAdress()}"
+                android:text="Сброс"
+                android:textColor="#FFFFFF"
+                app:backgroundTint="#525252"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/school_autoCompleteTextView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

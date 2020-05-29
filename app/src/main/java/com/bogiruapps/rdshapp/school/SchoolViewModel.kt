@@ -28,6 +28,9 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _showNextButton = MutableLiveData<Event<Unit>>()
     val showNextButton: LiveData<Event<Unit>> = _showNextButton
 
+    private val _resetAdress = MutableLiveData<Event<Unit>>()
+    val resetAdress: LiveData<Event<Unit>> = _resetAdress
+
     private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
 
@@ -113,9 +116,24 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
             }
     }
 
+    fun resetAddress() {
+        viewModelScope.launch {
+            if (userRepository.currentUser.value!!.school.name != "") {
+                when (userRepository.deleteUserFromSchool()) {
+                    is Result.Success -> {
+                        _resetAdress.value = Event(Unit)
+                    }
+                }
+            }else {
+                _resetAdress.value = Event(Unit)
+            }
+        }
+    }
+
     fun showNoticeFragment() {
         _openNoticeFragmentEvent.value = Event(Unit)
     }
+
 
 
 }
