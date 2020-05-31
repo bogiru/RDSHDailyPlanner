@@ -1,7 +1,6 @@
 package com.bogiruapps.rdshapp.data
 
 import android.net.Uri
-import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.chats.chat_room_event.Message
@@ -67,7 +66,9 @@ class UserRemoteDataSource(
     override suspend fun fetchUsers(region: Region, city: City, school: School): Result<List<User>> = withContext(ioDispatcher) {
         return@withContext try {
             when (val result =
-                schoolsCollection.document(school.id).collection(USERS_COLLECTION_NAME).get().await()) {
+                db.collection(REGION_COLLECTION_NAME).document(region.id)
+                    .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
+                    .document(school.id).collection(USERS_COLLECTION_NAME).get().await()) {
                 is Result.Success -> Result.Success(result.data.toUserList())
                 is Result.Error -> Result.Error(result.exception)
                 is Result.Canceled -> Result.Canceled(result.exception)
@@ -375,4 +376,5 @@ class UserRemoteDataSource(
 
     private fun getReferenceStorage(userId: String) =
         storage.reference.child("$USER_PICTURE_REFERENCE$userId")
+
 }

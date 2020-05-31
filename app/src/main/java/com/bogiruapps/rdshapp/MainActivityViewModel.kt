@@ -4,23 +4,18 @@ import android.app.Activity.RESULT_OK
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.multidex.MultiDexApplication
 import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
-import java.util.*
 
 
 class MainActivityViewModel(val application: Application, val userRepository: UserRepository) : ViewModel() {
