@@ -7,7 +7,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/info_linear_layout"
+            android:id="@+id/item_page_info_layout"
             android:layout_width="match_parent"
             android:background="#ffffff"
             android:layout_height="match_parent"
@@ -15,18 +15,18 @@
 
 
         <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/view_pager"
+                android:id="@+id/info_viewPager"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/spring_dots_indicator"
+                app:layout_constraintBottom_toTopOf="@+id/info_spring_dots_indicator"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
-                android:id="@+id/spring_dots_indicator"
+                android:id="@+id/info_spring_dots_indicator"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"

@@ -10,7 +10,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/edit_notice_layout"
+            android:id="@+id/notice_edit_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFFFFF"
@@ -28,13 +28,12 @@
                 app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/linearLayout5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="32dp">
 
                 <EditText
-                        android:id="@+id/event_edit_title_editText"
+                        android:id="@+id/notice_edit_title_editText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -49,7 +48,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                 <EditText
-                        android:id="@+id/event_edit_description_editText"
+                        android:id="@+id/notice_edit_description_editText"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -61,10 +60,10 @@
                         android:textStyle="normal"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/event_edit_title_editText" />
+                        app:layout_constraintTop_toBottomOf="@id/notice_edit_title_editText" />
 
                 <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                        android:id="@+id/extendedFloatingActionButton3"
+                        android:id="@+id/notice_edit_fab"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"

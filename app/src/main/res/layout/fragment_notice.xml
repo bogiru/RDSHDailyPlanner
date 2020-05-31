@@ -26,7 +26,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_notice"
+                android:id="@+id/notice_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -39,6 +39,7 @@
                 tools:listitem="@layout/notice_item" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+                android:id="@+id/notice_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"

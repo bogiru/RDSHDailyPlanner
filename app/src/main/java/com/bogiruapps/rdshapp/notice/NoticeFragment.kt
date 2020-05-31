@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
@@ -82,8 +80,8 @@ class NoticeFragment : Fragment() {
     }
 
     private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
         editItem?.isVisible = false
         deleteItem?.isVisible = false
 

@@ -57,10 +57,10 @@ class UserFragment : Fragment() {
     }
 
     private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
 
-        activity?.toolbar?.title = "Профиль"
+        activity?.main_toolbar?.title = "Профиль"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }

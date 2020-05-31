@@ -74,13 +74,13 @@ class EventEditFragment : Fragment() {
 }
 
     private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
 
         if (eventEditViewModel.checkCreateEventStatus()) {
-            activity?.toolbar?.title = "Создание"
+            activity?.main_toolbar?.title = "Создание"
         } else  {
-            activity?.toolbar?.title = "Редактирование"
+            activity?.main_toolbar?.title = "Редактирование"
         }
         editItem?.isVisible = false
         deleteItem?.isVisible = false

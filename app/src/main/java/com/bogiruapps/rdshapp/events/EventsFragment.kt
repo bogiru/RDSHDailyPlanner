@@ -76,10 +76,10 @@ class EventsFragment : Fragment() {
     }
 
     private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
 
-        activity?.toolbar?.title = "Мероприятия"
+        activity?.main_toolbar?.title = "Мероприятия"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }

@@ -10,7 +10,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/frameLayout4"
+            android:id="@+id/task_event_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#DAEBEBEB"
@@ -18,7 +18,7 @@
 
 
         <androidx.cardview.widget.CardView
-                android:id="@+id/image_cardView"
+                android:id="@+id/event_chat_room_item_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="136dp"
                 android:layout_marginStart="8dp"
@@ -33,7 +33,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/constraintLayout"
+                    android:id="@+id/task_event_header_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -52,7 +52,7 @@
                         app:loadImageEvent="@{viewModel.event.indexImage}" />
 
                 <TextView
-                        android:id="@+id/title_task_event"
+                        android:id="@+id/task_event_title"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -95,7 +95,7 @@
                 app:cardCornerRadius="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_cardView">
+                app:layout_constraintTop_toBottomOf="@+id/event_chat_room_item_cardView">
 
             <TextView
                     android:id="@+id/deadline_textView"

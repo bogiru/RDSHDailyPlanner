@@ -16,7 +16,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/coordinatorLayout"
+            android:id="@+id/rating_item_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -34,7 +34,7 @@
                     android:layout_height="match_parent">
 
                 <TextView
-                        android:id="@+id/user_name_textView"
+                        android:id="@+id/rating_item_user_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -43,34 +43,34 @@
                         android:text="@{user.name}"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/user_image"
-                        app:layout_constraintTop_toTopOf="@+id/user_image" />
+                        app:layout_constraintStart_toEndOf="@+id/rating_item_profile_image"
+                        app:layout_constraintTop_toTopOf="@+id/rating_item_profile_image" />
 
                 <TextView
-                        android:id="@+id/score_textView"
+                        android:id="@+id/rating_item_score"
                         android:layout_width="wrap_content"
                         android:layout_height="19dp"
                         android:layout_marginStart="8dp"
                         android:text="@{@string/score(user.score)}"
                         android:textSize="14sp"
-                        app:layout_constraintStart_toEndOf="@+id/user_image"
-                        app:layout_constraintTop_toBottomOf="@+id/user_name_textView" />
+                        app:layout_constraintStart_toEndOf="@+id/rating_item_profile_image"
+                        app:layout_constraintTop_toBottomOf="@+id/rating_item_user_name" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/user_image"
+                        android:id="@+id/rating_item_profile_image"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
                         android:layout_marginStart="12dp"
                         app:civ_border_color="#FFF"
                         app:civ_border_width="3dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/numberUser"
+                        app:layout_constraintStart_toEndOf="@+id/rating_itam_number_user"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.516"
                         app:loadIdInCircle="@{user.id}" />
 
                 <TextView
-                        android:id="@+id/numberUser"
+                        android:id="@+id/rating_itam_number_user"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"

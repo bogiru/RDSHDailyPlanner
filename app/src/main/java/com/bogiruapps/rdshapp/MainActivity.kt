@@ -1,6 +1,5 @@
 package com.bogiruapps.rdshapp
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -19,26 +18,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.bogiruapps.rdshapp.databinding.ActivityMainBinding
 import com.bogiruapps.rdshapp.databinding.DrawerHeaderBinding
 import com.bogiruapps.rdshapp.utils.ConnectionLiveData
-import com.bogiruapps.rdshapp.utils.RC_PICK_FROM_GALLERY
 import com.bogiruapps.rdshapp.utils.RC_SIGN_IN
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.android.viewmodel.ext.android.viewModel
-import android.opengl.ETC1.getHeight
-import android.opengl.ETC1.getWidth
-import android.graphics.BitmapFactory
-import android.graphics.Bitmap
-import android.R.attr.data
-import androidx.core.app.ComponentActivity.ExtraData
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.provider.MediaStore
-import android.util.Log
-import kotlinx.android.synthetic.main.drawer_header.view.*
-import java.io.FileNotFoundException
-import java.security.AccessController.getContext
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -131,7 +115,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun configureToolbar() {
         drawerLayout = binding.drawerLayout
-        toolbar = findViewById(R.id.toolbar)
+        toolbar = findViewById(R.id.main_toolbar)
         setSupportActionBar(toolbar)
     }
 

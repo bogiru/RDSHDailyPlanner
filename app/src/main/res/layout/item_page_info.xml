@@ -10,7 +10,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/info_linear_layout"
+            android:id="@+id/item_page_info_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:context=".info.InfoFragment">
@@ -30,7 +30,7 @@
                     android:padding="0dp">
 
                 <ImageView
-                        android:id="@+id/info_image"
+                        android:id="@+id/info_page_item_image"
                         imageDrawable="@{page.indexImage}"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
@@ -39,7 +39,7 @@
                         android:scaleType="centerCrop"/>
 
                 <TextView
-                        android:id="@+id/info_text_view"
+                        android:id="@+id/info_page_item_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"

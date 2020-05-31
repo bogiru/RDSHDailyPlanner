@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -69,14 +68,14 @@ class NoticeEditFragment : Fragment() {
     }
 
     private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
 
 
         if (noticeEditViewModel.checkCreateNoticeStatus()) {
-            activity?.toolbar?.title = "Создание объявления"
+            activity?.main_toolbar?.title = "Создание объявления"
         } else  {
-            activity?.toolbar?.title = "Редактирование объявления"
+            activity?.main_toolbar?.title = "Редактирование объявления"
         }
 
         editItem?.isVisible = false

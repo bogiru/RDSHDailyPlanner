@@ -16,12 +16,13 @@
             android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_constraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#DAEBEBEB">
 
             <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
+                    android:id="@+id/main_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:addStatesFromChildren="false"
@@ -49,7 +50,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                    app:layout_constraintTop_toBottomOf="@+id/main_toolbar"
                     app:layout_constraintVertical_bias="0.0"
                     app:navGraph="@navigation/navigation" />
 

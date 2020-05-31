@@ -13,7 +13,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/linearLayout"
+            android:id="@+id/task_event_item_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="10dp">
@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/constraintLayout"
+                        android:id="@+id/task_event_header_layout"
                         android:layout_width="0dp"
                         android:layout_height="103dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
                         app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
-                            android:id="@+id/imageView4"
+                            android:id="@+id/task_event_background"
                             imageDrawable="@{@drawable/header10}"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
@@ -57,7 +57,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                            android:id="@+id/title_task_event"
+                            android:id="@+id/task_event_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="16dp"
@@ -75,16 +75,16 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                            android:id="@+id/status_task_event"
+                            android:id="@+id/task_event_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:textColor="#FFFDFD"
-                            app:layout_constraintBottom_toTopOf="@+id/responsible_task_event"
+                            app:layout_constraintBottom_toTopOf="@+id/task_event+responsible"
                             app:layout_constraintEnd_toEndOf="parent" />
 
                     <TextView
-                            android:id="@+id/responsible_task_event"
+                            android:id="@+id/task_event+responsible"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
@@ -100,7 +100,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
-                        android:id="@+id/description_task_event"
+                        android:id="@+id/task_event_description"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
@@ -113,7 +113,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                        app:layout_constraintTop_toBottomOf="@+id/task_event_header_layout"
                         tools:visibility="visible" />
 
                 <CheckBox
@@ -127,11 +127,11 @@
                         android:text="Задание завершено"
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/description_task_event"
+                        app:layout_constraintTop_toBottomOf="@+id/task_event_description"
                         tools:visibility="visible" />
 
                 <TextView
-                        android:id="@+id/textView"
+                        android:id="@+id/task_event_more_details_textView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -140,17 +140,17 @@
                         android:text="Подробнее"
                         android:textColor="#000000"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/imageView5"
+                        app:layout_constraintEnd_toStartOf="@+id/task_event_more_details_imageView"
                         app:layout_constraintTop_toBottomOf="@+id/ckeck_box_task_completed"
                         app:layout_constraintVertical_bias="1.0" />
 
                 <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/task_event_more_details_imageView"
                         android:layout_width="21dp"
                         android:layout_height="21dp"
                         android:layout_marginEnd="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textView"
+                        app:layout_constraintTop_toTopOf="@+id/task_event_more_details_textView"
                         app:srcCompat="@drawable/ic_keyboard_arrow_down_black_48dp" />
 
 

@@ -2,17 +2,12 @@ package com.bogiruapps.rdshapp.info
 
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.viewpager2.widget.ViewPager2
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentInfoBinding
 import kotlinx.android.synthetic.main.activity_main.*
-import org.koin.android.ext.android.bind
-import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class InfoFragment : Fragment() {
@@ -42,10 +37,10 @@ class InfoFragment : Fragment() {
     }
 
     private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
 
-        activity?.toolbar?.title = " "
+        activity?.main_toolbar?.title = " "
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }

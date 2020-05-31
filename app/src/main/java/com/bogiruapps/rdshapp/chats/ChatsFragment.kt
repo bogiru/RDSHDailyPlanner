@@ -4,7 +4,6 @@ package com.bogiruapps.rdshapp.chats
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -15,14 +14,9 @@ import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentChatsBinding
-import com.bogiruapps.rdshapp.databinding.FragmentNoticeBinding
-import com.bogiruapps.rdshapp.notice.Notice
-import com.bogiruapps.rdshapp.notice.NoticeAdapter
-import com.bogiruapps.rdshapp.notice.NoticeViewModel
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_notice.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ChatsFragment : Fragment() {
@@ -75,8 +69,8 @@ class ChatsFragment : Fragment() {
     }
 
     private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
         editItem?.isVisible = false
         deleteItem?.isVisible = false
 

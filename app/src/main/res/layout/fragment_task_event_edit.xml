@@ -11,14 +11,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/frameLayout3"
+            android:id="@+id/task_event_edit_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFFFFF"
             tools:context=".events.tasksEvent.taskEventEdit.TaskEventEditFragment">
 
         <EditText
-                android:id="@+id/editText5"
+                android:id="@+id/task_event_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -30,10 +30,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText3" />
+                app:layout_constraintTop_toBottomOf="@+id/task_event_edit_title" />
 
         <EditText
-                android:id="@+id/editText3"
+                android:id="@+id/task_event_edit_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -49,7 +49,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         <Spinner
-                android:id="@+id/spinner_task_event_edit"
+                android:id="@+id/task_event_edit_spinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -58,10 +58,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                app:layout_constraintTop_toBottomOf="@+id/task_event_edit_responsible" />
 
         <TextView
-                android:id="@+id/textView9"
+                android:id="@+id/task_event_edit_responsible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -69,10 +69,10 @@
                 android:text="Ответственный:"
                 android:textStyle="italic"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText5" />
+                app:layout_constraintTop_toBottomOf="@+id/task_event_edit_text" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/ext_fub"
+                android:id="@+id/task_event_edit_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"

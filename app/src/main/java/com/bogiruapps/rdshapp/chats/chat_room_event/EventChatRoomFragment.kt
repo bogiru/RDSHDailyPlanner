@@ -1,7 +1,6 @@
 package com.bogiruapps.rdshapp.chats.chat_room_event
 
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -78,10 +77,10 @@ class EventChatRoomFragment : Fragment() {
     }
 
     private fun configureToolbar() {
-        val editItem = activity?.toolbar?.menu?.findItem(R.id.item_edit)
-        val deleteItem = activity?.toolbar?.menu?.findItem(R.id.item_delete)
+        val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
+        val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
 
-        activity?.toolbar?.title = "Чат"
+        activity?.main_toolbar?.title = "Чат"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }
