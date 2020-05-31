@@ -90,8 +90,8 @@ class EventsFragment : Fragment() {
 
     private fun configureRecyclerView() {
         adapter = EventsAdapter(getFirestoreRecyclerOptions(), eventsViewModel)
-        binding.recyclerViewEvents.layoutManager = LinearLayoutManager(activity)
-        binding.recyclerViewEvents.adapter = adapter
+        binding.eventsRecyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.eventsRecyclerView.adapter = adapter
 
     }
 

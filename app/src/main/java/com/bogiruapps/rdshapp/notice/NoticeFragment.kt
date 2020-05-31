@@ -99,8 +99,8 @@ class NoticeFragment : Fragment() {
     private fun configureRecyclerView() {
         val options = getFirestoreRecyclerOptions()
         adapter = NoticeAdapter(options, noticeViewModel)
-        binding.recyclerViewNotice.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewNotice.adapter = adapter
+        binding.noticeRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.noticeRecyclerView.adapter = adapter
     }
 
     private fun getFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Notice> {

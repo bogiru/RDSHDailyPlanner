@@ -77,7 +77,7 @@
                         app:iconGravity="end"
                         app:iconTint="#FFFFFF"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/event_edit_description_editText" />
+                        app:layout_constraintTop_toBottomOf="@+id/notice_edit_description_editText" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 

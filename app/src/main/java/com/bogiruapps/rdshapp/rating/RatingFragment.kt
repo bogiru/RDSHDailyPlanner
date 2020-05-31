@@ -51,9 +51,9 @@ class RatingFragment : Fragment() {
 
         ratingViewModel.dataLoading.observe(viewLifecycleOwner, Observer{ isShowProgress ->
             if (isShowProgress) {
-                binding.usersPb.visibility = View.VISIBLE
+                binding.ratingPb.visibility = View.VISIBLE
             } else {
-                binding.usersPb.visibility = View.INVISIBLE
+                binding.ratingPb.visibility = View.INVISIBLE
             }
         })
     }
@@ -76,8 +76,8 @@ class RatingFragment : Fragment() {
        // val layoutManager = GridLayoutManager(activity, GRID_SPAN_COUNT, GridLayoutManager.HORIZONTAL, false)
         val options = getFirestoreRecyclerOptions(query)
         adapter = RatingAdapter(options, ratingViewModel)
-        binding.recyclerViewUsers.layoutManager = LinearLayoutManager(activity)
-        binding.recyclerViewUsers.adapter = adapter
+        binding.ratingRecyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.ratingRecyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
     }
 

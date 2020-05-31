@@ -95,7 +95,7 @@ class TasksEventFragment : Fragment() {
         binding.viewModel = taskEventViewModel
 
         if (!taskEventViewModel.checkUserIsAuthorEvent()) {
-            binding.fubTaskEvent.visibility = View.INVISIBLE
+            binding.taskEventFub.visibility = View.INVISIBLE
         }
 
         binding.lifecycleOwner = this.viewLifecycleOwner
@@ -103,8 +103,8 @@ class TasksEventFragment : Fragment() {
 
     private fun configureRecyclerView(query: Query) {
         adapter = TaskEventAdapter(getFirestoreRecyclerOptions(query), taskEventViewModel)
-        binding.recyclerViewTasksEvent.layoutManager = LinearLayoutManager(activity)
-        binding.recyclerViewTasksEvent.adapter = adapter
+        binding.taskEventRecyclerView.layoutManager = LinearLayoutManager(activity)
+        binding.taskEventRecyclerView.adapter = adapter
 
         val callback = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -118,7 +118,7 @@ class TasksEventFragment : Fragment() {
         }
 
         val itemTouchHelper = ItemTouchHelper(callback)
-        itemTouchHelper.attachToRecyclerView(binding.recyclerViewTasksEvent)
+        itemTouchHelper.attachToRecyclerView(binding.taskEventRecyclerView)
     }
 
     private fun getFirestoreRecyclerOptions(query: Query): FirestoreRecyclerOptions<TaskEvent> {

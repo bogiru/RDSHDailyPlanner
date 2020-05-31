@@ -39,9 +39,9 @@ class TaskEventAdapter(
             }
 
             if (taskEvent.completed) {
-                binding.statusTaskEvent.text = "Статус: Выполнен"
+                binding.taskEventStatus.text = "Статус: Выполнен"
             } else {
-                binding.statusTaskEvent.text = "Статус: Ожидает выполнения"
+                binding.taskEventStatus.text = "Статус: Ожидает выполнения"
             }
             var numberClick = 1
 
@@ -55,14 +55,14 @@ class TaskEventAdapter(
         }
 
         private fun showDetailEvent(viewModel: TaskEventViewModel, taskEvent: TaskEvent) {
-            binding.imageView5.setImageResource(R.drawable.ic_expand_less_black_48dp)
-            binding.descriptionTaskEvent.visibility = View.VISIBLE
+            binding.taskEventMoreDetailsImageView.setImageResource(R.drawable.ic_expand_less_black_48dp)
+            binding.taskEventDescription.visibility = View.VISIBLE
             binding.ckeckBoxTaskCompleted.visibility = View.VISIBLE
         }
 
         private fun hideDetailEvent(viewModel: TaskEventViewModel) {
-            binding.imageView5.setImageResource(R.drawable.ic_keyboard_arrow_down_black_48dp)
-            binding.descriptionTaskEvent.visibility = View.GONE
+            binding.taskEventMoreDetailsImageView.setImageResource(R.drawable.ic_keyboard_arrow_down_black_48dp)
+            binding.taskEventDescription.visibility = View.GONE
             binding.ckeckBoxTaskCompleted.visibility = View.GONE
         }
 

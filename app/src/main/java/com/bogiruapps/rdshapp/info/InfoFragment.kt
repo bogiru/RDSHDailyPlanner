@@ -50,8 +50,8 @@ class InfoFragment : Fragment() {
     }
 
     private fun configureDotsIndicator() {
-        val wormDotsIndicator = binding.springDotsIndicator
-        val viewPager = binding.viewPager
+        val wormDotsIndicator = binding.infoSpringDotsIndicator
+        val viewPager = binding.infoViewPager
         val adapter = InfoViewPagerAdapter()
         viewPager.adapter = adapter
         wormDotsIndicator.setViewPager2(viewPager)

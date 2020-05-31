@@ -87,11 +87,11 @@ class NoticeEditFragment : Fragment() {
     }
 
     private fun showEditNotice() {
-        binding.editNoticeLayout.visibility = View.VISIBLE
+        binding.noticeEditLayout.visibility = View.VISIBLE
     }
 
     private fun hideEditNotice() {
-        binding.editNoticeLayout.visibility = View.INVISIBLE
+        binding.noticeEditLayout.visibility = View.INVISIBLE
     }
 
 

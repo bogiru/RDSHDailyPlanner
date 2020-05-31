@@ -74,9 +74,9 @@ class TaskEventEditFragment : Fragment() {
         val spinnerAdapter: ArrayAdapter<String> =
             ArrayAdapter(context!!, android.R.layout.simple_spinner_item, getUserNames(items))
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerTaskEventEdit.adapter = spinnerAdapter
+        binding.taskEventEditSpinner.adapter = spinnerAdapter
 
-        binding.spinnerTaskEventEdit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        binding.taskEventEditSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,

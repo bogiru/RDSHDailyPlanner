@@ -80,11 +80,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
                             android:textColor="#FFFDFD"
-                            app:layout_constraintBottom_toTopOf="@+id/task_event+responsible"
+                            app:layout_constraintBottom_toTopOf="@+id/task_event_responsible"
                             app:layout_constraintEnd_toEndOf="parent" />
 
                     <TextView
-                            android:id="@+id/task_event+responsible"
+                            android:id="@+id/task_event_responsible"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="8dp"
