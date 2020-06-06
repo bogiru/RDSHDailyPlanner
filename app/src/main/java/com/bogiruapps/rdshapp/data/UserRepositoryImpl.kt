@@ -21,10 +21,8 @@ import kotlinx.coroutines.coroutineScope
 class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
     UserRepository {
     override val currentUser = MutableLiveData<User>()
-    override val currentNotice = MutableLiveData<Notice>()
     override val currentEvent = MutableLiveData<SchoolEvent>()
     override val stateEvent = MutableLiveData<State>()
-    override val stateNotice = MutableLiveData<State>()
 
     override suspend fun createNewUser(user: User): Result<Void?> = coroutineScope {
         val task = async { dataSource.createUser(user) }
@@ -105,15 +103,6 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
             currentUser.value!!.city,
             currentUser.value!!.school
         )}
-        return@coroutineScope (task.await())
-    }
-
-    override suspend fun fetchFirestoreRecyclerQueryNotice(): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryNotice(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school
-            )}
         return@coroutineScope (task.await())
     }
 
@@ -244,35 +233,6 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
             currentEvent.value!!, message
         )}
         return@coroutineScope returnSuccessOrError(task.await())
-    }
-
-    override suspend fun createNewNotice(notice: Notice): Result<Void?> = coroutineScope {
-        val task = async { dataSource.createNotice(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school,
-            notice
-        )}
-        return@coroutineScope task.await()
-    }
-
-    override suspend fun updateNotice(notice: Notice): Result<Void?> = coroutineScope {
-        val task = async { dataSource.updateNotice(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school,
-            notice
-        )}
-        return@coroutineScope task.await()
-    }
-
-    override suspend fun deleteNotice(): Result<Void?> = coroutineScope {
-        val task = async { dataSource.deleteNotice(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school,
-            currentNotice.value!!)}
-        return@coroutineScope task.await()
     }
 
     override suspend fun updateUserPicture(user: User, internalUri: Uri): Result<Uri?> {

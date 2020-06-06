@@ -7,6 +7,9 @@ import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.data.UserRepositoryImpl
 import com.bogiruapps.rdshapp.events.EventsViewModel
 import com.bogiruapps.rdshapp.chats.chat_room_event.EventChatRoomViewModel
+import com.bogiruapps.rdshapp.data.noticeData.NoticeRemoteDataSource
+import com.bogiruapps.rdshapp.data.noticeData.NoticeRepository
+import com.bogiruapps.rdshapp.data.noticeData.NoticeRepositoryImpl
 import com.bogiruapps.rdshapp.events.detail_event.EventDetailViewModel
 import com.bogiruapps.rdshapp.events.edit_event.EventEditViewModel
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEventViewModel
@@ -31,6 +34,7 @@ val modules = module {
 
     // Data source
     single { UserRemoteDataSource(db = get(), storage = get()) }
+    single { NoticeRemoteDataSource(db = get()) }
 
     // Repository
     single<UserRepository> {
@@ -39,12 +43,18 @@ val modules = module {
         )
     }
 
+    single<NoticeRepository> {
+        NoticeRepositoryImpl(
+            dataSource = get()
+        )
+    }
+
     // ViewModels
     viewModel { MainActivityViewModel(application = get(), userRepository = get()) }
-    viewModel { NoticeViewModel(userRepository = get()) }
+    viewModel { NoticeViewModel(userRepository = get(), noticeRepository = get()) }
     viewModel { SchoolViewModel(userRepository = get()) }
-    viewModel { NoticeEditViewModel(userRepository = get()) }
-    viewModel { NoticeDetailViewModel(userRepository = get()) }
+    viewModel { NoticeEditViewModel(userRepository = get(), noticeRepository = get()) }
+    viewModel { NoticeDetailViewModel(userRepository = get(), noticeRepository = get()) }
     viewModel { EventsViewModel(userRepository = get()) }
     viewModel { EventDetailViewModel(userRepository = get()) }
     viewModel { EventEditViewModel(userRepository = get()) }

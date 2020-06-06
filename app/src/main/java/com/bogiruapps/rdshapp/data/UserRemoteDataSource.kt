@@ -136,37 +136,6 @@ class UserRemoteDataSource(
             .document(user.email.toString()).delete().await()
     }
 
-    override suspend fun createNotice(region: Region, city: City, school: School, notice: Notice): Result<Void> = withContext(ioDispatcher) {
-            return@withContext try {
-                db.collection(REGION_COLLECTION_NAME).document(region.id)
-                    .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
-                    .document(school.id).collection(NOTICE_COLLECTION_NAME).document(notice.id).set(notice)
-                    .await()
-            } catch (e: Exception) {
-                Result.Error(e)
-            }
-        }
-
-    override suspend fun updateNotice(region: Region, city: City, school: School, notice: Notice): Result<Void?> = withContext(ioDispatcher) {
-            return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
-                .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
-                .document(school.id).collection(NOTICE_COLLECTION_NAME).document(notice.id).update(
-                    FIELD_TEXT, notice.text,
-                    FIELD_TITLE, notice.title,
-                    FIELD_VIEWS, notice.views
-                )
-                .await()
-        }
-
-    override suspend fun deleteNotice(region: Region, city: City, school: School, notice: Notice): Result<Void?> = withContext(ioDispatcher) {
-            return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
-                .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
-                .document(school.id).collection(NOTICE_COLLECTION_NAME)
-                .document(notice.id).delete()
-                .await()
-
-        }
-
     override suspend fun fetchEvent(region: Region, city: City, school: School, eventId: String): Result<SchoolEvent?> = withContext(ioDispatcher) {
         return@withContext try {
             when (val resultDocumentSnapshot = db.collection(REGION_COLLECTION_NAME).document(region.id)
@@ -273,24 +242,6 @@ class UserRemoteDataSource(
             Result.Error(e)
         }
     }
-
-    suspend fun fetchFirestoreRecyclerQueryNotice(region: Region, city: City, school: School): Result<Query> = withContext(ioDispatcher) {
-            return@withContext try {
-                when (val result = db.collection(REGION_COLLECTION_NAME).document(region.id)
-                    .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
-                    .document(school.id).collection(NOTICE_COLLECTION_NAME)
-                    .orderBy(FIELD_DATE, Query.Direction.DESCENDING)
-                    .get().await()
-                    ) {
-
-                    is Result.Success -> Result.Success(result.data.query)
-                    is Result.Error -> Result.Error(result.exception)
-                    is Result.Canceled -> Result.Error(result.exception)
-                }
-            } catch (e: Exception) {
-                Result.Error(e)
-            }
-        }
 
     suspend fun fetchFirestoreRecyclerQueryEvent(region: Region, city: City, school: School): Result<Query> = withContext(ioDispatcher) {
         return@withContext try {

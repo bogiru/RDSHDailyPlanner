@@ -6,13 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.*
 import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.noticeData.NoticeRepository
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
-class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() {
+class NoticeViewModel(
+    private val userRepository: UserRepository,
+    private val noticeRepository: NoticeRepository) : ViewModel() {
+
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
@@ -49,14 +53,14 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
                     .contains(userRepository.currentUser.value!!.email)
             ) {
                 notice.views.add(userRepository.currentUser.value!!.email!!)
-                userRepository.updateNotice(notice)
+                noticeRepository.updateNotice(userRepository.currentUser.value!!, notice)
             }
         }
     }
 
     private fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
-            when (val result = userRepository.fetchFirestoreRecyclerQueryNotice()) {
+            when (val result = noticeRepository.fetchFirestoreRecyclerQueryNotice(userRepository.currentUser.value!!)) {
                 is Result.Success -> {
                     _query.value = result.data
                     _dataLoading.value = false
@@ -67,13 +71,13 @@ class NoticeViewModel(private val userRepository: UserRepository) : ViewModel() 
     }
 
     fun showDetailNoticeFragment(notice: Notice) {
-        userRepository.currentNotice.value = notice
+        noticeRepository.currentNotice.value = notice
         _openNoticeDetailFragmentEvent.value = Event(Unit)
     }
 
     fun showEditNoticeFragment() {
-        userRepository.stateNotice.value = State.CREATE
-        userRepository.currentNotice.value = Notice()
+        noticeRepository.stateNotice.value = State.CREATE
+        noticeRepository.currentNotice.value = Notice()
         _openNoticeEditFragmentEvent.value = Event(Unit)
     }
 

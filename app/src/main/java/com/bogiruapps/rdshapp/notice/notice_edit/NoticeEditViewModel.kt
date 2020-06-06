@@ -6,11 +6,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.noticeData.NoticeRepository
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
-class NoticeEditViewModel(private val userRepository: UserRepository) : ViewModel() {
+class NoticeEditViewModel(
+    private val userRepository: UserRepository,
+    private val noticeRepository: NoticeRepository) : ViewModel() {
 
     private val _openEditNotice = MutableLiveData<Event<Unit>>()
     val openEditNotice: LiveData<Event<Unit>> = _openEditNotice
@@ -24,15 +27,15 @@ class NoticeEditViewModel(private val userRepository: UserRepository) : ViewMode
     private val _showSnackbar = MutableLiveData<String>()
     val showSnackbar: MutableLiveData<String> = _showSnackbar
 
-    val notice = userRepository.currentNotice
+    val notice = noticeRepository.currentNotice
 
-    fun checkCreateNoticeStatus(): Boolean = userRepository.stateNotice.value == State.CREATE
+    fun checkCreateNoticeStatus(): Boolean = noticeRepository.stateNotice.value == State.CREATE
 
     fun updateNotice(notice: Notice) {
         if (notice.title == "" || notice.text == "") {
             _showSnackbar.value = "Не все поля заполнены"
         } else {
-            when (userRepository.stateNotice.value) {
+            when (noticeRepository.stateNotice.value) {
                 State.EDIT -> editNotice(notice)
                 State.CREATE -> createNotice(notice)
             }
@@ -43,7 +46,7 @@ class NoticeEditViewModel(private val userRepository: UserRepository) : ViewMode
         notice.author = userRepository.currentUser.value!!
 
         viewModelScope.launch {
-            userRepository.createNewNotice(notice)
+            noticeRepository.createNewNotice(userRepository.currentUser.value!!, notice)
             openNoticeFragment()
         }
     }
@@ -51,7 +54,7 @@ class NoticeEditViewModel(private val userRepository: UserRepository) : ViewMode
     private fun editNotice(notice: Notice) {
         if (notice.id == "") createNotice(notice)
         else viewModelScope.launch {
-            userRepository.updateNotice(notice)
+            noticeRepository.updateNotice(userRepository.currentUser.value!!, notice)
             //closeEditNotice()
             openNoticeFragment()
         }

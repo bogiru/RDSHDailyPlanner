@@ -17,10 +17,8 @@ import com.google.firebase.firestore.Query
 interface UserRepository {
 
     val currentUser: MutableLiveData<User>
-    val currentNotice: MutableLiveData<Notice>
     val currentEvent: MutableLiveData<SchoolEvent>
     val stateEvent: MutableLiveData<State>
-    val stateNotice: MutableLiveData<State>
 
     suspend fun createNewUser(user: User): Result<Void?>
 
@@ -44,8 +42,6 @@ interface UserRepository {
 
     suspend fun fetchFirestoreRecyclerQueryUser():  Result<Query>
 
-    suspend fun fetchFirestoreRecyclerQueryNotice(): Result<Query>
-
     suspend fun fetchFirestoreRecyclerQueryEvents(): Result<Query>
 
     suspend fun fetchFirestoreRecyclerQueryTasksEvent():  Result<Query>
@@ -66,8 +62,6 @@ interface UserRepository {
 
     suspend fun updateTaskEvent(event: TaskEvent): Result<Void?>
 
-   /* suspend fun fetchNotices(school: School): Result<List<Notice>>*/
-
     suspend fun deleteTaskEvent(taskEvent: TaskEvent): Result<Void?>
 
     suspend fun createChat(chat: Chat): Result<Void?>
@@ -75,12 +69,6 @@ interface UserRepository {
     suspend fun updateChat(chat: Chat): Result<Void?>
 
     suspend fun createEventMessage(message: Message): Result<Void?>
-
-    suspend fun createNewNotice(notice: Notice): Result<Void?>
-
-    suspend fun updateNotice(notice: Notice): Result<Void?>
-
-    suspend fun deleteNotice(): Result<Void?>
 
     suspend fun updateUserPicture(user: User, internalUri: Uri): Result<Uri?>
 }
