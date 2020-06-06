@@ -7,10 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.eventData.EventRepository
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
-class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel() {
+class TaskEventViewModel(
+    private val userRepository: UserRepository,
+    private val eventRepository: EventRepository)
+    : ViewModel() {
 
     private val _openTaskEventEdit = MutableLiveData<Event<Unit>>()
     val openTaskEventEdit: LiveData<Event<Unit>> = _openTaskEventEdit
@@ -27,7 +31,7 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
     private val _showSnackbar = MutableLiveData<Event<String>>()
     val showSnackbar: LiveData<Event<String>> = _showSnackbar
 
-    val event = userRepository.currentEvent.value!!
+    val event = eventRepository.currentEvent.value!!
 
     init {
         fetchFirestoreRecyclerQuery()
@@ -37,7 +41,7 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
 
     fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
-            when (val result = userRepository.fetchFirestoreRecyclerQueryTasksEvent()) {
+            when (val result = eventRepository.fetchFirestoreRecyclerQueryTasksEvent(userRepository.currentUser.value!!)) {
                 is Result.Success -> {
                     _query.value = result.data
                     _dataLoading.value = false
@@ -56,16 +60,16 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
                     taskEvent.description,
                     taskEvent.user
                 )
-                when (userRepository.updateTaskEvent(task)) {
+                when (eventRepository.updateTaskEvent(userRepository.currentUser.value!!, task)) {
                     is Result.Success -> {
                         if (taskEvent.completed) {
-                            userRepository.currentEvent.value!!.countCompletedTask--
+                            eventRepository.currentEvent.value!!.countCompletedTask--
                             userRepository.currentUser.value!!.score--
                         } else {
-                            userRepository.currentEvent.value!!.countCompletedTask++
+                            eventRepository.currentEvent.value!!.countCompletedTask++
                             userRepository.currentUser.value!!.score++
                         }
-                        userRepository.updateEvent(userRepository.currentEvent.value!!)
+                        eventRepository.updateEvent(userRepository.currentUser.value!!, eventRepository.currentEvent.value!!)
                         userRepository.updateUser(userRepository.currentUser.value!!)
                         userRepository.updateUserInSchool(userRepository.currentUser.value!!)
                     }
@@ -75,7 +79,7 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
     }
 
     fun showDeleteTaskEventFragment(taskEvent: TaskEvent) {
-        if (userRepository.currentUser.value!!.email == userRepository.currentEvent.value!!.author.email)  {
+        if (userRepository.currentUser.value!!.email == eventRepository.currentEvent.value!!.author.email)  {
             _openTaskEventDeleteFragmentEvent.value = Event(taskEvent)
         } else {
             _showSnackbar.value = Event("Право удаления предоставлено только автору мероприятия")
@@ -84,7 +88,7 @@ class TaskEventViewModel(private val userRepository: UserRepository) : ViewModel
 
     fun deleteTaskEvent(taskEvent: TaskEvent) {
         viewModelScope.launch {
-            userRepository.deleteTaskEvent(taskEvent)
+            eventRepository.deleteTaskEvent(userRepository.currentUser.value!!, taskEvent)
         }
     }
 

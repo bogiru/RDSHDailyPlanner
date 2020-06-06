@@ -6,10 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.eventData.EventRepository
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
-class EventDetailViewModel(val userRepository: UserRepository) : ViewModel() {
+class EventDetailViewModel(
+    private val userRepository: UserRepository,
+    private val eventRepository: EventRepository)
+    : ViewModel() {
+
     private val _openTaskEventRecyclerView = MutableLiveData<Event<Unit>>()
     val openTaskEventRecyclerView: LiveData<Event<Unit>> = _openTaskEventRecyclerView
 
@@ -25,7 +30,7 @@ class EventDetailViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _showToast = MutableLiveData<Event<String>>()
     val showToast: LiveData<Event<String>> = _showToast
 
-    val event = userRepository.currentEvent.value!!
+    val event = eventRepository.currentEvent.value!!
 
     fun showTaskEventRecyclerView() {
         _openTaskEventRecyclerView.value = Event(Unit)
@@ -33,15 +38,15 @@ class EventDetailViewModel(val userRepository: UserRepository) : ViewModel() {
 
     fun deleteEvent() {
         viewModelScope.launch {
-            when (userRepository.deleteEvent()) {
+            when (eventRepository.deleteEvent(userRepository.currentUser.value!!)) {
             }
         }
     }
 
     fun showEditEventFragment() {
-        if (userRepository.currentUser.value!!.email == userRepository.currentEvent.value!!.author.email) {
+        if (userRepository.currentUser.value!!.email == eventRepository.currentEvent.value!!.author.email) {
             _openEventEditFragmentEvent.value = Event(Unit)
-            userRepository.stateEvent.value = State.EDIT
+            eventRepository.stateEvent.value = State.EDIT
         } else {
             _showToast.value = Event("Право редактирование предоставлено только автору объявления")
         }
@@ -49,7 +54,7 @@ class EventDetailViewModel(val userRepository: UserRepository) : ViewModel() {
     }
 
     fun showDeleteEventFragment() {
-        if (userRepository.currentUser.value!!.name == userRepository.currentEvent.value!!.author.name)  {
+        if (userRepository.currentUser.value!!.name == eventRepository.currentEvent.value!!.author.name)  {
             _openEventDeleteFragmentEvent.value = Event(Unit)
         } else {
             _showToast.value = Event("Право удаления предоставлено только автору объявления")

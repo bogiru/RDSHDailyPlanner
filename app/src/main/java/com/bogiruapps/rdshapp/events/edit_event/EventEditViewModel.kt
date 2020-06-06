@@ -10,12 +10,16 @@ import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.UserRepository
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.chats.chat_room_event.Message
+import com.bogiruapps.rdshapp.data.eventData.EventRepository
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 import java.sql.Time
 import java.util.*
 
-class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {
+class EventEditViewModel(
+    private val userRepository: UserRepository,
+    private val eventRepository: EventRepository)
+    : ViewModel() {
 
     private val _indexImage = MutableLiveData<Int>()
     val indexImage: LiveData<Int> = _indexImage
@@ -29,9 +33,9 @@ class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _showDatePickerDialog = MutableLiveData<Event<Unit>>()
     val showDatePickerDialog: MutableLiveData<Event<Unit>> = _showDatePickerDialog
 
-    val event = userRepository.currentEvent.value
+    val event = eventRepository.currentEvent.value
 
-    fun checkCreateEventStatus(): Boolean = userRepository.stateEvent.value == State.CREATE
+    fun checkCreateEventStatus(): Boolean = eventRepository.stateEvent.value == State.CREATE
 
     fun updateDate(year: Int, month: Int, dayOfMonth: Int) {
         event!!.deadline = Date(year, month, dayOfMonth)
@@ -41,7 +45,7 @@ class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {
         if (event.title == "" || event.description == "") {
             _showSnackbar.value = "Не все поля заполнены"
         } else {
-            when (userRepository.stateEvent.value) {
+            when (eventRepository.stateEvent.value) {
                 State.CREATE -> createEvent(event)
                 State.EDIT -> editEvent(event)
             }
@@ -66,12 +70,12 @@ class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {
     private fun createEvent(event: SchoolEvent) {
         viewModelScope.launch {
             event.author = userRepository.currentUser.value!!
-            when(userRepository.createEvent(event)) {
+            when(eventRepository.createEvent(userRepository.currentUser.value!!, event)) {
                 is Result.Success -> {
                     val chat = Chat(event.id, event.title, Message("Сообщений нет"), event.indexImage)
                     when (userRepository.createChat(chat)) {
                         is Result.Success -> {
-                            userRepository.currentEvent.value = event
+                            eventRepository.currentEvent.value = event
                             openSchoolEventFragment()
                         }
                     }
@@ -83,7 +87,7 @@ class EventEditViewModel(val userRepository: UserRepository) : ViewModel() {
 
     private fun editEvent(event: SchoolEvent) {
         viewModelScope.launch {
-            userRepository.updateEvent(event)
+            eventRepository.updateEvent(userRepository.currentUser.value!!, event)
             openSchoolEventFragment()
         }
     }

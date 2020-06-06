@@ -7,12 +7,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.eventData.EventRepository
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
-class EventsViewModel(private val userRepository: UserRepository) : ViewModel() {
+class EventsViewModel(
+    private val userRepository: UserRepository,
+    private val eventRepository: EventRepository)
+    : ViewModel() {
 
     private val _openDetailEventFragment = MutableLiveData<Event<View>>()
     val openTaskEventFragment: LiveData<Event<View>> = _openDetailEventFragment
@@ -31,7 +35,7 @@ class EventsViewModel(private val userRepository: UserRepository) : ViewModel() 
 
     fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
-            when (val result = userRepository.fetchFirestoreRecyclerQueryEvents()) {
+            when (val result = eventRepository.fetchFirestoreRecyclerQueryEvents(userRepository.currentUser.value!!)) {
                 is Result.Success -> {
                     _query.value = result.data
                     _dataLoading.value = false
@@ -42,13 +46,13 @@ class EventsViewModel(private val userRepository: UserRepository) : ViewModel() 
     }
 
     fun showDetailEventFragment(event: SchoolEvent, v: View) {
-        userRepository.currentEvent.value = event
+        eventRepository.currentEvent.value = event
         _openDetailEventFragment.value = Event(v)
     }
 
     fun showCreateEventFragment() {
-        userRepository.stateEvent.value = State.CREATE
-        userRepository.currentEvent.value = SchoolEvent()
+        eventRepository.stateEvent.value = State.CREATE
+        eventRepository.currentEvent.value = SchoolEvent()
         _openEditEventFragment.value = Event(Unit)
     }
 

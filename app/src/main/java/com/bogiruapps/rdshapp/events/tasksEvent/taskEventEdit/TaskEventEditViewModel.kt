@@ -8,10 +8,14 @@ import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.eventData.EventRepository
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
 import kotlinx.coroutines.launch
 
-class TaskEventEditViewModel(val userRepository: UserRepository) : ViewModel() {
+class TaskEventEditViewModel(
+    private val userRepository: UserRepository,
+    private val eventRepository: EventRepository)
+    : ViewModel() {
 
     private val _openTaskEventFragment = MutableLiveData<Event<Unit>>()
     val openTaskEventFragment: LiveData<Event<Unit>> = _openTaskEventFragment
@@ -22,7 +26,7 @@ class TaskEventEditViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _showSnackbar = MutableLiveData<String>()
     val showSnackbar: MutableLiveData<String> = _showSnackbar
 
-    val event = userRepository.currentEvent.value
+    val event = eventRepository.currentEvent.value
 
     val taskEvent: TaskEvent = TaskEvent()
 
@@ -31,10 +35,10 @@ class TaskEventEditViewModel(val userRepository: UserRepository) : ViewModel() {
             _showSnackbar.value = "Не все поля заполнены"
         } else {
             viewModelScope.launch {
-                when (userRepository.createTaskEvent(taskEvent)) {
+                when (eventRepository.createTaskEvent(userRepository.currentUser.value!!, taskEvent)) {
                     is Result.Success -> {
-                        userRepository.currentEvent.value!!.countTask++
-                        when (userRepository.updateEvent(userRepository.currentEvent.value!!)) {
+                        eventRepository.currentEvent.value!!.countTask++
+                        when (eventRepository.updateEvent(userRepository.currentUser.value!!, eventRepository.currentEvent.value!!)) {
                             is Result.Success -> showTaskEventFragment()
                         }
                     }

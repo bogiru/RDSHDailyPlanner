@@ -31,22 +31,8 @@ interface UserDataSource {
 
     suspend fun deleteUserFromSchool(region: Region, city: City, school: School, user: User): Result<Void?>
 
-    suspend fun fetchEvent(region: Region, city: City, school: School, userId: String): Result<SchoolEvent?>
-
-    suspend fun createEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?>
-
-    suspend fun updateEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?>
-
-    suspend fun deleteEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?>
-
     suspend fun createChat(region: Region, city: City, school: School, chat: Chat): Result<Void?>
 
     suspend fun updateChat(region: Region, city: City, school: School, chat: Chat): Result<Void?>
-
-    suspend fun createTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
-
-    suspend fun updateTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
-
-    suspend fun deleteTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
 
 }
