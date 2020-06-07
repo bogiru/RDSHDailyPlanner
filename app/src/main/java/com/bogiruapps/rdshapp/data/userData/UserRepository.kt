@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.data
+package com.bogiruapps.rdshapp.data.userData
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.chats.Chat
@@ -39,16 +39,6 @@ interface UserRepository {
     suspend fun fetchUsers(): Result<List<User?>>
 
     suspend fun fetchFirestoreRecyclerQueryUser():  Result<Query>
-
-    suspend fun fetchFirestoreRecyclerQueryChats(): Result<Query>
-
-    suspend fun fetchFirestoreRecyclerQueryEventMessage(): Result<Query>
-
-    suspend fun createChat(chat: Chat): Result<Void?>
-
-    suspend fun updateChat(chat: Chat): Result<Void?>
-
-    suspend fun createEventMessage(message: Message): Result<Void?>
 
     suspend fun updateUserPicture(user: User, internalUri: Uri): Result<Uri?>
 }

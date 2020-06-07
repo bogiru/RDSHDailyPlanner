@@ -23,7 +23,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
  */
 class EventChatRoomFragment : Fragment() {
 
-    private val eventChatRoomViewModel: EventChatRoomViewModel by viewModel()
+    private val chatRoomViewModel: ChatRoomViewModel by viewModel()
 
     private lateinit var adapter: EventChatRoomAdapter
     private lateinit var binding: FragmentEventChatRoomBinding
@@ -34,7 +34,7 @@ class EventChatRoomFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         setupObserverViewModel()
-        eventChatRoomViewModel.fetchFirestoreRecyclerQuery()
+        chatRoomViewModel.fetchFirestoreRecyclerQuery()
         configureToolbar()
 
         return binding.root
@@ -48,26 +48,26 @@ class EventChatRoomFragment : Fragment() {
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_chat_room, container, false)
-        binding.viewModel = eventChatRoomViewModel
+        binding.viewModel = chatRoomViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
 
 
     private fun setupObserverViewModel() {
-        eventChatRoomViewModel.showEventChatRoomContent.observe(viewLifecycleOwner, EventObserver {
+        chatRoomViewModel.showEventChatRoomContent.observe(viewLifecycleOwner, EventObserver {
             configureRecyclerView()
         })
 
-        eventChatRoomViewModel.updateEventChatRoomRecyclerView.observe(viewLifecycleOwner, EventObserver {
+        chatRoomViewModel.updateEventChatRoomRecyclerView.observe(viewLifecycleOwner, EventObserver {
             binding.eventChatRoomRecyclerView.smoothScrollToPosition(0)
         })
 
-        eventChatRoomViewModel.clearEventChatRoomEdtText.observe(viewLifecycleOwner, EventObserver {
+        chatRoomViewModel.clearEventChatRoomEdtText.observe(viewLifecycleOwner, EventObserver {
             binding.eventChatRoomEdtText.text.clear()
             this.hideKeyboard()
         })
 
-        eventChatRoomViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->
+        chatRoomViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->
             if (isDataLoading) {
                 binding.eventChatRoomPb.visibility = View.VISIBLE
             } else {
@@ -89,13 +89,13 @@ class EventChatRoomFragment : Fragment() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.reverseLayout = true
 
-        adapter = EventChatRoomAdapter(getFirestoreRecyclerOptions(), eventChatRoomViewModel)
+        adapter = EventChatRoomAdapter(getFirestoreRecyclerOptions(), chatRoomViewModel)
         binding.eventChatRoomRecyclerView.layoutManager = layoutManager
         binding.eventChatRoomRecyclerView.adapter = adapter
     }
 
     private fun getFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Message> {
-        val query = eventChatRoomViewModel.query.value
+        val query = chatRoomViewModel.query.value
         return FirestoreRecyclerOptions.Builder<Message>()
             .setQuery(query!!, Message::class.java)
             .setLifecycleOwner(this)

@@ -22,7 +22,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:longClickable="true"
-                android:onClick="@{(view) -> viewModel.openChatRoomEvent(chat.id)}"
+                android:onClick="@{(view) -> viewModel.openChatRoomEvent(chat)}"
                 app:cardElevation="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

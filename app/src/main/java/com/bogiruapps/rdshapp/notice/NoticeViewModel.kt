@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.*
-import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.userData.UserRepository
 import com.bogiruapps.rdshapp.data.noticeData.NoticeRepository
-import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
 import com.google.firebase.firestore.Query

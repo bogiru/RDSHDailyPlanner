@@ -58,10 +58,9 @@ class EventRemoteDataSource(
 
     override suspend fun deleteEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
-            .collection(CITY_COLLECTION_NAME).document(city.id).collection(
-                SCHOOL_COLLECTION_NAME
-            )
-            .document(school.id).collection(EVENTS_COLLECTION_NAME).document(event.id).delete().await()
+            .collection(CITY_COLLECTION_NAME).document(city.id)
+            .collection(SCHOOL_COLLECTION_NAME).document(school.id)
+            .collection(EVENTS_COLLECTION_NAME).document(event.id).delete().await()
     }
 
     override suspend fun createTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?> = withContext(ioDispatcher) {

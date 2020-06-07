@@ -5,7 +5,7 @@ import java.util.*
 
 data class Chat(
     val id: String = "",
-    val title: String = "",
+    var title: String = "",
     val lastMessage: Message = Message("Сообщений нет"),
     var indexImage: Int = Random().nextInt(25)
 )

@@ -1,9 +1,5 @@
-package com.bogiruapps.rdshapp.data
+package com.bogiruapps.rdshapp.data.userData
 
-import com.bogiruapps.rdshapp.chats.Chat
-import com.bogiruapps.rdshapp.events.SchoolEvent
-import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
-import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.school.School
@@ -30,9 +26,5 @@ interface UserDataSource {
     suspend fun addUserToSchool(region: Region, city: City, school: School, user: User): Result<Void?>
 
     suspend fun deleteUserFromSchool(region: Region, city: City, school: School, user: User): Result<Void?>
-
-    suspend fun createChat(region: Region, city: City, school: School, chat: Chat): Result<Void?>
-
-    suspend fun updateChat(region: Region, city: City, school: School, chat: Chat): Result<Void?>
 
 }

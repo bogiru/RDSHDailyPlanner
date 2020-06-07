@@ -7,18 +7,19 @@ import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.utils.Result
-import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.userData.UserRepository
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.chats.chat_room_event.Message
+import com.bogiruapps.rdshapp.data.chatData.ChatRepository
 import com.bogiruapps.rdshapp.data.eventData.EventRepository
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
-import java.sql.Time
 import java.util.*
 
 class EventEditViewModel(
     private val userRepository: UserRepository,
-    private val eventRepository: EventRepository)
+    private val eventRepository: EventRepository,
+    private val chatRepository: ChatRepository)
     : ViewModel() {
 
     private val _indexImage = MutableLiveData<Int>()
@@ -72,10 +73,12 @@ class EventEditViewModel(
             event.author = userRepository.currentUser.value!!
             when(eventRepository.createEvent(userRepository.currentUser.value!!, event)) {
                 is Result.Success -> {
+                    eventRepository.currentEvent.value = event
+
                     val chat = Chat(event.id, event.title, Message("Сообщений нет"), event.indexImage)
-                    when (userRepository.createChat(chat)) {
+                    when (chatRepository.createChat(userRepository.currentUser.value!!, chat)) {
                         is Result.Success -> {
-                            eventRepository.currentEvent.value = event
+                            chatRepository.currentChat.value = chat
                             openSchoolEventFragment()
                         }
                     }
@@ -87,8 +90,20 @@ class EventEditViewModel(
 
     private fun editEvent(event: SchoolEvent) {
         viewModelScope.launch {
-            eventRepository.updateEvent(userRepository.currentUser.value!!, event)
-            openSchoolEventFragment()
+            when (eventRepository.updateEvent(userRepository.currentUser.value!!, event)) {
+                is Result.Success -> {
+                    val tempChat = chatRepository.currentChat.value!!
+                    tempChat.title = eventRepository.currentEvent.value!!.title
+                    tempChat.indexImage = eventRepository.currentEvent.value!!.indexImage
+
+                    when (chatRepository.updateChat(userRepository.currentUser.value!!, tempChat)) {
+                        is Result.Success -> {
+                            chatRepository.currentChat.value = tempChat
+                            openSchoolEventFragment()
+                        }
+                    }
+                }
+            }
         }
     }
 

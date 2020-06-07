@@ -6,9 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.utils.Result
-import com.bogiruapps.rdshapp.user.User
-import com.bogiruapps.rdshapp.data.UserRepository
-import com.google.firebase.auth.FirebaseUser
+import com.bogiruapps.rdshapp.data.userData.UserRepository
 import kotlinx.coroutines.launch
 
 class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {

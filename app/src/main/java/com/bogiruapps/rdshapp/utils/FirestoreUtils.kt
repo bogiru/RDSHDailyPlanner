@@ -1,4 +1,5 @@
 package com.bogiruapps.rdshapp.utils
+import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region
@@ -127,6 +128,8 @@ fun returnSuccessOrError(result: Result<Void?>): Result<Void?> {
 fun DocumentSnapshot.toUser(): User? = this.toObject(User::class.java)
 
 fun DocumentSnapshot.toEvent(): SchoolEvent? = this.toObject(SchoolEvent::class.java)
+
+fun DocumentSnapshot.toChat(): Chat? = this.toObject(Chat::class.java)
 
 fun QuerySnapshot.toRegionList(): List<Region> = this.map { item -> item.toObject(Region::class.java) }
 

@@ -2,11 +2,14 @@ package com.bogiruapps.rdshapp.di
 
 import com.bogiruapps.rdshapp.MainActivityViewModel
 import com.bogiruapps.rdshapp.chats.ChatsViewModel
-import com.bogiruapps.rdshapp.data.UserRemoteDataSource
-import com.bogiruapps.rdshapp.data.UserRepository
-import com.bogiruapps.rdshapp.data.UserRepositoryImpl
+import com.bogiruapps.rdshapp.data.userData.UserRemoteDataSource
+import com.bogiruapps.rdshapp.data.userData.UserRepository
+import com.bogiruapps.rdshapp.data.userData.UserRepositoryImpl
 import com.bogiruapps.rdshapp.events.EventsViewModel
-import com.bogiruapps.rdshapp.chats.chat_room_event.EventChatRoomViewModel
+import com.bogiruapps.rdshapp.chats.chat_room_event.ChatRoomViewModel
+import com.bogiruapps.rdshapp.data.chatData.ChatRemoteDataSource
+import com.bogiruapps.rdshapp.data.chatData.ChatRepository
+import com.bogiruapps.rdshapp.data.chatData.ChatRepositoryImpl
 import com.bogiruapps.rdshapp.data.eventData.EventRemoteDataSource
 import com.bogiruapps.rdshapp.data.eventData.EventRepository
 import com.bogiruapps.rdshapp.data.eventData.EventRepositoryImpl
@@ -36,9 +39,15 @@ val modules = module {
     single { FirebaseStorage.getInstance() }
 
     // Data source
-    single { UserRemoteDataSource(db = get(), storage = get()) }
+    single {
+        UserRemoteDataSource(
+            db = get(),
+            storage = get()
+        )
+    }
     single { NoticeRemoteDataSource(db = get()) }
     single { EventRemoteDataSource(db = get(), storage = get()) }
+    single { ChatRemoteDataSource(db = get()) }
 
     // Repository
     single<UserRepository> {
@@ -59,20 +68,26 @@ val modules = module {
         )
     }
 
+    single<ChatRepository> {
+        ChatRepositoryImpl(
+            dataSource = get()
+        )
+    }
+
     // ViewModels
     viewModel { MainActivityViewModel(application = get(), userRepository = get()) }
     viewModel { NoticeViewModel(userRepository = get(), noticeRepository = get()) }
     viewModel { SchoolViewModel(userRepository = get()) }
     viewModel { NoticeEditViewModel(userRepository = get(), noticeRepository = get()) }
     viewModel { NoticeDetailViewModel(userRepository = get(), noticeRepository = get()) }
-    viewModel { EventsViewModel(userRepository = get(), eventRepository = get()) }
-    viewModel { EventDetailViewModel(userRepository = get(), eventRepository = get()) }
-    viewModel { EventEditViewModel(userRepository = get(), eventRepository = get()) }
+    viewModel { EventsViewModel(userRepository = get(), eventRepository = get(), chatRepository = get()) }
+    viewModel { EventDetailViewModel(userRepository = get(), eventRepository = get(), chatRepository = get()) }
+    viewModel { EventEditViewModel(userRepository = get(), eventRepository = get(), chatRepository = get()) }
     viewModel { TaskEventViewModel(userRepository = get(), eventRepository = get()) }
     viewModel { TaskEventEditViewModel(userRepository = get(), eventRepository = get()) }
     viewModel { RatingViewModel(userRepository = get()) }
     viewModel { UserViewModel(userRepository = get()) }
-    viewModel { EventChatRoomViewModel(userRepository = get()) }
-    viewModel { ChatsViewModel(userRepository = get()) }
+    viewModel { ChatRoomViewModel(userRepository = get(), chatRepository = get()) }
+    viewModel { ChatsViewModel(userRepository = get(), chatRepository = get()) }
 
 }

@@ -1,18 +1,14 @@
-package com.bogiruapps.rdshapp.data
+package com.bogiruapps.rdshapp.data.userData
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
-import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
-import com.bogiruapps.rdshapp.events.SchoolEvent
-import com.bogiruapps.rdshapp.chats.chat_room_event.Message
-import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
-import com.bogiruapps.rdshapp.notice.Notice
+import com.bogiruapps.rdshapp.data.userData.UserRemoteDataSource
+import com.bogiruapps.rdshapp.data.userData.UserRepository
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.utils.returnSuccessOrError
 import com.bogiruapps.rdshapp.school.School
-import com.bogiruapps.rdshapp.utils.State
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -93,55 +89,6 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
             currentUser.value!!.school
         )}
         return@coroutineScope (task.await())
-    }
-
-    override suspend fun fetchFirestoreRecyclerQueryChats(): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryChats(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school
-            )}
-        return@coroutineScope (task.await())
-    }
-
-    override suspend fun fetchFirestoreRecyclerQueryEventMessage(): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryEventMessage(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school,
-            currentEvent.value!!
-        )}
-        return@coroutineScope (task.await())
-    }
-
-    override suspend fun createChat(chat: Chat): Result<Void?> = coroutineScope {
-        val task = async { dataSource.createChat(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school,
-            chat
-        )}
-        return@coroutineScope returnSuccessOrError(task.await())
-    }
-
-    override suspend fun updateChat(chat: Chat): Result<Void?> = coroutineScope {
-        val task = async { dataSource.updateChat(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school,
-            chat
-        )}
-        return@coroutineScope returnSuccessOrError(task.await())
-    }
-
-    override suspend fun createEventMessage(message: Message): Result<Void?> = coroutineScope {
-        val task = async { dataSource.createEventMessage(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school,
-            currentEvent.value!!, message
-        )}
-        return@coroutineScope returnSuccessOrError(task.await())
     }
 
     override suspend fun updateUserPicture(user: User, internalUri: Uri): Result<Uri?> {

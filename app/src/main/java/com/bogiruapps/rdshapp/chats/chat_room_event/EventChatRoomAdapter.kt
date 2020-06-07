@@ -11,7 +11,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 
 class EventChatRoomAdapter(
     options : FirestoreRecyclerOptions<Message>,
-    private val viewModel: EventChatRoomViewModel
+    private val viewModel: ChatRoomViewModel
 ) :
     FirestoreRecyclerAdapter<Message, EventChatRoomAdapter.EventsChatRoomViewHolder>(options) {
 
@@ -36,7 +36,7 @@ class EventChatRoomAdapter(
 
     class EventsChatRoomViewHolder(private val binding: EventChatRoomItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: EventChatRoomViewModel, message: Message) {
+        fun bind(viewModel: ChatRoomViewModel, message: Message) {
             binding.message = message
             binding.viewModel = viewModel
             binding.executePendingBindings()

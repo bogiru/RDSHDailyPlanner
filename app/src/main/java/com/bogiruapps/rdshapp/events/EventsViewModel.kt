@@ -6,7 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.userData.UserRepository
+import com.bogiruapps.rdshapp.data.chatData.ChatRepository
 import com.bogiruapps.rdshapp.data.eventData.EventRepository
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
@@ -15,7 +16,8 @@ import kotlinx.coroutines.launch
 
 class EventsViewModel(
     private val userRepository: UserRepository,
-    private val eventRepository: EventRepository)
+    private val eventRepository: EventRepository,
+    private val chatRepository: ChatRepository)
     : ViewModel() {
 
     private val _openDetailEventFragment = MutableLiveData<Event<View>>()
@@ -47,7 +49,15 @@ class EventsViewModel(
 
     fun showDetailEventFragment(event: SchoolEvent, v: View) {
         eventRepository.currentEvent.value = event
-        _openDetailEventFragment.value = Event(v)
+
+        viewModelScope.launch {
+            when (val result = chatRepository.fetchChat(userRepository.currentUser.value!!, event.id)) {
+                is Result.Success -> {
+                    chatRepository.currentChat.value = result.data
+                    _openDetailEventFragment.value = Event(v)
+                }
+            }
+        }
     }
 
     fun showCreateEventFragment() {

@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.userData.UserRepository
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 import com.firebase.ui.auth.AuthUI

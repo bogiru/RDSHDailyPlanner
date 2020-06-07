@@ -5,14 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.userData.UserRepository
+import com.bogiruapps.rdshapp.data.chatData.ChatRepository
 import com.bogiruapps.rdshapp.data.eventData.EventRepository
+import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
 class EventDetailViewModel(
     private val userRepository: UserRepository,
-    private val eventRepository: EventRepository)
+    private val eventRepository: EventRepository,
+    private val chatRepository: ChatRepository)
     : ViewModel() {
 
     private val _openTaskEventRecyclerView = MutableLiveData<Event<Unit>>()
@@ -39,6 +42,11 @@ class EventDetailViewModel(
     fun deleteEvent() {
         viewModelScope.launch {
             when (eventRepository.deleteEvent(userRepository.currentUser.value!!)) {
+                is Result.Success -> {
+                    when (chatRepository.deleteChat(userRepository.currentUser.value!!, eventRepository.currentEvent.value!!)) {
+
+                    }
+                }
             }
         }
     }

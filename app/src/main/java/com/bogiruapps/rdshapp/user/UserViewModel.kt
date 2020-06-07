@@ -3,7 +3,7 @@ package com.bogiruapps.rdshapp.user
 import android.app.Activity.RESULT_OK
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.userData.UserRepository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope

@@ -6,12 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.chats.Chat
-import com.bogiruapps.rdshapp.data.UserRepository
+import com.bogiruapps.rdshapp.data.userData.UserRepository
+import com.bogiruapps.rdshapp.data.chatData.ChatRepository
 import com.bogiruapps.rdshapp.utils.Result
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
-class EventChatRoomViewModel(val userRepository: UserRepository) : ViewModel() {
+class ChatRoomViewModel(
+    private val userRepository: UserRepository,
+    private val chatRepository: ChatRepository)
+    : ViewModel() {
 
     private val _query = MutableLiveData<Query>()
     val query: LiveData<Query> = _query
@@ -31,7 +35,7 @@ class EventChatRoomViewModel(val userRepository: UserRepository) : ViewModel() {
     fun fetchFirestoreRecyclerQuery() {
         _dataLoading.value = true
         viewModelScope.launch {
-            when (val result = userRepository.fetchFirestoreRecyclerQueryEventMessage()) {
+            when (val result = chatRepository.fetchFirestoreRecyclerQueryEventMessage(userRepository.currentUser.value!!)) {
                 is Result.Success -> {
                     _query.value = result.data
                     _showEventChatRoomContent.value = Event(Unit)
@@ -45,13 +49,13 @@ class EventChatRoomViewModel(val userRepository: UserRepository) : ViewModel() {
         clearEventChatRoomEdtText()
         viewModelScope.launch {
             val message = Message(textMessage, userRepository.currentUser.value!!)
-            when(userRepository.createEventMessage(message)) {
+            when(chatRepository.createMessage(userRepository.currentUser.value!!, message)) {
                 is Result.Success -> {
-                    val chat = Chat(userRepository.currentEvent.value!!.id,
-                        userRepository.currentEvent.value!!.title,
+                    val chat = Chat(chatRepository.currentChat.value!!.id,
+                        chatRepository.currentChat.value!!.title,
                         message,
-                        userRepository.currentEvent.value!!.indexImage)
-                    when (userRepository.updateChat(chat)) {
+                        chatRepository.currentChat.value!!.indexImage)
+                    when (chatRepository.updateChat(userRepository.currentUser.value!!, chat)) {
                         is Result.Success -> {}
                     }
                 }
