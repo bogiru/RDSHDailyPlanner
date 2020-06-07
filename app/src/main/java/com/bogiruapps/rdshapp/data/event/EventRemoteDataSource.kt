@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.data.eventData
+package com.bogiruapps.rdshapp.data.event
 
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent

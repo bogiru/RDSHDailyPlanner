@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.data.chatData
+package com.bogiruapps.rdshapp.data.chat
 
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.chats.Chat

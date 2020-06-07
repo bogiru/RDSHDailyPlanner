@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.data.noticeData
+package com.bogiruapps.rdshapp.data.notice
 
 import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.school.City

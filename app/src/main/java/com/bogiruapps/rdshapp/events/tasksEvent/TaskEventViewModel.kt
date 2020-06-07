@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.utils.Result
-import com.bogiruapps.rdshapp.data.userData.UserRepository
-import com.bogiruapps.rdshapp.data.eventData.EventRepository
+import com.bogiruapps.rdshapp.data.user.UserRepository
+import com.bogiruapps.rdshapp.data.event.EventRepository
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 

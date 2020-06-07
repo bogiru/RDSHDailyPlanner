@@ -86,15 +86,8 @@ class MainActivity : AppCompatActivity() {
             openNoticeFragment()
         })
 
-        mainViewModel.changeAvatar.observe(this, EventObserver {
-        })
-
         isConnected.observe(this, Observer { isConnected ->
-            if (isConnected) {
-                connected()
-            } else {
-                disconnected()
-            }
+            if (isConnected) connected() else disconnected()
         })
     }
 
@@ -134,7 +127,6 @@ class MainActivity : AppCompatActivity() {
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
         binding.bottomNavigationView.setupWithNavController(navController)
-
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -174,11 +166,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setEnabledMenuItem(value: Boolean) {
-        navView.menu.findItem(R.id.infoFragment).isEnabled = value
+        navView.menu.findItem(R.id.userFragment).isEnabled = value
         navView.menu.findItem(R.id.eventsFragment).isEnabled = value
-        //navView.menu.findItem(R.id.btn_grid_plan).isEnabled = value
-        //navView.menu.findItem(R.id.btn_settings).isEnabled = value
-
+        navView.menu.findItem(R.id.noticeFragment).isEnabled = value
+        navView.menu.findItem(R.id.chatsFragment).isEnabled = value
+        navView.menu.findItem(R.id.usersFragment).isEnabled = value
+        navView.menu.findItem(R.id.infoFragment).isEnabled = value
     }
 
     private fun openSignInActivity() {

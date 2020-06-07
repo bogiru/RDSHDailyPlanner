@@ -45,13 +45,13 @@ class UserFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            RC_PICK_FROM_GALLERY -> userViewModel.fetchPictureByUser(resultCode, data?.data)
+            RC_PICK_FROM_GALLERY -> userViewModel.fetchPictureFromGallery(resultCode, data?.data)
         }
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_user, container, false)
-        binding.user = userViewModel.fetchCurrentUser()
+        binding.user = userViewModel.user
         binding.viewModel = userViewModel
         binding.lifecycleOwner = viewLifecycleOwner
     }
@@ -59,10 +59,10 @@ class UserFragment : Fragment() {
     private fun configureToolbar() {
         val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
-
-        activity?.main_toolbar?.title = "Профиль"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
+
+        activity?.main_toolbar?.title = "Профиль"
     }
 
     private fun configureBottomNavigation() {
@@ -78,8 +78,8 @@ class UserFragment : Fragment() {
             pickImageFromGallery()
         })
 
-        userViewModel.showAllertDialogEditSchool.observe(viewLifecycleOwner, EventObserver {
-            showAllertDialogEditSchool()
+        userViewModel.showAlertDialogEditSchool.observe(viewLifecycleOwner, EventObserver {
+            showAlertDialogEditSchool()
         })
 
         userViewModel.openChooseSchoolFragmentEvent.observe(viewLifecycleOwner, EventObserver {
@@ -122,7 +122,6 @@ class UserFragment : Fragment() {
 
     private fun showLoadPb(textLoad: String) {
         binding.loadTextView.text = textLoad
-
         binding.userLoadLayout.visibility = View.VISIBLE
 
     }
@@ -139,23 +138,25 @@ class UserFragment : Fragment() {
     }
 
     @SuppressLint("ResourceType")
-    private fun showAllertDialogEditSchool(){
+    private fun showAlertDialogEditSchool(){
         val alertBuilder = MaterialAlertDialogBuilder(activity, R.style.AlertDialogTheme)
-        alertBuilder.setTitle("Сменить школу")
-        alertBuilder.setMessage("Вы дейстаительно хотите сменить школу? Это приведет к потере вашего счета")
-        alertBuilder.setIconAttribute(R.drawable.rdsh_image)
-        alertBuilder.setCancelable(true)
-        alertBuilder.setPositiveButton(
-            "Да"
-        ) { _: DialogInterface, _: Int ->
-            showLoadPb("Удаление пользователя из школы")
-            userViewModel.deleteUserFromSchool()
+        alertBuilder.apply {
+            setTitle("Сменить школу")
+            setMessage("Вы действительно хотите сменить школу?")
+            setIconAttribute(R.drawable.rdsh_image)
+            setCancelable(true)
+            setPositiveButton(
+                "Да"
+            ) { _: DialogInterface, _: Int ->
+                showLoadPb("Удаление пользователя из школы")
+                userViewModel.deleteUserFromSchool()
+            }
+            setNegativeButton(
+                "Нет"
+            ) { _: DialogInterface, _: Int ->
+            }
+            show()
         }
-        alertBuilder.setNegativeButton(
-            "Нет"
-        ) { _: DialogInterface, _: Int ->
-        }
-        alertBuilder.show()
     }
 
 }

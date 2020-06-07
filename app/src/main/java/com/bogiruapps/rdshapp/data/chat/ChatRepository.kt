@@ -1,6 +1,5 @@
-package com.bogiruapps.rdshapp.data.chatData
+package com.bogiruapps.rdshapp.data.chat
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.chats.chat_room_event.Message

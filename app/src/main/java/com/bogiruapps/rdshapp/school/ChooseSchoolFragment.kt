@@ -13,8 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentChooseSchoolBinding
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -25,11 +23,7 @@ class ChooseSchoolFragment : Fragment() {
     private lateinit var binding: FragmentChooseSchoolBinding
     private val schoolViewModel: SchoolViewModel by viewModel()
 
-    private lateinit var spinner: Spinner
-    private lateinit var btnChoose: Button
     private lateinit var progressBar: ProgressBar
-    private lateinit var chosenSchool: School
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,14 +31,13 @@ class ChooseSchoolFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         setupObserverViewModel()
-    return binding.root
-}
+        return binding.root
+    }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_choose_school, container, false)
         binding.viewModel = schoolViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
-        btnChoose = binding.btnNext
         progressBar = binding.chooseProgressBar
     }
 
@@ -69,11 +62,11 @@ class ChooseSchoolFragment : Fragment() {
             showSchoolsAutoCompleteTextView(schools)
         })
 
-        schoolViewModel.showNextButton.observe(viewLifecycleOwner, EventObserver {
-            binding.btnNext.visibility = View.VISIBLE
+        schoolViewModel.showSubmitButton.observe(viewLifecycleOwner, EventObserver {
+            binding.btnSubmit.visibility = View.VISIBLE
         })
 
-        schoolViewModel.resetAdress.observe(viewLifecycleOwner, EventObserver {
+        schoolViewModel.resetAddress.observe(viewLifecycleOwner, EventObserver {
             resetAutoCompleteTextView()
         })
 
@@ -83,54 +76,56 @@ class ChooseSchoolFragment : Fragment() {
     }
 
     private fun showRegionAutoCompleteTextView(regions: List<Region>) {
-        val regionsAutoCompleteTV = binding.regionAutoCompleteTextView
-        val regionsAdapter = ArrayAdapter(activity!!.applicationContext, android.R.layout.simple_dropdown_item_1line, regions)
+        val tvRegionsAutoComplete = binding.regionAutoCompleteTextView
 
-        regionsAutoCompleteTV.setAdapter(regionsAdapter)
+        val regionsAdapter = ArrayAdapter(
+            activity!!.applicationContext,
+            android.R.layout.simple_dropdown_item_1line,
+            regions)
+        tvRegionsAutoComplete.setAdapter(regionsAdapter)
 
-        regionsAutoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener{
-                parent, view, position, id ->
+        tvRegionsAutoComplete.onItemClickListener = AdapterView.OnItemClickListener{
+                parent, _, position, _ ->
             val currentRegion = parent.getItemAtPosition(position) as Region
             schoolViewModel.updateUserRegion(currentRegion)
-            regionsAutoCompleteTV.isEnabled = false
+            tvRegionsAutoComplete.isEnabled = false
         }
     }
 
     private fun showCitiesAutoCompleteTextView(cities: List<City>) {
-        val citiesAutoCompleteTV = binding.cityAutoCompleteTextView
+        val tvCitiesAutoComplete = binding.cityAutoCompleteTextView
         val citiesAdapter = ArrayAdapter(
             activity!!.applicationContext,
             android.R.layout.simple_dropdown_item_1line,
             cities
         )
 
-        citiesAutoCompleteTV.visibility = View.VISIBLE
+        tvCitiesAutoComplete.visibility = View.VISIBLE
         binding.btnResetAdress.visibility = View.VISIBLE
-        citiesAutoCompleteTV.setAdapter(citiesAdapter)
+        tvCitiesAutoComplete.setAdapter(citiesAdapter)
 
-        citiesAutoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener {
-                parent, view, position, id ->
-            val ida = id
+        tvCitiesAutoComplete.onItemClickListener = AdapterView.OnItemClickListener {
+                parent, _, position, _ ->
             val currentCity = parent.getItemAtPosition(position) as City
             schoolViewModel.updateUserCity(currentCity)
-            citiesAutoCompleteTV.isEnabled = false
+            tvCitiesAutoComplete.isEnabled = false
         }
     }
 
     private fun showSchoolsAutoCompleteTextView(schools: List<School>) {
-        val schoolsAutoCompleteTV = binding.schoolAutoCompleteTextView
+        val tvSchoolsAutoComplete = binding.schoolAutoCompleteTextView
         val schoolAdapter = ArrayAdapter(
             activity!!.applicationContext,
             android.R.layout.simple_dropdown_item_1line,
             schools
         )
 
-        schoolsAutoCompleteTV.visibility = View.VISIBLE
-        schoolsAutoCompleteTV.setAdapter(schoolAdapter)
+        tvSchoolsAutoComplete.visibility = View.VISIBLE
+        tvSchoolsAutoComplete.setAdapter(schoolAdapter)
 
-        schoolsAutoCompleteTV.onItemClickListener = AdapterView.OnItemClickListener {
-                parent, view, position, id ->
-            schoolsAutoCompleteTV.isEnabled = false
+        tvSchoolsAutoComplete.onItemClickListener = AdapterView.OnItemClickListener {
+                parent, _, position, _ ->
+            tvSchoolsAutoComplete.isEnabled = false
             val currentSchool = parent.getItemAtPosition(position) as School
             schoolViewModel.updateUserSchool(currentSchool)
         }
@@ -148,8 +143,8 @@ class ChooseSchoolFragment : Fragment() {
         binding.cityAutoCompleteTextView.isEnabled = true
         binding.schoolAutoCompleteTextView.isEnabled = true
 
-        binding.btnNext.visibility = View.INVISIBLE
-        binding.btnNext.visibility = View.INVISIBLE
+        binding.btnSubmit.visibility = View.INVISIBLE
+        binding.btnSubmit.visibility = View.INVISIBLE
     }
 
 }

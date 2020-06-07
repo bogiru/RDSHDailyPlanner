@@ -2,20 +2,20 @@ package com.bogiruapps.rdshapp.di
 
 import com.bogiruapps.rdshapp.MainActivityViewModel
 import com.bogiruapps.rdshapp.chats.ChatsViewModel
-import com.bogiruapps.rdshapp.data.userData.UserRemoteDataSource
-import com.bogiruapps.rdshapp.data.userData.UserRepository
-import com.bogiruapps.rdshapp.data.userData.UserRepositoryImpl
+import com.bogiruapps.rdshapp.data.user.UserRemoteDataSource
+import com.bogiruapps.rdshapp.data.user.UserRepository
+import com.bogiruapps.rdshapp.data.user.UserRepositoryImpl
 import com.bogiruapps.rdshapp.events.EventsViewModel
 import com.bogiruapps.rdshapp.chats.chat_room_event.ChatRoomViewModel
-import com.bogiruapps.rdshapp.data.chatData.ChatRemoteDataSource
-import com.bogiruapps.rdshapp.data.chatData.ChatRepository
-import com.bogiruapps.rdshapp.data.chatData.ChatRepositoryImpl
-import com.bogiruapps.rdshapp.data.eventData.EventRemoteDataSource
-import com.bogiruapps.rdshapp.data.eventData.EventRepository
-import com.bogiruapps.rdshapp.data.eventData.EventRepositoryImpl
-import com.bogiruapps.rdshapp.data.noticeData.NoticeRemoteDataSource
-import com.bogiruapps.rdshapp.data.noticeData.NoticeRepository
-import com.bogiruapps.rdshapp.data.noticeData.NoticeRepositoryImpl
+import com.bogiruapps.rdshapp.data.chat.ChatRemoteDataSource
+import com.bogiruapps.rdshapp.data.chat.ChatRepository
+import com.bogiruapps.rdshapp.data.chat.ChatRepositoryImpl
+import com.bogiruapps.rdshapp.data.event.EventRemoteDataSource
+import com.bogiruapps.rdshapp.data.event.EventRepository
+import com.bogiruapps.rdshapp.data.event.EventRepositoryImpl
+import com.bogiruapps.rdshapp.data.notice.NoticeRemoteDataSource
+import com.bogiruapps.rdshapp.data.notice.NoticeRepository
+import com.bogiruapps.rdshapp.data.notice.NoticeRepositoryImpl
 import com.bogiruapps.rdshapp.events.detail_event.EventDetailViewModel
 import com.bogiruapps.rdshapp.events.edit_event.EventEditViewModel
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEventViewModel
@@ -75,7 +75,7 @@ val modules = module {
     }
 
     // ViewModels
-    viewModel { MainActivityViewModel(application = get(), userRepository = get()) }
+    viewModel { MainActivityViewModel(userRepository = get()) }
     viewModel { NoticeViewModel(userRepository = get(), noticeRepository = get()) }
     viewModel { SchoolViewModel(userRepository = get()) }
     viewModel { NoticeEditViewModel(userRepository = get(), noticeRepository = get()) }

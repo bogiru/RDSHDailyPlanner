@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.data.userData
+package com.bogiruapps.rdshapp.data.user
 
 import android.net.Uri
 import com.bogiruapps.rdshapp.school.City

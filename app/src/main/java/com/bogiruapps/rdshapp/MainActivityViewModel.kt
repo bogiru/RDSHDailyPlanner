@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bogiruapps.rdshapp.data.userData.UserRepository
+import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 import com.firebase.ui.auth.AuthUI
@@ -18,7 +18,7 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 
 
-class MainActivityViewModel(val application: Application, val userRepository: UserRepository) : ViewModel() {
+class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
 
     private val _openSignInActivityEvent = MutableLiveData<Event<Unit>>()
     val openSignInActivityEvent: LiveData<Event<Unit>> = _openSignInActivityEvent
@@ -26,16 +26,11 @@ class MainActivityViewModel(val application: Application, val userRepository: Us
     private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
 
-    private val _changeAvatar = MutableLiveData<Event<Unit>>()
-    val changeAvatar: LiveData<Event<Unit>> = _changeAvatar
-
     val user: LiveData<User> = userRepository.currentUser
 
     fun checkUserIsConnected(firebaseUser: FirebaseUser?) {
         if (firebaseUser != null) {
-            if (user.value == null) {
-                fetchCurrentUserInformation(firebaseUser)
-            }
+            if (user.value == null) fetchCurrentUserInformation(firebaseUser)
         } else {
             showSignInActivity()
         }
@@ -45,7 +40,7 @@ class MainActivityViewModel(val application: Application, val userRepository: Us
         if (resultCode == RESULT_OK) {
             checkUserIsConnected(firebaseUser)
         } else {
-            val response = IdpResponse.fromResultIntent(data)
+            //val response = IdpResponse.fromResultIntent(data)
             showSignInActivity()
         }
     }
@@ -79,8 +74,6 @@ class MainActivityViewModel(val application: Application, val userRepository: Us
         viewModelScope.launch {
             when (userRepository.createNewUser(user)) {
                 is Result.Success -> fetchCurrentUserInformation(firebaseUser)
-                is Result.Error -> Log.d("III", "error")
-                is Result.Canceled -> Log.d("III", "canceled")
             }
         }
     }

@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.utils.Result
-import com.bogiruapps.rdshapp.data.userData.UserRepository
+import com.bogiruapps.rdshapp.data.user.UserRepository
 import kotlinx.coroutines.launch
 
 class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
@@ -23,11 +23,11 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _showNextButton = MutableLiveData<Event<Unit>>()
-    val showNextButton: LiveData<Event<Unit>> = _showNextButton
+    private val _showSubmitButton = MutableLiveData<Event<Unit>>()
+    val showSubmitButton: LiveData<Event<Unit>> = _showSubmitButton
 
-    private val _resetAdress = MutableLiveData<Event<Unit>>()
-    val resetAdress: LiveData<Event<Unit>> = _resetAdress
+    private val _resetAddress = MutableLiveData<Event<Unit>>()
+    val resetAddress: LiveData<Event<Unit>> = _resetAddress
 
     private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
@@ -36,39 +36,6 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
 
     init {
         fetchRegions()
-    }
-
-    fun fetchRegions() {
-        viewModelScope.launch {
-            when (val result = userRepository.fetchRegions()) {
-                is Result.Success -> {
-                    _dataLoading.value = false
-                    _regions.value = result.data
-                }
-            }
-        }
-    }
-
-    private fun fetchCities() {
-        viewModelScope.launch {
-            when (val result = userRepository.fetchCities()) {
-                is Result.Success -> {
-                    _dataLoading.value = false
-                    _cities.value = result.data
-                }
-            }
-        }
-    }
-
-    fun fetchSchools() {
-        viewModelScope.launch {
-            when (val result = userRepository.fetchSchools()) {
-                is Result.Success -> {
-                    _schools.value = result.data
-                    _dataLoading.value = false
-                }
-            }
-        }
     }
 
     fun updateUserRegion(region: Region) {
@@ -106,7 +73,7 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
                         when (userRepository.addUserToSchool()) {
                             is Result.Success -> {
                                 _dataLoading.value = false
-                                _showNextButton.value = Event(Unit)
+                                _showSubmitButton.value = Event(Unit)
                             }
                         }
                     }
@@ -119,11 +86,11 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
             if (userRepository.currentUser.value!!.school.name != "") {
                 when (userRepository.deleteUserFromSchool()) {
                     is Result.Success -> {
-                        _resetAdress.value = Event(Unit)
+                        _resetAddress.value = Event(Unit)
                     }
                 }
-            }else {
-                _resetAdress.value = Event(Unit)
+            } else {
+                _resetAddress.value = Event(Unit)
             }
         }
     }
@@ -132,6 +99,37 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
         _openNoticeFragmentEvent.value = Event(Unit)
     }
 
+    private fun fetchRegions() {
+        viewModelScope.launch {
+            when (val result = userRepository.fetchRegions()) {
+                is Result.Success -> {
+                    _dataLoading.value = false
+                    _regions.value = result.data
+                }
+            }
+        }
+    }
 
+    private fun fetchCities() {
+        viewModelScope.launch {
+            when (val result = userRepository.fetchCities()) {
+                is Result.Success -> {
+                    _dataLoading.value = false
+                    _cities.value = result.data
+                }
+            }
+        }
+    }
+
+    private fun fetchSchools() {
+        viewModelScope.launch {
+            when (val result = userRepository.fetchSchools()) {
+                is Result.Success -> {
+                    _schools.value = result.data
+                    _dataLoading.value = false
+                }
+            }
+        }
+    }
 
 }

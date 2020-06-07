@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.data.userData
+package com.bogiruapps.rdshapp.data.user
 
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region

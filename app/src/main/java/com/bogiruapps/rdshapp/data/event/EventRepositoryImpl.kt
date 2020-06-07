@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.data.eventData
+package com.bogiruapps.rdshapp.data.event
 
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.events.SchoolEvent

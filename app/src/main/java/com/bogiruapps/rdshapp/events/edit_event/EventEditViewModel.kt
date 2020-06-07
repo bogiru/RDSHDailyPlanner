@@ -7,11 +7,11 @@ import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.utils.Result
-import com.bogiruapps.rdshapp.data.userData.UserRepository
+import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.chats.chat_room_event.Message
-import com.bogiruapps.rdshapp.data.chatData.ChatRepository
-import com.bogiruapps.rdshapp.data.eventData.EventRepository
+import com.bogiruapps.rdshapp.data.chat.ChatRepository
+import com.bogiruapps.rdshapp.data.event.EventRepository
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 import java.util.*

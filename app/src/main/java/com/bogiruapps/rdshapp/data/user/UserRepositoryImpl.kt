@@ -1,10 +1,8 @@
-package com.bogiruapps.rdshapp.data.userData
+package com.bogiruapps.rdshapp.data.user
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
-import com.bogiruapps.rdshapp.data.userData.UserRemoteDataSource
-import com.bogiruapps.rdshapp.data.userData.UserRepository
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.utils.returnSuccessOrError
