@@ -69,15 +69,6 @@ class NoticeFragment : Fragment() {
         noticeViewModel.openNoticeDetailFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             showNoticeDetail()
         })
-
-        noticeViewModel.dataLoading.observe(viewLifecycleOwner, Observer{ isShowProgress ->
-            if (isShowProgress) {
-                binding.pbNotice.visibility = View.VISIBLE
-            } else {
-                binding.pbNotice.visibility = View.INVISIBLE
-            }
-        })
-
     }
 
     private fun configureToolbar() {

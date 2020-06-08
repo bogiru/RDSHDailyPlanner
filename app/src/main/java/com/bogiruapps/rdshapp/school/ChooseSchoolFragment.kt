@@ -42,13 +42,6 @@ class ChooseSchoolFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        schoolViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isLoad ->
-            if (isLoad) {
-                progressBar.visibility = View.VISIBLE
-            } else {
-                progressBar.visibility = View.INVISIBLE
-            }
-        })
 
         schoolViewModel.regions.observe(viewLifecycleOwner, Observer { regions ->
             showRegionAutoCompleteTextView(regions)

@@ -72,14 +72,6 @@ class TasksEventFragment : Fragment() {
             configureRecyclerView(query)
         })
 
-        taskEventViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->
-            if (isDataLoading) {
-                binding.taskEventPb.visibility = View.VISIBLE
-            } else {
-                binding.taskEventPb.visibility = View.INVISIBLE
-            }
-        })
-
         taskEventViewModel.openTaskEventDeleteFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             showAllertDialogDelete(it)
         })

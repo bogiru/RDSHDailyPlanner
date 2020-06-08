@@ -45,7 +45,10 @@ class UserFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            RC_PICK_FROM_GALLERY -> userViewModel.fetchPictureFromGallery(resultCode, data?.data)
+            RC_PICK_FROM_GALLERY -> {
+                binding.loadTextView.text = "Загрузка изображения"
+                userViewModel.fetchPictureFromGallery(resultCode, data?.data)
+            }
         }
     }
 
@@ -83,18 +86,12 @@ class UserFragment : Fragment() {
         })
 
         userViewModel.openChooseSchoolFragmentEvent.observe(viewLifecycleOwner, EventObserver {
-            hideLoadPb()
             findNavController().navigate(R.id.action_userFragment_to_choseSchoolFragment)
         })
 
-        userViewModel.dataLoadingImage.observe(viewLifecycleOwner, Observer {
-            if (it) {
-                showLoadPb("Загрузка изображения")
-            } else {
-                showSnackbar("Изменение изображения профиля может занять несколько минут")
-                setImageToView()
-                hideLoadPb()
-            }
+        userViewModel.imageLoadingToRemoteStorageCompleteEvent.observe(viewLifecycleOwner, EventObserver {
+            showSnackbar("Изменение изображения профиля может занять несколько минут")
+            setImageToView()
         })
     }
 
@@ -120,16 +117,6 @@ class UserFragment : Fragment() {
 
     }
 
-    private fun showLoadPb(textLoad: String) {
-        binding.loadTextView.text = textLoad
-        binding.userLoadLayout.visibility = View.VISIBLE
-
-    }
-
-    private fun hideLoadPb() {
-        binding.userLoadLayout.visibility = View.INVISIBLE
-    }
-
     private fun pickImageFromGallery() {
         requestPermissionStorage(this.activity!!)
         if (requestPermissionStorage(this.activity!!)) {
@@ -148,7 +135,8 @@ class UserFragment : Fragment() {
             setPositiveButton(
                 "Да"
             ) { _: DialogInterface, _: Int ->
-                showLoadPb("Удаление пользователя из школы")
+                binding.userLoadLayout.visibility = View.VISIBLE
+                binding.loadTextView.text = "Удаление пользователя из школы"
                 userViewModel.deleteUserFromSchool()
             }
             setNegativeButton(

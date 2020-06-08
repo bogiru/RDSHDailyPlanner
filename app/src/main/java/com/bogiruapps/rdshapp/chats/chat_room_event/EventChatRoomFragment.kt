@@ -66,14 +66,6 @@ class EventChatRoomFragment : Fragment() {
             binding.eventChatRoomEdtText.text.clear()
             this.hideKeyboard()
         })
-
-        chatRoomViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->
-            if (isDataLoading) {
-                binding.eventChatRoomPb.visibility = View.VISIBLE
-            } else {
-                binding.eventChatRoomPb.visibility = View.INVISIBLE
-            }
-        })
     }
 
     private fun configureToolbar() {

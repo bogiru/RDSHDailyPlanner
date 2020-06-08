@@ -65,14 +65,6 @@ class EventsFragment : Fragment() {
         eventsViewModel.showSchoolEventContent.observe(viewLifecycleOwner, EventObserver {
             configureRecyclerView()
         })
-
-        eventsViewModel.dataLoading.observe(viewLifecycleOwner, Observer { isDataLoading ->
-            if (isDataLoading) {
-                binding.eventPb.visibility = View.VISIBLE
-            } else {
-                binding.eventPb.visibility = View.INVISIBLE
-            }
-        })
     }
 
     private fun configureToolbar() {

@@ -20,8 +20,8 @@ class UserViewModel(
     val schoolRepository: SchoolRepository
 ): ViewModel() {
 
-    private val _dataLoadingImage = MutableLiveData<Boolean>()
-    val dataLoadingImage: LiveData<Boolean> = _dataLoadingImage
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
 
     private val _openChooseSchoolFragmentEvent = MutableLiveData<Event<Unit>>()
     val openChooseSchoolFragmentEvent: LiveData<Event<Unit>> = _openChooseSchoolFragmentEvent
@@ -32,10 +32,14 @@ class UserViewModel(
     private val _showActionPickActivity = MutableLiveData<Event<Unit>>()
     val showActionPickActivity: LiveData<Event<Unit>> = _showActionPickActivity
 
+    private val _imageLoadingToRemoteStorageCompleteEvent = MutableLiveData<Event<Unit>>()
+    val imageLoadingToRemoteStorageCompleteEvent: LiveData<Event<Unit>> = _imageLoadingToRemoteStorageCompleteEvent
+
     val user = userRepository.currentUser.value!!
 
     fun fetchPictureFromGallery(resultCode: Int, uri: Uri?) {
-        _dataLoadingImage.value = true
+        _dataLoading.value = true
+
         if (resultCode == RESULT_OK) {
             uri?.let {
                 downloadPictureToRemoteStorage(uri)
@@ -44,23 +48,21 @@ class UserViewModel(
     }
 
     fun deleteUserFromSchool() {
+        _dataLoading.value = true
         viewModelScope.launch {
             when(schoolRepository.deleteUserFromSchool(user)) {
                 is Result.Success -> {
-                    val tempUser = User(
-                        user.name,
-                        user.email,
-                        Region("", ""),
-                        City("", ""),
-                        School("", ""),
-                        user.score, user.pictureUrl,
-                        user.admin,
-                        user.id)
+                    user.apply {
+                        region = Region()
+                        city = City()
+                        school = School()
+                    }
 
-                    when (userRepository.updateUser(tempUser)) {
+                    when (userRepository.updateUser(user)) {
                         is Result.Success -> {
-                            userRepository.currentUser.value = tempUser
+                            userRepository.currentUser.value = user
                             openChooseSchoolFragmentEvent()
+                            _dataLoading.value = false
                         }
                     }
                 }
@@ -76,7 +78,8 @@ class UserViewModel(
                     uriStorage.data?.let { uri ->
                         user.pictureUrl = uri.toString()
                     }
-                    _dataLoadingImage.value = false
+                    _imageLoadingToRemoteStorageCompleteEvent.value = Event(Unit)
+                    _dataLoading.value = false
                 }
             }
         }

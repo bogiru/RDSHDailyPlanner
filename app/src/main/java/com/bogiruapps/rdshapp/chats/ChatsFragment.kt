@@ -51,13 +51,6 @@ class ChatsFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        chatsViewModel.dataLoading.observe(viewLifecycleOwner, Observer{ isShowProgress ->
-            if (isShowProgress) {
-                binding.pbChats.visibility = View.VISIBLE
-            } else {
-                binding.pbChats.visibility = View.INVISIBLE
-            }
-        })
 
         chatsViewModel.showChatsContent.observe(viewLifecycleOwner, Observer {
             configureRecyclerView()
