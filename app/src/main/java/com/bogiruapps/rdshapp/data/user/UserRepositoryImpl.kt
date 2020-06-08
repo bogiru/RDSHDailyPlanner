@@ -31,47 +31,6 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         return@coroutineScope task.await()
     }
 
-    override suspend fun updateUserInSchool(user: User): Result<Void?> = coroutineScope {
-        val task = async { dataSource.updateUserInSchool(user) }
-        return@coroutineScope task.await()
-    }
-
-    override suspend fun fetchRegions(): Result<List<Region>> = coroutineScope {
-        val task = async { dataSource.fetchRegions() }
-        return@coroutineScope task.await()
-    }
-
-    override suspend fun fetchCities(): Result<List<City>> = coroutineScope {
-        val task = async { dataSource.fetchCities(currentUser.value!!.region.id) }
-        return@coroutineScope task.await()
-    }
-
-    override suspend fun fetchSchools(): Result<List<School>> = coroutineScope {
-        val task = async { dataSource.fetchSchools(
-            currentUser.value!!.region.id,
-            currentUser.value!!.city.id
-        ) }
-        return@coroutineScope task.await()
-    }
-
-    override suspend fun addUserToSchool(): Result<Void?> = coroutineScope {
-        val task = async { dataSource.addUserToSchool(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school,
-            currentUser.value!!)}
-        return@coroutineScope task.await()
-    }
-
-    override suspend fun deleteUserFromSchool(): Result<Void?> = coroutineScope {
-        val task = async { dataSource.deleteUserFromSchool(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school,
-            currentUser.value!!) }
-        return@coroutineScope task.await()
-    }
-
     override suspend fun fetchUsers(): Result<List<User>> = coroutineScope {
         val task = async { dataSource.fetchUsers(currentUser.value!!.region,
             currentUser.value!!.city,

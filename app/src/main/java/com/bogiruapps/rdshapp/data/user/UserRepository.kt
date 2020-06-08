@@ -18,18 +18,6 @@ interface UserRepository {
 
     suspend fun fetchUser(userId: String): Result<User?>
 
-    suspend fun updateUserInSchool(user: User): Result<Void?>
-
-    suspend fun fetchRegions(): Result<List<Region>>
-
-    suspend fun fetchCities(): Result<List<City>>
-
-    suspend fun fetchSchools(): Result<List<School>>
-
-    suspend fun addUserToSchool(): Result<Void?>
-
-    suspend fun deleteUserFromSchool(): Result<Void?>
-
     suspend fun fetchUsers(): Result<List<User?>>
 
     suspend fun fetchFirestoreRecyclerQueryUser():  Result<Query>

@@ -8,13 +8,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.data.school.SchoolRepository
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.school.School
 import kotlinx.coroutines.launch
 import com.bogiruapps.rdshapp.utils.Result
 
-class UserViewModel(val userRepository: UserRepository) : ViewModel() {
+class UserViewModel(
+    val userRepository: UserRepository,
+    val schoolRepository: SchoolRepository
+): ViewModel() {
 
     private val _dataLoadingImage = MutableLiveData<Boolean>()
     val dataLoadingImage: LiveData<Boolean> = _dataLoadingImage
@@ -41,7 +45,7 @@ class UserViewModel(val userRepository: UserRepository) : ViewModel() {
 
     fun deleteUserFromSchool() {
         viewModelScope.launch {
-            when(userRepository.deleteUserFromSchool()) {
+            when(schoolRepository.deleteUserFromSchool(user)) {
                 is Result.Success -> {
                     val tempUser = User(
                         user.name,

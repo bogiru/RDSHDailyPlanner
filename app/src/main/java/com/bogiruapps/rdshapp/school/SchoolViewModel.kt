@@ -5,11 +5,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.data.school.SchoolRepository
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import kotlinx.coroutines.launch
 
-class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
+class SchoolViewModel(
+    private val userRepository: UserRepository,
+    private val schoolRepository: SchoolRepository
+): ViewModel() {
 
     private val _regions = MutableLiveData<List<Region>>()
     val regions: LiveData<List<Region>> = _regions
@@ -70,7 +74,7 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
                 user.school = school
                 when (userRepository.updateUser(user)) {
                     is Result.Success -> {
-                        when (userRepository.addUserToSchool()) {
+                        when (schoolRepository.addUserToSchool(user)) {
                             is Result.Success -> {
                                 _dataLoading.value = false
                                 _showSubmitButton.value = Event(Unit)
@@ -84,7 +88,7 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
     fun resetAddress() {
         viewModelScope.launch {
             if (userRepository.currentUser.value!!.school.name != "") {
-                when (userRepository.deleteUserFromSchool()) {
+                when (schoolRepository.deleteUserFromSchool(user)) {
                     is Result.Success -> {
                         _resetAddress.value = Event(Unit)
                     }
@@ -101,7 +105,7 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
 
     private fun fetchRegions() {
         viewModelScope.launch {
-            when (val result = userRepository.fetchRegions()) {
+            when (val result = schoolRepository.fetchRegions()) {
                 is Result.Success -> {
                     _dataLoading.value = false
                     _regions.value = result.data
@@ -112,7 +116,7 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
 
     private fun fetchCities() {
         viewModelScope.launch {
-            when (val result = userRepository.fetchCities()) {
+            when (val result = schoolRepository.fetchCities(user)) {
                 is Result.Success -> {
                     _dataLoading.value = false
                     _cities.value = result.data
@@ -123,7 +127,7 @@ class SchoolViewModel(val userRepository: UserRepository) : ViewModel() {
 
     private fun fetchSchools() {
         viewModelScope.launch {
-            when (val result = userRepository.fetchSchools()) {
+            when (val result = schoolRepository.fetchSchools(user)) {
                 is Result.Success -> {
                     _schools.value = result.data
                     _dataLoading.value = false

@@ -71,7 +71,6 @@ class TaskEventViewModel(
                         }
                         eventRepository.updateEvent(userRepository.currentUser.value!!, eventRepository.currentEvent.value!!)
                         userRepository.updateUser(userRepository.currentUser.value!!)
-                        userRepository.updateUserInSchool(userRepository.currentUser.value!!)
                     }
                 }
             }
