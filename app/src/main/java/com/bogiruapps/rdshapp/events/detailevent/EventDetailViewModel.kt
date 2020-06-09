@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events.detail_event
+package com.bogiruapps.rdshapp.events.detailevent
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

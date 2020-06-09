@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.chats.chat_room_event
+package com.bogiruapps.rdshapp.chats.chatroomevent
 
 
 import android.os.Bundle
@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
 

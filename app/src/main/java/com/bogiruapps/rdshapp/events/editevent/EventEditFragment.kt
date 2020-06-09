@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events.edit_event
+package com.bogiruapps.rdshapp.events.editevent
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -12,7 +12,6 @@ import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentEventEditBinding
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import android.app.DatePickerDialog

@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.events.edit_event.EventEditViewModel" />
+                type="com.bogiruapps.rdshapp.events.editevent.EventEditViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

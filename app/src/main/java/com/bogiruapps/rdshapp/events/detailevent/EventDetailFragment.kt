@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events.detail_event
+package com.bogiruapps.rdshapp.events.detailevent
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -14,7 +14,6 @@ import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.EventDetailFragmentBinding
 import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class  EventDetailFragment : Fragment() {

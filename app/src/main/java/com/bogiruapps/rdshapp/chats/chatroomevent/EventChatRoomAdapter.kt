@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.chats.chat_room_event
+package com.bogiruapps.rdshapp.chats.chatroomevent
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

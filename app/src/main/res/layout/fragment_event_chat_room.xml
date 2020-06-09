@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.chats.chat_room_event.ChatRoomViewModel" />
+                type="com.bogiruapps.rdshapp.chats.chatroomevent.ChatRoomViewModel" />
         <variable
                 name="textMessage"
                 type="String" />

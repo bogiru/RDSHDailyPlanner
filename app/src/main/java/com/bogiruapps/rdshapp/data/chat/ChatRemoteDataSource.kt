@@ -1,7 +1,7 @@
 package com.bogiruapps.rdshapp.data.chat
 
 import com.bogiruapps.rdshapp.chats.Chat
-import com.bogiruapps.rdshapp.chats.chat_room_event.Message
+import com.bogiruapps.rdshapp.chats.chatroomevent.Message
 import com.bogiruapps.rdshapp.events.SchoolEvent
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region

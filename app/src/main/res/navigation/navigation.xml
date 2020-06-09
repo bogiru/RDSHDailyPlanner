@@ -57,7 +57,7 @@
     </fragment>
     <fragment
             android:id="@+id/eventEditFragment"
-            android:name="com.bogiruapps.rdshapp.events.edit_event.EventEditFragment"
+            android:name="com.bogiruapps.rdshapp.events.editevent.EventEditFragment"
             android:label="Редактирование"
             tools:layout="@layout/fragment_event_edit">
         <action
@@ -107,7 +107,7 @@
     </fragment>
     <fragment
             android:id="@+id/eventDetailFragment"
-            android:name="com.bogiruapps.rdshapp.events.detail_event.EventDetailFragment"
+            android:name="com.bogiruapps.rdshapp.events.detailevent.EventDetailFragment"
             android:label="Подробности">
         <action
                 android:id="@+id/action_eventDetailFragment_to_eventEditFragment"
@@ -136,7 +136,7 @@
     </fragment>
     <fragment
             android:id="@+id/eventChatRoomFragment"
-            android:name="com.bogiruapps.rdshapp.chats.chat_room_event.EventChatRoomFragment"
+            android:name="com.bogiruapps.rdshapp.chats.chatroomevent.EventChatRoomFragment"
             android:label="EventChatRoomFragment" />
     <fragment
             android:id="@+id/chatsFragment"

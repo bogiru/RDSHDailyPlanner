@@ -6,7 +6,7 @@ import com.bogiruapps.rdshapp.data.user.UserRemoteDataSource
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.user.UserRepositoryImpl
 import com.bogiruapps.rdshapp.events.EventsViewModel
-import com.bogiruapps.rdshapp.chats.chat_room_event.ChatRoomViewModel
+import com.bogiruapps.rdshapp.chats.chatroomevent.ChatRoomViewModel
 import com.bogiruapps.rdshapp.data.chat.ChatRemoteDataSource
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
 import com.bogiruapps.rdshapp.data.chat.ChatRepositoryImpl
@@ -19,8 +19,8 @@ import com.bogiruapps.rdshapp.data.notice.NoticeRepositoryImpl
 import com.bogiruapps.rdshapp.data.school.SchoolRemoteDataSource
 import com.bogiruapps.rdshapp.data.school.SchoolRepository
 import com.bogiruapps.rdshapp.data.school.SchoolRepositoryImpl
-import com.bogiruapps.rdshapp.events.detail_event.EventDetailViewModel
-import com.bogiruapps.rdshapp.events.edit_event.EventEditViewModel
+import com.bogiruapps.rdshapp.events.detailevent.EventDetailViewModel
+import com.bogiruapps.rdshapp.events.editevent.EventEditViewModel
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEventViewModel
 import com.bogiruapps.rdshapp.events.tasksEvent.taskEventEdit.TaskEventEditViewModel
 import com.bogiruapps.rdshapp.notice.NoticeViewModel
