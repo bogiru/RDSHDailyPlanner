@@ -6,9 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
 import com.bogiruapps.rdshapp.data.event.EventRepository
+import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
 import com.google.firebase.firestore.Query
@@ -17,8 +17,8 @@ import kotlinx.coroutines.launch
 class EventsViewModel(
     private val userRepository: UserRepository,
     private val eventRepository: EventRepository,
-    private val chatRepository: ChatRepository)
-    : ViewModel() {
+    private val chatRepository: ChatRepository
+) : ViewModel() {
 
     private val _openDetailEventFragment = MutableLiveData<Event<View>>()
     val openTaskEventFragment: LiveData<Event<View>> = _openDetailEventFragment
@@ -29,17 +29,19 @@ class EventsViewModel(
     private val _showSchoolEventContent = MutableLiveData<Event<Unit>>()
     val showSchoolEventContent: LiveData<Event<Unit>> = _showSchoolEventContent
 
-    private val _query = MutableLiveData<Query>()
-    val query: LiveData<Query> = _query
+    private val _querySchoolEvents = MutableLiveData<Query>()
+    val querySchoolEvents: LiveData<Query> = _querySchoolEvents
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    fun fetchFirestoreRecyclerQuery() {
+    fun fetchFirestoreRecyclerQuerySchoolEvents() {
+        _dataLoading.value = true
         viewModelScope.launch {
-            when (val result = eventRepository.fetchFirestoreRecyclerQueryEvents(userRepository.currentUser.value!!)) {
+            when (val result = eventRepository
+                .fetchFirestoreRecyclerQuerySchoolEvents(userRepository.currentUser.value!!)) {
                 is Result.Success -> {
-                    _query.value = result.data
+                    _querySchoolEvents.value = result.data
                     _dataLoading.value = false
                     showSchoolEventContent()
                 }
@@ -47,20 +49,21 @@ class EventsViewModel(
         }
     }
 
-    fun showDetailEventFragment(event: SchoolEvent, v: View) {
-        eventRepository.currentEvent.value = event
+    fun showDetailSchoolEventFragment(schoolEvent: SchoolEvent, view: View) {
+        eventRepository.currentEvent.value = schoolEvent
 
         viewModelScope.launch {
-            when (val result = chatRepository.fetchChat(userRepository.currentUser.value!!, event.id)) {
+            when (val result = chatRepository
+                .fetchChat(userRepository.currentUser.value!!, schoolEvent.id)) {
                 is Result.Success -> {
                     chatRepository.currentChat.value = result.data
-                    _openDetailEventFragment.value = Event(v)
+                    _openDetailEventFragment.value = Event(view)
                 }
             }
         }
     }
 
-    fun showCreateEventFragment() {
+    fun showCreateSchoolEventFragment() {
         eventRepository.stateEvent.value = State.CREATE
         eventRepository.currentEvent.value = SchoolEvent()
         _openEditEventFragment.value = Event(Unit)

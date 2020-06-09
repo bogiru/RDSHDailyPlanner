@@ -51,7 +51,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:loadImageEvent="@{viewModel.event.indexImage}" />
+                        app:loadImageEvent="@{viewModel.schoolEvent.imageIndex}" />
 
                 <TextView
                         android:id="@+id/task_event_title"
@@ -60,7 +60,7 @@
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:fontFamily="sans-serif"
-                        android:text="@{viewModel.event.title}"
+                        android:text="@{viewModel.schoolEvent.title}"
                         android:textColor="#FFFFFF"
                         android:textColorHint="#FFFFFF"
                         android:textColorLink="#2196F3"
@@ -117,7 +117,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginBottom="12dp"
-                    android:text="@{viewModel.event.deadline}" />
+                    android:text="@{viewModel.schoolEvent.deadline}" />
 
         </androidx.cardview.widget.CardView>
 
@@ -154,7 +154,7 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginRight="8dp"
                             android:layout_marginBottom="8dp"
-                            android:text="@{viewModel.event.description}" />
+                            android:text="@{viewModel.schoolEvent.description}" />
                 </LinearLayout>
             </ScrollView>
 

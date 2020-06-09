@@ -85,9 +85,9 @@ class NoticeFragment : Fragment() {
     }
 
     private fun getFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Notice> {
-        val query = noticeViewModel.queryNotices.value
+        val queryNotices = noticeViewModel.queryNotices.value
         return FirestoreRecyclerOptions.Builder<Notice>()
-            .setQuery(query!!, Notice::class.java)
+            .setQuery(queryNotices!!, Notice::class.java)
             .setLifecycleOwner(this)
             .build()
     }

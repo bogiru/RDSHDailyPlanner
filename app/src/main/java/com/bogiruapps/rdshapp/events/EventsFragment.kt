@@ -17,7 +17,6 @@ import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_notice.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class EventsFragment : Fragment() {
@@ -33,7 +32,7 @@ class EventsFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         setupObserverViewModel()
-        eventsViewModel.fetchFirestoreRecyclerQuery()
+        eventsViewModel.fetchFirestoreRecyclerQuerySchoolEvents()
         configureToolbar()
         hideBottomNavigationView(activity!!)
 
@@ -49,17 +48,15 @@ class EventsFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_events, container, false)
         binding.viewModel = eventsViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
-
-
     }
 
     private fun setupObserverViewModel() {
         eventsViewModel.openTaskEventFragment.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(R.id.action_eventsFragment_to_eventDetailFragment)
+            openTaskEventFragment()
         })
 
         eventsViewModel.openEditEventFragment.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(R.id.action_eventsFragment_to_eventEditFragment)
+            openEventEditFragment()
         })
 
         eventsViewModel.showSchoolEventContent.observe(viewLifecycleOwner, EventObserver {
@@ -70,8 +67,6 @@ class EventsFragment : Fragment() {
     private fun configureToolbar() {
         val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
-
-        activity?.main_toolbar?.title = "Мероприятия"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }
@@ -80,33 +75,22 @@ class EventsFragment : Fragment() {
         adapter = EventsAdapter(getFirestoreRecyclerOptions(), eventsViewModel)
         binding.eventsRecyclerView.layoutManager = LinearLayoutManager(activity)
         binding.eventsRecyclerView.adapter = adapter
-
     }
 
     private fun getFirestoreRecyclerOptions(): FirestoreRecyclerOptions<SchoolEvent> {
-        val query = eventsViewModel.query.value
+        val queryEvents = eventsViewModel.querySchoolEvents.value
         return FirestoreRecyclerOptions.Builder<SchoolEvent>()
-            .setQuery(query!!, SchoolEvent::class.java)
+            .setQuery(queryEvents!!, SchoolEvent::class.java)
             .setLifecycleOwner(this)
             .build()
     }
 
-    /*private fun setupListenerOnFub() {
-            binding.fubNotice.setOnClickListener {
-                showANoticeDetail()
-            }
-    }*//*
-
-    private fun showANoticeDetail() {
-        findNavController().navigate(R.id.action_noticeFragment_to_noticeDetailFragment)
-        adapter.stopListening()
-    }
-*/
-    private fun hideProgress() {
-        pb_notice.visibility = View.INVISIBLE
+    private fun openTaskEventFragment() {
+        findNavController().navigate(R.id.action_eventsFragment_to_eventDetailFragment)
     }
 
-
-
+    private fun openEventEditFragment() {
+        findNavController().navigate(R.id.action_eventsFragment_to_eventEditFragment)
+    }
 }
 

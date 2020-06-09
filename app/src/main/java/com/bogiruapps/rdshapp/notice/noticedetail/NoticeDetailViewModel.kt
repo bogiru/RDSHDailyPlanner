@@ -23,7 +23,7 @@ class NoticeDetailViewModel(
     val openNoticeEditFragmentEvent: LiveData<Event<Unit>> = _openNoticeEditFragmentEvent
 
     private val _openNoticeDeleteFragmentEvent = MutableLiveData<Event<Unit>>()
-    val openNoticeDeleteFragmentEvent: LiveData<Event<Unit>> = _openNoticeDeleteFragmentEvent
+    val openDialogDeleteNoticeEvent: LiveData<Event<Unit>> = _openNoticeDeleteFragmentEvent
 
     private val _showSnackbar = MutableLiveData<Event<String>>()
     val showSnackbar: LiveData<Event<String>> = _showSnackbar

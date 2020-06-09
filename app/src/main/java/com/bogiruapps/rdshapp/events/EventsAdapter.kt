@@ -3,20 +3,17 @@ package com.bogiruapps.rdshapp.events
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.EventsItemBinding
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import java.lang.Math.random
 
 class EventsAdapter(
     options : FirestoreRecyclerOptions<SchoolEvent>,
     private val viewModel: EventsViewModel
-) :
-    FirestoreRecyclerAdapter<SchoolEvent, EventsAdapter.EventsViewHolder>(options) {
+) : FirestoreRecyclerAdapter<SchoolEvent, EventsAdapter.EventsViewHolder>(options) {
 
-    override fun onBindViewHolder(p0: EventsViewHolder, p1: Int, p2: SchoolEvent) {
-        p0.bind(viewModel, p2)
+    override fun onBindViewHolder(holder: EventsViewHolder, position: Int, event: SchoolEvent) {
+        holder.bind(viewModel, event)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventsViewHolder {
@@ -28,14 +25,16 @@ class EventsAdapter(
         fun bind(viewModel: EventsViewModel, schoolEvent: SchoolEvent) {
             binding.event = schoolEvent
             binding.viewModel = viewModel
-           if (schoolEvent.countTask == 0) {
-               binding.eventProgressBar.setDonut_progress("0")
-           } else {
-               binding.eventProgressBar.setDonut_progress("${schoolEvent.countCompletedTask * 100 / schoolEvent.countTask}")
-               //binding.eventProgressTextView.text = "${schoolEvent.countCompletedTask * 100 / schoolEvent.countTask}%"
-           }
+            setSchoolEventProgressBar(schoolEvent)
             binding.executePendingBindings()
+        }
 
+        private fun setSchoolEventProgressBar(schoolEvent: SchoolEvent) {
+            val progress =
+                if (schoolEvent.countTask == 0) 0
+                else schoolEvent.countCompletedTask * 100 / schoolEvent.countTask
+
+            binding.eventProgressBar.setDonut_progress("$progress")
         }
 
         companion object {

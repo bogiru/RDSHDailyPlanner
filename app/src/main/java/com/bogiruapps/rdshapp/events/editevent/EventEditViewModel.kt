@@ -14,16 +14,15 @@ import com.bogiruapps.rdshapp.data.chat.ChatRepository
 import com.bogiruapps.rdshapp.data.event.EventRepository
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
-import java.util.*
 
 class EventEditViewModel(
     private val userRepository: UserRepository,
     private val eventRepository: EventRepository,
-    private val chatRepository: ChatRepository)
-    : ViewModel() {
+    private val chatRepository: ChatRepository
+) : ViewModel() {
 
-    private val _indexImage = MutableLiveData<Int>()
-    val indexImage: LiveData<Int> = _indexImage
+    private val _imageIndex = MutableLiveData<Int>()
+    val indexImage: LiveData<Int> = _imageIndex
 
     private val _openSchoolEventFragment = MutableLiveData<Event<Unit>>()
     val openSchoolEventFragment: LiveData<Event<Unit>> = _openSchoolEventFragment
@@ -37,12 +36,13 @@ class EventEditViewModel(
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    val event = eventRepository.currentEvent.value
+    val user = userRepository.currentUser.value!!
+    val schoolEvent = eventRepository.currentEvent.value!!
 
     fun checkCreateEventStatus(): Boolean = eventRepository.stateEvent.value == State.CREATE
 
     fun updateDate(year: Int, month: Int, dayOfMonth: Int) {
-        event!!.deadline = Date(year, month, dayOfMonth)
+        //schoolEvent!!.deadline = Calendar.getInstance().set(year, month, dayOfMonth)
     }
 
     fun updateEvent(event: SchoolEvent) {
@@ -52,7 +52,7 @@ class EventEditViewModel(
             _dataLoading.value = true
             when (eventRepository.stateEvent.value) {
                 State.CREATE -> createEvent(event)
-                State.EDIT -> editEvent(event)
+                State.EDIT -> editSchoolEvent(event)
             }
         }
     }
@@ -62,24 +62,27 @@ class EventEditViewModel(
     }
 
     fun setNextImageEvent() {
-        event!!.indexImage = (event.indexImage + 1) % 25
-        _indexImage.value = event.indexImage
+        schoolEvent.imageIndex = (schoolEvent.imageIndex + 1) % 25
+        _imageIndex.value = schoolEvent.imageIndex
     }
 
-    fun setLastImageEvent() {
-        event!!.indexImage = (event.indexImage - 1)
-        if (event.indexImage < 0) event!!.indexImage = 24
-        _indexImage.value = event.indexImage
+    fun setPreviousImageEvent() {
+        schoolEvent.imageIndex = (schoolEvent.imageIndex - 1)
+        if (schoolEvent.imageIndex < 0) schoolEvent.imageIndex = 24
+        _imageIndex.value = schoolEvent.imageIndex
     }
 
     private fun createEvent(event: SchoolEvent) {
         viewModelScope.launch {
-            event.author = userRepository.currentUser.value!!
-            when(eventRepository.createEvent(userRepository.currentUser.value!!, event)) {
+            event.author = user
+            when(eventRepository.createEvent(user, event)) {
                 is Result.Success -> {
                     eventRepository.currentEvent.value = event
-
-                    val chat = Chat(event.id, event.title, Message("Сообщений нет"), event.indexImage)
+                    val chat = Chat(
+                        event.id,
+                        event.title,
+                        Message("Сообщений нет"),
+                        event.imageIndex)
                     when (chatRepository.createChat(userRepository.currentUser.value!!, chat)) {
                         is Result.Success -> {
                             chatRepository.currentChat.value = chat
@@ -87,21 +90,20 @@ class EventEditViewModel(
                             openSchoolEventFragment()
                         }
                     }
-
                 }
             }
         }
     }
 
-    private fun editEvent(event: SchoolEvent) {
+    private fun editSchoolEvent(event: SchoolEvent) {
         viewModelScope.launch {
-            when (eventRepository.updateEvent(userRepository.currentUser.value!!, event)) {
+            when (eventRepository.updateEvent(user, event)) {
                 is Result.Success -> {
                     val tempChat = chatRepository.currentChat.value!!
-                    tempChat.title = eventRepository.currentEvent.value!!.title
-                    tempChat.indexImage = eventRepository.currentEvent.value!!.indexImage
+                    tempChat.title = event.title
+                    tempChat.indexImage = event.imageIndex
 
-                    when (chatRepository.updateChat(userRepository.currentUser.value!!, tempChat)) {
+                    when (chatRepository.updateChat(user, tempChat)) {
                         is Result.Success -> {
                             chatRepository.currentChat.value = tempChat
                             _dataLoading.value = false

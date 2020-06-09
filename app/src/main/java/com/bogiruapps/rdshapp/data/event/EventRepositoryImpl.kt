@@ -87,7 +87,7 @@ class EventRepositoryImpl(
         return@coroutineScope task.await()
     }
 
-    override suspend fun fetchFirestoreRecyclerQueryEvents(user: User): Result<Query> = coroutineScope {
+    override suspend fun fetchFirestoreRecyclerQuerySchoolEvents(user: User): Result<Query> = coroutineScope {
         val task = async { dataSource.fetchFirestoreRecyclerQueryEvent(
             user.region,
             user.city,

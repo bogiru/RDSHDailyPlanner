@@ -15,11 +15,11 @@ import kotlinx.coroutines.launch
 class EventDetailViewModel(
     private val userRepository: UserRepository,
     private val eventRepository: EventRepository,
-    private val chatRepository: ChatRepository)
-    : ViewModel() {
+    private val chatRepository: ChatRepository
+) : ViewModel() {
 
     private val _openTaskEventRecyclerView = MutableLiveData<Event<Unit>>()
-    val openTaskEventRecyclerView: LiveData<Event<Unit>> = _openTaskEventRecyclerView
+    val openTaskEventFragment: LiveData<Event<Unit>> = _openTaskEventRecyclerView
 
     private val _openEventFragmentEvent = MutableLiveData<Event<Unit>>()
     val openEventFragmentEvent: LiveData<Event<Unit>> = _openEventFragmentEvent
@@ -27,27 +27,26 @@ class EventDetailViewModel(
     private val _openEventEditFragmentEvent = MutableLiveData<Event<Unit>>()
     val openEventEditFragmentEvent: LiveData<Event<Unit>> = _openEventEditFragmentEvent
 
-    private val _openEventDeleteFragmentEvent = MutableLiveData<Event<Unit>>()
-    val openEventDeleteFragmentEvent: LiveData<Event<Unit>> = _openEventDeleteFragmentEvent
+    private val _openDialogDeleteEvent = MutableLiveData<Event<Unit>>()
+    val openDialogDeleteEvent: LiveData<Event<Unit>> = _openDialogDeleteEvent
 
-    private val _showToast = MutableLiveData<Event<String>>()
-    val showToast: LiveData<Event<String>> = _showToast
+    private val _showSnackbar = MutableLiveData<Event<String>>()
+    val showSnackbar: LiveData<Event<String>> = _showSnackbar
 
-    val event = eventRepository.currentEvent.value!!
-
-    fun showTaskEventRecyclerView() {
-        _openTaskEventRecyclerView.value = Event(Unit)
-    }
+    val user = userRepository.currentUser.value!!
+    val schoolEvent = eventRepository.currentEvent.value!!
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    fun deleteEvent() {
+    fun deleteSchoolEvent() {
         _dataLoading.value = true
         viewModelScope.launch {
-            when (eventRepository.deleteEvent(userRepository.currentUser.value!!)) {
+            when (eventRepository.deleteEvent(user)) {
                 is Result.Success -> {
-                    when (chatRepository.deleteChat(userRepository.currentUser.value!!, eventRepository.currentEvent.value!!)) {
+                    when (chatRepository.deleteChat(
+                        user,
+                        schoolEvent)) {
                         is Result.Success -> _dataLoading.value = false
                     }
                 }
@@ -56,22 +55,20 @@ class EventDetailViewModel(
     }
 
     fun showEditEventFragment() {
-        if (userRepository.currentUser.value!!.email == eventRepository.currentEvent.value!!.author.email) {
+        if (user.email == schoolEvent.author.email) {
             _openEventEditFragmentEvent.value = Event(Unit)
             eventRepository.stateEvent.value = State.EDIT
         } else {
-            _showToast.value = Event("Право редактирование предоставлено только автору объявления")
+            _showSnackbar.value = Event("Право редактирование предоставлено только автору объявления")
         }
 
     }
 
-    fun showDeleteEventFragment() {
-        if (userRepository.currentUser.value!!.name == eventRepository.currentEvent.value!!.author.name)  {
-            _openEventDeleteFragmentEvent.value = Event(Unit)
+    fun showDialogDeleteSchoolEvent() {
+        if (user.name == schoolEvent.author.name)  {
+            _openDialogDeleteEvent.value = Event(Unit)
         } else {
-            _showToast.value = Event("Право удаления предоставлено только автору объявления")
+            _showSnackbar.value = Event("Право удаления предоставлено только автору объявления")
         }
-
     }
-
 }

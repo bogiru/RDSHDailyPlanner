@@ -52,7 +52,7 @@
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="8dp"
                             android:hint="Введите название"
-                            android:text="@={viewModel.event.title}"
+                            android:text="@={viewModel.schoolEvent.title}"
                             android:textSize="18sp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -67,7 +67,7 @@
                             android:layout_marginEnd="8dp"
                             android:layout_marginBottom="8dp"
                             android:hint="Введите текст объявления"
-                            android:text="@={viewModel.event.description}"
+                            android:text="@={viewModel.schoolEvent.description}"
                             android:textSize="14sp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
@@ -101,7 +101,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="12dp"
-                    android:text="@{viewModel.event.deadline}" />
+                    android:text="@{viewModel.schoolEvent.deadline}" />
 
             <ImageView
                     android:id="@+id/deadline_edit_imageView"
@@ -146,7 +146,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:loadImageEvent="@{viewModel.event.indexImage}" />
+                        app:loadImageEvent="@{viewModel.schoolEvent.imageIndex}" />
 
                 <TextView
                         android:id="@+id/event_edit_chose_image_textView"
@@ -172,7 +172,7 @@
                         android:id="@+id/keyboard_arrow_left_imageView"
                         android:layout_width="45dp"
                         android:layout_height="60dp"
-                        android:onClick="@{(view) -> viewModel.setLastImageEvent()}"
+                        android:onClick="@{(view) -> viewModel.setPreviousImageEvent()}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@+id/event_edit_image"
                         app:layout_constraintTop_toTopOf="parent"
@@ -212,7 +212,7 @@
                 android:layout_marginBottom="16dp"
                 android:background="#5A9FF1"
                 android:gravity="center"
-                android:onClick="@{(view) -> viewModel.updateEvent(viewModel.event)}"
+                android:onClick="@{(view) -> viewModel.updateEvent(viewModel.schoolEvent)}"
                 android:text="Опубликовать"
                 android:textColor="#FFFFFF"
                 app:backgroundTint="#5A9FF1"

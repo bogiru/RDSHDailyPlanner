@@ -11,5 +11,5 @@ data class SchoolEvent (
     var countTask: Int = 0,
     var countCompletedTask: Int = 0,
     var author: User = User(),
-    var indexImage: Int = Random().nextInt(25)
+    var imageIndex: Int = Random().nextInt(25)
 )

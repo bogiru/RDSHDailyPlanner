@@ -31,7 +31,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="4dp"
                 android:longClickable="true"
-                android:onClick="@{(view) -> viewModel.showDetailEventFragment(event, view)}"
+                android:onClick="@{(view) -> viewModel.showDetailSchoolEventFragment(event, view)}"
                 app:cardBackgroundColor="#E8FFFFFF"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
@@ -57,7 +57,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintVertical_bias="0.0"
-                        app:loadImageEvent="@{event.indexImage}" />
+                        app:loadImageEvent="@{event.imageIndex}" />
 
                 <TextView
                         android:id="@+id/task_event_title"

@@ -27,7 +27,7 @@ interface EventRepository {
 
     suspend fun deleteTaskEvent(user: User, taskEvent: TaskEvent): Result<Void?>
 
-    suspend fun fetchFirestoreRecyclerQueryEvents(user: User): Result<Query>
+    suspend fun fetchFirestoreRecyclerQuerySchoolEvents(user: User): Result<Query>
 
     suspend fun fetchFirestoreRecyclerQueryTasksEvent(user: User):  Result<Query>
 

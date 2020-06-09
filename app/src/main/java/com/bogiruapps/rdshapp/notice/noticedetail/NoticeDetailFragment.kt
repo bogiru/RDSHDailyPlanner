@@ -14,7 +14,6 @@ import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeDetailBinding
 import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -49,7 +48,7 @@ class NoticeDetailFragment : Fragment() {
             showNoticeEditFragment()
         })
 
-        noticeDetailViewModel.openNoticeDeleteFragmentEvent.observe(viewLifecycleOwner, EventObserver {
+        noticeDetailViewModel.openDialogDeleteNoticeEvent.observe(viewLifecycleOwner, EventObserver {
             showAlertDialogDelete()
         })
 
