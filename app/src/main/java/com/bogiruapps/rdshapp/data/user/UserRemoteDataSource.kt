@@ -22,7 +22,6 @@ class UserRemoteDataSource(
     private val ioDispatcher = Dispatchers.IO
 
     private val userCollection = db.collection(USERS_COLLECTION_NAME)
-    private val schoolsCollection = db.collection(SCHOOL_COLLECTION_NAME)
 
     override suspend fun createUser(user: User): Result<Void?> = withContext(ioDispatcher) {
         return@withContext try {

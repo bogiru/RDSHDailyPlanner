@@ -26,11 +26,21 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
 
+    private val _setVisibilityEmailUnverifiedLayoutEvent = MutableLiveData<Event<Boolean>>()
+    val setVisibilityEmailUnverifiedLayoutEvent: LiveData<Event<Boolean>> = _setVisibilityEmailUnverifiedLayoutEvent
+
     val user: LiveData<User> = userRepository.currentUser
 
     fun checkUserIsConnected(firebaseUser: FirebaseUser?) {
         if (firebaseUser != null) {
-            if (user.value == null) fetchCurrentUserInformation(firebaseUser)
+
+            if (firebaseUser.isEmailVerified) {
+                _setVisibilityEmailUnverifiedLayoutEvent.value = Event(false)
+                if (user.value == null) fetchCurrentUserInformation(firebaseUser)
+            } else {
+                _setVisibilityEmailUnverifiedLayoutEvent.value = Event(true)
+                firebaseUser.sendEmailVerification()
+            }
         } else {
             showSignInActivity()
         }
@@ -40,7 +50,6 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
         if (resultCode == RESULT_OK) {
             checkUserIsConnected(firebaseUser)
         } else {
-            //val response = IdpResponse.fromResultIntent(data)
             showSignInActivity()
         }
     }

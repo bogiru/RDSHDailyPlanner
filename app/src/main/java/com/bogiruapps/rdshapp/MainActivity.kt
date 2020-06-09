@@ -89,6 +89,17 @@ class MainActivity : AppCompatActivity() {
         isConnected.observe(this, Observer { isConnected ->
             if (isConnected) connected() else disconnected()
         })
+
+        mainViewModel.setVisibilityEmailUnverifiedLayoutEvent.observe(this, EventObserver {
+            if (it) {
+                binding.emailUnverifiedLayout.visibility = View.VISIBLE
+                setEnabledMenuItem(false)
+            } else {
+                binding.emailUnverifiedLayout.visibility = View.INVISIBLE
+                setEnabledMenuItem(true)
+            }
+        })
+
     }
 
     private fun connected() {
