@@ -14,6 +14,7 @@ import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentChatsBinding
+import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -34,7 +35,7 @@ class ChatsFragment : Fragment() {
         chatsViewModel.fetchFirestoreRecyclerQuery()
         setupObserverViewModel()
         configureToolbar()
-        configureBottomNavigation()
+        hideBottomNavigationView(activity!!)
 
         return binding.root
     }
@@ -67,10 +68,6 @@ class ChatsFragment : Fragment() {
         editItem?.isVisible = false
         deleteItem?.isVisible = false
 
-    }
-
-    private fun configureBottomNavigation() {
-        activity!!.bottomNavigationView.visibility = View.GONE
     }
 
     private fun configureRecyclerView() {

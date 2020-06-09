@@ -15,14 +15,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import android.content.Intent
 import android.widget.ImageView
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.utils.*
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.storage.FirebaseStorage
 
 
@@ -36,7 +34,7 @@ class UserFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         configureToolbar()
-        configureBottomNavigation()
+        hideBottomNavigationView(activity!!)
         configureBinding(inflater, container)
         setupObserverViewModel()
 
@@ -66,10 +64,6 @@ class UserFragment : Fragment() {
         deleteItem?.isVisible = false
 
         activity?.main_toolbar?.title = "Профиль"
-    }
-
-    private fun configureBottomNavigation() {
-        activity!!.bottomNavigationView.visibility = View.GONE
     }
 
     private fun setupObserverViewModel() {

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentInfoBinding
+import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -20,7 +21,7 @@ class InfoFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         configureToolbar()
-        hideBottomNavigation()
+        hideBottomNavigationView(activity!!)
         configureDotsIndicator()
 
         return binding.root
@@ -38,10 +39,6 @@ class InfoFragment : Fragment() {
         deleteItem?.isVisible = false
 
         activity?.main_toolbar?.title = " "
-    }
-
-    private fun hideBottomNavigation() {
-        activity!!.bottomNavigationView.visibility = View.GONE
     }
 
     private fun configureDotsIndicator() {

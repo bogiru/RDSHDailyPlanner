@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_main.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
 import pub.devrel.easypermissions.EasyPermissions.hasPermissions
@@ -22,6 +23,10 @@ fun Fragment.hideKeyboard() {
 
 fun showSnackbar(view: View, message: String) {
     Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
+}
+
+fun hideBottomNavigationView(activity: Activity) {
+    activity!!.bottomNavigationView.visibility = View.GONE
 }
 
 @AfterPermissionGranted(RC_IMAGE_PERMS)

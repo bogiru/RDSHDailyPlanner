@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.RatingFragmentBinding
 import com.bogiruapps.rdshapp.user.User
+import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,7 +33,7 @@ class RatingFragment : Fragment() {
         configureBinding(inflater, container)
         setupObserverViewModel()
         configureToolbar()
-        configureBottomNavigation()
+        hideBottomNavigationView(activity!!)
         ratingViewModel.fetchFirestoreRecyclerQuery()
         return binding.root
     }
@@ -54,10 +55,6 @@ class RatingFragment : Fragment() {
         val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
         editItem?.isVisible = false
         deleteItem?.isVisible = false
-    }
-
-    private fun configureBottomNavigation() {
-        activity!!.bottomNavigationView.visibility = View.GONE
     }
 
     private fun configureRecyclerView(query: Query) {
