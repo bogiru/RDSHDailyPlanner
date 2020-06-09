@@ -34,6 +34,9 @@ class EventEditViewModel(
     private val _showDatePickerDialog = MutableLiveData<Event<Unit>>()
     val showDatePickerDialog: MutableLiveData<Event<Unit>> = _showDatePickerDialog
 
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
+
     val event = eventRepository.currentEvent.value
 
     fun checkCreateEventStatus(): Boolean = eventRepository.stateEvent.value == State.CREATE
@@ -46,6 +49,7 @@ class EventEditViewModel(
         if (event.title == "" || event.description == "") {
             _showSnackbar.value = "Не все поля заполнены"
         } else {
+            _dataLoading.value = true
             when (eventRepository.stateEvent.value) {
                 State.CREATE -> createEvent(event)
                 State.EDIT -> editEvent(event)
@@ -79,6 +83,7 @@ class EventEditViewModel(
                     when (chatRepository.createChat(userRepository.currentUser.value!!, chat)) {
                         is Result.Success -> {
                             chatRepository.currentChat.value = chat
+                            _dataLoading.value = false
                             openSchoolEventFragment()
                         }
                     }
@@ -99,6 +104,7 @@ class EventEditViewModel(
                     when (chatRepository.updateChat(userRepository.currentUser.value!!, tempChat)) {
                         is Result.Success -> {
                             chatRepository.currentChat.value = tempChat
+                            _dataLoading.value = false
                             openSchoolEventFragment()
                         }
                     }

@@ -39,12 +39,16 @@ class EventDetailViewModel(
         _openTaskEventRecyclerView.value = Event(Unit)
     }
 
+    private val _dataLoading = MutableLiveData<Boolean>()
+    val dataLoading: LiveData<Boolean> = _dataLoading
+
     fun deleteEvent() {
+        _dataLoading.value = true
         viewModelScope.launch {
             when (eventRepository.deleteEvent(userRepository.currentUser.value!!)) {
                 is Result.Success -> {
                     when (chatRepository.deleteChat(userRepository.currentUser.value!!, eventRepository.currentEvent.value!!)) {
-
+                        is Result.Success -> _dataLoading.value = false
                     }
                 }
             }

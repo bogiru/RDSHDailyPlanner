@@ -20,11 +20,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 /**
  * A simple [Fragment] subclass.
  */
-class EventChatRoomFragment : Fragment() {
+class ChatRoomFragment : Fragment() {
 
     private val chatRoomViewModel: ChatRoomViewModel by viewModel()
 
-    private lateinit var adapter: EventChatRoomAdapter
+    private lateinit var adapter: ChatRoomAdapter
     private lateinit var binding: FragmentEventChatRoomBinding
 
     override fun onCreateView(
@@ -80,7 +80,7 @@ class EventChatRoomFragment : Fragment() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.reverseLayout = true
 
-        adapter = EventChatRoomAdapter(getFirestoreRecyclerOptions(), chatRoomViewModel)
+        adapter = ChatRoomAdapter(getFirestoreRecyclerOptions(), chatRoomViewModel)
         binding.eventChatRoomRecyclerView.layoutManager = layoutManager
         binding.eventChatRoomRecyclerView.adapter = adapter
     }

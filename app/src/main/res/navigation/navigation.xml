@@ -136,7 +136,7 @@
     </fragment>
     <fragment
             android:id="@+id/eventChatRoomFragment"
-            android:name="com.bogiruapps.rdshapp.chats.chatroomevent.EventChatRoomFragment"
+            android:name="com.bogiruapps.rdshapp.chats.chatroomevent.ChatRoomFragment"
             android:label="EventChatRoomFragment" />
     <fragment
             android:id="@+id/chatsFragment"

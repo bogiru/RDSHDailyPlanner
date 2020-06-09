@@ -60,6 +60,9 @@ class TaskEventViewModel(
                     taskEvent.description,
                     taskEvent.user
                 )
+
+                _dataLoading.value = true
+
                 when (eventRepository.updateTaskEvent(userRepository.currentUser.value!!, task)) {
                     is Result.Success -> {
                         if (taskEvent.completed) {
@@ -71,6 +74,7 @@ class TaskEventViewModel(
                         }
                         eventRepository.updateEvent(userRepository.currentUser.value!!, eventRepository.currentEvent.value!!)
                         userRepository.updateUser(userRepository.currentUser.value!!)
+                        _dataLoading.value = false
                     }
                 }
             }

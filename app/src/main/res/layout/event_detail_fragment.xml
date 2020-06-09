@@ -7,6 +7,7 @@
         <variable
                 name="viewModel"
                 type="com.bogiruapps.rdshapp.events.detailevent.EventDetailViewModel" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,6 +24,7 @@
                 android:layout_height="136dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:visibility="@{viewModel.dataLoading ? View.INVISIBLE : View.VISIBLE}"
                 android:layout_marginEnd="8dp"
                 android:longClickable="true"
                 app:cardBackgroundColor="#E8FFFFFF"
@@ -90,6 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:visibility="@{viewModel.dataLoading ? View.INVISIBLE : View.VISIBLE}"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 app:cardCornerRadius="12dp"
@@ -124,6 +127,7 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:visibility="@{viewModel.dataLoading ? View.INVISIBLE : View.VISIBLE}"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 app:cardCornerRadius="12dp"
@@ -134,7 +138,8 @@
 
             <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    tools:visibility="visible">
 
                 <LinearLayout
                         android:layout_width="match_parent"
@@ -155,6 +160,16 @@
 
         </androidx.cardview.widget.CardView>
 
+        <ProgressBar
+                android:id="@+id/pb_event_detail"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="@{viewModel.dataLoading ? View.VISIBLE : View.INVISIBLE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

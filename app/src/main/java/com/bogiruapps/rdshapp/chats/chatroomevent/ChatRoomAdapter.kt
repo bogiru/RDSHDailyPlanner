@@ -9,11 +9,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 
-class EventChatRoomAdapter(
+class ChatRoomAdapter(
     options : FirestoreRecyclerOptions<Message>,
     private val viewModel: ChatRoomViewModel
 ) :
-    FirestoreRecyclerAdapter<Message, EventChatRoomAdapter.EventsChatRoomViewHolder>(options) {
+    FirestoreRecyclerAdapter<Message, ChatRoomAdapter.EventsChatRoomViewHolder>(options) {
 
     override fun onBindViewHolder(p0: EventsChatRoomViewHolder, p1: Int, p2: Message) {
         p0.bind(viewModel, p2)
