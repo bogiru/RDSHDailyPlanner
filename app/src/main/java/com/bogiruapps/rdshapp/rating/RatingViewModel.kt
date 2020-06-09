@@ -13,19 +13,20 @@ class RatingViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _query = MutableLiveData<Query>()
-    val query: LiveData<Query> = _query
+    private val _queryUsers = MutableLiveData<Query>()
+    val queryUsers: LiveData<Query> = _queryUsers
 
 
     fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
             when (val result = userRepository.fetchFirestoreRecyclerQueryUser()) {
                 is Result.Success -> {
-                    _query.value = result.data
+                    _queryUsers.value = result.data
                     _dataLoading.value = false
                 }
             }
         }
     }
+
 
 }

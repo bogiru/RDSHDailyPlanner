@@ -170,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         navView.menu.findItem(R.id.eventsFragment).isEnabled = value
         navView.menu.findItem(R.id.noticeFragment).isEnabled = value
         navView.menu.findItem(R.id.chatsFragment).isEnabled = value
-        navView.menu.findItem(R.id.usersFragment).isEnabled = value
+        navView.menu.findItem(R.id.ratingFragment).isEnabled = value
         navView.menu.findItem(R.id.infoFragment).isEnabled = value
     }
 

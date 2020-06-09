@@ -24,8 +24,8 @@ import com.bogiruapps.rdshapp.events.edit_event.EventEditViewModel
 import com.bogiruapps.rdshapp.events.tasksEvent.TaskEventViewModel
 import com.bogiruapps.rdshapp.events.tasksEvent.taskEventEdit.TaskEventEditViewModel
 import com.bogiruapps.rdshapp.notice.NoticeViewModel
-import com.bogiruapps.rdshapp.notice.notice_detail.NoticeDetailViewModel
-import com.bogiruapps.rdshapp.notice.notice_edit.NoticeEditViewModel
+import com.bogiruapps.rdshapp.notice.noticedetail.NoticeDetailViewModel
+import com.bogiruapps.rdshapp.notice.noticeedit.NoticeEditViewModel
 import com.bogiruapps.rdshapp.school.SchoolViewModel
 import com.bogiruapps.rdshapp.rating.RatingViewModel
 import com.bogiruapps.rdshapp.user.UserViewModel

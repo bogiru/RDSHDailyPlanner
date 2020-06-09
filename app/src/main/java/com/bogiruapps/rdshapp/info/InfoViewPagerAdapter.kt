@@ -1,12 +1,12 @@
 package com.bogiruapps.rdshapp.info
 
-    import android.view.LayoutInflater
+import android.view.LayoutInflater
     import android.view.ViewGroup
     import androidx.recyclerview.widget.RecyclerView
     import com.bogiruapps.rdshapp.R
     import com.bogiruapps.rdshapp.databinding.ItemPageInfoBinding
 
-class InfoViewPagerAdapter () : RecyclerView.Adapter<InfoViewPagerAdapter.InfoHolder>() {
+class InfoViewPagerAdapter : RecyclerView.Adapter<InfoViewPagerAdapter.InfoHolder>() {
 
     private val pages = listOf(
         InfoPage(R.string.info_text1, R.drawable.info_image_rdsh),
@@ -20,9 +20,7 @@ class InfoViewPagerAdapter () : RecyclerView.Adapter<InfoViewPagerAdapter.InfoHo
         return InfoHolder.from(parent)
     }
 
-    override fun getItemCount(): Int {
-        return pages.size
-    }
+    override fun getItemCount(): Int = pages.size
 
     override fun onBindViewHolder(holder: InfoHolder, position: Int) {
         holder.bind(pages[position])

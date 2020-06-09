@@ -135,7 +135,6 @@ class UserFragment : Fragment() {
             setPositiveButton(
                 "Да"
             ) { _: DialogInterface, _: Int ->
-                binding.userLoadLayout.visibility = View.VISIBLE
                 binding.loadTextView.text = "Удаление пользователя из школы"
                 userViewModel.deleteUserFromSchool()
             }

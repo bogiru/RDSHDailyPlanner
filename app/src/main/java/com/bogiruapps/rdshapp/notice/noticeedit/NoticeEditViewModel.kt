@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.notice.notice_edit
+package com.bogiruapps.rdshapp.notice.noticeedit
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,12 +14,6 @@ import kotlinx.coroutines.launch
 class NoticeEditViewModel(
     private val userRepository: UserRepository,
     private val noticeRepository: NoticeRepository) : ViewModel() {
-
-    private val _openEditNotice = MutableLiveData<Event<Unit>>()
-    val openEditNotice: LiveData<Event<Unit>> = _openEditNotice
-
-    private val _closeEditNotice = MutableLiveData<Event<Unit>>()
-    val closeEditNotice: LiveData<Event<Unit>> = _closeEditNotice
 
     private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
@@ -52,24 +46,17 @@ class NoticeEditViewModel(
     }
 
     private fun editNotice(notice: Notice) {
-        if (notice.id == "") createNotice(notice)
-        else viewModelScope.launch {
-            noticeRepository.updateNotice(userRepository.currentUser.value!!, notice)
-            //closeEditNotice()
-            openNoticeFragment()
+        if (notice.id == "") {
+            createNotice(notice)
+        } else {
+            viewModelScope.launch {
+                noticeRepository.updateNotice(userRepository.currentUser.value!!, notice)
+                openNoticeFragment()
+            }
         }
     }
 
-    fun openEditNotice() {
-        _openEditNotice.value = Event(Unit)
-    }
-
-    private fun closeEditNotice() {
-        _closeEditNotice.value = Event(Unit)
-    }
-
     private fun openNoticeFragment() {
-
         _openNoticeFragmentEvent.value = Event(Unit)
     }
 

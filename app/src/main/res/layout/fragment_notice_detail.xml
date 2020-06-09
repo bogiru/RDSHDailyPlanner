@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.notice.notice_detail.NoticeDetailViewModel" />
+                type="com.bogiruapps.rdshapp.notice.noticedetail.NoticeDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,7 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
-                        android:text="@{String.valueOf(viewModel.notice.views.size())}"
+                        android:text="@{String.valueOf(viewModel.notice.listOfUsersViewed.size())}"
                         app:layout_constraintBottom_toBottomOf="@+id/notice_detail_views_imageView"
                         app:layout_constraintEnd_toStartOf="@+id/notice_detail_views_imageView"
                         app:layout_constraintTop_toTopOf="@+id/notice_detail_views_imageView" />

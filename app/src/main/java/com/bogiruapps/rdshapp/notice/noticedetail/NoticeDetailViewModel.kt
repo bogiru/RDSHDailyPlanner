@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.notice.notice_detail
+package com.bogiruapps.rdshapp.notice.noticedetail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -24,10 +24,10 @@ class NoticeDetailViewModel(
     private val _openNoticeDeleteFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeDeleteFragmentEvent: LiveData<Event<Unit>> = _openNoticeDeleteFragmentEvent
 
-    private val _showToast = MutableLiveData<Event<String>>()
-    val showToast: LiveData<Event<String>> = _showToast
+    private val _showSnackbar = MutableLiveData<Event<String>>()
+    val showSnackbar: LiveData<Event<String>> = _showSnackbar
 
-    val notice = noticeRepository.currentNotice
+    val notice = noticeRepository.currentNotice.value
 
     fun deleteNotice() {
         viewModelScope.launch {
@@ -35,23 +35,20 @@ class NoticeDetailViewModel(
         }
     }
 
-    fun showNoticeFragment() {
-        _openNoticeFragmentEvent.value = Event(Unit)
-    }
-
     fun showEditNoticeFragment() {
-        if (userRepository.currentUser.value!!.email == noticeRepository.currentNotice.value!!.author!!.email) {
+        if (userRepository.currentUser.value!!.email == notice!!.author.email) {
             _openNoticeEditFragmentEvent.value = Event(Unit)
             noticeRepository.stateNotice.value = State.EDIT
         } else {
-            _showToast.value = Event("Право редактирование предоставлено только автору объявления")
+            _showSnackbar.value = Event("Право редактирование предоставлено только автору объявления")
         }
-
     }
 
     fun showDeleteNoticeFragment() {
-        if (userRepository.currentUser.value!!.email  == noticeRepository.currentNotice.value!!.author!!.email)  _openNoticeDeleteFragmentEvent.value = Event(Unit)
-        else _showToast.value = Event("Право удаления предоставлено только автору объявления")
-
+        if (userRepository.currentUser.value!!.email  == notice!!.author.email) {
+            _openNoticeDeleteFragmentEvent.value = Event(Unit)
+        } else {
+            _showSnackbar.value = Event("Право удаления предоставлено только автору объявления")
+        }
     }
 }

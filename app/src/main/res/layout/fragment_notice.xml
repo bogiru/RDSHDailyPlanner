@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:onClick="@{(view) -> viewModel.showEditNoticeFragment()}"
+                android:onClick="@{(view) -> viewModel.showCreateNoticeFragment()}"
                 app:backgroundTint="#E2D51717"
                 app:icon="@drawable/ic_plus"
                 app:iconTint="#FFFFFF"

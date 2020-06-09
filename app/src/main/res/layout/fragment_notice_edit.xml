@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.notice.notice_edit.NoticeEditViewModel" />
+                type="com.bogiruapps.rdshapp.notice.noticeedit.NoticeEditViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

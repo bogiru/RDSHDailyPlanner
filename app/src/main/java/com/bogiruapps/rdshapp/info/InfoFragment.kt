@@ -20,15 +20,10 @@ class InfoFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         configureToolbar()
-        configureBottomNavigation()
+        hideBottomNavigation()
         configureDotsIndicator()
 
         return binding.root
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.toolbar_menu, menu)
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
@@ -39,13 +34,13 @@ class InfoFragment : Fragment() {
     private fun configureToolbar() {
         val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
-
-        activity?.main_toolbar?.title = " "
         editItem?.isVisible = false
         deleteItem?.isVisible = false
+
+        activity?.main_toolbar?.title = " "
     }
 
-    private fun configureBottomNavigation() {
+    private fun hideBottomNavigation() {
         activity!!.bottomNavigationView.visibility = View.GONE
     }
 

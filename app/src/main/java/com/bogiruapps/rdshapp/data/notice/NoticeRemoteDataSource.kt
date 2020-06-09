@@ -36,16 +36,14 @@ class NoticeRemoteDataSource(
             .document(school.id).collection(NOTICE_COLLECTION_NAME).document(notice.id).update(
                 FIELD_TEXT, notice.text,
                 FIELD_TITLE, notice.title,
-                FIELD_VIEWS, notice.views
+                FIELD_VIEWS, notice.listOfUsersViewed
             )
             .await()
     }
 
     override suspend fun deleteNotice(region: Region, city: City, school: School, notice: Notice): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
-            .collection(CITY_COLLECTION_NAME).document(city.id).collection(
-                SCHOOL_COLLECTION_NAME
-            )
+            .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
             .document(school.id).collection(NOTICE_COLLECTION_NAME)
             .document(notice.id).delete()
             .await()

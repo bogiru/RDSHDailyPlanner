@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.notice.notice_detail
+package com.bogiruapps.rdshapp.notice.noticedetail
 
 
 import android.annotation.SuppressLint
@@ -17,9 +17,6 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-/**
- * A simple [Fragment] subclass.
- */
 class NoticeDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentNoticeDetailBinding
@@ -33,7 +30,6 @@ class NoticeDetailFragment : Fragment() {
         configureBinding(inflater, container)
         setupObserverViewModel()
         configureToolbar()
-        configureBottomNavigation()
         return binding.root
     }
 
@@ -44,26 +40,25 @@ class NoticeDetailFragment : Fragment() {
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notice_detail, container, false)
         binding.viewModel = noticeDetailViewModel
-        binding.lifecycleOwner = this.viewLifecycleOwner
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun setupObserverViewModel() {
         noticeDetailViewModel.openNoticeFragmentEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeFragment)
+            showNoticeFragment()
         })
 
         noticeDetailViewModel.openNoticeEditFragmentEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeEditFragment)
+            showNoticeEditFragment()
         })
 
         noticeDetailViewModel.openNoticeDeleteFragmentEvent.observe(viewLifecycleOwner, EventObserver {
-            showAllertDialogDelete()
+            showAlertDialogDelete()
         })
 
-        noticeDetailViewModel.showToast.observe(viewLifecycleOwner, EventObserver {
+        noticeDetailViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver {
             showSnackbar(it)
         })
-
     }
 
     private fun configureToolbar() {
@@ -82,33 +77,36 @@ class NoticeDetailFragment : Fragment() {
 
         editItem?.isVisible = true
         deleteItem?.isVisible = true
-
-    }
-
-    private fun configureBottomNavigation() {
-        //activity!!.bottomNavigationView.menu.clear()
-        //activity!!.bottomNavigationView.inflateMenu(R.menu.notice_bottom_menu)
-        //activity!!.bottomNavigationView.visibility = View.VISIBLE
     }
 
     @SuppressLint("ResourceType")
-    private fun showAllertDialogDelete(){
+    private fun showAlertDialogDelete(){
         val alertBuilder = MaterialAlertDialogBuilder(activity, R.style.AlertDialogTheme)
-        alertBuilder.setTitle("Удалить объявление")
-        alertBuilder.setMessage("Вы уверены, что хотите удалить объявление?")
-        alertBuilder.setIconAttribute(R.drawable.rdsh_image)
-        alertBuilder.setCancelable(true)
-        alertBuilder.setPositiveButton(
-            "Да"
-        ) { _: DialogInterface, _: Int ->
-            noticeDetailViewModel.deleteNotice()
-            findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeFragment)
+        alertBuilder.apply {
+            setTitle("Удалить объявление")
+            setMessage("Вы уверены, что хотите удалить объявление?")
+            setIconAttribute(R.drawable.rdsh_image)
+            setCancelable(true)
+            setPositiveButton(
+                "Да"
+            ) { _: DialogInterface, _: Int ->
+                noticeDetailViewModel.deleteNotice()
+                showNoticeFragment()
+            }
+            setNegativeButton(
+                "Нет"
+            ) { _: DialogInterface, _: Int ->
+            }
+            show()
         }
-        alertBuilder.setNegativeButton(
-            "Нет"
-        ) { _: DialogInterface, _: Int ->
-        }
-        alertBuilder.show()
+    }
+
+    private fun showNoticeFragment() {
+        findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeFragment)
+    }
+
+    private fun showNoticeEditFragment() {
+        findNavController().navigate(R.id.action_noticeDetailFragment_to_noticeEditFragment)
     }
 
 }

@@ -44,26 +44,14 @@ class RatingFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-
-        ratingViewModel.query.observe(viewLifecycleOwner, Observer {
+        ratingViewModel.queryUsers.observe(viewLifecycleOwner, Observer {
             configureRecyclerView(it)
-        })
-
-        ratingViewModel.dataLoading.observe(viewLifecycleOwner, Observer{ isShowProgress ->
-            if (isShowProgress) {
-                binding.ratingPb.visibility = View.VISIBLE
-            } else {
-                binding.ratingPb.visibility = View.INVISIBLE
-            }
         })
     }
 
     private fun configureToolbar() {
         val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
-
-        activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
-        activity?.main_toolbar?.title = "Рейтинг"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }
@@ -73,7 +61,6 @@ class RatingFragment : Fragment() {
     }
 
     private fun configureRecyclerView(query: Query) {
-       // val layoutManager = GridLayoutManager(activity, GRID_SPAN_COUNT, GridLayoutManager.HORIZONTAL, false)
         val options = getFirestoreRecyclerOptions(query)
         adapter = RatingAdapter(options, ratingViewModel)
         binding.ratingRecyclerView.layoutManager = LinearLayoutManager(activity)
@@ -83,7 +70,7 @@ class RatingFragment : Fragment() {
 
     private fun getFirestoreRecyclerOptions(query: Query): FirestoreRecyclerOptions<User> {
         return FirestoreRecyclerOptions.Builder<User>()
-            .setQuery(query!!, User::class.java)
+            .setQuery(query, User::class.java)
             .setLifecycleOwner(this)
             .build()
     }

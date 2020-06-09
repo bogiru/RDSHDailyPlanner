@@ -30,7 +30,7 @@
 
         <item
                 android:title="Рейтинг"
-                android:id="@+id/usersFragment"
+                android:id="@+id/ratingFragment"
                 android:icon="@drawable/ic_rating"/>
         <item
                 android:title="Информация"

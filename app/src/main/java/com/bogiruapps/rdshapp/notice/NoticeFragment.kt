@@ -6,17 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeBinding
-import com.bogiruapps.rdshapp.databinding.FragmentNoticeBindingImpl
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_notice.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class NoticeFragment : Fragment() {
@@ -34,7 +31,7 @@ class NoticeFragment : Fragment() {
         setupObserverViewModel()
         noticeViewModel.checkUserSchool()
         configureToolbar()
-        configureBottomNavigation()
+        hideBottomNavigation()
 
         return binding.root
     }
@@ -43,8 +40,6 @@ class NoticeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         this.hideKeyboard()
     }
-
-
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notice, container, false)
@@ -62,8 +57,7 @@ class NoticeFragment : Fragment() {
         })
 
         noticeViewModel.openNoticeEditFragmentEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(R.id.action_noticeFragment_to_noticeEditFragment)
-
+            showNoticeEdit()
         })
 
         noticeViewModel.openNoticeDetailFragmentEvent.observe(viewLifecycleOwner, EventObserver {
@@ -76,15 +70,13 @@ class NoticeFragment : Fragment() {
         val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
         editItem?.isVisible = false
         deleteItem?.isVisible = false
-
     }
 
-    private fun configureBottomNavigation() {
+    private fun hideBottomNavigation() {
         activity!!.bottomNavigationView.visibility = View.GONE
     }
 
     private fun openChooseSchoolFragment() {
-        hideProgress()
         findNavController().navigate(R.id.action_noticeFragment_to_choseSchoolFragment)
     }
 
@@ -96,18 +88,18 @@ class NoticeFragment : Fragment() {
     }
 
     private fun getFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Notice> {
-        val query = noticeViewModel.query.value
+        val query = noticeViewModel.queryNotices.value
         return FirestoreRecyclerOptions.Builder<Notice>()
             .setQuery(query!!, Notice::class.java)
             .setLifecycleOwner(this)
             .build()
     }
 
-    private fun showNoticeDetail() {
-        findNavController().navigate(R.id.action_noticeFragment_to_noticeDetailFragment)
+    private fun showNoticeEdit() {
+        findNavController().navigate(R.id.action_noticeFragment_to_noticeEditFragment)
     }
 
-    private fun hideProgress() {
-        pb_notice.visibility = View.INVISIBLE
+    private fun showNoticeDetail() {
+        findNavController().navigate(R.id.action_noticeFragment_to_noticeDetailFragment)
     }
 }

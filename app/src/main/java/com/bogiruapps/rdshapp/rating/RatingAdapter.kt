@@ -15,10 +15,8 @@ class RatingAdapter (
     private val viewModel: RatingViewModel
 ) : FirestoreRecyclerAdapter<User, RatingAdapter.RatingViewHolder>(options) {
 
-    override fun onBindViewHolder(p0: RatingViewHolder, p1: Int, p2: User) {
-        p0.bind(viewModel, p2, p1 + 1)
-
-
+    override fun onBindViewHolder(viewHolder: RatingViewHolder, position: Int, user: User) {
+        viewHolder.bind(viewModel, user, position + 1)
     }
 
     override fun onChildChanged(
@@ -38,10 +36,10 @@ class RatingAdapter (
     class RatingViewHolder(private val binding: RatingItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: RatingViewModel, user: User, numberUser: Int) {
+        fun bind(viewModel: RatingViewModel, user: User, position: Int) {
             binding.user = user
             binding.viewModel = viewModel
-            binding.place = numberUser
+            binding.place = position
             binding.executePendingBindings()
         }
 
