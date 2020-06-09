@@ -12,6 +12,7 @@ import com.bogiruapps.rdshapp.EventObserver
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.EventDetailFragmentBinding
+import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -38,10 +39,6 @@ class  EventDetailFragment : Fragment() {
         return binding.root
     }
 
-    private fun showSnackBar(message: String) {
-        Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
-    }
-
     private fun setupObserverViewModel() {
         /*showProgress()*/
         eventDetailViewModel.openTaskEventRecyclerView.observe(viewLifecycleOwner, EventObserver {
@@ -60,8 +57,8 @@ class  EventDetailFragment : Fragment() {
             showAllertDialogDelete()
         })
 
-        eventDetailViewModel.showToast.observe(viewLifecycleOwner, EventObserver {
-            showSnackBar(it)
+        eventDetailViewModel.showToast.observe(viewLifecycleOwner, EventObserver { message ->
+            showSnackbar(view!!, message)
         })
 
      /*   eventDetailViewModel.openEventDeleteFragmentEvent.observe(this, Observer {

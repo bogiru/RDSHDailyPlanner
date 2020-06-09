@@ -15,6 +15,7 @@ import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.databinding.FragmentTaskEventEditBinding
+import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -42,10 +43,6 @@ class TaskEventEditFragment : Fragment() {
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
-    }
-
     private fun setupObserverViewModel() {
         taskEventviewModel.openTaskEventFragment.observe(this, EventObserver {
             findNavController().navigate(R.id.action_taskEventEditFragment_to_tasksEventFragment)
@@ -55,8 +52,8 @@ class TaskEventEditFragment : Fragment() {
             setupSpinner(it)
         })
 
-        taskEventviewModel.showSnackbar.observe(this, Observer {
-            showSnackbar(it)
+        taskEventviewModel.showSnackbar.observe(this, Observer {message ->
+            showSnackbar(view!!, message)
         })
     }
 

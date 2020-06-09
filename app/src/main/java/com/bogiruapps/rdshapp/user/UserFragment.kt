@@ -72,10 +72,6 @@ class UserFragment : Fragment() {
         activity!!.bottomNavigationView.visibility = View.GONE
     }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(view!!, message, Snackbar.LENGTH_LONG).show()
-    }
-
     private fun setupObserverViewModel() {
         userViewModel.showActionPickActivity.observe(viewLifecycleOwner, EventObserver {
             pickImageFromGallery()
@@ -90,7 +86,7 @@ class UserFragment : Fragment() {
         })
 
         userViewModel.imageLoadingToRemoteStorageCompleteEvent.observe(viewLifecycleOwner, EventObserver {
-            showSnackbar("Изменение изображения профиля может занять несколько минут")
+            showSnackbar(view!!, "Изменение изображения профиля может занять несколько минут")
             setImageToView()
         })
     }

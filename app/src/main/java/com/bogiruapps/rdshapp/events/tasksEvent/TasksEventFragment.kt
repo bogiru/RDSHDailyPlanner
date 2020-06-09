@@ -22,6 +22,7 @@ import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentTasksEventBinding
 import com.bogiruapps.rdshapp.utils.SwipeToDeleteCallback
 import com.bogiruapps.rdshapp.utils.hideKeyboard
+import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.Query
@@ -59,10 +60,6 @@ class TasksEventFragment : Fragment() {
         sharedElementEnterTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
     }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
-    }
-
     private fun setupObserverViewModel() {
         taskEventViewModel.openTaskEventEdit.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_tasksEventFragment_to_taskEventEditFragment)
@@ -76,8 +73,8 @@ class TasksEventFragment : Fragment() {
             showAllertDialogDelete(it)
         })
 
-        taskEventViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver {
-            showSnackbar(it)
+        taskEventViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver { message ->
+            showSnackbar(view!!, message)
         })
 
     }
@@ -104,7 +101,7 @@ class TasksEventFragment : Fragment() {
                     adapter.deleteItem(viewHolder.adapterPosition)
                 } else {
                     adapter.notifyItemChanged(viewHolder.adapterPosition)
-                    taskEventViewModel.showSnackbar("Право удаления предоставлено только автору мероприятия")
+                    showSnackbar(view!!, "Право удаления предоставлено только автору мероприятия")
                 }
             }
         }

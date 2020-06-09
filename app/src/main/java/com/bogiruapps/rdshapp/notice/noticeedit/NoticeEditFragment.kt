@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeEditBinding
+import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -39,17 +40,13 @@ class NoticeEditFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
-    }
-
     private fun setupObserverViewModel() {
         noticeEditViewModel.openNoticeFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             showNoticeFragment()
         })
 
-        noticeEditViewModel.showSnackbar.observe(viewLifecycleOwner, Observer {
-            showSnackbar(it)
+        noticeEditViewModel.showSnackbar.observe(viewLifecycleOwner, Observer { message ->
+            showSnackbar(view!!, message)
         })
     }
 

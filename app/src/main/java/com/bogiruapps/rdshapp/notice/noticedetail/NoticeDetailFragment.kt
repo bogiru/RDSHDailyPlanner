@@ -12,6 +12,7 @@ import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentNoticeDetailBinding
+import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,10 +34,6 @@ class NoticeDetailFragment : Fragment() {
         return binding.root
     }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
-    }
-
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_notice_detail, container, false)
         binding.viewModel = noticeDetailViewModel
@@ -56,8 +53,8 @@ class NoticeDetailFragment : Fragment() {
             showAlertDialogDelete()
         })
 
-        noticeDetailViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver {
-            showSnackbar(it)
+        noticeDetailViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver {message ->
+            showSnackbar(view!!, message)
         })
     }
 

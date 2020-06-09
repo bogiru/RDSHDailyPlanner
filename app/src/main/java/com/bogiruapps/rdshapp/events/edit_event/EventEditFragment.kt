@@ -18,6 +18,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import android.app.DatePickerDialog
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.RuntimeExecutionException
 import com.google.firebase.storage.FirebaseStorage
@@ -51,17 +52,13 @@ class EventEditFragment : Fragment() {
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
 
-    private fun showSnackbar(message: String) {
-        Snackbar.make(view!!, message, Snackbar.LENGTH_SHORT).show()
-    }
-
     private fun setupObserverViewModel() {
         eventEditViewModel.openSchoolEventFragment.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_eventEditFragment_to_eventsFragment)
         })
 
-        eventEditViewModel.showSnackbar.observe(viewLifecycleOwner, Observer {
-            showSnackbar(it)
+        eventEditViewModel.showSnackbar.observe(viewLifecycleOwner, Observer {message ->
+            showSnackbar(view!!, message)
         })
 
         eventEditViewModel.showDatePickerDialog.observe(viewLifecycleOwner, Observer {
