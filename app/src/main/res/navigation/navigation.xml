@@ -77,7 +77,7 @@
     </fragment>
     <fragment
             android:id="@+id/tasksEventFragment"
-            android:name="com.bogiruapps.rdshapp.schoolEvents.tasksEvent.SchoolTasksEventFragment"
+            android:name="com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEventFragment"
             android:label="Задачи">
         <action
                 android:id="@+id/action_tasksEventFragment_to_taskEventEditFragment"
@@ -98,7 +98,7 @@
     </fragment>
     <fragment
             android:id="@+id/taskEventEditFragment"
-            android:name="com.bogiruapps.rdshapp.schoolEvents.tasksEvent.taskEventEdit.SchoolTaskEventEditFragment"
+            android:name="com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit.SchoolTaskEventEditFragment"
             android:label="Редактирование">
         <action
                 android:id="@+id/action_taskEventEditFragment_to_tasksEventFragment"

@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.schoolEvents.tasksEvent.taskEventEdit
+package com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -79,7 +79,7 @@ class SchoolTaskEventEditFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                taskEventviewModel.schoolTaskEvent.user = items[position]
+                taskEventviewModel.taskSchoolEvent.user = items[position]
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {

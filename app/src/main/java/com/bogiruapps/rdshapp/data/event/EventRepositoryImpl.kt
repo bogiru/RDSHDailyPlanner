@@ -2,7 +2,7 @@ package com.bogiruapps.rdshapp.data.event
 
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
-import com.bogiruapps.rdshapp.schoolEvents.tasksEvent.SchoolTaskEvent
+import com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEvent
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
@@ -57,32 +57,32 @@ class EventRepositoryImpl(
         return@coroutineScope task.await()
     }
 
-    override suspend fun createTaskEvent(user: User, schoolTaskEvent: SchoolTaskEvent): Result<Void?> = coroutineScope {
+    override suspend fun createTaskEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.createTaskEvent(
             user.region,
             user.city,
             user.school,
-            currentEvent.value!!, schoolTaskEvent
+            currentEvent.value!!, taskSchoolEvent
         )}
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
-    override suspend fun updateTaskEvent(user: User, schoolTaskEvent: SchoolTaskEvent): Result<Void?> = coroutineScope {
+    override suspend fun updateTaskEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.updateTaskEvent(
             user.region,
             user.city,
             user.school,
-            currentEvent.value!!, schoolTaskEvent
+            currentEvent.value!!, taskSchoolEvent
         )}
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
-    override suspend fun deleteTaskEvent(user: User, schoolTaskEvent: SchoolTaskEvent): Result<Void?> = coroutineScope {
+    override suspend fun deleteTaskEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.deleteTaskEvent(
             user.region,
             user.city,
             user.school,
-            currentEvent.value!!, schoolTaskEvent
+            currentEvent.value!!, taskSchoolEvent
         )}
         return@coroutineScope task.await()
     }
