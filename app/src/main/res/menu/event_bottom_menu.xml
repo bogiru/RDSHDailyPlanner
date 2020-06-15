@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:id="@+id/eventDetailFragment"
+            android:id="@+id/schoolEventDetailFragment"
             android:icon="@drawable/ic_info"
             android:title="Описание" />
     <item
-            android:id="@+id/tasksEventFragment"
+            android:id="@+id/tasksSchoolEventFragment"
             android:icon="@drawable/ic_star_24px"
             android:title="Задачи" />
     <item
-            android:id="@+id/eventChatRoomFragment"
+            android:id="@+id/ChatRoomFragment"
             android:icon="@drawable/ic_chats_24px"
             android:title="Чат" />
 </menu>

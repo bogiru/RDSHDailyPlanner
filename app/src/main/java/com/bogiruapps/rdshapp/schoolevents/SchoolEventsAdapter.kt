@@ -1,9 +1,9 @@
-package com.bogiruapps.rdshapp.schoolEvents
+package com.bogiruapps.rdshapp.schoolevents
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bogiruapps.rdshapp.databinding.EventsItemBinding
+import com.bogiruapps.rdshapp.databinding.SchoolEventsItemBinding
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
@@ -20,7 +20,7 @@ class SchoolEventsAdapter(
         return EventsViewHolder.from(parent)
     }
 
-    class EventsViewHolder(private val binding: EventsItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class EventsViewHolder(private val binding: SchoolEventsItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: SchoolEventsViewModel, schoolEvent: SchoolEvent) {
             binding.event = schoolEvent
@@ -40,7 +40,7 @@ class SchoolEventsAdapter(
         companion object {
             fun from(parent: ViewGroup): EventsViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = EventsItemBinding.inflate(layoutInflater, parent, false)
+                val binding = SchoolEventsItemBinding.inflate(layoutInflater, parent, false)
                 return EventsViewHolder(binding)
             }
         }

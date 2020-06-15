@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.databinding.FragmentEventChatRoomBinding
+import com.bogiruapps.rdshapp.databinding.FragmentSchoolEventChatRoomBinding
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,7 +25,7 @@ class ChatRoomFragment : Fragment() {
     private val chatRoomViewModel: ChatRoomViewModel by viewModel()
 
     private lateinit var adapter: ChatRoomAdapter
-    private lateinit var binding: FragmentEventChatRoomBinding
+    private lateinit var binding: FragmentSchoolEventChatRoomBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +46,7 @@ class ChatRoomFragment : Fragment() {
 
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_chat_room, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_school_event_chat_room, container, false)
         binding.viewModel = chatRoomViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
     }

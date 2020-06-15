@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.schoolEvents.taskevent
+package com.bogiruapps.rdshapp.schoolevents.taskevent
 
 
 import android.annotation.SuppressLint
@@ -61,7 +61,7 @@ class TaskSchoolEventFragment : Fragment() {
 
     private fun setupObserverViewModel() {
         taskSchoolEventViewModel.openTaskSchoolEventEdit.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(R.id.action_tasksEventFragment_to_taskEventEditFragment)
+            findNavController().navigate(R.id.action_taskSchoolEventFragment_to_taskSchoolEventEditFragment)
         })
 
         taskSchoolEventViewModel.query.observe(viewLifecycleOwner, Observer { query ->

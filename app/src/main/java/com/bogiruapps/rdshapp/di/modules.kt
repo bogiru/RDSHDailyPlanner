@@ -5,7 +5,7 @@ import com.bogiruapps.rdshapp.chats.ChatsViewModel
 import com.bogiruapps.rdshapp.data.user.UserRemoteDataSource
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.user.UserRepositoryImpl
-import com.bogiruapps.rdshapp.schoolEvents.SchoolEventsViewModel
+import com.bogiruapps.rdshapp.schoolevents.SchoolEventsViewModel
 import com.bogiruapps.rdshapp.chats.chatroomevent.ChatRoomViewModel
 import com.bogiruapps.rdshapp.data.chat.ChatRemoteDataSource
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
@@ -19,10 +19,10 @@ import com.bogiruapps.rdshapp.data.notice.NoticeRepositoryImpl
 import com.bogiruapps.rdshapp.data.school.SchoolRemoteDataSource
 import com.bogiruapps.rdshapp.data.school.SchoolRepository
 import com.bogiruapps.rdshapp.data.school.SchoolRepositoryImpl
-import com.bogiruapps.rdshapp.schoolEvents.detailevent.SchoolEventDetailViewModel
-import com.bogiruapps.rdshapp.schoolEvents.editevent.SchoolEventEditViewModel
-import com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEventViewModel
-import com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit.TaskSchoolEventEditViewModel
+import com.bogiruapps.rdshapp.schoolevents.detailevent.SchoolEventDetailViewModel
+import com.bogiruapps.rdshapp.schoolevents.editevent.SchoolEventEditViewModel
+import com.bogiruapps.rdshapp.schoolevents.taskevent.TaskSchoolEventViewModel
+import com.bogiruapps.rdshapp.schoolevents.taskevent.taskEventEdit.TaskSchoolEventEditViewModel
 import com.bogiruapps.rdshapp.notice.NoticeViewModel
 import com.bogiruapps.rdshapp.notice.noticedetail.NoticeDetailViewModel
 import com.bogiruapps.rdshapp.notice.noticeedit.NoticeEditViewModel

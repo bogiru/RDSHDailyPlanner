@@ -1,11 +1,11 @@
-package com.bogiruapps.rdshapp.schoolEvents.taskevent
+package com.bogiruapps.rdshapp.schoolevents.taskevent
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.databinding.TasksEventItemBinding
+import com.bogiruapps.rdshapp.databinding.TasksSchoolEventItemBinding
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -28,7 +28,7 @@ class TaskSchoolEventAdapter(
         snapshots.getSnapshot(position).reference.delete()
     }
 
-    class TaskSchoolEventViewHolder(private val binding: TasksEventItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class TaskSchoolEventViewHolder(private val binding: TasksSchoolEventItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModelSchool: TaskSchoolEventViewModel, taskEvent: TaskSchoolEvent) {
             binding.taskEvent = taskEvent
@@ -69,7 +69,7 @@ class TaskSchoolEventAdapter(
         companion object {
             fun from(parent: ViewGroup): TaskSchoolEventViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = TasksEventItemBinding.inflate(layoutInflater, parent, false)
+                val binding = TasksSchoolEventItemBinding.inflate(layoutInflater, parent, false)
                 return TaskSchoolEventViewHolder(binding)
             }
         }

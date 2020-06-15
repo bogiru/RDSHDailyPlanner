@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEventViewModel" />
+                type="com.bogiruapps.rdshapp.schoolevents.taskevent.TaskSchoolEventViewModel" />
         <import type="android.view.View"/>
     </data>
 
@@ -29,7 +29,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:layout_conversion_absoluteHeight="641dp"
                 tools:layout_conversion_absoluteWidth="411dp"
-                tools:listitem="@layout/tasks_event_item" />
+                tools:listitem="@layout/tasks_school_event_item" />
 
         <ProgressBar
                 android:id="@+id/task_event_pb"

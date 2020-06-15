@@ -1,7 +1,7 @@
 package com.bogiruapps.rdshapp.data.schoolEvent
 
-import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
-import com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEvent
+import com.bogiruapps.rdshapp.schoolevents.SchoolEvent
+import com.bogiruapps.rdshapp.schoolevents.taskevent.TaskSchoolEvent
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.school.School

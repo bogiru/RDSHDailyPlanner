@@ -178,7 +178,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setEnabledMenuItem(value: Boolean) {
         navView.menu.findItem(R.id.userFragment).isEnabled = value
-        navView.menu.findItem(R.id.eventsFragment).isEnabled = value
+        navView.menu.findItem(R.id.schoolEventsFragment).isEnabled = value
         navView.menu.findItem(R.id.noticeFragment).isEnabled = value
         navView.menu.findItem(R.id.chatsFragment).isEnabled = value
         navView.menu.findItem(R.id.ratingFragment).isEnabled = value

@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.schoolEvents.detailevent
+package com.bogiruapps.rdshapp.schoolevents.detailevent
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -11,8 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.databinding.EventDetailFragmentBinding
-import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
+import com.bogiruapps.rdshapp.databinding.FragmentSchoolEventDetailBinding
+import com.bogiruapps.rdshapp.schoolevents.SchoolEvent
 import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
@@ -21,7 +21,7 @@ class  SchoolEventDetailFragment : Fragment() {
 
     private val schoolEventDetailViewModel: SchoolEventDetailViewModel by viewModel()
 
-    private lateinit var binding: EventDetailFragmentBinding
+    private lateinit var binding: FragmentSchoolEventDetailBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +51,7 @@ class  SchoolEventDetailFragment : Fragment() {
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.event_detail_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_school_event_detail, container, false)
         binding.viewModel = schoolEventDetailViewModel
         setSchoolEventProgressBar(schoolEventDetailViewModel.schoolEvent)
         binding.lifecycleOwner = this.viewLifecycleOwner
@@ -110,15 +110,15 @@ class  SchoolEventDetailFragment : Fragment() {
     }
 
     private fun openTaskSchoolEventFragment() {
-        findNavController().navigate(R.id.action_eventDetailFragment_to_tasksEventFragment)
+        findNavController().navigate(R.id.action_schoolEventDetailFragment_to_taskSchoolEventFragment)
     }
 
     private fun openSchoolEventFragment() {
-        findNavController().navigate(R.id.action_eventDetailFragment_to_eventsFragment)
+        findNavController().navigate(R.id.action_schoolEventDetailFragment_to_schoolEventsFragment)
     }
 
     private fun openSchoolEventEditFragment() {
-        findNavController().navigate(R.id.action_eventDetailFragment_to_eventEditFragment)
+        findNavController().navigate(R.id.action_schoolEventDetailFragment_to_schoolEventEditFragment)
     }
 
 }

@@ -10,16 +10,16 @@
             android:label="fragment_info"
             tools:layout="@layout/fragment_info" />
     <fragment
-            android:id="@+id/eventsFragment"
-            android:name="com.bogiruapps.rdshapp.schoolEvents.SchoolEventsFragment"
+            android:id="@+id/schoolEventsFragment"
+            android:name="com.bogiruapps.rdshapp.schoolevents.SchoolEventsFragment"
             android:label="Мероприятия"
-            tools:layout="@layout/fragment_events">
+            tools:layout="@layout/fragment_school_events">
         <action
                 android:id="@+id/action_schoolEventsFragment_to_schoolEventEditFragment"
-                app:destination="@id/eventEditFragment" />
+                app:destination="@id/schoolEventEditFragment" />
         <action
-                android:id="@+id/action_eventsFragment_to_eventDetailFragment"
-                app:destination="@id/eventDetailFragment"
+                android:id="@+id/action_schoolEventsFragment_to_schoolEventDetailFragment"
+                app:destination="@id/schoolEventDetailFragment"
                 app:enterAnim="@anim/fui_slide_in_right" />
     </fragment>
     <fragment
@@ -56,13 +56,13 @@
                 app:popUpTo="@+id/navigation" />
     </fragment>
     <fragment
-            android:id="@+id/eventEditFragment"
-            android:name="com.bogiruapps.rdshapp.schoolEvents.editevent.SchoolEventEditFragment"
+            android:id="@+id/schoolEventEditFragment"
+            android:name="com.bogiruapps.rdshapp.schoolevents.editevent.SchoolEventEditFragment"
             android:label="Редактирование"
-            tools:layout="@layout/fragment_event_edit">
+            tools:layout="@layout/fragment_school_event_edit">
         <action
-                android:id="@+id/action_eventEditFragment_to_eventsFragment"
-                app:destination="@id/eventsFragment"
+                android:id="@+id/action_schoolEventEditFragment_to_schoolEventsFragment"
+                app:destination="@id/schoolEventsFragment"
                 app:popUpTo="@+id/noticeFragment" />
     </fragment>
     <fragment
@@ -76,12 +76,12 @@
                 app:popUpTo="@+id/navigation" />
     </fragment>
     <fragment
-            android:id="@+id/tasksEventFragment"
-            android:name="com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEventFragment"
+            android:id="@+id/tasksSchoolEventFragment"
+            android:name="com.bogiruapps.rdshapp.schoolevents.taskevent.TaskSchoolEventFragment"
             android:label="Задачи">
         <action
-                android:id="@+id/action_tasksEventFragment_to_taskEventEditFragment"
-                app:destination="@id/taskEventEditFragment" />
+                android:id="@+id/action_taskSchoolEventFragment_to_taskSchoolEventEditFragment"
+                app:destination="@id/taskSchoolEventEditFragment" />
     </fragment>
     <fragment
             android:id="@+id/noticeDetailFragment"
@@ -97,28 +97,28 @@
                 app:popUpTo="@+id/navigation" />
     </fragment>
     <fragment
-            android:id="@+id/taskEventEditFragment"
-            android:name="com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit.TaskSchoolEventEditFragment"
+            android:id="@+id/taskSchoolEventEditFragment"
+            android:name="com.bogiruapps.rdshapp.schoolevents.taskevent.taskEventEdit.TaskSchoolEventEditFragment"
             android:label="Редактирование">
         <action
-                android:id="@+id/action_taskEventEditFragment_to_tasksEventFragment"
-                app:destination="@id/tasksEventFragment"
-                app:popUpTo="@+id/eventsFragment" />
+                android:id="@+id/action_taskSchoolEventEditFragment_to_taskSchoolEventFragment"
+                app:destination="@id/tasksSchoolEventFragment"
+                app:popUpTo="@+id/schoolEventsFragment" />
     </fragment>
     <fragment
-            android:id="@+id/eventDetailFragment"
-            android:name="com.bogiruapps.rdshapp.schoolEvents.detailevent.SchoolEventDetailFragment"
+            android:id="@+id/schoolEventDetailFragment"
+            android:name="com.bogiruapps.rdshapp.schoolevents.detailevent.SchoolEventDetailFragment"
             android:label="Подробности">
         <action
-                android:id="@+id/action_eventDetailFragment_to_eventEditFragment"
-                app:destination="@id/eventEditFragment" />
+                android:id="@+id/action_schoolEventDetailFragment_to_schoolEventEditFragment"
+                app:destination="@id/schoolEventEditFragment" />
         <action
-                android:id="@+id/action_eventDetailFragment_to_tasksEventFragment"
-                app:destination="@id/tasksEventFragment"
-                app:popUpTo="@+id/eventsFragment" />
+                android:id="@+id/action_schoolEventDetailFragment_to_taskSchoolEventFragment"
+                app:destination="@id/tasksSchoolEventFragment"
+                app:popUpTo="@+id/schoolEventsFragment" />
         <action
-                android:id="@+id/action_eventDetailFragment_to_eventsFragment"
-                app:destination="@id/eventsFragment"
+                android:id="@+id/action_schoolEventDetailFragment_to_schoolEventsFragment"
+                app:destination="@id/schoolEventsFragment"
                 app:popUpTo="@+id/noticeFragment" />
     </fragment>
     <fragment
@@ -135,7 +135,7 @@
                 app:destination="@id/choseSchoolFragment" />
     </fragment>
     <fragment
-            android:id="@+id/eventChatRoomFragment"
+            android:id="@+id/ChatRoomFragment"
             android:name="com.bogiruapps.rdshapp.chats.chatroomevent.ChatRoomFragment"
             android:label="EventChatRoomFragment" />
     <fragment
@@ -144,7 +144,7 @@
             android:label="Чаты" >
         <action
                 android:id="@+id/action_chatsFragment_to_eventChatRoomFragment"
-                app:destination="@id/eventChatRoomFragment"
+                app:destination="@id/ChatRoomFragment"
                 app:enterAnim="@anim/fui_slide_in_right" />
     </fragment>
 </navigation>

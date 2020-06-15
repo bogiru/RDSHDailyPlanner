@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.schoolEvents.taskevent
+package com.bogiruapps.rdshapp.schoolevents.taskevent
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

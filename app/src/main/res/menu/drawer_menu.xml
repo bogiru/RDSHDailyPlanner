@@ -11,7 +11,7 @@
                 android:icon="@drawable/ic_account_circle_24px" />
 
         <item
-                android:id="@+id/eventsFragment"
+                android:id="@+id/schoolEventsFragment"
                 android:title="Мероприятия"
                 android:icon="@drawable/ic_events"/>
         <item

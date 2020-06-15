@@ -6,10 +6,10 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEventViewModel" />
+                type="com.bogiruapps.rdshapp.schoolevents.taskevent.TaskSchoolEventViewModel" />
         <variable
                 name="taskEvent"
-                type="com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEvent" />
+                type="com.bogiruapps.rdshapp.schoolevents.taskevent.TaskSchoolEvent" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

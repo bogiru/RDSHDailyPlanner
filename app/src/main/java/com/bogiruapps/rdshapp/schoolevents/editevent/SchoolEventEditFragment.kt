@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.schoolEvents.editevent
+package com.bogiruapps.rdshapp.schoolevents.editevent
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.databinding.FragmentEventEditBinding
+import com.bogiruapps.rdshapp.databinding.FragmentSchoolEventEditBinding
 import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
 import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.bumptech.glide.Glide
@@ -22,7 +22,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SchoolEventEditFragment : Fragment() {
 
     private val schoolEventEditViewModel: SchoolEventEditViewModel by viewModel()
-    private lateinit var binding: FragmentEventEditBinding
+    private lateinit var binding: FragmentSchoolEventEditBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +36,7 @@ class SchoolEventEditFragment : Fragment() {
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_edit, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_school_event_edit, container, false)
         binding.viewModel = schoolEventEditViewModel
         binding.lifecycleOwner = viewLifecycleOwner
     }
@@ -97,6 +97,6 @@ class SchoolEventEditFragment : Fragment() {
     }
 
     private fun openSchoolEventFragment() {
-        findNavController().navigate(R.id.action_eventEditFragment_to_eventsFragment)
+        findNavController().navigate(R.id.action_schoolEventEditFragment_to_schoolEventsFragment)
     }
 }

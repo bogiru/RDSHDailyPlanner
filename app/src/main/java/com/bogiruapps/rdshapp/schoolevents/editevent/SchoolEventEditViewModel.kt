@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.schoolEvents.editevent
+package com.bogiruapps.rdshapp.schoolevents.editevent
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,7 @@ import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.user.UserRepository
-import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
+import com.bogiruapps.rdshapp.schoolevents.SchoolEvent
 import com.bogiruapps.rdshapp.chats.chatroomevent.Message
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
 import com.bogiruapps.rdshapp.data.schoolEvent.SchoolEventRepository

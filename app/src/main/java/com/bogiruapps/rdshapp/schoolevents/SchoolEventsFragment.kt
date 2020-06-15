@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.schoolEvents
+package com.bogiruapps.rdshapp.schoolevents
 
 
 import android.os.Bundle
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.databinding.FragmentEventsBinding
+import com.bogiruapps.rdshapp.databinding.FragmentSchoolEventsBinding
 import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -24,7 +24,7 @@ class SchoolEventsFragment : Fragment() {
     private val schoolEventsViewModel: SchoolEventsViewModel by viewModel()
 
     private lateinit var adapter: SchoolEventsAdapter
-    private lateinit var binding: FragmentEventsBinding
+    private lateinit var binding: FragmentSchoolEventsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,7 +45,7 @@ class SchoolEventsFragment : Fragment() {
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_events, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_school_events, container, false)
         binding.viewModel = schoolEventsViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
@@ -86,7 +86,7 @@ class SchoolEventsFragment : Fragment() {
     }
 
     private fun openSchoolEventDetailFragment() {
-        findNavController().navigate(R.id.action_eventsFragment_to_eventDetailFragment)
+        findNavController().navigate(R.id.action_schoolEventsFragment_to_schoolEventDetailFragment)
     }
 
     private fun openSchoolEventEditFragment() {

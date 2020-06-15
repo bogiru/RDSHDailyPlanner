@@ -11,10 +11,10 @@
 
         <variable
                 name="event"
-                type="com.bogiruapps.rdshapp.schoolEvents.SchoolEvent" />
+                type="com.bogiruapps.rdshapp.schoolevents.SchoolEvent" />
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.schoolEvents.SchoolEventsViewModel" />
+                type="com.bogiruapps.rdshapp.schoolevents.SchoolEventsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

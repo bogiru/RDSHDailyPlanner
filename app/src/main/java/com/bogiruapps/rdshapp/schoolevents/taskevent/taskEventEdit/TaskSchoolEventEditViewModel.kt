@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit
+package com.bogiruapps.rdshapp.schoolevents.taskevent.taskEventEdit
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,7 +9,7 @@ import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.schoolEvent.SchoolEventRepository
-import com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEvent
+import com.bogiruapps.rdshapp.schoolevents.taskevent.TaskSchoolEvent
 import kotlinx.coroutines.launch
 
 class TaskSchoolEventEditViewModel(

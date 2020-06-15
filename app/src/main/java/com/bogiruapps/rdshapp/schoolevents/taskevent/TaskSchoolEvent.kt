@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.schoolEvents.taskevent
+package com.bogiruapps.rdshapp.schoolevents.taskevent
 
 import com.bogiruapps.rdshapp.user.User
 import java.util.*

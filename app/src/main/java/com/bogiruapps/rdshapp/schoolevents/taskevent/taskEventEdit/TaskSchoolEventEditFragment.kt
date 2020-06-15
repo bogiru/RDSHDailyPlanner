@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit
+package com.bogiruapps.rdshapp.schoolevents.taskevent.taskEventEdit
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -44,7 +44,7 @@ class TaskSchoolEventEditFragment : Fragment() {
 
     private fun setupObserverViewModel() {
         taskEventviewModel.openTaskEventFragment.observe(this, EventObserver {
-            findNavController().navigate(R.id.action_taskEventEditFragment_to_tasksEventFragment)
+            findNavController().navigate(R.id.action_taskSchoolEventEditFragment_to_taskSchoolEventFragment)
         })
 
         taskEventviewModel.users.observe(this, Observer {

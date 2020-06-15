@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.schoolEvents.editevent.SchoolEventEditViewModel" />
+                type="com.bogiruapps.rdshapp.schoolevents.editevent.SchoolEventEditViewModel" />
         <import type="android.view.View"/>
     </data>
 
