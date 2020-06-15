@@ -14,31 +14,31 @@ class TaskSchoolEventAdapter(
     options : FirestoreRecyclerOptions<TaskSchoolEvent>,
     private val viewModelSchool: TaskSchoolEventViewModel
 ) :
-    FirestoreRecyclerAdapter<TaskSchoolEvent, TaskSchoolEventAdapter.TaskEventViewHolder>(options) {
+    FirestoreRecyclerAdapter<TaskSchoolEvent, TaskSchoolEventAdapter.TaskSchoolEventViewHolder>(options) {
 
-    override fun onBindViewHolder(p0:  TaskEventViewHolder, p1: Int, p2: TaskSchoolEvent) {
-        p0.bind(viewModelSchool, p2)
+    override fun onBindViewHolder(holderSchool:  TaskSchoolEventViewHolder, position: Int, taskEvent: TaskSchoolEvent) {
+        holderSchool.bind(viewModelSchool, taskEvent)
 
     }
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskEventViewHolder {
-        return TaskEventViewHolder.from(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskSchoolEventViewHolder {
+        return TaskSchoolEventViewHolder.from(parent)
     }
 
     fun deleteItem(position: Int) {
         snapshots.getSnapshot(position).reference.delete()
     }
 
-    class TaskEventViewHolder(private val binding: TasksEventItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class TaskSchoolEventViewHolder(private val binding: TasksEventItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModelSchool: TaskSchoolEventViewModel, taskSchoolEvent: TaskSchoolEvent) {
-            binding.taskEvent = taskSchoolEvent
+        fun bind(viewModelSchool: TaskSchoolEventViewModel, taskEvent: TaskSchoolEvent) {
+            binding.taskEvent = taskEvent
             binding.viewModel = viewModelSchool
 
-            if (taskSchoolEvent.user!!.email != FirebaseAuth.getInstance().currentUser!!.email) {
+            if (taskEvent.user!!.email != FirebaseAuth.getInstance().currentUser!!.email) {
                 binding.ckeckBoxTaskCompleted.isEnabled = false
             }
 
-            if (taskSchoolEvent.completed) {
+            if (taskEvent.completed) {
                 binding.taskEventStatus.text = "Статус: Выполнен"
             } else {
                 binding.taskEventStatus.text = "Статус: Ожидает выполнения"
@@ -46,31 +46,31 @@ class TaskSchoolEventAdapter(
             var numberClick = 1
 
             binding.taskEventItemCardView.setOnClickListener {
-                if (numberClick % 2 == 0) hideDetailEvent(viewModelSchool)
-                else showDetailEvent(viewModelSchool, taskSchoolEvent)
+                if (numberClick % 2 == 0) hideDetailSchoolEvent()
+                else showDetailSchoolEvent()
 
                 numberClick++
             }
             binding.executePendingBindings()
         }
 
-        private fun showDetailEvent(viewModelSchool: TaskSchoolEventViewModel, taskSchoolEvent: TaskSchoolEvent) {
+        private fun showDetailSchoolEvent() {
             binding.taskEventMoreDetailsImageView.setImageResource(R.drawable.ic_expand_less_black_48dp)
             binding.taskEventDescription.visibility = View.VISIBLE
             binding.ckeckBoxTaskCompleted.visibility = View.VISIBLE
         }
 
-        private fun hideDetailEvent(viewModelSchool: TaskSchoolEventViewModel) {
+        private fun hideDetailSchoolEvent() {
             binding.taskEventMoreDetailsImageView.setImageResource(R.drawable.ic_keyboard_arrow_down_black_48dp)
             binding.taskEventDescription.visibility = View.GONE
             binding.ckeckBoxTaskCompleted.visibility = View.GONE
         }
 
         companion object {
-            fun from(parent: ViewGroup): TaskEventViewHolder {
+            fun from(parent: ViewGroup): TaskSchoolEventViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = TasksEventItemBinding.inflate(layoutInflater, parent, false)
-                return TaskEventViewHolder(binding)
+                return TaskSchoolEventViewHolder(binding)
             }
         }
     }
