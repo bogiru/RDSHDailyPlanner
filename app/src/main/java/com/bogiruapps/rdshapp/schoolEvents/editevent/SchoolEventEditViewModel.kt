@@ -17,12 +17,12 @@ import kotlinx.coroutines.launch
 
 class SchoolEventEditViewModel(
     private val userRepository: UserRepository,
-    private val eventRepository: EventRepository,
+    private val schoolEventRepository: EventRepository,
     private val chatRepository: ChatRepository
 ) : ViewModel() {
 
     private val _imageIndex = MutableLiveData<Int>()
-    val indexImage: LiveData<Int> = _imageIndex
+    val imageIndex: LiveData<Int> = _imageIndex
 
     private val _openSchoolEventFragment = MutableLiveData<Event<Unit>>()
     val openSchoolEventFragment: LiveData<Event<Unit>> = _openSchoolEventFragment
@@ -37,21 +37,21 @@ class SchoolEventEditViewModel(
     val dataLoading: LiveData<Boolean> = _dataLoading
 
     val user = userRepository.currentUser.value!!
-    val schoolEvent = eventRepository.currentEvent.value!!
+    val schoolEvent = schoolEventRepository.currentEvent.value!!
 
-    fun checkCreateEventStatus(): Boolean = eventRepository.stateEvent.value == State.CREATE
+    fun checkCreateSchoolEventStatus(): Boolean = schoolEventRepository.stateEvent.value == State.CREATE
 
     fun updateDate(year: Int, month: Int, dayOfMonth: Int) {
         //schoolEvent!!.deadline = Calendar.getInstance().set(year, month, dayOfMonth)
     }
 
-    fun updateEvent(event: SchoolEvent) {
+    fun updateSchoolEvent(event: SchoolEvent) {
         if (event.title == "" || event.description == "") {
             _showSnackbar.value = "Не все поля заполнены"
         } else {
             _dataLoading.value = true
-            when (eventRepository.stateEvent.value) {
-                State.CREATE -> createEvent(event)
+            when (schoolEventRepository.stateEvent.value) {
+                State.CREATE -> createSchoolEvent(event)
                 State.EDIT -> editSchoolEvent(event)
             }
         }
@@ -61,23 +61,23 @@ class SchoolEventEditViewModel(
         _showDatePickerDialog.value = Event(Unit)
     }
 
-    fun setNextImageEvent() {
+    fun setNextImageSchoolEvent() {
         schoolEvent.imageIndex = (schoolEvent.imageIndex + 1) % 25
         _imageIndex.value = schoolEvent.imageIndex
     }
 
-    fun setPreviousImageEvent() {
+    fun setPreviousImageSchoolEvent() {
         schoolEvent.imageIndex = (schoolEvent.imageIndex - 1)
         if (schoolEvent.imageIndex < 0) schoolEvent.imageIndex = 24
         _imageIndex.value = schoolEvent.imageIndex
     }
 
-    private fun createEvent(event: SchoolEvent) {
+    private fun createSchoolEvent(event: SchoolEvent) {
         viewModelScope.launch {
             event.author = user
-            when(eventRepository.createEvent(user, event)) {
+            when(schoolEventRepository.createEvent(user, event)) {
                 is Result.Success -> {
-                    eventRepository.currentEvent.value = event
+                    schoolEventRepository.currentEvent.value = event
                     val chat = Chat(
                         event.id,
                         event.title,
@@ -97,7 +97,7 @@ class SchoolEventEditViewModel(
 
     private fun editSchoolEvent(event: SchoolEvent) {
         viewModelScope.launch {
-            when (eventRepository.updateEvent(user, event)) {
+            when (schoolEventRepository.updateEvent(user, event)) {
                 is Result.Success -> {
                     val tempChat = chatRepository.currentChat.value!!
                     tempChat.title = event.title

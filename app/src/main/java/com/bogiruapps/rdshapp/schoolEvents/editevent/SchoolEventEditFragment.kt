@@ -54,7 +54,7 @@ class SchoolEventEditFragment : Fragment() {
             showDatePickerDialog()
         })
 
-        schoolEventEditViewModel.indexImage.observe(viewLifecycleOwner, Observer {
+        schoolEventEditViewModel.imageIndex.observe(viewLifecycleOwner, Observer {
             loadImage(it)
         })
 }
@@ -65,7 +65,7 @@ class SchoolEventEditFragment : Fragment() {
         editItem?.isVisible = false
         deleteItem?.isVisible = false
 
-        if (schoolEventEditViewModel.checkCreateEventStatus()) {
+        if (schoolEventEditViewModel.checkCreateSchoolEventStatus()) {
             activity?.main_toolbar?.title = "Создание"
         } else  {
             activity?.main_toolbar?.title = "Редактирование"
