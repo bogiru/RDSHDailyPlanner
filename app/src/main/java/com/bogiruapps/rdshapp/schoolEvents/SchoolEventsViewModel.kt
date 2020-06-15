@@ -16,15 +16,15 @@ import kotlinx.coroutines.launch
 
 class SchoolEventsViewModel(
     private val userRepository: UserRepository,
-    private val eventRepository: EventRepository,
+    private val schoolEventRepository: EventRepository,
     private val chatRepository: ChatRepository
 ) : ViewModel() {
 
-    private val _openDetailEventFragment = MutableLiveData<Event<View>>()
-    val openTaskEventFragment: LiveData<Event<View>> = _openDetailEventFragment
+    private val _openSchoolEventDetailFragment = MutableLiveData<Event<View>>()
+    val openSchoolEventDetailFragment: LiveData<Event<View>> = _openSchoolEventDetailFragment
 
-    private val _openEditEventFragment = MutableLiveData<Event<Unit>>()
-    val openEditEventFragment: LiveData<Event<Unit>> = _openEditEventFragment
+    private val _openSchoolEventEditFragment = MutableLiveData<Event<Unit>>()
+    val openSchoolEventEditFragment: LiveData<Event<Unit>> = _openSchoolEventEditFragment
 
     private val _showSchoolEventContent = MutableLiveData<Event<Unit>>()
     val showSchoolEventContent: LiveData<Event<Unit>> = _showSchoolEventContent
@@ -38,7 +38,7 @@ class SchoolEventsViewModel(
     fun fetchFirestoreRecyclerQuerySchoolEvents() {
         _dataLoading.value = true
         viewModelScope.launch {
-            when (val result = eventRepository
+            when (val result = schoolEventRepository
                 .fetchFirestoreRecyclerQuerySchoolEvents(userRepository.currentUser.value!!)) {
                 is Result.Success -> {
                     _querySchoolEvents.value = result.data
@@ -50,23 +50,23 @@ class SchoolEventsViewModel(
     }
 
     fun showDetailSchoolEventFragment(schoolEvent: SchoolEvent, view: View) {
-        eventRepository.currentEvent.value = schoolEvent
+        schoolEventRepository.currentEvent.value = schoolEvent
 
         viewModelScope.launch {
             when (val result = chatRepository
                 .fetchChat(userRepository.currentUser.value!!, schoolEvent.id)) {
                 is Result.Success -> {
                     chatRepository.currentChat.value = result.data
-                    _openDetailEventFragment.value = Event(view)
+                    _openSchoolEventDetailFragment.value = Event(view)
                 }
             }
         }
     }
 
     fun showCreateSchoolEventFragment() {
-        eventRepository.stateEvent.value = State.CREATE
-        eventRepository.currentEvent.value = SchoolEvent()
-        _openEditEventFragment.value = Event(Unit)
+        schoolEventRepository.stateEvent.value = State.CREATE
+        schoolEventRepository.currentEvent.value = SchoolEvent()
+        _openSchoolEventEditFragment.value = Event(Unit)
     }
 
     private fun showSchoolEventContent() {

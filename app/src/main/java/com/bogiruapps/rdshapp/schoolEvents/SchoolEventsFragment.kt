@@ -51,11 +51,11 @@ class SchoolEventsFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        schoolEventsViewModel.openTaskEventFragment.observe(viewLifecycleOwner, EventObserver {
-            openTaskSchoolEventFragment()
+        schoolEventsViewModel.openSchoolEventDetailFragment.observe(viewLifecycleOwner, EventObserver {
+            openSchoolEventDetailFragment()
         })
 
-        schoolEventsViewModel.openEditEventFragment.observe(viewLifecycleOwner, EventObserver {
+        schoolEventsViewModel.openSchoolEventEditFragment.observe(viewLifecycleOwner, EventObserver {
             openSchoolEventEditFragment()
         })
 
@@ -85,7 +85,7 @@ class SchoolEventsFragment : Fragment() {
             .build()
     }
 
-    private fun openTaskSchoolEventFragment() {
+    private fun openSchoolEventDetailFragment() {
         findNavController().navigate(R.id.action_eventsFragment_to_eventDetailFragment)
     }
 

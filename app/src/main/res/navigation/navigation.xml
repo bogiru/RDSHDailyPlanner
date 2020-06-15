@@ -15,7 +15,7 @@
             android:label="Мероприятия"
             tools:layout="@layout/fragment_events">
         <action
-                android:id="@+id/action_eventsFragment_to_eventEditFragment"
+                android:id="@+id/action_schoolEventsFragment_to_schoolEventEditFragment"
                 app:destination="@id/eventEditFragment" />
         <action
                 android:id="@+id/action_eventsFragment_to_eventDetailFragment"
