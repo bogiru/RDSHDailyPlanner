@@ -49,7 +49,7 @@ class SchoolEventDetailViewModel(
     }
 
     fun openSchoolEventEditFragment() {
-        if (user.email == schoolEvent.author.email) {
+        if (user.id == schoolEvent.author.id) {
             _openSchoolEventEditFragmentEvent.value = Event(Unit)
             schoolEventRepository.stateEvent.value = State.EDIT
         } else {

@@ -49,8 +49,8 @@ class NoticeViewModel(
 
     fun addUserViewed(notice: Notice) {
         viewModelScope.launch {
-            if (!notice.listOfUsersViewed.contains(userRepository.currentUser.value!!.email)) {
-                notice.listOfUsersViewed.add(userRepository.currentUser.value!!.email!!)
+            if (!notice.listOfUsersViewed.contains(userRepository.currentUser.value!!.id)) {
+                notice.listOfUsersViewed.add(userRepository.currentUser.value!!.id!!)
                 noticeRepository.updateNotice(userRepository.currentUser.value!!, notice)
             }
         }

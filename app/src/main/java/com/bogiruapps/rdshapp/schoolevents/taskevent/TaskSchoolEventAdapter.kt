@@ -30,11 +30,11 @@ class TaskSchoolEventAdapter(
 
     class TaskSchoolEventViewHolder(private val binding: TasksSchoolEventItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModelSchool: TaskSchoolEventViewModel, taskEvent: TaskSchoolEvent) {
+        fun bind(viewModel: TaskSchoolEventViewModel, taskEvent: TaskSchoolEvent) {
             binding.taskEvent = taskEvent
-            binding.viewModel = viewModelSchool
+            binding.viewModel = viewModel
 
-            if (taskEvent.user!!.email != FirebaseAuth.getInstance().currentUser!!.email) {
+            if (taskEvent.user!!.id != viewModel.user.id) {
                 binding.ckeckBoxTaskCompleted.isEnabled = false
             }
 

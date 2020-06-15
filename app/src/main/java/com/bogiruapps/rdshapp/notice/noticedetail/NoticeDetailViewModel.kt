@@ -43,7 +43,7 @@ class NoticeDetailViewModel(
     }
 
     fun showEditNoticeFragment() {
-        if (userRepository.currentUser.value!!.email == notice!!.author.email) {
+        if (userRepository.currentUser.value!!.id == notice!!.author.id) {
             _openNoticeEditFragmentEvent.value = Event(Unit)
             noticeRepository.stateNotice.value = State.EDIT
         } else {
@@ -52,7 +52,7 @@ class NoticeDetailViewModel(
     }
 
     fun showDeleteNoticeFragment() {
-        if (userRepository.currentUser.value!!.email  == notice!!.author.email) {
+        if (userRepository.currentUser.value!!.id  == notice!!.author.id) {
             _openNoticeDeleteFragmentEvent.value = Event(Unit)
         } else {
             _showSnackbar.value = Event("Право удаления предоставлено только автору объявления")

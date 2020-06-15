@@ -6,7 +6,6 @@ import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -58,20 +57,20 @@ class SchoolRemoteDataSource(private val db: FirebaseFirestore): SchoolDataSourc
                 SCHOOL_COLLECTION_NAME
             )
             .document(user.school.id).collection(USERS_COLLECTION_NAME)
-            .document(user.email.toString()).set(user).await()
+            .document(user.id.toString()).set(user).await()
     }
 
     override suspend fun deleteUserFromSchool(user: User): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(user.region.id)
             .collection(CITY_COLLECTION_NAME).document(user.city.id).collection(SCHOOL_COLLECTION_NAME)
             .document(user.school.id).collection(USERS_COLLECTION_NAME)
-            .document(user.email.toString()).delete().await()
+            .document(user.id.toString()).delete().await()
     }
 
     override suspend fun updateUserInSchool(user: User): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(SCHOOL_COLLECTION_NAME).document(user.school.id).collection(
             USERS_COLLECTION_NAME
-        ).document(user.email.toString()).update(
+        ).document(user.id.toString()).update(
             FIELD_SCORE, user.score
         ).await()
     }

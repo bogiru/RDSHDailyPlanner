@@ -113,7 +113,7 @@
                     android:id="@+id/user_title_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="почта"
+                    android:text="Регион"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="@+id/user_email_textView"
                     app:layout_constraintTop_toBottomOf="@+id/user_email_textView" />
@@ -125,7 +125,7 @@
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
-                    android:text="@{user.email}"
+                    android:text="@{user.region.name}"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"

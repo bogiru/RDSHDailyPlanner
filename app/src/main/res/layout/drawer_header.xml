@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="@{viewModel.userRepository.currentUser.email}"
+                android:text="@{viewModel.userRepository.currentUser.region.name}"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
                 android:textStyle="italic"

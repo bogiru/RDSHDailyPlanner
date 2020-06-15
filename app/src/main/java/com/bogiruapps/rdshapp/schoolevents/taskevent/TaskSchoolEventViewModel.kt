@@ -33,11 +33,13 @@ class TaskSchoolEventViewModel(
 
     val schoolEvent = schoolEventRepository.currentEvent.value!!
 
+    val user = userRepository.currentUser.value!!
+
     init {
         fetchFirestoreRecyclerQuery()
     }
 
-    fun checkUserIsAuthorSchoolEvent() =  schoolEvent.author.email == userRepository.currentUser.value!!.email
+    fun checkUserIsAuthorSchoolEvent() =  schoolEvent.author.id == userRepository.currentUser.value!!.id
 
     fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
@@ -52,7 +54,7 @@ class TaskSchoolEventViewModel(
 
     fun taskCompleted(taskSchoolEvent: TaskSchoolEvent) {
         viewModelScope.launch {
-            if (taskSchoolEvent.user!!.email == userRepository.currentUser.value?.email) {
+            if (taskSchoolEvent.user!!.id == userRepository.currentUser.value?.id) {
                 val task = TaskSchoolEvent(
                     taskSchoolEvent.id,
                     taskSchoolEvent.title,
