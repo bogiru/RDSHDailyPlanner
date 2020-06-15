@@ -53,10 +53,6 @@ class SchoolEventEditFragment : Fragment() {
         schoolEventEditViewModel.showDatePickerDialog.observe(viewLifecycleOwner, Observer {
             showDatePickerDialog()
         })
-
-        schoolEventEditViewModel.imageIndex.observe(viewLifecycleOwner, Observer {
-            loadImage(it)
-        })
 }
 
     private fun configureToolbar() {
@@ -69,18 +65,6 @@ class SchoolEventEditFragment : Fragment() {
             activity?.main_toolbar?.title = "Создание"
         } else  {
             activity?.main_toolbar?.title = "Редактирование"
-        }
-    }
-
-    private fun loadImage(indexImage: Int) {
-        val storageReference =
-            FirebaseStorage.getInstance().reference.child("backgroundEvents/$indexImage.png")
-        storageReference.downloadUrl.addOnCompleteListener {
-            /*try {*/
-                Glide.with(binding.eventEditImage).load(it.result).error(R.drawable.noavatar).into(binding.eventEditImage)
-            /*} catch (e: RuntimeExecutionException) {
-                Glide.with(binding.eventEditImage).load(R.drawable.noavatar).into(binding.eventEditImage)
-            }*/
         }
     }
 
