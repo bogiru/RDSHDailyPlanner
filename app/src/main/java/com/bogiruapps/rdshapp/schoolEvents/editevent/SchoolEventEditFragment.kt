@@ -1,12 +1,9 @@
-package com.bogiruapps.rdshapp.events.editevent
+package com.bogiruapps.rdshapp.schoolEvents.editevent
 
-import android.app.DatePickerDialog
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -17,17 +14,14 @@ import com.bogiruapps.rdshapp.databinding.FragmentEventEditBinding
 import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
 import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.bumptech.glide.Glide
-import com.google.android.gms.tasks.RuntimeExecutionException
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.text.SimpleDateFormat
-import java.util.*
 
 
-class EventEditFragment : Fragment() {
+class SchoolEventEditFragment : Fragment() {
 
-    private val eventEditViewModel: EventEditViewModel by viewModel()
+    private val eventEditViewModel: SchoolEventEditViewModel by viewModel()
     private lateinit var binding: FragmentEventEditBinding
 
     override fun onCreateView(

@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events.tasksEvent.taskEventEdit
+package com.bogiruapps.rdshapp.schoolEvents.tasksEvent.taskEventEdit
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -9,10 +9,10 @@ import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.event.EventRepository
-import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
+import com.bogiruapps.rdshapp.schoolEvents.tasksEvent.SchoolTaskEvent
 import kotlinx.coroutines.launch
 
-class TaskEventEditViewModel(
+class SchoolTaskEventEditViewModel(
     private val userRepository: UserRepository,
     private val eventRepository: EventRepository)
     : ViewModel() {
@@ -28,14 +28,14 @@ class TaskEventEditViewModel(
 
     val event = eventRepository.currentEvent.value
 
-    val taskEvent: TaskEvent = TaskEvent()
+    val schoolTaskEvent: SchoolTaskEvent = SchoolTaskEvent()
 
     fun createTaskEvent() {
-        if (taskEvent.title == "" || taskEvent.description == "") {
+        if (schoolTaskEvent.title == "" || schoolTaskEvent.description == "") {
             _showSnackbar.value = "Не все поля заполнены"
         } else {
             viewModelScope.launch {
-                when (eventRepository.createTaskEvent(userRepository.currentUser.value!!, taskEvent)) {
+                when (eventRepository.createTaskEvent(userRepository.currentUser.value!!, schoolTaskEvent)) {
                     is Result.Success -> {
                         eventRepository.currentEvent.value!!.countTask++
                         when (eventRepository.updateEvent(userRepository.currentUser.value!!, eventRepository.currentEvent.value!!)) {

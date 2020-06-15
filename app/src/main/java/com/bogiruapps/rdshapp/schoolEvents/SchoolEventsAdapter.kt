@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events
+package com.bogiruapps.rdshapp.schoolEvents
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,10 +7,10 @@ import com.bogiruapps.rdshapp.databinding.EventsItemBinding
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
-class EventsAdapter(
+class SchoolEventsAdapter(
     options : FirestoreRecyclerOptions<SchoolEvent>,
-    private val viewModel: EventsViewModel
-) : FirestoreRecyclerAdapter<SchoolEvent, EventsAdapter.EventsViewHolder>(options) {
+    private val viewModel: SchoolEventsViewModel
+) : FirestoreRecyclerAdapter<SchoolEvent, SchoolEventsAdapter.EventsViewHolder>(options) {
 
     override fun onBindViewHolder(holder: EventsViewHolder, position: Int, event: SchoolEvent) {
         holder.bind(viewModel, event)
@@ -22,7 +22,7 @@ class EventsAdapter(
 
     class EventsViewHolder(private val binding: EventsItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(viewModel: EventsViewModel, schoolEvent: SchoolEvent) {
+        fun bind(viewModel: SchoolEventsViewModel, schoolEvent: SchoolEvent) {
             binding.event = schoolEvent
             binding.viewModel = viewModel
             setSchoolEventProgressBar(schoolEvent)

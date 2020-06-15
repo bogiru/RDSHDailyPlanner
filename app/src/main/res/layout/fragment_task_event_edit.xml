@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.events.tasksEvent.taskEventEdit.TaskEventEditViewModel" />
+                type="com.bogiruapps.rdshapp.schoolEvents.tasksEvent.taskEventEdit.SchoolTaskEventEditViewModel" />
 
     </data>
 
@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFFFFF"
-            tools:context=".events.tasksEvent.taskEventEdit.TaskEventEditFragment">
+            tools:context=".schoolEvents.tasksEvent.taskEventEdit.SchoolTaskEventEditFragment">
 
         <EditText
                 android:id="@+id/task_event_edit_text"
@@ -26,7 +26,7 @@
                 android:layout_marginEnd="8dp"
                 android:gravity="start"
                 android:hint="Введите текст объявления"
-                android:text="@={viewModel.taskEvent.description}"
+                android:text="@={viewModel.schoolTaskEvent.description}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,7 @@
                 android:layout_marginEnd="8dp"
                 android:gravity="start"
                 android:hint="Введите название"
-                android:text="@={viewModel.taskEvent.title}"
+                android:text="@={viewModel.schoolTaskEvent.title}"
                 android:textSize="18sp"
                 android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="parent"

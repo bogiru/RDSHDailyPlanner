@@ -1,7 +1,7 @@
 package com.bogiruapps.rdshapp.data.event
 
-import com.bogiruapps.rdshapp.events.SchoolEvent
-import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
+import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
+import com.bogiruapps.rdshapp.schoolEvents.tasksEvent.SchoolTaskEvent
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.school.School
@@ -63,29 +63,29 @@ class EventRemoteDataSource(
             .collection(EVENTS_COLLECTION_NAME).document(event.id).delete().await()
     }
 
-    override suspend fun createTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun createTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, schoolTaskEvent: SchoolTaskEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
             .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
             .document(school.id).collection(EVENTS_COLLECTION_NAME)
-            .document(event.id).collection(TASKS_COLLECTION_NAME).document(taskEvent.id).set(taskEvent).await()
+            .document(event.id).collection(TASKS_COLLECTION_NAME).document(schoolTaskEvent.id).set(schoolTaskEvent).await()
     }
 
-    override suspend fun updateTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun updateTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, schoolTaskEvent: SchoolTaskEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
             .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
             .document(school.id).collection(EVENTS_COLLECTION_NAME)
-            .document(event.id).collection(TASKS_COLLECTION_NAME).document(taskEvent.id).update(
-                FIELD_TITLE, taskEvent.title,
-                FIELD_DESCRIPTION, taskEvent.description,
-                FIELD_USER, taskEvent.user,
-                FIELD_COMPLETED, taskEvent.completed
+            .document(event.id).collection(TASKS_COLLECTION_NAME).document(schoolTaskEvent.id).update(
+                FIELD_TITLE, schoolTaskEvent.title,
+                FIELD_DESCRIPTION, schoolTaskEvent.description,
+                FIELD_USER, schoolTaskEvent.user,
+                FIELD_COMPLETED, schoolTaskEvent.completed
             ).await()
     }
 
-    override suspend fun deleteTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun deleteTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, schoolTaskEvent: SchoolTaskEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
             .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME).document(school.id)
-            .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(TASKS_COLLECTION_NAME).document(taskEvent.id).delete().await()
+            .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(TASKS_COLLECTION_NAME).document(schoolTaskEvent.id).delete().await()
     }
 
     suspend fun fetchFirestoreRecyclerQueryEvent(region: Region, city: City, school: School): Result<Query> = withContext(ioDispatcher) {

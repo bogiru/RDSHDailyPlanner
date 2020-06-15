@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.events.tasksEvent.TaskEventViewModel" />
+                type="com.bogiruapps.rdshapp.schoolEvents.tasksEvent.SchoolTaskEventViewModel" />
         <import type="android.view.View"/>
     </data>
 

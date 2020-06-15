@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events
+package com.bogiruapps.rdshapp.schoolEvents
 
 import android.view.View
 import androidx.lifecycle.LiveData
@@ -14,7 +14,7 @@ import com.bogiruapps.rdshapp.utils.State
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
-class EventsViewModel(
+class SchoolEventsViewModel(
     private val userRepository: UserRepository,
     private val eventRepository: EventRepository,
     private val chatRepository: ChatRepository

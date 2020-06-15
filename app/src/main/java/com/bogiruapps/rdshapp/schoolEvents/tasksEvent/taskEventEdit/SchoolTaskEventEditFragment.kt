@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events.tasksEvent.taskEventEdit
+package com.bogiruapps.rdshapp.schoolEvents.tasksEvent.taskEventEdit
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,13 +16,12 @@ import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.databinding.FragmentTaskEventEditBinding
 import com.bogiruapps.rdshapp.utils.showSnackbar
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class TaskEventEditFragment : Fragment() {
+class SchoolTaskEventEditFragment : Fragment() {
 
-    private val taskEventviewModel: TaskEventEditViewModel by viewModel()
+    private val taskEventviewModel: SchoolTaskEventEditViewModel by viewModel()
 
     private lateinit var binding: FragmentTaskEventEditBinding
     private lateinit var chosenUser: User
@@ -80,7 +79,7 @@ class TaskEventEditFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                taskEventviewModel.taskEvent.user = items[position]
+                taskEventviewModel.schoolTaskEvent.user = items[position]
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {

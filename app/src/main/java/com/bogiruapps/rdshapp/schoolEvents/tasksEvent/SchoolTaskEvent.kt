@@ -1,9 +1,9 @@
-package com.bogiruapps.rdshapp.events.tasksEvent
+package com.bogiruapps.rdshapp.schoolEvents.tasksEvent
 
 import com.bogiruapps.rdshapp.user.User
 import java.util.*
 
-data class TaskEvent (
+data class SchoolTaskEvent (
     var id: String = UUID.randomUUID().toString(),
     var title: String = "",
     var completed: Boolean = false,

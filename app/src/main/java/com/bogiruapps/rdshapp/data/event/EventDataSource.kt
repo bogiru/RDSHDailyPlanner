@@ -1,7 +1,7 @@
 package com.bogiruapps.rdshapp.data.event
 
-import com.bogiruapps.rdshapp.events.SchoolEvent
-import com.bogiruapps.rdshapp.events.tasksEvent.TaskEvent
+import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
+import com.bogiruapps.rdshapp.schoolEvents.tasksEvent.SchoolTaskEvent
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.school.School
@@ -17,10 +17,10 @@ interface EventDataSource {
 
     suspend fun deleteEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?>
 
-    suspend fun createTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
+    suspend fun createTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, schoolTaskEvent: SchoolTaskEvent): Result<Void?>
 
-    suspend fun updateTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
+    suspend fun updateTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, schoolTaskEvent: SchoolTaskEvent): Result<Void?>
 
-    suspend fun deleteTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskEvent: TaskEvent): Result<Void?>
+    suspend fun deleteTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, schoolTaskEvent: SchoolTaskEvent): Result<Void?>
 
 }

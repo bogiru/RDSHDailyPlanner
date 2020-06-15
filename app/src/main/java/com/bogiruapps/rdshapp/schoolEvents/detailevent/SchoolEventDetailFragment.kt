@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events.detailevent
+package com.bogiruapps.rdshapp.schoolEvents.detailevent
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -12,14 +12,14 @@ import com.bogiruapps.rdshapp.EventObserver
 import org.koin.android.viewmodel.ext.android.viewModel
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.EventDetailFragmentBinding
-import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
 import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.android.synthetic.main.activity_main.*
 
-class  EventDetailFragment : Fragment() {
+class  SchoolEventDetailFragment : Fragment() {
 
-    private val eventDetailViewModel: EventDetailViewModel by viewModel()
+    private val eventDetailViewModel: SchoolEventDetailViewModel by viewModel()
 
     private lateinit var binding: EventDetailFragmentBinding
 

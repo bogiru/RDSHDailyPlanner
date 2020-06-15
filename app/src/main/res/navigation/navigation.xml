@@ -11,7 +11,7 @@
             tools:layout="@layout/fragment_info" />
     <fragment
             android:id="@+id/eventsFragment"
-            android:name="com.bogiruapps.rdshapp.events.EventsFragment"
+            android:name="com.bogiruapps.rdshapp.schoolEvents.SchoolEventsFragment"
             android:label="Мероприятия"
             tools:layout="@layout/fragment_events">
         <action
@@ -57,7 +57,7 @@
     </fragment>
     <fragment
             android:id="@+id/eventEditFragment"
-            android:name="com.bogiruapps.rdshapp.events.editevent.EventEditFragment"
+            android:name="com.bogiruapps.rdshapp.schoolEvents.editevent.SchoolEventEditFragment"
             android:label="Редактирование"
             tools:layout="@layout/fragment_event_edit">
         <action
@@ -77,7 +77,7 @@
     </fragment>
     <fragment
             android:id="@+id/tasksEventFragment"
-            android:name="com.bogiruapps.rdshapp.events.tasksEvent.TasksEventFragment"
+            android:name="com.bogiruapps.rdshapp.schoolEvents.tasksEvent.SchoolTasksEventFragment"
             android:label="Задачи">
         <action
                 android:id="@+id/action_tasksEventFragment_to_taskEventEditFragment"
@@ -98,7 +98,7 @@
     </fragment>
     <fragment
             android:id="@+id/taskEventEditFragment"
-            android:name="com.bogiruapps.rdshapp.events.tasksEvent.taskEventEdit.TaskEventEditFragment"
+            android:name="com.bogiruapps.rdshapp.schoolEvents.tasksEvent.taskEventEdit.SchoolTaskEventEditFragment"
             android:label="Редактирование">
         <action
                 android:id="@+id/action_taskEventEditFragment_to_tasksEventFragment"
@@ -107,7 +107,7 @@
     </fragment>
     <fragment
             android:id="@+id/eventDetailFragment"
-            android:name="com.bogiruapps.rdshapp.events.detailevent.EventDetailFragment"
+            android:name="com.bogiruapps.rdshapp.schoolEvents.detailevent.SchoolEventDetailFragment"
             android:label="Подробности">
         <action
                 android:id="@+id/action_eventDetailFragment_to_eventEditFragment"

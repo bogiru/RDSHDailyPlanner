@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events.tasksEvent
+package com.bogiruapps.rdshapp.schoolEvents.tasksEvent
 
 
 import android.annotation.SuppressLint
@@ -24,7 +24,6 @@ import com.bogiruapps.rdshapp.utils.SwipeToDeleteCallback
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -32,11 +31,11 @@ import org.koin.android.viewmodel.ext.android.viewModel
 /**
  * A simple [Fragment] subclass.
  */
-class TasksEventFragment : Fragment() {
+class SchoolTasksEventFragment : Fragment() {
 
-    private val taskEventViewModel: TaskEventViewModel by viewModel()
+    private val schoolTaskEventViewModel: SchoolTaskEventViewModel by viewModel()
 
-    private lateinit var adapter: TaskEventAdapter
+    private lateinit var adapterSchool: SchoolTaskEventAdapter
     private lateinit var binding: FragmentTasksEventBinding
 
     override fun onCreateView(
@@ -61,19 +60,19 @@ class TasksEventFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        taskEventViewModel.openTaskEventEdit.observe(viewLifecycleOwner, EventObserver {
+        schoolTaskEventViewModel.openTaskEventEdit.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_tasksEventFragment_to_taskEventEditFragment)
         })
 
-        taskEventViewModel.query.observe(viewLifecycleOwner, Observer {query ->
+        schoolTaskEventViewModel.query.observe(viewLifecycleOwner, Observer { query ->
             configureRecyclerView(query)
         })
 
-        taskEventViewModel.openTaskEventDeleteFragmentEvent.observe(viewLifecycleOwner, EventObserver {
+        schoolTaskEventViewModel.openSchoolTaskEventDeleteFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             showAllertDialogDelete(it)
         })
 
-        taskEventViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver { message ->
+        schoolTaskEventViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver { message ->
             showSnackbar(view!!, message)
         })
 
@@ -81,9 +80,9 @@ class TasksEventFragment : Fragment() {
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tasks_event, container, false)
-        binding.viewModel = taskEventViewModel
+        binding.viewModel = schoolTaskEventViewModel
 
-        if (!taskEventViewModel.checkUserIsAuthorEvent()) {
+        if (!schoolTaskEventViewModel.checkUserIsAuthorEvent()) {
             binding.taskEventFub.visibility = View.INVISIBLE
         }
 
@@ -91,16 +90,16 @@ class TasksEventFragment : Fragment() {
     }
 
     private fun configureRecyclerView(query: Query) {
-        adapter = TaskEventAdapter(getFirestoreRecyclerOptions(query), taskEventViewModel)
+        adapterSchool = SchoolTaskEventAdapter(getFirestoreRecyclerOptions(query), schoolTaskEventViewModel)
         binding.taskEventRecyclerView.layoutManager = LinearLayoutManager(activity)
-        binding.taskEventRecyclerView.adapter = adapter
+        binding.taskEventRecyclerView.adapter = adapterSchool
 
         val callback = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                if (taskEventViewModel.checkUserIsAuthorEvent()) {
-                    adapter.deleteItem(viewHolder.adapterPosition)
+                if (schoolTaskEventViewModel.checkUserIsAuthorEvent()) {
+                    adapterSchool.deleteItem(viewHolder.adapterPosition)
                 } else {
-                    adapter.notifyItemChanged(viewHolder.adapterPosition)
+                    adapterSchool.notifyItemChanged(viewHolder.adapterPosition)
                     showSnackbar(view!!, "Право удаления предоставлено только автору мероприятия")
                 }
             }
@@ -110,9 +109,9 @@ class TasksEventFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.taskEventRecyclerView)
     }
 
-    private fun getFirestoreRecyclerOptions(query: Query): FirestoreRecyclerOptions<TaskEvent> {
-        return FirestoreRecyclerOptions.Builder<TaskEvent>()
-            .setQuery(query!!, TaskEvent::class.java)
+    private fun getFirestoreRecyclerOptions(query: Query): FirestoreRecyclerOptions<SchoolTaskEvent> {
+        return FirestoreRecyclerOptions.Builder<SchoolTaskEvent>()
+            .setQuery(query!!, SchoolTaskEvent::class.java)
             .setLifecycleOwner(this)
             .build()
     }
@@ -128,7 +127,7 @@ class TasksEventFragment : Fragment() {
     }
 
     @SuppressLint("ResourceType")
-    private fun showAllertDialogDelete(taskEvent: TaskEvent){
+    private fun showAllertDialogDelete(schoolTaskEvent: SchoolTaskEvent){
         val alertBuilder = AlertDialog.Builder(activity, R.style.AlertDialogTheme)
         alertBuilder.setTitle("Удалить объявление")
         alertBuilder.setMessage("Вы уверены, что хотите удалить объявление?")
@@ -137,7 +136,7 @@ class TasksEventFragment : Fragment() {
         alertBuilder.setPositiveButton(
             "Да"
         ) { _: DialogInterface, _: Int ->
-            taskEventViewModel.deleteTaskEvent(taskEvent)
+            schoolTaskEventViewModel.deleteTaskEvent(schoolTaskEvent)
         }
         alertBuilder.setNegativeButton(
             "Нет"

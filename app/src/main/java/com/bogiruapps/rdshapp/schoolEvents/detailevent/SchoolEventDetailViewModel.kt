@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events.detailevent
+package com.bogiruapps.rdshapp.schoolEvents.detailevent
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -12,7 +12,7 @@ import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
-class EventDetailViewModel(
+class SchoolEventDetailViewModel(
     private val userRepository: UserRepository,
     private val eventRepository: EventRepository,
     private val chatRepository: ChatRepository

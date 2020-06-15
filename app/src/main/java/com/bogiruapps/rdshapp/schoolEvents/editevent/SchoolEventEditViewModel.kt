@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events.editevent
+package com.bogiruapps.rdshapp.schoolEvents.editevent
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,14 +8,14 @@ import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.user.UserRepository
-import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
 import com.bogiruapps.rdshapp.chats.chatroomevent.Message
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
 import com.bogiruapps.rdshapp.data.event.EventRepository
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
-class EventEditViewModel(
+class SchoolEventEditViewModel(
     private val userRepository: UserRepository,
     private val eventRepository: EventRepository,
     private val chatRepository: ChatRepository

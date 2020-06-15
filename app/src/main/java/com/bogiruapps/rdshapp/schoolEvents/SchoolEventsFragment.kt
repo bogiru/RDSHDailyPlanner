@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.events
+package com.bogiruapps.rdshapp.schoolEvents
 
 
 import android.os.Bundle
@@ -19,11 +19,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class EventsFragment : Fragment() {
+class SchoolEventsFragment : Fragment() {
 
-    private val eventsViewModel: EventsViewModel by viewModel()
+    private val eventsViewModel: SchoolEventsViewModel by viewModel()
 
-    private lateinit var adapter: EventsAdapter
+    private lateinit var adapter: SchoolEventsAdapter
     private lateinit var binding: FragmentEventsBinding
 
     override fun onCreateView(
@@ -72,7 +72,7 @@ class EventsFragment : Fragment() {
     }
 
     private fun configureRecyclerView() {
-        adapter = EventsAdapter(getFirestoreRecyclerOptions(), eventsViewModel)
+        adapter = SchoolEventsAdapter(getFirestoreRecyclerOptions(), eventsViewModel)
         binding.eventsRecyclerView.layoutManager = LinearLayoutManager(activity)
         binding.eventsRecyclerView.adapter = adapter
     }

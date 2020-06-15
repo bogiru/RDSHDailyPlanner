@@ -3,7 +3,7 @@ package com.bogiruapps.rdshapp.data.chat
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.chats.chatroomevent.Message
-import com.bogiruapps.rdshapp.events.SchoolEvent
+import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.returnSuccessOrError
