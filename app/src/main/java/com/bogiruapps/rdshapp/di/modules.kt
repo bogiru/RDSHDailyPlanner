@@ -22,7 +22,7 @@ import com.bogiruapps.rdshapp.data.school.SchoolRepositoryImpl
 import com.bogiruapps.rdshapp.schoolEvents.detailevent.SchoolEventDetailViewModel
 import com.bogiruapps.rdshapp.schoolEvents.editevent.SchoolEventEditViewModel
 import com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEventViewModel
-import com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit.SchoolTaskEventEditViewModel
+import com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit.TaskSchoolEventEditViewModel
 import com.bogiruapps.rdshapp.notice.NoticeViewModel
 import com.bogiruapps.rdshapp.notice.noticedetail.NoticeDetailViewModel
 import com.bogiruapps.rdshapp.notice.noticeedit.NoticeEditViewModel
@@ -89,7 +89,7 @@ val modules = module {
     viewModel { SchoolEventDetailViewModel(userRepository = get(), eventRepository = get(), chatRepository = get()) }
     viewModel { SchoolEventEditViewModel(userRepository = get(), eventRepository = get(), chatRepository = get()) }
     viewModel { TaskSchoolEventViewModel(userRepository = get(), eventRepository = get()) }
-    viewModel { SchoolTaskEventEditViewModel(userRepository = get(), eventRepository = get()) }
+    viewModel { TaskSchoolEventEditViewModel(userRepository = get(), eventRepository = get()) }
     viewModel { RatingViewModel(userRepository = get()) }
     viewModel { UserViewModel(userRepository = get(), schoolRepository = get()) }
     viewModel { ChatRoomViewModel(userRepository = get(), chatRepository = get()) }

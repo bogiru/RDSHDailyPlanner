@@ -13,37 +13,37 @@ import kotlinx.coroutines.launch
 
 class TaskSchoolEventViewModel(
     private val userRepository: UserRepository,
-    private val eventRepository: EventRepository)
+    private val schoolEventRepository: EventRepository)
     : ViewModel() {
 
-    private val _openTaskEventEdit = MutableLiveData<Event<Unit>>()
-    val openTaskEventEdit: LiveData<Event<Unit>> = _openTaskEventEdit
+    private val _openTaskSchoolEventEdit = MutableLiveData<Event<Unit>>()
+    val openTaskSchoolEventEdit: LiveData<Event<Unit>> = _openTaskSchoolEventEdit
 
-    private val _query = MutableLiveData<Query>()
-    val query: LiveData<Query> = _query
+    private val _queryTaskSchoolEvent = MutableLiveData<Query>()
+    val query: LiveData<Query> = _queryTaskSchoolEvent
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val _openTaskEventDeleteFragmentEvent = MutableLiveData<Event<TaskSchoolEvent>>()
-    val openTaskEventDeleteFragmentSchoolEvent: LiveData<Event<TaskSchoolEvent>> = _openTaskEventDeleteFragmentEvent
+    private val _openTaskSchoolEventDeleteFragmentEvent = MutableLiveData<Event<TaskSchoolEvent>>()
+    val openTaskEventDeleteFragmentSchoolEvent: LiveData<Event<TaskSchoolEvent>> = _openTaskSchoolEventDeleteFragmentEvent
 
     private val _showSnackbar = MutableLiveData<Event<String>>()
     val showSnackbar: LiveData<Event<String>> = _showSnackbar
 
-    val event = eventRepository.currentEvent.value!!
+    val schoolEvent = schoolEventRepository.currentEvent.value!!
 
     init {
         fetchFirestoreRecyclerQuery()
     }
 
-    fun checkUserIsAuthorEvent() =  event.author.email == userRepository.currentUser.value!!.email
+    fun checkUserIsAuthorSchoolEvent() =  schoolEvent.author.email == userRepository.currentUser.value!!.email
 
     fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
-            when (val result = eventRepository.fetchFirestoreRecyclerQueryTasksEvent(userRepository.currentUser.value!!)) {
+            when (val result = schoolEventRepository.fetchFirestoreRecyclerQueryTasksEvent(userRepository.currentUser.value!!)) {
                 is Result.Success -> {
-                    _query.value = result.data
+                    _queryTaskSchoolEvent.value = result.data
                     _dataLoading.value = false
                 }
             }
@@ -63,16 +63,16 @@ class TaskSchoolEventViewModel(
 
                 _dataLoading.value = true
 
-                when (eventRepository.updateTaskEvent(userRepository.currentUser.value!!, task)) {
+                when (schoolEventRepository.updateTaskSchoolEvent(userRepository.currentUser.value!!, task)) {
                     is Result.Success -> {
                         if (taskSchoolEvent.completed) {
-                            eventRepository.currentEvent.value!!.countCompletedTask--
+                            schoolEventRepository.currentEvent.value!!.countCompletedTask--
                             userRepository.currentUser.value!!.score--
                         } else {
-                            eventRepository.currentEvent.value!!.countCompletedTask++
+                            schoolEventRepository.currentEvent.value!!.countCompletedTask++
                             userRepository.currentUser.value!!.score++
                         }
-                        eventRepository.updateEvent(userRepository.currentUser.value!!, eventRepository.currentEvent.value!!)
+                        schoolEventRepository.updateEvent(userRepository.currentUser.value!!, schoolEventRepository.currentEvent.value!!)
                         userRepository.updateUser(userRepository.currentUser.value!!)
                         _dataLoading.value = false
                     }
@@ -81,22 +81,14 @@ class TaskSchoolEventViewModel(
         }
     }
 
-    fun showDeleteTaskEventFragment(taskSchoolEvent: TaskSchoolEvent) {
-        if (userRepository.currentUser.value!!.email == eventRepository.currentEvent.value!!.author.email)  {
-            _openTaskEventDeleteFragmentEvent.value = Event(taskSchoolEvent)
-        } else {
-            _showSnackbar.value = Event("Право удаления предоставлено только автору мероприятия")
-        }
-    }
-
-    fun deleteTaskEvent(taskSchoolEvent: TaskSchoolEvent) {
+    fun deleteTaskSchoolEvent(taskSchoolEvent: TaskSchoolEvent) {
         viewModelScope.launch {
-            eventRepository.deleteTaskEvent(userRepository.currentUser.value!!, taskSchoolEvent)
+            schoolEventRepository.deleteTaskEvent(userRepository.currentUser.value!!, taskSchoolEvent)
         }
     }
 
-    fun showTaskEditEvent() {
-        _openTaskEventEdit.value = Event(Unit)
+    fun showTaskSchoolEventEdit() {
+        _openTaskSchoolEventEdit.value = Event(Unit)
     }
 
     fun showSnackbar(message: String) {

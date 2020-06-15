@@ -19,9 +19,9 @@ import com.bogiruapps.rdshapp.utils.showSnackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class SchoolTaskEventEditFragment : Fragment() {
+class TaskSchoolEventEditFragment : Fragment() {
 
-    private val taskEventviewModel: SchoolTaskEventEditViewModel by viewModel()
+    private val taskEventviewModel: TaskSchoolEventEditViewModel by viewModel()
 
     private lateinit var binding: FragmentTaskEventEditBinding
     private lateinit var chosenUser: User

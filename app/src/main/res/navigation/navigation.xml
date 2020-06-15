@@ -98,7 +98,7 @@
     </fragment>
     <fragment
             android:id="@+id/taskEventEditFragment"
-            android:name="com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit.SchoolTaskEventEditFragment"
+            android:name="com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit.TaskSchoolEventEditFragment"
             android:label="Редактирование">
         <action
                 android:id="@+id/action_taskEventEditFragment_to_tasksEventFragment"

@@ -67,7 +67,7 @@ class EventRepositoryImpl(
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
-    override suspend fun updateTaskEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
+    override suspend fun updateTaskSchoolEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.updateTaskEvent(
             user.region,
             user.city,

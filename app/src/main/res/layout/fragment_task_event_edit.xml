@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit.SchoolTaskEventEditViewModel" />
+                type="com.bogiruapps.rdshapp.schoolEvents.taskevent.taskEventEdit.TaskSchoolEventEditViewModel" />
 
     </data>
 
@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#FFFFFF"
-            tools:context=".schoolEvents.taskevent.taskEventEdit.SchoolTaskEventEditFragment">
+            tools:context=".schoolEvents.taskevent.taskEventEdit.TaskSchoolEventEditFragment">
 
         <EditText
                 android:id="@+id/task_event_edit_text"

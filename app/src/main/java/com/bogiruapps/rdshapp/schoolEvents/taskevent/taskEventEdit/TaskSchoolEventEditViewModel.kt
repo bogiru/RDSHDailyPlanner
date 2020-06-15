@@ -12,7 +12,7 @@ import com.bogiruapps.rdshapp.data.event.EventRepository
 import com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEvent
 import kotlinx.coroutines.launch
 
-class SchoolTaskEventEditViewModel(
+class TaskSchoolEventEditViewModel(
     private val userRepository: UserRepository,
     private val eventRepository: EventRepository)
     : ViewModel() {

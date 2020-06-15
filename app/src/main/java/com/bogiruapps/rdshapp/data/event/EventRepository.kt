@@ -23,7 +23,7 @@ interface EventRepository {
 
     suspend fun deleteEvent(user: User): Result<Void?>
 
-    suspend fun updateTaskEvent(user: User, eventSchool: TaskSchoolEvent): Result<Void?>
+    suspend fun updateTaskSchoolEvent(user: User, eventSchool: TaskSchoolEvent): Result<Void?>
 
     suspend fun deleteTaskEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?>
 

@@ -60,7 +60,7 @@ class TaskSchoolEventFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        taskSchoolEventViewModel.openTaskEventEdit.observe(viewLifecycleOwner, EventObserver {
+        taskSchoolEventViewModel.openTaskSchoolEventEdit.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_tasksEventFragment_to_taskEventEditFragment)
         })
 
@@ -82,7 +82,7 @@ class TaskSchoolEventFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tasks_event, container, false)
         binding.viewModel = taskSchoolEventViewModel
 
-        if (!taskSchoolEventViewModel.checkUserIsAuthorEvent()) {
+        if (!taskSchoolEventViewModel.checkUserIsAuthorSchoolEvent()) {
             binding.taskEventFub.visibility = View.INVISIBLE
         }
 
@@ -96,7 +96,7 @@ class TaskSchoolEventFragment : Fragment() {
 
         val callback = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                if (taskSchoolEventViewModel.checkUserIsAuthorEvent()) {
+                if (taskSchoolEventViewModel.checkUserIsAuthorSchoolEvent()) {
                     adapter.deleteItem(viewHolder.adapterPosition)
                 } else {
                     adapter.notifyItemChanged(viewHolder.adapterPosition)
@@ -136,7 +136,7 @@ class TaskSchoolEventFragment : Fragment() {
         alertBuilder.setPositiveButton(
             "Да"
         ) { _: DialogInterface, _: Int ->
-            taskSchoolEventViewModel.deleteTaskEvent(taskSchoolEvent)
+            taskSchoolEventViewModel.deleteTaskSchoolEvent(taskSchoolEvent)
         }
         alertBuilder.setNegativeButton(
             "Нет"
