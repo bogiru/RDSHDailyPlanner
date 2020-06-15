@@ -8,6 +8,7 @@ import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.utils.returnSuccessOrError
 import com.bogiruapps.rdshapp.school.School
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
@@ -48,20 +49,8 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
         return@coroutineScope (task.await())
     }
 
-    override suspend fun updateUserPicture(user: User, internalUri: Uri): Result<Uri?> {
-        val uri = dataSource.createNewPictureInStorage(user.id, internalUri)
-
-        when (uri) {
-            is Result.Success -> {
-                val uriPicture = uri.data.toString()
-                user.pictureUrl = uriPicture
-                when (updateUser(user)) {
-                    is Result.Error, is Result.Canceled -> {
-                        return Result.Error(Exception("Ошибка при обновлении информации пользователя"))
-                    }
-                }
-            }
-        }
-        return uri
+    override suspend fun updateUserPicture(user: User, internalUri: Uri): Result<UploadTask.TaskSnapshot> = coroutineScope {
+        val task = async { dataSource.uploadPictureToStorage(user.id, internalUri) }
+        return@coroutineScope task.await()
     }
 }

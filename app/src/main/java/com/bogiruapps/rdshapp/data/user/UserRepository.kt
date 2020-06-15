@@ -7,6 +7,7 @@ import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.school.School
 import com.google.firebase.firestore.Query
+import com.google.firebase.storage.UploadTask
 
 interface UserRepository {
 
@@ -22,5 +23,5 @@ interface UserRepository {
 
     suspend fun fetchFirestoreRecyclerQueryUser():  Result<Query>
 
-    suspend fun updateUserPicture(user: User, internalUri: Uri): Result<Uri?>
+    suspend fun updateUserPicture(user: User, internalUri: Uri): Result<UploadTask.TaskSnapshot>
 }

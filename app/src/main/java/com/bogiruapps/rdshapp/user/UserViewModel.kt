@@ -72,12 +72,9 @@ class UserViewModel(
 
     private fun downloadPictureToRemoteStorage(uriPicture: Uri) {
         viewModelScope.launch {
-            when (val uriStorage = userRepository
+            when (userRepository
                     .updateUserPicture(userRepository.currentUser.value!!, uriPicture)) {
                 is Result.Success -> {
-                    uriStorage.data?.let { uri ->
-                        user.pictureUrl = uri.toString()
-                    }
                     _imageLoadingToRemoteStorageCompleteEvent.value = Event(Unit)
                     _dataLoading.value = false
                 }

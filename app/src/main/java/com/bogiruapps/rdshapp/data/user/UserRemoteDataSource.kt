@@ -9,7 +9,6 @@ import com.bogiruapps.rdshapp.utils.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.UploadTask
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -25,21 +24,20 @@ class UserRemoteDataSource(
 
     override suspend fun createUser(user: User): Result<Void?> = withContext(ioDispatcher) {
         return@withContext try {
-            userCollection.document(user.email.toString()).set(user).await()
+            userCollection.document(user.id.toString()).set(user).await()
         } catch (e: Exception) {
             Result.Error(e)
         }
     }
 
     override suspend fun updateUser(user: User): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext userCollection.document(user.email.toString()).update(
+        return@withContext userCollection.document(user.id.toString()).update(
             FIELD_NAME, user.name,
-            FIELD_EMAIL, user.email,
+            FIELD_EMAIL, user.id,
             FIELD_REGION, user.region,
             FIELD_CITY, user.city,
             FIELD_SCHOOL, user.school,
             FIELD_SCORE, user.score,
-            FIELD_IMAGE_URL, user.pictureUrl,
             FIELD_ADMIN, user.admin,
             FIELD_ID, user.id
         ).await()
@@ -91,23 +89,13 @@ class UserRemoteDataSource(
         }
     }
 
-    suspend fun createNewPictureInStorage(userId: String, internalUri: Uri): Result<Uri> {
-        return try {
-            uploadPictureToStorage(userId, internalUri)
-            fetchPictureUriFromStorage(userId)
-        } catch (e: Exception) {
-            Result.Error(e)
-        }
-    }
-
-    private suspend fun uploadPictureToStorage(userId: String, internalUri: Uri) =
+    suspend fun uploadPictureToStorage(userId: String, internalUri: Uri) =
         withContext(ioDispatcher) {
-            getReferenceStorage(userId).putFile(internalUri).await<UploadTask.TaskSnapshot>()
-        }
-
-    private suspend fun fetchPictureUriFromStorage(userId: String): Result<Uri> =
-        withContext(ioDispatcher) {
-            return@withContext getReferenceStorage(userId).downloadUrl.await()
+            try {
+                return@withContext getReferenceStorage(userId).putFile(internalUri).await()
+            }catch (e: Exception) {
+                return@withContext Result.Error(e)
+            }
         }
 
     private fun getReferenceStorage(userId: String) =
