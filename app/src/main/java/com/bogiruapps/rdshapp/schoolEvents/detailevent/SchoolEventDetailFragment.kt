@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class  SchoolEventDetailFragment : Fragment() {
 
-    private val eventDetailViewModel: SchoolEventDetailViewModel by viewModel()
+    private val schoolEventDetailViewModel: SchoolEventDetailViewModel by viewModel()
 
     private lateinit var binding: EventDetailFragmentBinding
 
@@ -36,31 +36,31 @@ class  SchoolEventDetailFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        eventDetailViewModel.openTaskEventFragment.observe(viewLifecycleOwner, EventObserver {
-            openTaskEventFragment()
+        schoolEventDetailViewModel.openTaskEventFragment.observe(viewLifecycleOwner, EventObserver {
+            openTaskSchoolEventFragment()
         })
 
-        eventDetailViewModel.openEventFragmentEvent.observe(viewLifecycleOwner, EventObserver {
-            openEventFragment()
+        schoolEventDetailViewModel.openEventFragmentEvent.observe(viewLifecycleOwner, EventObserver {
+            openSchoolEventFragment()
         })
 
-        eventDetailViewModel.openEventEditFragmentEvent.observe(viewLifecycleOwner, EventObserver {
-            openEventEditFragment()
+        schoolEventDetailViewModel.openEventEditFragmentEvent.observe(viewLifecycleOwner, EventObserver {
+            openSchoolEventEditFragment()
         })
 
-        eventDetailViewModel.openDialogDeleteEvent.observe(viewLifecycleOwner, EventObserver {
+        schoolEventDetailViewModel.openDialogDeleteEvent.observe(viewLifecycleOwner, EventObserver {
             showAlertDialogDeleteSchoolEvent()
         })
 
-        eventDetailViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver { message ->
+        schoolEventDetailViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver { message ->
             showSnackbar(view!!, message)
         })
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.event_detail_fragment, container, false)
-        binding.viewModel = eventDetailViewModel
-        setSchoolEventProgressBar(eventDetailViewModel.schoolEvent)
+        binding.viewModel = schoolEventDetailViewModel
+        setSchoolEventProgressBar(schoolEventDetailViewModel.schoolEvent)
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
 
@@ -79,12 +79,12 @@ class  SchoolEventDetailFragment : Fragment() {
         deleteItem?.isVisible = true
 
         editItem?.setOnMenuItemClickListener {
-            eventDetailViewModel.showEditEventFragment()
+            schoolEventDetailViewModel.showEditEventFragment()
             return@setOnMenuItemClickListener true
         }
 
         deleteItem?.setOnMenuItemClickListener {
-            eventDetailViewModel.showDialogDeleteSchoolEvent()
+            schoolEventDetailViewModel.showDialogDeleteSchoolEvent()
             return@setOnMenuItemClickListener true
         }
     }
@@ -98,8 +98,8 @@ class  SchoolEventDetailFragment : Fragment() {
             setPositiveButton(
                 "Да"
             ) { _: DialogInterface, _: Int ->
-                eventDetailViewModel.deleteSchoolEvent()
-                openEventFragment()
+                schoolEventDetailViewModel.deleteSchoolEvent()
+                openSchoolEventFragment()
             }
             setNegativeButton(
                 "Нет") { _: DialogInterface, _: Int ->
@@ -116,15 +116,15 @@ class  SchoolEventDetailFragment : Fragment() {
         }
     }
 
-    private fun openTaskEventFragment() {
+    private fun openTaskSchoolEventFragment() {
         findNavController().navigate(R.id.action_eventDetailFragment_to_tasksEventFragment)
     }
 
-    private fun openEventFragment() {
+    private fun openSchoolEventFragment() {
         findNavController().navigate(R.id.action_eventDetailFragment_to_eventsFragment)
     }
 
-    private fun openEventEditFragment() {
+    private fun openSchoolEventEditFragment() {
         findNavController().navigate(R.id.action_eventDetailFragment_to_eventEditFragment)
     }
 
