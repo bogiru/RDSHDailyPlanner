@@ -35,7 +35,7 @@ class TaskSchoolEventFragment : Fragment() {
 
     private val taskSchoolEventViewModel: TaskSchoolEventViewModel by viewModel()
 
-    private lateinit var adapterSchool: TaskSchoolEventAdapter
+    private lateinit var adapter: TaskSchoolEventAdapter
     private lateinit var binding: FragmentTasksEventBinding
 
     override fun onCreateView(
@@ -89,17 +89,17 @@ class TaskSchoolEventFragment : Fragment() {
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
 
-    private fun configureRecyclerView(query: Query) {
-        adapterSchool = TaskSchoolEventAdapter(getFirestoreRecyclerOptions(query), taskSchoolEventViewModel)
+    private fun configureRecyclerView(queryTasksSchoolEvent: Query) {
+        adapter = TaskSchoolEventAdapter(getFirestoreRecyclerOptions(queryTasksSchoolEvent), taskSchoolEventViewModel)
         binding.taskEventRecyclerView.layoutManager = LinearLayoutManager(activity)
-        binding.taskEventRecyclerView.adapter = adapterSchool
+        binding.taskEventRecyclerView.adapter = adapter
 
         val callback = object : SwipeToDeleteCallback(context!!) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 if (taskSchoolEventViewModel.checkUserIsAuthorEvent()) {
-                    adapterSchool.deleteItem(viewHolder.adapterPosition)
+                    adapter.deleteItem(viewHolder.adapterPosition)
                 } else {
-                    adapterSchool.notifyItemChanged(viewHolder.adapterPosition)
+                    adapter.notifyItemChanged(viewHolder.adapterPosition)
                     showSnackbar(view!!, "Право удаления предоставлено только автору мероприятия")
                 }
             }
@@ -109,9 +109,9 @@ class TaskSchoolEventFragment : Fragment() {
         itemTouchHelper.attachToRecyclerView(binding.taskEventRecyclerView)
     }
 
-    private fun getFirestoreRecyclerOptions(query: Query): FirestoreRecyclerOptions<TaskSchoolEvent> {
+    private fun getFirestoreRecyclerOptions(queryTasksSchoolEvent: Query): FirestoreRecyclerOptions<TaskSchoolEvent> {
         return FirestoreRecyclerOptions.Builder<TaskSchoolEvent>()
-            .setQuery(query!!, TaskSchoolEvent::class.java)
+            .setQuery(queryTasksSchoolEvent, TaskSchoolEvent::class.java)
             .setLifecycleOwner(this)
             .build()
     }
