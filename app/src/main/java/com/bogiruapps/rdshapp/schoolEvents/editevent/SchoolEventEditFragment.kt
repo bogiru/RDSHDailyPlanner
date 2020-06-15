@@ -21,7 +21,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class SchoolEventEditFragment : Fragment() {
 
-    private val eventEditViewModel: SchoolEventEditViewModel by viewModel()
+    private val schoolEventEditViewModel: SchoolEventEditViewModel by viewModel()
     private lateinit var binding: FragmentEventEditBinding
 
     override fun onCreateView(
@@ -37,24 +37,24 @@ class SchoolEventEditFragment : Fragment() {
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_edit, container, false)
-        binding.viewModel = eventEditViewModel
+        binding.viewModel = schoolEventEditViewModel
         binding.lifecycleOwner = viewLifecycleOwner
     }
 
     private fun setupObserverViewModel() {
-        eventEditViewModel.openSchoolEventFragment.observe(viewLifecycleOwner, EventObserver {
+        schoolEventEditViewModel.openSchoolEventFragment.observe(viewLifecycleOwner, EventObserver {
             openSchoolEventFragment()
         })
 
-        eventEditViewModel.showSnackbar.observe(viewLifecycleOwner, Observer {message ->
+        schoolEventEditViewModel.showSnackbar.observe(viewLifecycleOwner, Observer { message ->
             showSnackbar(view!!, message)
         })
 
-        eventEditViewModel.showDatePickerDialog.observe(viewLifecycleOwner, Observer {
+        schoolEventEditViewModel.showDatePickerDialog.observe(viewLifecycleOwner, Observer {
             showDatePickerDialog()
         })
 
-        eventEditViewModel.indexImage.observe(viewLifecycleOwner, Observer {
+        schoolEventEditViewModel.indexImage.observe(viewLifecycleOwner, Observer {
             loadImage(it)
         })
 }
@@ -65,7 +65,7 @@ class SchoolEventEditFragment : Fragment() {
         editItem?.isVisible = false
         deleteItem?.isVisible = false
 
-        if (eventEditViewModel.checkCreateEventStatus()) {
+        if (schoolEventEditViewModel.checkCreateEventStatus()) {
             activity?.main_toolbar?.title = "Создание"
         } else  {
             activity?.main_toolbar?.title = "Редактирование"
