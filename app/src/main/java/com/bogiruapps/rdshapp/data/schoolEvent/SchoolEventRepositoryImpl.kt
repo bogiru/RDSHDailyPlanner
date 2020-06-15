@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.data.event
+package com.bogiruapps.rdshapp.data.schoolEvent
 
 import androidx.lifecycle.MutableLiveData
 import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
@@ -11,14 +11,14 @@ import com.google.firebase.firestore.Query
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 
-class EventRepositoryImpl(
-    private val dataSource: EventRemoteDataSource): EventRepository {
+class SchoolEventRepositoryImpl(
+    private val dataSource: SchoolEventRemoteDataSource): SchoolEventRepository {
 
     override val currentEvent = MutableLiveData<SchoolEvent>()
     override val stateEvent = MutableLiveData<State>()
 
-    override suspend fun fetchEvent(user: User, eventId: String): Result<SchoolEvent?> = coroutineScope {
-        val task = async { dataSource.fetchEvent(
+    override suspend fun fetchSchoolEvent(user: User, eventId: String): Result<SchoolEvent?> = coroutineScope {
+        val task = async { dataSource.fetchSchoolEvent(
             user.region,
             user.city,
             user.school,
@@ -27,8 +27,8 @@ class EventRepositoryImpl(
         return@coroutineScope task.await()
     }
 
-    override suspend fun createEvent(user: User, event: SchoolEvent): Result<Void?> = coroutineScope {
-        val task = async { dataSource.createEvent(
+    override suspend fun createSchoolEvent(user: User, event: SchoolEvent): Result<Void?> = coroutineScope {
+        val task = async { dataSource.createSchoolEvent(
             user.region,
             user.city,
             user.school,
@@ -37,8 +37,8 @@ class EventRepositoryImpl(
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
-    override suspend fun updateEvent(user: User, event: SchoolEvent): Result<Void?> = coroutineScope {
-        val task = async { dataSource.updateEvent(
+    override suspend fun updateSchoolEvent(user: User, event: SchoolEvent): Result<Void?> = coroutineScope {
+        val task = async { dataSource.updateSchoolEvent(
             user.region,
             user.city,
             user.school,
@@ -47,8 +47,8 @@ class EventRepositoryImpl(
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
-    override suspend fun deleteEvent(user: User): Result<Void?> = coroutineScope {
-        val task = async { dataSource.deleteEvent(
+    override suspend fun deleteSchoolEvent(user: User): Result<Void?> = coroutineScope {
+        val task = async { dataSource.deleteSchoolEvent(
             user.region,
             user.city,
             user.school,
@@ -57,8 +57,8 @@ class EventRepositoryImpl(
         return@coroutineScope task.await()
     }
 
-    override suspend fun createTaskEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
-        val task = async { dataSource.createTaskEvent(
+    override suspend fun createTaskSchoolEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
+        val task = async { dataSource.createTaskSchoolEvent(
             user.region,
             user.city,
             user.school,
@@ -68,7 +68,7 @@ class EventRepositoryImpl(
     }
 
     override suspend fun updateTaskSchoolEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
-        val task = async { dataSource.updateTaskEvent(
+        val task = async { dataSource.updateTaskSchoolEvent(
             user.region,
             user.city,
             user.school,
@@ -77,8 +77,8 @@ class EventRepositoryImpl(
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
-    override suspend fun deleteTaskEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
-        val task = async { dataSource.deleteTaskEvent(
+    override suspend fun deleteTaskSchoolEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
+        val task = async { dataSource.deleteTaskSchoolEvent(
             user.region,
             user.city,
             user.school,
@@ -88,7 +88,7 @@ class EventRepositoryImpl(
     }
 
     override suspend fun fetchFirestoreRecyclerQuerySchoolEvents(user: User): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryEvent(
+        val task = async { dataSource.fetchFirestoreRecyclerQuerySchoolEvent(
             user.region,
             user.city,
             user.school
@@ -96,8 +96,8 @@ class EventRepositoryImpl(
         return@coroutineScope (task.await())
     }
 
-    override suspend fun fetchFirestoreRecyclerQueryTasksEvent(user: User): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryTaskEvent(
+    override suspend fun fetchFirestoreRecyclerQueryTasksSchoolEvent(user: User): Result<Query> = coroutineScope {
+        val task = async { dataSource.fetchFirestoreRecyclerQueryTaskSchoolEvent(
             user.region,
             user.city,
             user.school,

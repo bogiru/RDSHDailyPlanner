@@ -8,13 +8,13 @@ import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.data.user.UserRepository
-import com.bogiruapps.rdshapp.data.event.EventRepository
+import com.bogiruapps.rdshapp.data.schoolEvent.SchoolEventRepository
 import com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEvent
 import kotlinx.coroutines.launch
 
 class TaskSchoolEventEditViewModel(
     private val userRepository: UserRepository,
-    private val eventRepository: EventRepository)
+    private val schoolEventRepository: SchoolEventRepository)
     : ViewModel() {
 
     private val _openTaskEventFragment = MutableLiveData<Event<Unit>>()
@@ -26,7 +26,7 @@ class TaskSchoolEventEditViewModel(
     private val _showSnackbar = MutableLiveData<String>()
     val showSnackbar: MutableLiveData<String> = _showSnackbar
 
-    val event = eventRepository.currentEvent.value
+    val event = schoolEventRepository.currentEvent.value
 
     val taskSchoolEvent: TaskSchoolEvent = TaskSchoolEvent()
 
@@ -35,10 +35,10 @@ class TaskSchoolEventEditViewModel(
             _showSnackbar.value = "Не все поля заполнены"
         } else {
             viewModelScope.launch {
-                when (eventRepository.createTaskEvent(userRepository.currentUser.value!!, taskSchoolEvent)) {
+                when (schoolEventRepository.createTaskSchoolEvent(userRepository.currentUser.value!!, taskSchoolEvent)) {
                     is Result.Success -> {
-                        eventRepository.currentEvent.value!!.countTask++
-                        when (eventRepository.updateEvent(userRepository.currentUser.value!!, eventRepository.currentEvent.value!!)) {
+                        schoolEventRepository.currentEvent.value!!.countTask++
+                        when (schoolEventRepository.updateSchoolEvent(userRepository.currentUser.value!!, schoolEventRepository.currentEvent.value!!)) {
                             is Result.Success -> showTaskEventFragment()
                         }
                     }

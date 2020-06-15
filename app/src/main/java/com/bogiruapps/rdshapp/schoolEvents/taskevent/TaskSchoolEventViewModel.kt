@@ -7,13 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.user.UserRepository
-import com.bogiruapps.rdshapp.data.event.EventRepository
+import com.bogiruapps.rdshapp.data.schoolEvent.SchoolEventRepository
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
 class TaskSchoolEventViewModel(
     private val userRepository: UserRepository,
-    private val schoolEventRepository: EventRepository)
+    private val schoolEventRepository: SchoolEventRepository)
     : ViewModel() {
 
     private val _openTaskSchoolEventEdit = MutableLiveData<Event<Unit>>()
@@ -41,7 +41,7 @@ class TaskSchoolEventViewModel(
 
     fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
-            when (val result = schoolEventRepository.fetchFirestoreRecyclerQueryTasksEvent(userRepository.currentUser.value!!)) {
+            when (val result = schoolEventRepository.fetchFirestoreRecyclerQueryTasksSchoolEvent(userRepository.currentUser.value!!)) {
                 is Result.Success -> {
                     _queryTaskSchoolEvent.value = result.data
                     _dataLoading.value = false
@@ -72,7 +72,7 @@ class TaskSchoolEventViewModel(
                             schoolEventRepository.currentEvent.value!!.countCompletedTask++
                             userRepository.currentUser.value!!.score++
                         }
-                        schoolEventRepository.updateEvent(userRepository.currentUser.value!!, schoolEventRepository.currentEvent.value!!)
+                        schoolEventRepository.updateSchoolEvent(userRepository.currentUser.value!!, schoolEventRepository.currentEvent.value!!)
                         userRepository.updateUser(userRepository.currentUser.value!!)
                         _dataLoading.value = false
                     }
@@ -83,7 +83,7 @@ class TaskSchoolEventViewModel(
 
     fun deleteTaskSchoolEvent(taskSchoolEvent: TaskSchoolEvent) {
         viewModelScope.launch {
-            schoolEventRepository.deleteTaskEvent(userRepository.currentUser.value!!, taskSchoolEvent)
+            schoolEventRepository.deleteTaskSchoolEvent(userRepository.currentUser.value!!, taskSchoolEvent)
         }
     }
 

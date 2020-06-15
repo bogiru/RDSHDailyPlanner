@@ -7,14 +7,14 @@ import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
-import com.bogiruapps.rdshapp.data.event.EventRepository
+import com.bogiruapps.rdshapp.data.schoolEvent.SchoolEventRepository
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
 class SchoolEventDetailViewModel(
     userRepository: UserRepository,
-    private val schoolEventRepository: EventRepository,
+    private val schoolEventRepository: SchoolEventRepository,
     private val chatRepository: ChatRepository
 ) : ViewModel() {
 
@@ -36,7 +36,7 @@ class SchoolEventDetailViewModel(
     fun deleteSchoolEvent() {
         _dataLoading.value = true
         viewModelScope.launch {
-            when (schoolEventRepository.deleteEvent(user)) {
+            when (schoolEventRepository.deleteSchoolEvent(user)) {
                 is Result.Success -> {
                     when (chatRepository.deleteChat(
                         user,

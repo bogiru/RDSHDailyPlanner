@@ -11,13 +11,13 @@ import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
 import com.bogiruapps.rdshapp.chats.chatroomevent.Message
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
-import com.bogiruapps.rdshapp.data.event.EventRepository
+import com.bogiruapps.rdshapp.data.schoolEvent.SchoolEventRepository
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
 class SchoolEventEditViewModel(
     private val userRepository: UserRepository,
-    private val schoolEventRepository: EventRepository,
+    private val schoolEventRepository: SchoolEventRepository,
     private val chatRepository: ChatRepository
 ) : ViewModel() {
 
@@ -75,7 +75,7 @@ class SchoolEventEditViewModel(
     private fun createSchoolEvent(event: SchoolEvent) {
         viewModelScope.launch {
             event.author = user
-            when(schoolEventRepository.createEvent(user, event)) {
+            when(schoolEventRepository.createSchoolEvent(user, event)) {
                 is Result.Success -> {
                     schoolEventRepository.currentEvent.value = event
                     val chat = Chat(
@@ -97,7 +97,7 @@ class SchoolEventEditViewModel(
 
     private fun editSchoolEvent(event: SchoolEvent) {
         viewModelScope.launch {
-            when (schoolEventRepository.updateEvent(user, event)) {
+            when (schoolEventRepository.updateSchoolEvent(user, event)) {
                 is Result.Success -> {
                     val tempChat = chatRepository.currentChat.value!!
                     tempChat.title = event.title

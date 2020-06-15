@@ -1,4 +1,4 @@
-package com.bogiruapps.rdshapp.data.event
+package com.bogiruapps.rdshapp.data.schoolEvent
 
 import com.bogiruapps.rdshapp.schoolEvents.SchoolEvent
 import com.bogiruapps.rdshapp.schoolEvents.taskevent.TaskSchoolEvent
@@ -12,14 +12,14 @@ import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class EventRemoteDataSource(
+class SchoolEventRemoteDataSource(
     private val db: FirebaseFirestore,
     private val storage: FirebaseStorage
-) : EventDataSource {
+) : SchoolEventDataSource {
 
     private val ioDispatcher = Dispatchers.IO
 
-    override suspend fun fetchEvent(region: Region, city: City, school: School, eventId: String): Result<SchoolEvent?> = withContext(ioDispatcher) {
+    override suspend fun fetchSchoolEvent(region: Region, city: City, school: School, eventId: String): Result<SchoolEvent?> = withContext(ioDispatcher) {
         return@withContext try {
             when (val resultDocumentSnapshot = db.collection(REGION_COLLECTION_NAME).document(region.id)
                 .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME).document(school.id)
@@ -33,13 +33,13 @@ class EventRemoteDataSource(
         }
     }
 
-    override suspend fun createEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun createSchoolEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
             .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME).document(school.id)
             .collection(EVENTS_COLLECTION_NAME).document(event.id).set(event).await()
     }
 
-    override suspend fun updateEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun updateSchoolEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
             .collection(CITY_COLLECTION_NAME).document(city.id).collection(
                 SCHOOL_COLLECTION_NAME
@@ -56,21 +56,21 @@ class EventRemoteDataSource(
             .await()
     }
 
-    override suspend fun deleteEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun deleteSchoolEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
             .collection(CITY_COLLECTION_NAME).document(city.id)
             .collection(SCHOOL_COLLECTION_NAME).document(school.id)
             .collection(EVENTS_COLLECTION_NAME).document(event.id).delete().await()
     }
 
-    override suspend fun createTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun createTaskSchoolEvent(region: Region, city: City, school: School, event: SchoolEvent, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
             .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
             .document(school.id).collection(EVENTS_COLLECTION_NAME)
             .document(event.id).collection(TASKS_COLLECTION_NAME).document(taskSchoolEvent.id).set(taskSchoolEvent).await()
     }
 
-    override suspend fun updateTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun updateTaskSchoolEvent(region: Region, city: City, school: School, event: SchoolEvent, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
             .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
             .document(school.id).collection(EVENTS_COLLECTION_NAME)
@@ -82,13 +82,13 @@ class EventRemoteDataSource(
             ).await()
     }
 
-    override suspend fun deleteTaskEvent(region: Region, city: City, school: School, event: SchoolEvent, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun deleteTaskSchoolEvent(region: Region, city: City, school: School, event: SchoolEvent, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
             .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME).document(school.id)
             .collection(EVENTS_COLLECTION_NAME).document(event.id).collection(TASKS_COLLECTION_NAME).document(taskSchoolEvent.id).delete().await()
     }
 
-    suspend fun fetchFirestoreRecyclerQueryEvent(region: Region, city: City, school: School): Result<Query> = withContext(ioDispatcher) {
+    suspend fun fetchFirestoreRecyclerQuerySchoolEvent(region: Region, city: City, school: School): Result<Query> = withContext(ioDispatcher) {
         return@withContext try {
             when (val result =db.collection(REGION_COLLECTION_NAME).document(region.id)
                 .collection(CITY_COLLECTION_NAME).document(city.id)
@@ -104,7 +104,7 @@ class EventRemoteDataSource(
         }
     }
 
-    suspend fun fetchFirestoreRecyclerQueryTaskEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Query> = withContext(ioDispatcher) {
+    suspend fun fetchFirestoreRecyclerQueryTaskSchoolEvent(region: Region, city: City, school: School, event: SchoolEvent): Result<Query> = withContext(ioDispatcher) {
         return@withContext try {
             when (val result = db.collection(REGION_COLLECTION_NAME).document(region.id)
                 .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
