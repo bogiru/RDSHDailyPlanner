@@ -13,19 +13,13 @@ import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
 class SchoolEventDetailViewModel(
-    private val userRepository: UserRepository,
-    private val eventRepository: EventRepository,
+    userRepository: UserRepository,
+    private val schoolEventRepository: EventRepository,
     private val chatRepository: ChatRepository
 ) : ViewModel() {
 
-    private val _openTaskEventRecyclerView = MutableLiveData<Event<Unit>>()
-    val openTaskEventFragment: LiveData<Event<Unit>> = _openTaskEventRecyclerView
-
-    private val _openEventFragmentEvent = MutableLiveData<Event<Unit>>()
-    val openEventFragmentEvent: LiveData<Event<Unit>> = _openEventFragmentEvent
-
-    private val _openEventEditFragmentEvent = MutableLiveData<Event<Unit>>()
-    val openEventEditFragmentEvent: LiveData<Event<Unit>> = _openEventEditFragmentEvent
+    private val _openSchoolEventEditFragmentEvent = MutableLiveData<Event<Unit>>()
+    val openSchoolEventEditFragmentEvent: LiveData<Event<Unit>> = _openSchoolEventEditFragmentEvent
 
     private val _openDialogDeleteEvent = MutableLiveData<Event<Unit>>()
     val openDialogDeleteEvent: LiveData<Event<Unit>> = _openDialogDeleteEvent
@@ -34,7 +28,7 @@ class SchoolEventDetailViewModel(
     val showSnackbar: LiveData<Event<String>> = _showSnackbar
 
     val user = userRepository.currentUser.value!!
-    val schoolEvent = eventRepository.currentEvent.value!!
+    val schoolEvent = schoolEventRepository.currentEvent.value!!
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
@@ -42,7 +36,7 @@ class SchoolEventDetailViewModel(
     fun deleteSchoolEvent() {
         _dataLoading.value = true
         viewModelScope.launch {
-            when (eventRepository.deleteEvent(user)) {
+            when (schoolEventRepository.deleteEvent(user)) {
                 is Result.Success -> {
                     when (chatRepository.deleteChat(
                         user,
@@ -54,10 +48,10 @@ class SchoolEventDetailViewModel(
         }
     }
 
-    fun showEditEventFragment() {
+    fun openSchoolEventEditFragment() {
         if (user.email == schoolEvent.author.email) {
-            _openEventEditFragmentEvent.value = Event(Unit)
-            eventRepository.stateEvent.value = State.EDIT
+            _openSchoolEventEditFragmentEvent.value = Event(Unit)
+            schoolEventRepository.stateEvent.value = State.EDIT
         } else {
             _showSnackbar.value = Event("Право редактирование предоставлено только автору объявления")
         }

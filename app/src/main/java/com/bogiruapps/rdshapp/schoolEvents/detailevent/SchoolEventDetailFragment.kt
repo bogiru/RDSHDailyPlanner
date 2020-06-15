@@ -36,15 +36,8 @@ class  SchoolEventDetailFragment : Fragment() {
     }
 
     private fun setupObserverViewModel() {
-        schoolEventDetailViewModel.openTaskEventFragment.observe(viewLifecycleOwner, EventObserver {
-            openTaskSchoolEventFragment()
-        })
 
-        schoolEventDetailViewModel.openEventFragmentEvent.observe(viewLifecycleOwner, EventObserver {
-            openSchoolEventFragment()
-        })
-
-        schoolEventDetailViewModel.openEventEditFragmentEvent.observe(viewLifecycleOwner, EventObserver {
+        schoolEventDetailViewModel.openSchoolEventEditFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             openSchoolEventEditFragment()
         })
 
@@ -79,7 +72,7 @@ class  SchoolEventDetailFragment : Fragment() {
         deleteItem?.isVisible = true
 
         editItem?.setOnMenuItemClickListener {
-            schoolEventDetailViewModel.showEditEventFragment()
+            schoolEventDetailViewModel.openSchoolEventEditFragment()
             return@setOnMenuItemClickListener true
         }
 
