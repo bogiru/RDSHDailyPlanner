@@ -21,7 +21,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class SchoolEventsFragment : Fragment() {
 
-    private val eventsViewModel: SchoolEventsViewModel by viewModel()
+    private val schoolEventsViewModel: SchoolEventsViewModel by viewModel()
 
     private lateinit var adapter: SchoolEventsAdapter
     private lateinit var binding: FragmentEventsBinding
@@ -32,7 +32,7 @@ class SchoolEventsFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         setupObserverViewModel()
-        eventsViewModel.fetchFirestoreRecyclerQuerySchoolEvents()
+        schoolEventsViewModel.fetchFirestoreRecyclerQuerySchoolEvents()
         configureToolbar()
         hideBottomNavigationView(activity!!)
 
@@ -46,20 +46,20 @@ class SchoolEventsFragment : Fragment() {
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_events, container, false)
-        binding.viewModel = eventsViewModel
+        binding.viewModel = schoolEventsViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
 
     private fun setupObserverViewModel() {
-        eventsViewModel.openTaskEventFragment.observe(viewLifecycleOwner, EventObserver {
-            openTaskEventFragment()
+        schoolEventsViewModel.openTaskEventFragment.observe(viewLifecycleOwner, EventObserver {
+            openTaskSchoolEventFragment()
         })
 
-        eventsViewModel.openEditEventFragment.observe(viewLifecycleOwner, EventObserver {
-            openEventEditFragment()
+        schoolEventsViewModel.openEditEventFragment.observe(viewLifecycleOwner, EventObserver {
+            openSchoolEventEditFragment()
         })
 
-        eventsViewModel.showSchoolEventContent.observe(viewLifecycleOwner, EventObserver {
+        schoolEventsViewModel.showSchoolEventContent.observe(viewLifecycleOwner, EventObserver {
             configureRecyclerView()
         })
     }
@@ -72,25 +72,25 @@ class SchoolEventsFragment : Fragment() {
     }
 
     private fun configureRecyclerView() {
-        adapter = SchoolEventsAdapter(getFirestoreRecyclerOptions(), eventsViewModel)
+        adapter = SchoolEventsAdapter(getFirestoreRecyclerOptions(), schoolEventsViewModel)
         binding.eventsRecyclerView.layoutManager = LinearLayoutManager(activity)
         binding.eventsRecyclerView.adapter = adapter
     }
 
     private fun getFirestoreRecyclerOptions(): FirestoreRecyclerOptions<SchoolEvent> {
-        val queryEvents = eventsViewModel.querySchoolEvents.value
+        val queryEvents = schoolEventsViewModel.querySchoolEvents.value
         return FirestoreRecyclerOptions.Builder<SchoolEvent>()
             .setQuery(queryEvents!!, SchoolEvent::class.java)
             .setLifecycleOwner(this)
             .build()
     }
 
-    private fun openTaskEventFragment() {
+    private fun openTaskSchoolEventFragment() {
         findNavController().navigate(R.id.action_eventsFragment_to_eventDetailFragment)
     }
 
-    private fun openEventEditFragment() {
-        findNavController().navigate(R.id.action_eventsFragment_to_eventEditFragment)
+    private fun openSchoolEventEditFragment() {
+        findNavController().navigate(R.id.action_schoolEventsFragment_to_schoolEventEditFragment)
     }
 }
 
