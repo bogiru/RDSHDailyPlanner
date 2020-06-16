@@ -19,9 +19,7 @@ class SchoolEventRepositoryImpl(
 
     override suspend fun fetchSchoolEvent(user: User, eventId: String): Result<SchoolEvent?> = coroutineScope {
         val task = async { dataSource.fetchSchoolEvent(
-            user.region,
-            user.city,
-            user.school,
+            user,
             eventId
         )}
         return@coroutineScope task.await()
@@ -29,9 +27,7 @@ class SchoolEventRepositoryImpl(
 
     override suspend fun createSchoolEvent(user: User, event: SchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.createSchoolEvent(
-            user.region,
-            user.city,
-            user.school,
+            user,
             event
         )}
         return@coroutineScope returnSuccessOrError(task.await())
@@ -39,9 +35,7 @@ class SchoolEventRepositoryImpl(
 
     override suspend fun updateSchoolEvent(user: User, event: SchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.updateSchoolEvent(
-            user.region,
-            user.city,
-            user.school,
+            user,
             event
         )}
         return@coroutineScope returnSuccessOrError(task.await())
@@ -49,9 +43,7 @@ class SchoolEventRepositoryImpl(
 
     override suspend fun deleteSchoolEvent(user: User): Result<Void?> = coroutineScope {
         val task = async { dataSource.deleteSchoolEvent(
-            user.region,
-            user.city,
-            user.school,
+            user,
             currentEvent.value!!
         )}
         return@coroutineScope task.await()
@@ -59,9 +51,7 @@ class SchoolEventRepositoryImpl(
 
     override suspend fun createTaskSchoolEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.createTaskSchoolEvent(
-            user.region,
-            user.city,
-            user.school,
+            user,
             currentEvent.value!!, taskSchoolEvent
         )}
         return@coroutineScope returnSuccessOrError(task.await())
@@ -69,9 +59,7 @@ class SchoolEventRepositoryImpl(
 
     override suspend fun updateTaskSchoolEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.updateTaskSchoolEvent(
-            user.region,
-            user.city,
-            user.school,
+            user,
             currentEvent.value!!, taskSchoolEvent
         )}
         return@coroutineScope returnSuccessOrError(task.await())
@@ -79,28 +67,22 @@ class SchoolEventRepositoryImpl(
 
     override suspend fun deleteTaskSchoolEvent(user: User, taskSchoolEvent: TaskSchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.deleteTaskSchoolEvent(
-            user.region,
-            user.city,
-            user.school,
+            user,
             currentEvent.value!!, taskSchoolEvent
         )}
         return@coroutineScope task.await()
     }
 
     override suspend fun fetchFirestoreRecyclerQuerySchoolEvents(user: User): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQuerySchoolEvent(
-            user.region,
-            user.city,
-            user.school
-        )}
+        val task = async {
+            dataSource.fetchFirestoreRecyclerQuerySchoolEvent(user)
+        }
         return@coroutineScope (task.await())
     }
 
     override suspend fun fetchFirestoreRecyclerQueryTasksSchoolEvent(user: User): Result<Query> = coroutineScope {
         val task = async { dataSource.fetchFirestoreRecyclerQueryTaskSchoolEvent(
-            user.region,
-            user.city,
-            user.school,
+            user,
             currentEvent.value!!
         )}
         return@coroutineScope (task.await())
