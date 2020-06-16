@@ -6,6 +6,7 @@ import com.bogiruapps.rdshapp.schoolevents.SchoolEvent
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region
 import com.bogiruapps.rdshapp.school.School
+import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -16,11 +17,14 @@ class ChatRemoteDataSource(private val db: FirebaseFirestore) : ChatDataSource {
 
     private val ioDispatcher = Dispatchers.IO
 
-    override suspend fun fetchChat(region: Region, city: City, school: School, chatId: String): Result<Chat?> = withContext(ioDispatcher) {
+    override suspend fun fetchChat(user: User, chatId: String): Result<Chat?> = withContext(ioDispatcher) {
         return@withContext try {
-            when (val resultDocumentSnapshot = db.collection(REGION_COLLECTION_NAME).document(region.id)
-                .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME).document(school.id)
-                .collection(EVENTS_COLLECTION_NAME).document(chatId).get().await()) {
+            when (val resultDocumentSnapshot = db
+                .collection(REGION_COLLECTION_NAME).document(user.region.id)
+                .collection(CITY_COLLECTION_NAME).document(user.city.id)
+                .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
+                .collection(EVENTS_COLLECTION_NAME).document(chatId)
+                .get().await()) {
                 is Result.Success -> Result.Success(resultDocumentSnapshot.data.toChat())
                 is Result.Error -> Result.Error(resultDocumentSnapshot.exception)
                 is Result.Canceled -> Result.Canceled(resultDocumentSnapshot.exception)
@@ -30,16 +34,21 @@ class ChatRemoteDataSource(private val db: FirebaseFirestore) : ChatDataSource {
         }
     }
 
-    override suspend fun createChat(region: Region, city: City, school: School, chat: Chat): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
-            .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
-            .document(school.id).collection(CHATS_COLLECTION_NAME).document(chat.id).set(chat).await()
+    override suspend fun createChat(user: User, chat: Chat): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext db
+            .collection(REGION_COLLECTION_NAME).document(user.region.id)
+            .collection(CITY_COLLECTION_NAME).document(user.city.id)
+            .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
+            .collection(CHATS_COLLECTION_NAME).document(chat.id)
+            .set(chat).await()
     }
 
-    override suspend fun updateChat(region: Region, city: City, school: School, chat: Chat): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
-            .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
-            .document(school.id).collection(CHATS_COLLECTION_NAME).document(chat.id)
+    override suspend fun updateChat(user: User, chat: Chat): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext db
+            .collection(REGION_COLLECTION_NAME).document(user.region.id)
+            .collection(CITY_COLLECTION_NAME).document(user.city.id)
+            .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
+            .collection(CHATS_COLLECTION_NAME).document(chat.id)
             .update(
                 FIELD_TITLE, chat.title,
                 FIELD_LAST_MESSAGE, chat.lastMessage
@@ -47,25 +56,33 @@ class ChatRemoteDataSource(private val db: FirebaseFirestore) : ChatDataSource {
             .await()
     }
 
-    override suspend fun deleteChat(region: Region, city: City, school: School, event: SchoolEvent, chat: Chat): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
-            .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
-            .document(school.id).collection(EVENTS_COLLECTION_NAME).document(event.id)
-            .collection(CHATS_COLLECTION_NAME).document(chat.id).delete().await()
+    override suspend fun deleteChat(user: User, event: SchoolEvent, chat: Chat): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext db
+            .collection(REGION_COLLECTION_NAME).document(user.region.id)
+            .collection(CITY_COLLECTION_NAME).document(user.city.id)
+            .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
+            .collection(EVENTS_COLLECTION_NAME).document(event.id)
+            .collection(CHATS_COLLECTION_NAME).document(chat.id)
+            .delete().await()
     }
 
-    override suspend fun createMessage(region: Region, city: City, school: School, chatId: String, message: Message): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext db.collection(REGION_COLLECTION_NAME).document(region.id)
-            .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
-            .document(school.id).collection(EVENTS_COLLECTION_NAME)
-            .document(chatId).collection(MESSAGES_COLLECTION_NAME).document().set(message).await()
+    override suspend fun createMessage(user: User, chatId: String, message: Message): Result<Void?> = withContext(ioDispatcher) {
+        return@withContext db
+            .collection(REGION_COLLECTION_NAME).document(user.region.id)
+            .collection(CITY_COLLECTION_NAME).document(user.city.id)
+            .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
+            .collection(EVENTS_COLLECTION_NAME).document(chatId)
+            .collection(MESSAGES_COLLECTION_NAME).document()
+            .set(message).await()
     }
 
-    suspend fun fetchFirestoreRecyclerQueryChats(region: Region, city: City, school: School): Result<Query> = withContext(ioDispatcher) {
+    suspend fun fetchFirestoreRecyclerQueryChats(user: User): Result<Query> = withContext(ioDispatcher) {
         return@withContext try {
-            when (val result = db.collection(REGION_COLLECTION_NAME).document(region.id)
-                .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
-                .document(school.id).collection(CHATS_COLLECTION_NAME)
+            when (val result = db
+                .collection(REGION_COLLECTION_NAME).document(user.region.id)
+                .collection(CITY_COLLECTION_NAME).document(user.city.id)
+                .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
+                .collection(CHATS_COLLECTION_NAME)
                 .get().await()) {
                 is Result.Success -> Result.Success(result.data.query)
                 is Result.Error -> Result.Error(result.exception)
@@ -76,13 +93,14 @@ class ChatRemoteDataSource(private val db: FirebaseFirestore) : ChatDataSource {
         }
     }
 
-    suspend fun fetchFirestoreRecyclerQueryMessage(region: Region, city: City, school: School, chatId: String): Result<Query> = withContext(ioDispatcher) {
+    suspend fun fetchFirestoreRecyclerQueryMessage(user: User, chatId: String): Result<Query> = withContext(ioDispatcher) {
         return@withContext try {
-            when (val result = db.collection(REGION_COLLECTION_NAME).document(region.id)
-                .collection(CITY_COLLECTION_NAME).document(city.id)
-                .collection(SCHOOL_COLLECTION_NAME).document(school.id)
-                .collection(EVENTS_COLLECTION_NAME).document(chatId).collection(
-                    MESSAGES_COLLECTION_NAME)
+            when (val result = db
+                .collection(REGION_COLLECTION_NAME).document(user.region.id)
+                .collection(CITY_COLLECTION_NAME).document(user.city.id)
+                .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
+                .collection(EVENTS_COLLECTION_NAME).document(chatId)
+                .collection(MESSAGES_COLLECTION_NAME)
                 .orderBy(FIELD_DATE, Query.Direction.DESCENDING).get().await()) {
                 is Result.Success -> Result.Success(result.data.query)
                 is Result.Error -> Result.Error(result.exception)

@@ -16,29 +16,21 @@ class ChatRepositoryImpl(private val dataSource: ChatRemoteDataSource): ChatRepo
     override val currentChat = MutableLiveData<Chat>()
 
     override suspend fun fetchFirestoreRecyclerQueryChats(user: User): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryChats(
-            user.region,
-            user.city,
-            user.school
-        )}
+        val task = async { dataSource.fetchFirestoreRecyclerQueryChats(user)}
         return@coroutineScope (task.await())
     }
 
     override suspend fun fetchFirestoreRecyclerQueryEventMessage(user: User): Result<Query> = coroutineScope {
         val task = async { dataSource.fetchFirestoreRecyclerQueryMessage(
-            user.region,
-            user.city,
-            user.school,
-            currentChat.value!!.id
-        )}
+                user,
+                currentChat.value!!.id
+            )}
         return@coroutineScope (task.await())
     }
 
     override suspend fun fetchChat(user: User, chatId: String): Result<Chat?> = coroutineScope {
         val task = async { dataSource.fetchChat(
-            user.region,
-            user.city,
-            user.school,
+            user,
             chatId)}
 
         return@coroutineScope task.await()
@@ -46,9 +38,7 @@ class ChatRepositoryImpl(private val dataSource: ChatRemoteDataSource): ChatRepo
 
     override suspend fun createChat(user: User, chat: Chat): Result<Void?> = coroutineScope {
         val task = async { dataSource.createChat(
-            user.region,
-            user.city,
-            user.school,
+            user,
             chat
         )}
         return@coroutineScope returnSuccessOrError(task.await())
@@ -56,9 +46,7 @@ class ChatRepositoryImpl(private val dataSource: ChatRemoteDataSource): ChatRepo
 
     override suspend fun updateChat(user: User, chat: Chat): Result<Void?> = coroutineScope {
         val task = async { dataSource.updateChat(
-            user.region,
-            user.city,
-            user.school,
+            user,
             chat
         )}
         return@coroutineScope returnSuccessOrError(task.await())
@@ -66,9 +54,7 @@ class ChatRepositoryImpl(private val dataSource: ChatRemoteDataSource): ChatRepo
 
     override suspend fun deleteChat(user: User, event: SchoolEvent): Result<Void?> = coroutineScope {
         val task = async { dataSource.deleteChat(
-            user.region,
-            user.city,
-            user.school,
+            user,
             event,
             currentChat.value!!
         )}
@@ -77,9 +63,7 @@ class ChatRepositoryImpl(private val dataSource: ChatRemoteDataSource): ChatRepo
 
     override suspend fun createMessage(user: User, message: Message): Result<Void?> = coroutineScope {
         val task = async { dataSource.createMessage(
-            user.region,
-            user.city,
-            user.school,
+            user,
             currentChat.value!!.id, message
         )}
         return@coroutineScope returnSuccessOrError(task.await())

@@ -3,21 +3,19 @@ package com.bogiruapps.rdshapp.data.chat
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.chats.chatroomevent.Message
 import com.bogiruapps.rdshapp.schoolevents.SchoolEvent
-import com.bogiruapps.rdshapp.school.City
-import com.bogiruapps.rdshapp.school.Region
-import com.bogiruapps.rdshapp.school.School
+import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 
 interface ChatDataSource {
 
-    suspend fun fetchChat(region: Region, city: City, school: School, chatId: String): Result<Chat?>
+    suspend fun fetchChat(user: User, chatId: String): Result<Chat?>
 
-    suspend fun createChat(region: Region, city: City, school: School, chat: Chat): Result<Void?>
+    suspend fun createChat(user: User, chat: Chat): Result<Void?>
 
-    suspend fun updateChat(region: Region, city: City, school: School, chat: Chat): Result<Void?>
+    suspend fun updateChat(user: User, chat: Chat): Result<Void?>
 
-    suspend fun deleteChat(region: Region, city: City, school: School, event: SchoolEvent, chat: Chat): Result<Void?>
+    suspend fun deleteChat(user: User, event: SchoolEvent, chat: Chat): Result<Void?>
 
-    suspend fun createMessage(region: Region, city: City, school: School, chatId: String, message: Message): Result<Void?>
+    suspend fun createMessage(user: User, chatId: String, message: Message): Result<Void?>
 
 }
