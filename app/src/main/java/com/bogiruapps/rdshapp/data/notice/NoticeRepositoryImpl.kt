@@ -16,9 +16,7 @@ class NoticeRepositoryImpl (private val dataSource: NoticeRemoteDataSource) : No
 
     override suspend fun createNewNotice(user: com.bogiruapps.rdshapp.user.User, notice: Notice): Result<Void?> = coroutineScope {
         val task = async { dataSource.createNotice(
-            user.region,
-            user.city,
-            user.school,
+            user,
             notice
         )}
         return@coroutineScope task.await()
@@ -26,9 +24,7 @@ class NoticeRepositoryImpl (private val dataSource: NoticeRemoteDataSource) : No
 
     override suspend fun updateNotice(user: User, notice: Notice): Result<Void?> = coroutineScope {
         val task = async { dataSource.updateNotice(
-            user.region,
-            user.city,
-            user.school,
+            user,
             notice
         )}
         return@coroutineScope task.await()
@@ -36,19 +32,16 @@ class NoticeRepositoryImpl (private val dataSource: NoticeRemoteDataSource) : No
 
     override suspend fun deleteNotice(user: User): Result<Void?> = coroutineScope {
         val task = async { dataSource.deleteNotice(
-            user.region,
-            user.city,
-            user.school,
-            currentNotice.value!!)}
+            user,
+            currentNotice.value!!
+        )}
         return@coroutineScope task.await()
     }
 
     override suspend fun fetchFirestoreRecyclerQueryNotice(user: User): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryNotice(
-            user.region,
-            user.city,
-            user.school
-        )}
+        val task = async {
+            dataSource.fetchFirestoreRecyclerQueryNotice(user)
+        }
         return@coroutineScope (task.await())
     }
 
