@@ -13,6 +13,7 @@ import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.RatingFragmentBinding
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
+import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
@@ -47,6 +48,10 @@ class RatingFragment : Fragment() {
     private fun setupObserverViewModel() {
         ratingViewModel.queryUsers.observe(viewLifecycleOwner, Observer {
             configureRecyclerView(it)
+        })
+
+        ratingViewModel.showSnackbar.observe(viewLifecycleOwner, Observer { message ->
+            showSnackbar(view!!, message)
         })
     }
 

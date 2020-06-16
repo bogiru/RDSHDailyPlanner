@@ -24,8 +24,8 @@ class SchoolEventDetailViewModel(
     private val _openDialogDeleteEvent = MutableLiveData<Event<Unit>>()
     val openDialogDeleteEvent: LiveData<Event<Unit>> = _openDialogDeleteEvent
 
-    private val _showSnackbar = MutableLiveData<Event<String>>()
-    val showSnackbar: LiveData<Event<String>> = _showSnackbar
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: LiveData<String> = _showSnackbar
 
     val user = userRepository.currentUser.value!!
     val schoolEvent = schoolEventRepository.currentEvent.value!!
@@ -42,8 +42,18 @@ class SchoolEventDetailViewModel(
                         user,
                         schoolEvent)) {
                         is Result.Success -> _dataLoading.value = false
+                        is Result.Error ->
+                            _showSnackbar.value = "Ошибка при удалении чата"
+                        is Result.Error ->
+                            _showSnackbar.value = "Ошибка при удалении чата"
                     }
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при удалении мероприятия. Попробуйте снова"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при удалении мероприятия. Попробуйте снова"
             }
         }
     }
@@ -53,7 +63,7 @@ class SchoolEventDetailViewModel(
             _openSchoolEventEditFragmentEvent.value = Event(Unit)
             schoolEventRepository.stateEvent.value = State.EDIT
         } else {
-            _showSnackbar.value = Event("Право редактирование предоставлено только автору объявления")
+            _showSnackbar.value = "Право редактирование предоставлено только автору объявления"
         }
 
     }
@@ -62,7 +72,7 @@ class SchoolEventDetailViewModel(
         if (user.name == schoolEvent.author.name)  {
             _openDialogDeleteEvent.value = Event(Unit)
         } else {
-            _showSnackbar.value = Event("Право удаления предоставлено только автору объявления")
+            _showSnackbar.value = "Право удаления предоставлено только автору объявления"
         }
     }
 }

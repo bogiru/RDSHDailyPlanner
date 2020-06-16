@@ -33,10 +33,9 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
     }
 
     override suspend fun fetchUsers(): Result<List<User>> = coroutineScope {
-        val task = async { dataSource.fetchUsers(currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school
-        )}
+        val task = async {
+            dataSource.fetchUsers(currentUser.value!!
+            )}
         return@coroutineScope task.await()
     }
 

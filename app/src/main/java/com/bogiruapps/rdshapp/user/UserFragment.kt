@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import android.content.Intent
 import android.widget.ImageView
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
@@ -22,6 +23,7 @@ import com.bogiruapps.rdshapp.utils.*
 import com.bumptech.glide.Glide
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.storage.FirebaseStorage
+import org.koin.android.ext.android.get
 
 
 class UserFragment : Fragment() {
@@ -82,6 +84,10 @@ class UserFragment : Fragment() {
         userViewModel.imageLoadingToRemoteStorageCompleteEvent.observe(viewLifecycleOwner, EventObserver {
             showSnackbar(view!!, "Изменение изображения профиля может занять несколько минут")
             setImageToView()
+        })
+
+        userViewModel.showSnackbar.observe(viewLifecycleOwner, Observer { message ->
+            showSnackbar(view!!, message)
         })
     }
 

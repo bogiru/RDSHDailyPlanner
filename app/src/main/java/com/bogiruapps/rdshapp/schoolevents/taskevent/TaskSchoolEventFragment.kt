@@ -72,7 +72,7 @@ class TaskSchoolEventFragment : Fragment() {
             showAllertDialogDelete(it)
         })
 
-        taskSchoolEventViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver { message ->
+        taskSchoolEventViewModel.showSnackbar.observe(viewLifecycleOwner, Observer { message ->
             showSnackbar(view!!, message)
         })
 

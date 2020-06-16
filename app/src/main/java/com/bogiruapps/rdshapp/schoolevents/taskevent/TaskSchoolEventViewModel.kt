@@ -28,8 +28,8 @@ class TaskSchoolEventViewModel(
     private val _openTaskSchoolEventDeleteFragmentEvent = MutableLiveData<Event<TaskSchoolEvent>>()
     val openTaskEventDeleteFragmentSchoolEvent: LiveData<Event<TaskSchoolEvent>> = _openTaskSchoolEventDeleteFragmentEvent
 
-    private val _showSnackbar = MutableLiveData<Event<String>>()
-    val showSnackbar: LiveData<Event<String>> = _showSnackbar
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: LiveData<String> = _showSnackbar
 
     val schoolEvent = schoolEventRepository.currentEvent.value!!
     val user = userRepository.currentUser.value!!
@@ -42,11 +42,18 @@ class TaskSchoolEventViewModel(
 
     fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
-            when (val result = schoolEventRepository.fetchFirestoreRecyclerQueryTasksSchoolEvent(user)) {
+            when (val result =
+                schoolEventRepository.fetchFirestoreRecyclerQueryTasksSchoolEvent(user)) {
                 is Result.Success -> {
                     _queryTaskSchoolEvent.value = result.data
                     _dataLoading.value = false
                 }
+
+                is Result.Canceled ->
+                    showSnackbar("Ошибка при получении списка задач")
+
+                is Result.Error ->
+                    showSnackbar("Ошибка при получении списка задач")
             }
         }
     }
@@ -77,6 +84,12 @@ class TaskSchoolEventViewModel(
                         userRepository.updateUser(userRepository.currentUser.value!!)
                         _dataLoading.value = false
                     }
+
+                    is Result.Canceled ->
+                        showSnackbar("Ошибка при обновлении задачи. Попробуйте снова")
+
+                    is Result.Error ->
+                        showSnackbar("Ошибка при обновлении задачи. Попробуйте снова")
                 }
             }
         }
@@ -93,7 +106,7 @@ class TaskSchoolEventViewModel(
     }
 
     fun showSnackbar(message: String) {
-        _showSnackbar.value = Event(message)
+        _showSnackbar.value = message
     }
 
 }

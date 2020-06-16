@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 
@@ -52,7 +53,7 @@ class NoticeDetailFragment : Fragment() {
             showAlertDialogDelete()
         })
 
-        noticeDetailViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver {message ->
+        noticeDetailViewModel.showSnackbar.observe(viewLifecycleOwner, Observer {message ->
             showSnackbar(view!!, message)
         })
     }

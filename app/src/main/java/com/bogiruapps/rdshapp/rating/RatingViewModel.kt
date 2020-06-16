@@ -16,6 +16,8 @@ class RatingViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _queryUsers = MutableLiveData<Query>()
     val queryUsers: LiveData<Query> = _queryUsers
 
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: MutableLiveData<String> = _showSnackbar
 
     fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
@@ -24,6 +26,12 @@ class RatingViewModel(val userRepository: UserRepository) : ViewModel() {
                     _queryUsers.value = result.data
                     _dataLoading.value = false
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при получении списка учеников"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при получении списка учеников"
             }
         }
     }

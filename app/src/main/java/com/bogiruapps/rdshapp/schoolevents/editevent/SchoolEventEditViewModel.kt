@@ -91,6 +91,13 @@ class SchoolEventEditViewModel(
                         }
                     }
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при создании мероприятия. Попробуйте снова"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при создании мероприятия. Попробуйте снова"
+
             }
         }
     }
@@ -101,7 +108,7 @@ class SchoolEventEditViewModel(
                 is Result.Success -> {
                     val tempChat = chatRepository.currentChat.value!!
                     tempChat.title = event.title
-                    tempChat.indexImage = event.imageIndex
+                    tempChat.indexImage = _imageIndex.value!!
 
                     when (chatRepository.updateChat(user, tempChat)) {
                         is Result.Success -> {
@@ -109,8 +116,20 @@ class SchoolEventEditViewModel(
                             _dataLoading.value = false
                             openSchoolEventFragment()
                         }
+
+                        is Result.Canceled ->
+                            _showSnackbar.value = "Ошибка при обновлении чата. Попробуйте снова"
+
+                        is Result.Error ->
+                            _showSnackbar.value = "Ошибка при обновлении чата. Попробуйте снова"
                     }
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при обновлении мероприятия. Попробуйте снова"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при обновлении мероприятия. Попробуйте снова"
             }
         }
     }

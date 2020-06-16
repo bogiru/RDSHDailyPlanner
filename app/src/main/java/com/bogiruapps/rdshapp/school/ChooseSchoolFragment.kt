@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentChooseSchoolBinding
+import com.bogiruapps.rdshapp.utils.showSnackbar
 import org.koin.android.viewmodel.ext.android.viewModel
 
 /**
@@ -65,6 +66,10 @@ class ChooseSchoolFragment : Fragment() {
 
         schoolViewModel.openNoticeFragmentEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_choseSchoolFragment_to_noticeFragment)
+        })
+
+        schoolViewModel.showSnackbar.observe(viewLifecycleOwner, Observer { message ->
+            showSnackbar(view!!, message)
         })
     }
 

@@ -13,8 +13,6 @@ import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentSchoolEventEditBinding
 import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
 import com.bogiruapps.rdshapp.utils.showSnackbar
-import com.bumptech.glide.Glide
-import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 

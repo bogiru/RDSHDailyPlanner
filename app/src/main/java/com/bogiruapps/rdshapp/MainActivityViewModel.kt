@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
+import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseUser
@@ -28,6 +29,9 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
 
     private val _setVisibilityEmailUnverifiedLayoutEvent = MutableLiveData<Event<Boolean>>()
     val setVisibilityEmailUnverifiedLayoutEvent: LiveData<Event<Boolean>> = _setVisibilityEmailUnverifiedLayoutEvent
+
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: MutableLiveData<String> = _showSnackbar
 
     val user: LiveData<User> = userRepository.currentUser
 
@@ -74,6 +78,12 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
                         createUserToDb(firebaseUser)
                     }
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при получении информации о пользователе"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при получении информации о пользователе"
             }
         }
     }
@@ -83,6 +93,12 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
         viewModelScope.launch {
             when (userRepository.createNewUser(user)) {
                 is Result.Success -> fetchCurrentUserInformation(firebaseUser)
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при создании пользователя в базе данных"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при создании пользователя в базе данных"
             }
         }
     }

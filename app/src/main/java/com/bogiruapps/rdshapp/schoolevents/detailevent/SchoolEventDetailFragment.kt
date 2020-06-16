@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -45,7 +46,7 @@ class  SchoolEventDetailFragment : Fragment() {
             showAlertDialogDeleteSchoolEvent()
         })
 
-        schoolEventDetailViewModel.showSnackbar.observe(viewLifecycleOwner, EventObserver { message ->
+        schoolEventDetailViewModel.showSnackbar.observe(viewLifecycleOwner, Observer { message ->
             showSnackbar(view!!, message)
         })
     }

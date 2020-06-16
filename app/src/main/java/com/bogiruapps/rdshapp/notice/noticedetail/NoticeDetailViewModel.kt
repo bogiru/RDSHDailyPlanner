@@ -25,8 +25,8 @@ class NoticeDetailViewModel(
     private val _openNoticeDeleteFragmentEvent = MutableLiveData<Event<Unit>>()
     val openDialogDeleteNoticeEvent: LiveData<Event<Unit>> = _openNoticeDeleteFragmentEvent
 
-    private val _showSnackbar = MutableLiveData<Event<String>>()
-    val showSnackbar: LiveData<Event<String>> = _showSnackbar
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: LiveData<String> = _showSnackbar
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
@@ -39,6 +39,12 @@ class NoticeDetailViewModel(
         viewModelScope.launch {
             when (noticeRepository.deleteNotice(user)) {
                 is Result.Success -> _dataLoading.value = false
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при удалении объявления. Попробуйте снова"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при удалении объявления. Попробуйте снова"
             }
         }
     }
@@ -48,7 +54,7 @@ class NoticeDetailViewModel(
             _openNoticeEditFragmentEvent.value = Event(Unit)
             noticeRepository.stateNotice.value = State.EDIT
         } else {
-            _showSnackbar.value = Event("Право редактирование предоставлено только автору объявления")
+            _showSnackbar.value = "Право редактирование предоставлено только автору объявления"
         }
     }
 
@@ -56,7 +62,7 @@ class NoticeDetailViewModel(
         if (user.id  == notice!!.author.id) {
             _openNoticeDeleteFragmentEvent.value = Event(Unit)
         } else {
-            _showSnackbar.value = Event("Право удаления предоставлено только автору объявления")
+            _showSnackbar.value = "Право удаления предоставлено только автору объявления"
         }
     }
 }

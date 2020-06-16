@@ -51,6 +51,12 @@ class NoticeEditViewModel(
                     _dataLoading.value = false
                     openNoticeFragment()
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при создании объявления. Попробуйте снова"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при создании объявления. Попробуйте снова"
             }
         }
     }
@@ -65,6 +71,12 @@ class NoticeEditViewModel(
                         _dataLoading.value = false
                         openNoticeFragment()
                     }
+
+                    is Result.Canceled ->
+                        _showSnackbar.value = "Ошибка при обновлении объявления. Попробуйте снова"
+
+                    is Result.Error ->
+                        _showSnackbar.value = "Ошибка при обновлении объявления. Попробуйте снова"
                 }
             }
         }

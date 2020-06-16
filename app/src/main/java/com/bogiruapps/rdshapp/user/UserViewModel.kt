@@ -35,6 +35,9 @@ class UserViewModel(
     private val _imageLoadingToRemoteStorageCompleteEvent = MutableLiveData<Event<Unit>>()
     val imageLoadingToRemoteStorageCompleteEvent: LiveData<Event<Unit>> = _imageLoadingToRemoteStorageCompleteEvent
 
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: MutableLiveData<String> = _showSnackbar
+
     val user = userRepository.currentUser.value!!
 
     fun fetchPictureFromGallery(resultCode: Int, uri: Uri?) {
@@ -66,6 +69,12 @@ class UserViewModel(
                         }
                     }
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при удалении пользователя из школы. Попробуйте снова"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при удалении пользователя из школы. Попробуйте снова"
             }
         }
     }
@@ -78,6 +87,12 @@ class UserViewModel(
                     _imageLoadingToRemoteStorageCompleteEvent.value = Event(Unit)
                     _dataLoading.value = false
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при загрузке изображения. Попробуйте снова"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при загрузке изображения. Попробуйте снова"
             }
         }
     }

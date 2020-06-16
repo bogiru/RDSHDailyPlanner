@@ -36,6 +36,9 @@ class SchoolViewModel(
     private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
     val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
 
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: MutableLiveData<String> = _showSnackbar
+
     val user = userRepository.currentUser.value!!
 
     init {
@@ -51,6 +54,12 @@ class SchoolViewModel(
                     userRepository.currentUser.value = user
                     fetchCities()
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при обновлении региона. Попробуйте снова"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при обновлении региона. Попробуйте снова"
             }
         }
     }
@@ -64,6 +73,12 @@ class SchoolViewModel(
                     userRepository.currentUser.value = user
                     fetchSchools()
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при обновлении города/района. Попробуйте снова"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при обновлении города/района. Попробуйте снова"
             }
         }
     }
@@ -79,8 +94,19 @@ class SchoolViewModel(
                                 _dataLoading.value = false
                                 _showSubmitButton.value = Event(Unit)
                             }
+                            is Result.Canceled ->
+                                _showSnackbar.value = "Ошибка при добавлении ученика в школу. Попробуйте снова"
+
+                            is Result.Error ->
+                                _showSnackbar.value = "Ошибка при добавлении ученика в школу. Попробуйте снова"
                         }
                     }
+
+                    is Result.Canceled ->
+                        _showSnackbar.value = "Ошибка при обновлении данных пользователя. Попробуйте снова"
+
+                    is Result.Error ->
+                        _showSnackbar.value = "Ошибка при обновлении данных пользователя. Попробуйте снова"
                 }
             }
     }
@@ -92,6 +118,12 @@ class SchoolViewModel(
                     is Result.Success -> {
                         _resetAddress.value = Event(Unit)
                     }
+
+                    is Result.Canceled ->
+                        _showSnackbar.value = "Ошибка при удалении ученика из школы. Попробуйте снова"
+
+                    is Result.Error ->
+                        _showSnackbar.value = "Ошибка при удалении ученика из школы. Попробуйте снова"
                 }
             } else {
                 _resetAddress.value = Event(Unit)
@@ -110,6 +142,12 @@ class SchoolViewModel(
                     _dataLoading.value = false
                     _regions.value = result.data
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при получении регионов"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при получении регионов"
             }
         }
     }
@@ -121,6 +159,12 @@ class SchoolViewModel(
                     _dataLoading.value = false
                     _cities.value = result.data
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при получении городов"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при получении городов"
             }
         }
     }
@@ -132,6 +176,12 @@ class SchoolViewModel(
                     _schools.value = result.data
                     _dataLoading.value = false
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при получении школ"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при получении школ"
             }
         }
     }

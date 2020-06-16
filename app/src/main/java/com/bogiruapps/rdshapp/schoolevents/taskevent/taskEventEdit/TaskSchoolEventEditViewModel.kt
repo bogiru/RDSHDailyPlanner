@@ -31,6 +31,10 @@ class TaskSchoolEventEditViewModel(
 
     val taskSchoolEvent: TaskSchoolEvent = TaskSchoolEvent()
 
+    init {
+        fetchUsers()
+    }
+
     fun createTaskEvent() {
         if (taskSchoolEvent.title == "" || taskSchoolEvent.description == "") {
             _showSnackbar.value = "Не все поля заполнены"
@@ -43,29 +47,27 @@ class TaskSchoolEventEditViewModel(
                             is Result.Success -> showTaskEventFragment()
                         }
                     }
+
+                    is Result.Canceled ->
+                        _showSnackbar.value = "Ошибка при создании задачи. Попробуйте снова"
+
+                    is Result.Error ->
+                        _showSnackbar.value = "Ошибка при создании задачи. Попробуйте снова"
                 }
             }
         }
     }
 
-    init {
-        initUsers()
-    }
-
-   /* fun editTaskEvent(event: SchoolEvent) {
-        if (event.id == "") createTaskEvent(event)
-        else viewModelScope.launch {
-            userRepository.editEvent(event)
-            showDetailEventFragment()
-        }
-    }*/
-
-    private fun initUsers() {
+    private fun fetchUsers() {
         viewModelScope.launch {
             when (val result = userRepository.fetchUsers()) {
-                is Result.Success -> {
-                    _users.value = result.data
-                }
+                is Result.Success -> _users.value = result.data
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при получении учеников. Попробуйте снова"
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при получении учеников. Попробуйте снова"
             }
         }
     }

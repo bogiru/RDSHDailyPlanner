@@ -35,6 +35,9 @@ class NoticeViewModel(
     private val _queryNotices = MutableLiveData<Query>()
     val queryNotices: LiveData<Query> = _queryNotices
 
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: MutableLiveData<String> = _showSnackbar
+
     private val user = userRepository.currentUser.value
 
     fun checkUserSchool() {
@@ -66,6 +69,12 @@ class NoticeViewModel(
                     _dataLoading.value = false
                     showNoticeFragment()
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при получении списка объявлений"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при получении списка объявлений"
             }
         }
     }

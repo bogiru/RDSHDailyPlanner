@@ -19,9 +19,11 @@ import com.bogiruapps.rdshapp.databinding.ActivityMainBinding
 import com.bogiruapps.rdshapp.databinding.DrawerHeaderBinding
 import com.bogiruapps.rdshapp.utils.ConnectionLiveData
 import com.bogiruapps.rdshapp.utils.RC_SIGN_IN
+import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -98,6 +100,10 @@ class MainActivity : AppCompatActivity() {
                 binding.emailUnverifiedLayout.visibility = View.INVISIBLE
                 setEnabledMenuItem(true)
             }
+        })
+
+        mainViewModel.showSnackbar.observe(this, Observer { message ->
+            showSnackbar(this.get(), message)
         })
 
     }

@@ -35,6 +35,9 @@ class SchoolEventsViewModel(
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: MutableLiveData<String> = _showSnackbar
+
     private val user = userRepository.currentUser.value!!
 
     fun fetchFirestoreRecyclerQuerySchoolEvents() {
@@ -47,6 +50,12 @@ class SchoolEventsViewModel(
                     _dataLoading.value = false
                     showSchoolEventContent()
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при получении списка мероприятий"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при получении списка мероприятий"
             }
         }
     }
@@ -61,6 +70,12 @@ class SchoolEventsViewModel(
                     chatRepository.currentChat.value = result.data
                     _openSchoolEventDetailFragment.value = Event(view)
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = "Ошибка при получении информации о мероприятии. Попробуйте снова"
+
+                is Result.Error ->
+                    _showSnackbar.value = "Ошибка при получении информации о мероприятии. Попробуйте снова"
             }
         }
     }
