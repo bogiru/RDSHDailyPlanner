@@ -28,9 +28,11 @@ class ChatsViewModel(
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
+    private val user = userRepository.currentUser.value!!
+
     fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
-            when (val result = chatRepository.fetchFirestoreRecyclerQueryChats(userRepository.currentUser.value!!)) {
+            when (val result = chatRepository.fetchFirestoreRecyclerQueryChats(user)) {
                 is Result.Success -> {
                     _query.value = result.data
                     _dataLoading.value = false

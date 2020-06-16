@@ -26,6 +26,7 @@ class NoticeEditViewModel(
     val showSnackbar: MutableLiveData<String> = _showSnackbar
 
     val notice = noticeRepository.currentNotice
+    private val user = userRepository.currentUser.value!!
 
     fun checkCreateNoticeStatus(): Boolean = noticeRepository.stateNotice.value == State.CREATE
 
@@ -42,10 +43,10 @@ class NoticeEditViewModel(
     }
 
     private fun createNotice(notice: Notice) {
-        notice.author = userRepository.currentUser.value!!
+        notice.author = user
 
         viewModelScope.launch {
-            when (noticeRepository.createNewNotice(userRepository.currentUser.value!!, notice)) {
+            when (noticeRepository.createNewNotice(user, notice)) {
                 is Result.Success -> {
                     _dataLoading.value = false
                     openNoticeFragment()
@@ -59,7 +60,7 @@ class NoticeEditViewModel(
             createNotice(notice)
         } else {
             viewModelScope.launch {
-                when (noticeRepository.updateNotice(userRepository.currentUser.value!!, notice)) {
+                when (noticeRepository.updateNotice(user, notice)) {
                     is Result.Success -> {
                         _dataLoading.value = false
                         openNoticeFragment()

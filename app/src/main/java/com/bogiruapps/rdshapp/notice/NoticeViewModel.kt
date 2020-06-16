@@ -35,8 +35,9 @@ class NoticeViewModel(
     private val _queryNotices = MutableLiveData<Query>()
     val queryNotices: LiveData<Query> = _queryNotices
 
+    private val user = userRepository.currentUser.value
+
     fun checkUserSchool() {
-        val user = userRepository.currentUser.value
         if (user != null) {
             val school = user.school
             if (school.name == "") {
@@ -49,9 +50,9 @@ class NoticeViewModel(
 
     fun addUserViewed(notice: Notice) {
         viewModelScope.launch {
-            if (!notice.listOfUsersViewed.contains(userRepository.currentUser.value!!.id)) {
-                notice.listOfUsersViewed.add(userRepository.currentUser.value!!.id!!)
-                noticeRepository.updateNotice(userRepository.currentUser.value!!, notice)
+            if (!notice.listOfUsersViewed.contains(user!!.id)) {
+                notice.listOfUsersViewed.add(user.id)
+                noticeRepository.updateNotice(user, notice)
             }
         }
     }
@@ -59,7 +60,7 @@ class NoticeViewModel(
     private fun fetchFirestoreRecyclerQueryNotices() {
         viewModelScope.launch {
             when (val result = noticeRepository
-                .fetchFirestoreRecyclerQueryNotice(userRepository.currentUser.value!!)) {
+                .fetchFirestoreRecyclerQueryNotice(user!!)) {
                 is Result.Success -> {
                     _queryNotices.value = result.data
                     _dataLoading.value = false

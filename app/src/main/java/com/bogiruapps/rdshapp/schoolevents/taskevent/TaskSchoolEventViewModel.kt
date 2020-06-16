@@ -32,18 +32,17 @@ class TaskSchoolEventViewModel(
     val showSnackbar: LiveData<Event<String>> = _showSnackbar
 
     val schoolEvent = schoolEventRepository.currentEvent.value!!
-
     val user = userRepository.currentUser.value!!
 
     init {
         fetchFirestoreRecyclerQuery()
     }
 
-    fun checkUserIsAuthorSchoolEvent() =  schoolEvent.author.id == userRepository.currentUser.value!!.id
+    fun checkUserIsAuthorSchoolEvent() =  schoolEvent.author.id == user.id
 
     fun fetchFirestoreRecyclerQuery() {
         viewModelScope.launch {
-            when (val result = schoolEventRepository.fetchFirestoreRecyclerQueryTasksSchoolEvent(userRepository.currentUser.value!!)) {
+            when (val result = schoolEventRepository.fetchFirestoreRecyclerQueryTasksSchoolEvent(user)) {
                 is Result.Success -> {
                     _queryTaskSchoolEvent.value = result.data
                     _dataLoading.value = false
@@ -54,7 +53,7 @@ class TaskSchoolEventViewModel(
 
     fun taskCompleted(taskSchoolEvent: TaskSchoolEvent) {
         viewModelScope.launch {
-            if (taskSchoolEvent.user!!.id == userRepository.currentUser.value?.id) {
+            if (taskSchoolEvent.user!!.id == user.id) {
                 val task = TaskSchoolEvent(
                     taskSchoolEvent.id,
                     taskSchoolEvent.title,
@@ -65,7 +64,7 @@ class TaskSchoolEventViewModel(
 
                 _dataLoading.value = true
 
-                when (schoolEventRepository.updateTaskSchoolEvent(userRepository.currentUser.value!!, task)) {
+                when (schoolEventRepository.updateTaskSchoolEvent(user, task)) {
                     is Result.Success -> {
                         if (taskSchoolEvent.completed) {
                             schoolEventRepository.currentEvent.value!!.countCompletedTask--
@@ -85,7 +84,7 @@ class TaskSchoolEventViewModel(
 
     fun deleteTaskSchoolEvent(taskSchoolEvent: TaskSchoolEvent) {
         viewModelScope.launch {
-            schoolEventRepository.deleteTaskSchoolEvent(userRepository.currentUser.value!!, taskSchoolEvent)
+            schoolEventRepository.deleteTaskSchoolEvent(user, taskSchoolEvent)
         }
     }
 

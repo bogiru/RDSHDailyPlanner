@@ -6,6 +6,6 @@ import java.util.*
 data class Chat(
     val id: String = "",
     var title: String = "",
-    val lastMessage: Message = Message("Сообщений нет"),
+    var lastMessage: Message = Message("Сообщений нет"),
     var indexImage: Int = Random().nextInt(25)
 )

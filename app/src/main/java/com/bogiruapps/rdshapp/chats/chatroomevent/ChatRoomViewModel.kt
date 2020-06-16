@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
-import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
 import com.bogiruapps.rdshapp.utils.Result
@@ -32,10 +31,13 @@ class ChatRoomViewModel(
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
+    private val chat = chatRepository.currentChat.value!!
+    private val user = userRepository.currentUser.value!!
+
     fun fetchFirestoreRecyclerQuery() {
         _dataLoading.value = true
         viewModelScope.launch {
-            when (val result = chatRepository.fetchFirestoreRecyclerQueryEventMessage(userRepository.currentUser.value!!)) {
+            when (val result = chatRepository.fetchFirestoreRecyclerQueryEventMessage(user)) {
                 is Result.Success -> {
                     _query.value = result.data
                     _showEventChatRoomContent.value = Event(Unit)
@@ -48,14 +50,12 @@ class ChatRoomViewModel(
     fun loadMessage(textMessage: String) {
         clearEventChatRoomEdtText()
         viewModelScope.launch {
-            val message = Message(textMessage, userRepository.currentUser.value!!)
-            when(chatRepository.createMessage(userRepository.currentUser.value!!, message)) {
+            val message = Message(textMessage, user)
+            when(chatRepository.createMessage(user, message)) {
                 is Result.Success -> {
-                    val chat = Chat(chatRepository.currentChat.value!!.id,
-                        chatRepository.currentChat.value!!.title,
-                        message,
-                        chatRepository.currentChat.value!!.indexImage)
-                    when (chatRepository.updateChat(userRepository.currentUser.value!!, chat)) {
+                    val tempChat = chat
+                    tempChat.lastMessage = message
+                    when (chatRepository.updateChat(user, tempChat)) {
                         is Result.Success -> {}
                     }
                 }

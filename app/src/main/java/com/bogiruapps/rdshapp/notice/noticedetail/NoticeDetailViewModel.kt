@@ -32,18 +32,19 @@ class NoticeDetailViewModel(
     val dataLoading: LiveData<Boolean> = _dataLoading
 
     val notice = noticeRepository.currentNotice.value
+    private val user = userRepository.currentUser.value!!
 
     fun deleteNotice() {
         _dataLoading.value = true
         viewModelScope.launch {
-            when (noticeRepository.deleteNotice(userRepository.currentUser.value!!)) {
+            when (noticeRepository.deleteNotice(user)) {
                 is Result.Success -> _dataLoading.value = false
             }
         }
     }
 
     fun showEditNoticeFragment() {
-        if (userRepository.currentUser.value!!.id == notice!!.author.id) {
+        if (user.id == notice!!.author.id) {
             _openNoticeEditFragmentEvent.value = Event(Unit)
             noticeRepository.stateNotice.value = State.EDIT
         } else {
@@ -52,7 +53,7 @@ class NoticeDetailViewModel(
     }
 
     fun showDeleteNoticeFragment() {
-        if (userRepository.currentUser.value!!.id  == notice!!.author.id) {
+        if (user.id  == notice!!.author.id) {
             _openNoticeDeleteFragmentEvent.value = Event(Unit)
         } else {
             _showSnackbar.value = Event("Право удаления предоставлено только автору объявления")

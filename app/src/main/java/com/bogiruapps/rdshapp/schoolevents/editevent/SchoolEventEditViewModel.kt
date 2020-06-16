@@ -83,7 +83,7 @@ class SchoolEventEditViewModel(
                         event.title,
                         Message("Сообщений нет"),
                         event.imageIndex)
-                    when (chatRepository.createChat(userRepository.currentUser.value!!, chat)) {
+                    when (chatRepository.createChat(user, chat)) {
                         is Result.Success -> {
                             chatRepository.currentChat.value = chat
                             _dataLoading.value = false

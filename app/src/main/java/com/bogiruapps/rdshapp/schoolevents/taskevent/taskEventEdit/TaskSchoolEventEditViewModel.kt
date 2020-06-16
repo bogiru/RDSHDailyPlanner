@@ -26,7 +26,8 @@ class TaskSchoolEventEditViewModel(
     private val _showSnackbar = MutableLiveData<String>()
     val showSnackbar: MutableLiveData<String> = _showSnackbar
 
-    val event = schoolEventRepository.currentEvent.value
+    private val event = schoolEventRepository.currentEvent.value!!
+    private val user = userRepository.currentUser.value!!
 
     val taskSchoolEvent: TaskSchoolEvent = TaskSchoolEvent()
 
@@ -35,10 +36,10 @@ class TaskSchoolEventEditViewModel(
             _showSnackbar.value = "Не все поля заполнены"
         } else {
             viewModelScope.launch {
-                when (schoolEventRepository.createTaskSchoolEvent(userRepository.currentUser.value!!, taskSchoolEvent)) {
+                when (schoolEventRepository.createTaskSchoolEvent(user, taskSchoolEvent)) {
                     is Result.Success -> {
                         schoolEventRepository.currentEvent.value!!.countTask++
-                        when (schoolEventRepository.updateSchoolEvent(userRepository.currentUser.value!!, schoolEventRepository.currentEvent.value!!)) {
+                        when (schoolEventRepository.updateSchoolEvent(user, event)) {
                             is Result.Success -> showTaskEventFragment()
                         }
                     }
