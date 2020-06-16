@@ -15,6 +15,6 @@ interface UserDataSource {
 
     suspend fun fetchUser(userId: String): Result<User?>
 
-    suspend fun fetchUsers(region: Region, city: City, school: School): Result<List<User>>
+    suspend fun fetchUsers(user: User): Result<List<User>>
 
 }

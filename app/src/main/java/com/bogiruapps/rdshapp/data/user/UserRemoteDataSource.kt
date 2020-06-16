@@ -24,14 +24,15 @@ class UserRemoteDataSource(
 
     override suspend fun createUser(user: User): Result<Void?> = withContext(ioDispatcher) {
         return@withContext try {
-            userCollection.document(user.id.toString()).set(user).await()
+            userCollection.document(user.id).set(user).await()
         } catch (e: Exception) {
             Result.Error(e)
         }
     }
 
     override suspend fun updateUser(user: User): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext userCollection.document(user.id.toString()).update(
+        return@withContext userCollection.document(user.id)
+            .update (
             FIELD_NAME, user.name,
             FIELD_EMAIL, user.id,
             FIELD_REGION, user.region,
@@ -40,12 +41,14 @@ class UserRemoteDataSource(
             FIELD_SCORE, user.score,
             FIELD_ADMIN, user.admin,
             FIELD_ID, user.id
-        ).await()
+        )
+            .await()
     }
 
     override suspend fun fetchUser(userId: String): Result<User?> = withContext(ioDispatcher) {
         return@withContext try {
-            when (val resultDocumentSnapshot = userCollection.document(userId).get().await()) {
+            when (val resultDocumentSnapshot =
+                userCollection.document(userId).get().await()) {
                 is Result.Success -> Result.Success(resultDocumentSnapshot.data.toUser())
                 is Result.Error -> Result.Error(resultDocumentSnapshot.exception)
                 is Result.Canceled -> Result.Canceled(resultDocumentSnapshot.exception)
@@ -55,12 +58,14 @@ class UserRemoteDataSource(
         }
     }
 
-    override suspend fun fetchUsers(region: Region, city: City, school: School): Result<List<User>> = withContext(ioDispatcher) {
+    override suspend fun fetchUsers(user: User): Result<List<User>> = withContext(ioDispatcher) {
         return@withContext try {
-            when (val result =
-                db.collection(REGION_COLLECTION_NAME).document(region.id)
-                    .collection(CITY_COLLECTION_NAME).document(city.id).collection(SCHOOL_COLLECTION_NAME)
-                    .document(school.id).collection(USERS_COLLECTION_NAME).get().await()) {
+            when (val result = db
+                .collection(REGION_COLLECTION_NAME).document(user.region.id)
+                .collection(CITY_COLLECTION_NAME).document(user.city.id)
+                .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
+                .collection(USERS_COLLECTION_NAME)
+                .get().await()) {
                 is Result.Success -> Result.Success(result.data.toUserList())
                 is Result.Error -> Result.Error(result.exception)
                 is Result.Canceled -> Result.Canceled(result.exception)
@@ -72,11 +77,11 @@ class UserRemoteDataSource(
 
     suspend fun fetchFirestoreRecyclerQueryUser(region: Region, city: City, school: School): Result<Query> = withContext(ioDispatcher) {
         return@withContext try {
-            when (val result = db.collection(REGION_COLLECTION_NAME).document(region.id)
-                .collection(CITY_COLLECTION_NAME).document(city.id).collection(
-                    SCHOOL_COLLECTION_NAME
-                )
-                .document(school.id).collection(USERS_COLLECTION_NAME)
+            when (val result = db
+                .collection(REGION_COLLECTION_NAME).document(region.id)
+                .collection(CITY_COLLECTION_NAME).document(city.id)
+                .collection(SCHOOL_COLLECTION_NAME).document(school.id)
+                .collection(USERS_COLLECTION_NAME)
                 .orderBy(FIELD_SCORE, Query.Direction.DESCENDING)
                 .get().await()
                 ) {
