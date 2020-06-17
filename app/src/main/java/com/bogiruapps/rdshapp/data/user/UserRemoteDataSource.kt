@@ -34,7 +34,6 @@ class UserRemoteDataSource(
         return@withContext userCollection.document(user.id)
             .update (
             FIELD_NAME, user.name,
-            FIELD_EMAIL, user.id,
             FIELD_REGION, user.region,
             FIELD_CITY, user.city,
             FIELD_SCHOOL, user.school,
@@ -60,12 +59,12 @@ class UserRemoteDataSource(
 
     override suspend fun fetchUsers(user: User): Result<List<User>> = withContext(ioDispatcher) {
         return@withContext try {
-            when (val result = db
-                .collection(REGION_COLLECTION_NAME).document(user.region.id)
-                .collection(CITY_COLLECTION_NAME).document(user.city.id)
-                .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
-                .collection(USERS_COLLECTION_NAME)
-                .get().await()) {
+            when (val result =
+                db.collection(USERS_COLLECTION_NAME)
+                    .whereEqualTo(FIELD_REGION, user.region)
+                    .whereEqualTo(FIELD_CITY, user.city)
+                    .whereEqualTo(FIELD_SCHOOL, user.school)
+                    .get().await()) {
                 is Result.Success -> Result.Success(result.data.toUserList())
                 is Result.Error -> Result.Error(result.exception)
                 is Result.Canceled -> Result.Canceled(result.exception)
@@ -75,15 +74,15 @@ class UserRemoteDataSource(
         }
     }
 
-    suspend fun fetchFirestoreRecyclerQueryUser(region: Region, city: City, school: School): Result<Query> = withContext(ioDispatcher) {
+    suspend fun fetchFirestoreRecyclerQueryUser(user: User): Result<Query> = withContext(ioDispatcher) {
         return@withContext try {
-            when (val result = db
-                .collection(REGION_COLLECTION_NAME).document(region.id)
-                .collection(CITY_COLLECTION_NAME).document(city.id)
-                .collection(SCHOOL_COLLECTION_NAME).document(school.id)
-                .collection(USERS_COLLECTION_NAME)
-                .orderBy(FIELD_SCORE, Query.Direction.DESCENDING)
-                .get().await()
+            when (val result =
+                db.collection(USERS_COLLECTION_NAME)
+                    .whereEqualTo(FIELD_REGION, user.region)
+                    .whereEqualTo(FIELD_CITY, user.city)
+                    .whereEqualTo(FIELD_SCHOOL, user.school)
+                    .orderBy(FIELD_SCORE, Query.Direction.DESCENDING)
+                    .get().await()
                 ) {
                 is Result.Success -> Result.Success(result.data.query)
                 is Result.Error -> Result.Error(result.exception)

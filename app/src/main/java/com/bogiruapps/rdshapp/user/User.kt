@@ -8,10 +8,10 @@ import java.util.*
 
 data class User(
     var name: String? = "",
+    var id: String = UUID.randomUUID().toString(),
     var region: Region = Region("", ""),
     var city: City = City("", ""),
     var school: School = School("", ""),
     var score: Int = 0,
-    var admin: Boolean? = false,
-    var id: String = UUID.randomUUID().toString()
+    var admin: Boolean? = false
 )

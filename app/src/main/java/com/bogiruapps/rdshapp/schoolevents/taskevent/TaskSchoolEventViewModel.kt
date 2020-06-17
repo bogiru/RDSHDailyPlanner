@@ -75,14 +75,23 @@ class TaskSchoolEventViewModel(
                     is Result.Success -> {
                         if (taskSchoolEvent.completed) {
                             schoolEventRepository.currentEvent.value!!.countCompletedTask--
-                            userRepository.currentUser.value!!.score--
+                            user.score--
                         } else {
                             schoolEventRepository.currentEvent.value!!.countCompletedTask++
-                            userRepository.currentUser.value!!.score++
+                            user.score++
                         }
-                        schoolEventRepository.updateSchoolEvent(userRepository.currentUser.value!!, schoolEventRepository.currentEvent.value!!)
-                        userRepository.updateUser(userRepository.currentUser.value!!)
-                        _dataLoading.value = false
+
+                        when (schoolEventRepository.updateSchoolEvent(user, schoolEvent)) {
+                            is Result.Success -> {
+                                schoolEventRepository.currentEvent.value = schoolEvent
+                                when (userRepository.updateUser(user)) {
+                                    is Result.Success ->  {
+                                        userRepository.currentUser.value = user
+                                        _dataLoading.value = false
+                                    }
+                                }
+                        }
+                        }
                     }
 
                     is Result.Canceled ->

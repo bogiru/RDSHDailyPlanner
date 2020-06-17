@@ -40,11 +40,9 @@ class UserRepositoryImpl(private val dataSource: UserRemoteDataSource) :
     }
 
     override suspend fun fetchFirestoreRecyclerQueryUser(): Result<Query> = coroutineScope {
-        val task = async { dataSource.fetchFirestoreRecyclerQueryUser(
-            currentUser.value!!.region,
-            currentUser.value!!.city,
-            currentUser.value!!.school
-        )}
+        val task = async {
+            dataSource.fetchFirestoreRecyclerQueryUser(currentUser.value!!)
+        }
         return@coroutineScope (task.await())
     }
 

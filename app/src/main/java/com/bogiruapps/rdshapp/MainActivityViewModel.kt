@@ -69,7 +69,7 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
 
     private fun fetchCurrentUserInformation(firebaseUser: FirebaseUser) {
         viewModelScope.launch {
-            when (val result = userRepository.fetchUser(firebaseUser.email.toString())) {
+            when (val result = userRepository.fetchUser(firebaseUser.uid)) {
                 is Result.Success -> {
                     val user = result.data
                     if (user != null) {
@@ -89,7 +89,7 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
     }
 
     private fun createUserToDb(firebaseUser: FirebaseUser) {
-        val user = User(firebaseUser.displayName)
+        val user = User(firebaseUser.displayName, firebaseUser.uid)
         viewModelScope.launch {
             when (userRepository.createNewUser(user)) {
                 is Result.Success -> fetchCurrentUserInformation(firebaseUser)
