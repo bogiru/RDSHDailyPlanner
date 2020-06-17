@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--fields-->
+    <string name="error_not_all_fields_are_filled">
+        Не все поля заполнены
+    </string>
+
+    <!--not enough-->
+    <string name="error_not_enough_rights_to_edit">
+        Право редактирования предоставлено только автору объявления
+    </string>
+    <string name="error_not_enough_rights_to_delete">
+        Право удаления предоставлено только автору объявления
+    </string>
+
+    <!--user-->
+    <string name="error_fetch_information_about_user">
+        Ошибка при получении информации о пользователе
+    </string>
+    <string name="error_create_user_to_db">
+        Ошибка при создании пользователя в базе данных
+    </string>
+    <string name="error_delete_user_from_school">
+        Ошибка при удалении пользователя из школы. Попробуйте снова
+    </string>
+    <string name="error_load_image_to_remote_storage">
+        Ошибка при загрузке изображения. Попробуйте снова
+    </string>
+    <string name="error_update_data_user">
+        Ошибка при обновлении данных пользователя. Попробуйте снова
+    </string>
+    <string name="error_add_user_to_school">
+        Ошибка при добавлении ученика в школу. Попробуйте снова
+    </string>
+    <string name="error_fetch_users_list_from_current_school">
+        Ошибка при получении списка учеников
+    </string>
+
+    <!--choose school-->
+    <string name="error_fetch_regions_list">
+        Ошибка при получении списка регионов
+    </string>
+    <string name="error_fetch_cities_list">
+        Ошибка при получении списка городов/районов
+    </string>
+    <string name="error_fetch_schools_list">
+        Ошибка при получении списка школ
+    </string>
+    <string name="error_update_region">
+        Ошибка при обновлении региона. Попробуйте снова
+    </string>
+    <string name="error_update_city">
+        Ошибка при обновлении города/района. Попробуйте снова
+    </string>
+    <string name="error_update_school">
+        Ошибка при обновлении города/школы. Попробуйте снова
+    </string>
+
+    <!--school events-->
+    <string name="error_fetch_school_events_list">
+        Ошибка при получении списка мероприятий
+    </string>
+    <string name="error_fetch_information_about_school_event">
+        Ошибка при получении информации о мероприятии. Попробуйте снова
+    </string>
+    <string name="error_create_event_to_db">
+        Ошибка при создании мероприятия. Попробуйте снова
+    </string>
+    <string name="error_update_event_to_db">
+        Ошибка при обновлении мероприятия. Попробуйте снова
+    </string>
+
+    <!--tasks school event-->
+    <string name="error_fetch_school_event_tasks_list">
+        Ошибка при получении списка задач
+    </string>
+    <string name="error_update_task_school_event">
+        Ошибка при обновлении задачи. Попробуйте снова
+    </string>
+    <string name="error_create_task_school_event">
+        Ошибка при создании задачи. Попробуйте снова
+    </string>
+
+    <!--chats-->
+    <string name="error_create_chats_to_db">
+        Ошибка при создании чата. Попробуйте снова
+    </string>
+    <string name="error_update_chats_to_db">
+        Ошибка при обновлении чата. Попробуйте снова
+    </string>
+
+    <!--notices-->
+    <string name="error_fetch_notices_list">
+        Ошибка при получении списка объявлений
+    </string>
+    <string name="error_create_notice_to_db">
+        Ошибка при создании объявления. Попробуйте снова
+    </string>
+    <string name="error_update_notice_to_db">
+        Ошибка при обновлении объявления. Попробуйте снова
+    </string>
+    <string name="error_delete_notice_to_db">
+        Ошибка при удалении объявления. Попробуйте снова
+    </string>
+
+</resources>

@@ -2,12 +2,14 @@ package com.bogiruapps.rdshapp.user
 
 import android.app.Activity.RESULT_OK
 import android.net.Uri
+import android.net.wifi.WifiConfiguration.AuthAlgorithm.strings
 import androidx.lifecycle.ViewModel
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.data.school.SchoolRepository
 import com.bogiruapps.rdshapp.school.City
 import com.bogiruapps.rdshapp.school.Region
@@ -71,10 +73,10 @@ class UserViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при удалении пользователя из школы. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_delete_user_from_school.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при удалении пользователя из школы. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_delete_user_from_school.toString()
             }
         }
     }
@@ -89,10 +91,10 @@ class UserViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при загрузке изображения. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_load_image_to_remote_storage.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при загрузке изображения. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_load_image_to_remote_storage.toString()
             }
         }
     }

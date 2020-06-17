@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.data.school.SchoolRepository
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.user.UserRepository
@@ -56,10 +57,10 @@ class SchoolViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при обновлении региона. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_update_region.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при обновлении региона. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_update_region.toString()
             }
         }
     }
@@ -75,10 +76,10 @@ class SchoolViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при обновлении города/района. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_update_city.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при обновлении города/района. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_update_city.toString()
             }
         }
     }
@@ -95,18 +96,18 @@ class SchoolViewModel(
                                 _showSubmitButton.value = Event(Unit)
                             }
                             is Result.Canceled ->
-                                _showSnackbar.value = "Ошибка при добавлении ученика в школу. Попробуйте снова"
+                                _showSnackbar.value = R.string.error_add_user_to_school.toString()
 
                             is Result.Error ->
-                                _showSnackbar.value = "Ошибка при добавлении ученика в школу. Попробуйте снова"
+                                _showSnackbar.value = R.string.error_add_user_to_school.toString()
                         }
                     }
 
                     is Result.Canceled ->
-                        _showSnackbar.value = "Ошибка при обновлении данных пользователя. Попробуйте снова"
+                        _showSnackbar.value = R.string.error_update_data_user.toString()
 
                     is Result.Error ->
-                        _showSnackbar.value = "Ошибка при обновлении данных пользователя. Попробуйте снова"
+                        _showSnackbar.value = R.string.error_update_data_user.toString()
                 }
             }
     }
@@ -120,10 +121,10 @@ class SchoolViewModel(
                     }
 
                     is Result.Canceled ->
-                        _showSnackbar.value = "Ошибка при удалении ученика из школы. Попробуйте снова"
+                        _showSnackbar.value = R.string.error_update_school.toString()
 
                     is Result.Error ->
-                        _showSnackbar.value = "Ошибка при удалении ученика из школы. Попробуйте снова"
+                        _showSnackbar.value = R.string.error_update_school.toString()
                 }
             } else {
                 _resetAddress.value = Event(Unit)
@@ -144,10 +145,10 @@ class SchoolViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при получении регионов"
+                    _showSnackbar.value = R.string.error_fetch_regions_list.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при получении регионов"
+                    _showSnackbar.value = R.string.error_fetch_regions_list.toString()
             }
         }
     }
@@ -161,10 +162,10 @@ class SchoolViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при получении городов"
+                    _showSnackbar.value = R.string.error_fetch_cities_list.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при получении городов"
+                    _showSnackbar.value = R.string.error_fetch_cities_list.toString()
             }
         }
     }
@@ -178,10 +179,10 @@ class SchoolViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при получении школ"
+                    _showSnackbar.value = R.string.error_fetch_schools_list.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при получении школ"
+                    _showSnackbar.value = R.string.error_fetch_schools_list.toString()
             }
         }
     }

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.data.notice.NoticeRepository
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.utils.Result
@@ -71,10 +72,10 @@ class NoticeViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при получении списка объявлений"
+                    _showSnackbar.value = R.string.error_fetch_notices_list.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при получении списка объявлений"
+                    _showSnackbar.value = R.string.error_fetch_notices_list.toString()
             }
         }
     }

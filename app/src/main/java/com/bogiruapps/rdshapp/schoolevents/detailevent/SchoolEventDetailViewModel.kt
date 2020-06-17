@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
 import com.bogiruapps.rdshapp.data.schoolEvent.SchoolEventRepository
@@ -48,7 +49,7 @@ class SchoolEventDetailViewModel(
             _openSchoolEventEditFragmentEvent.value = Event(Unit)
             schoolEventRepository.stateEvent.value = State.EDIT
         } else {
-            _showSnackbar.value = "Право редактирование предоставлено только автору объявления"
+            _showSnackbar.value = R.string.error_not_enough_rights_to_edit.toString()
         }
 
     }
@@ -57,7 +58,7 @@ class SchoolEventDetailViewModel(
         if (user.name == schoolEvent.author.name)  {
             _openDialogDeleteEvent.value = Event(Unit)
         } else {
-            _showSnackbar.value = "Право удаления предоставлено только автору объявления"
+            _showSnackbar.value = R.string.error_not_enough_rights_to_delete.toString()
         }
     }
 }

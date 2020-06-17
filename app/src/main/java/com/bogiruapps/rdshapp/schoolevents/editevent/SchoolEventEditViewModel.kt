@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.user.UserRepository
@@ -47,7 +48,7 @@ class SchoolEventEditViewModel(
 
     fun updateSchoolEvent(event: SchoolEvent) {
         if (event.title == "" || event.description == "") {
-            _showSnackbar.value = "Не все поля заполнены"
+            _showSnackbar.value = R.string.error_not_all_fields_are_filled.toString()
         } else {
             _dataLoading.value = true
             when (schoolEventRepository.stateEvent.value) {
@@ -79,7 +80,7 @@ class SchoolEventEditViewModel(
                     val chat = Chat(
                         event.id,
                         event.title,
-                        Message("Сообщений нет"),
+                        Message(R.string.there_are_not_message.toString()),
                         event.imageIndex)
                     when (chatRepository.createChat(user, chat)) {
                         is Result.Success -> {
@@ -91,10 +92,10 @@ class SchoolEventEditViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при создании мероприятия. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_create_event_to_db.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при создании мероприятия. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_create_event_to_db.toString()
 
             }
         }
@@ -121,18 +122,18 @@ class SchoolEventEditViewModel(
                         }
 
                         is Result.Canceled ->
-                            _showSnackbar.value = "Ошибка при обновлении чата. Попробуйте снова"
+                            _showSnackbar.value = R.string.error_update_chats_to_db.toString()
 
                         is Result.Error ->
-                            _showSnackbar.value = "Ошибка при обновлении чата. Попробуйте снова"
+                            _showSnackbar.value = R.string.error_update_chats_to_db.toString()
                     }
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при обновлении мероприятия. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_update_event_to_db.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при обновлении мероприятия. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_update_event_to_db.toString()
             }
         }
     }

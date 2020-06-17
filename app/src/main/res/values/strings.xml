@@ -20,7 +20,7 @@
     <string name="input_message">Введите сообщение</string>
     <string name="input_text_notice">Введите текст объявления</string>
     <string name="input_region_name">Введите название региона</string>
-    <string name="input_city">input_city_name</string>
+    <string name="input_city_name">Введите название города/района</string>
     <string name="input_school_name">Введите название школы</string>
     <string name="input_title">Введите название</string>
 
@@ -120,6 +120,11 @@
     <string name="more_details">Подробнее</string>
     <string name="background_color" translatable="false">#DAEBEBEB</string>
 
+    <!--chats-->
+    <string name="there_are_not_message">
+        Сообщений нет
+    </string>
+
     <!--user: profile and rating-->
     <string name="change">Изменить</string>
     <string name="score">Счет: %1$d</string>
@@ -136,12 +141,7 @@
     <!--no internet-->
     <string name="no_internet">Нет подключения к интернету</string>
 
-    <!--other-->
+    <!--edit, create-->
     <string name="publish">Опубликовать</string>
-
-    <!--errors-->
-    <string name="error_fetch_information_about_user">
-        Ошибка при получении информации о пользователе
-    </string>
 
 </resources>

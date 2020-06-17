@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.schoolEvent.SchoolEventRepository
@@ -50,10 +51,10 @@ class TaskSchoolEventViewModel(
                 }
 
                 is Result.Canceled ->
-                    showSnackbar("Ошибка при получении списка задач")
+                    showSnackbar(R.string.error_fetch_school_event_tasks_list.toString())
 
                 is Result.Error ->
-                    showSnackbar("Ошибка при получении списка задач")
+                    showSnackbar(R.string.error_fetch_school_event_tasks_list.toString())
             }
         }
     }
@@ -95,10 +96,10 @@ class TaskSchoolEventViewModel(
                     }
 
                     is Result.Canceled ->
-                        showSnackbar("Ошибка при обновлении задачи. Попробуйте снова")
+                        showSnackbar(R.string.error_update_task_school_event.toString())
 
                     is Result.Error ->
-                        showSnackbar("Ошибка при обновлении задачи. Попробуйте снова")
+                        showSnackbar(R.string.error_update_task_school_event.toString())
                 }
             }
         }

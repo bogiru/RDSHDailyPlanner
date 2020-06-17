@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
 import com.bogiruapps.rdshapp.data.schoolEvent.SchoolEventRepository
 import com.bogiruapps.rdshapp.data.user.UserRepository
@@ -52,10 +53,10 @@ class SchoolEventsViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при получении списка мероприятий"
+                    _showSnackbar.value = R.string.error_fetch_school_events_list.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при получении списка мероприятий"
+                    _showSnackbar.value = R.string.error_fetch_school_events_list.toString()
             }
         }
     }
@@ -72,10 +73,10 @@ class SchoolEventsViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при получении информации о мероприятии. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_fetch_information_about_school_event.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при получении информации о мероприятии. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_fetch_information_about_school_event.toString()
             }
         }
     }

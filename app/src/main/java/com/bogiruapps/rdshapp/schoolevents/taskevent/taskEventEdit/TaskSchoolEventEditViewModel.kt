@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.data.user.UserRepository
@@ -37,7 +38,7 @@ class TaskSchoolEventEditViewModel(
 
     fun createTaskEvent() {
         if (taskSchoolEvent.title == "" || taskSchoolEvent.description == "") {
-            _showSnackbar.value = "Не все поля заполнены"
+            _showSnackbar.value = R.string.error_not_all_fields_are_filled.toString()
         } else {
             viewModelScope.launch {
                 when (schoolEventRepository.createTaskSchoolEvent(user, taskSchoolEvent)) {
@@ -49,10 +50,10 @@ class TaskSchoolEventEditViewModel(
                     }
 
                     is Result.Canceled ->
-                        _showSnackbar.value = "Ошибка при создании задачи. Попробуйте снова"
+                        _showSnackbar.value = R.string.error_create_task_school_event.toString()
 
                     is Result.Error ->
-                        _showSnackbar.value = "Ошибка при создании задачи. Попробуйте снова"
+                        _showSnackbar.value = R.string.error_create_task_school_event.toString()
                 }
             }
         }
@@ -64,10 +65,10 @@ class TaskSchoolEventEditViewModel(
                 is Result.Success -> _users.value = result.data
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при получении учеников. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_fetch_users_from_current_school.toString()
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при получении учеников. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_fetch_users_from_current_school.toString()
             }
         }
     }

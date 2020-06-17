@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.utils.Result
 import com.google.firebase.firestore.Query
@@ -28,10 +29,10 @@ class RatingViewModel(val userRepository: UserRepository) : ViewModel() {
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при получении списка учеников"
+                    _showSnackbar.value = R.string.error_fetch_users_list_from_current_school.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при получении списка учеников"
+                    _showSnackbar.value = R.string.error_fetch_users_list_from_current_school.toString()
             }
         }
     }

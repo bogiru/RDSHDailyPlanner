@@ -83,7 +83,7 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
                     _showSnackbar.value = R.string.error_fetch_information_about_user.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при получении информации о пользователе"
+                    _showSnackbar.value = R.string.error_fetch_information_about_user.toString()
             }
         }
     }
@@ -95,10 +95,10 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
                 is Result.Success -> fetchCurrentUserInformation(firebaseUser)
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при создании пользователя в базе данных"
+                    _showSnackbar.value = R.string.error_create_user_to_db.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при создании пользователя в базе данных"
+                    _showSnackbar.value = R.string.error_create_user_to_db.toString()
             }
         }
     }

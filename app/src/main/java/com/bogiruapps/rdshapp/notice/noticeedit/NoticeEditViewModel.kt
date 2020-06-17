@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.notice.NoticeRepository
 import com.bogiruapps.rdshapp.notice.Notice
@@ -32,7 +33,7 @@ class NoticeEditViewModel(
 
     fun updateNotice(notice: Notice) {
         if (notice.title == "" || notice.text == "") {
-            _showSnackbar.value = "Не все поля заполнены"
+            _showSnackbar.value = R.string.error_not_all_fields_are_filled.toString()
         } else {
             _dataLoading.value = true
             when (noticeRepository.stateNotice.value) {
@@ -53,10 +54,10 @@ class NoticeEditViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при создании объявления. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_create_notice_to_db.toString()
 
                 is Result.Error ->
-                    _showSnackbar.value = "Ошибка при создании объявления. Попробуйте снова"
+                    _showSnackbar.value = R.string.error_create_notice_to_db.toString()
             }
         }
     }
@@ -73,10 +74,10 @@ class NoticeEditViewModel(
                     }
 
                     is Result.Canceled ->
-                        _showSnackbar.value = "Ошибка при обновлении объявления. Попробуйте снова"
+                        _showSnackbar.value = R.string.error_update_notice_to_db.toString()
 
                     is Result.Error ->
-                        _showSnackbar.value = "Ошибка при обновлении объявления. Попробуйте снова"
+                        _showSnackbar.value = R.string.error_update_notice_to_db.toString()
                 }
             }
         }
