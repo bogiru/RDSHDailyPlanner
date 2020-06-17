@@ -50,7 +50,7 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
         }
     }
 
-    fun handleSignInActivityResult(resultCode: Int, data: Intent?, firebaseUser: FirebaseUser?) {
+    fun handleSignInActivityResult(resultCode: Int, firebaseUser: FirebaseUser?) {
         if (resultCode == RESULT_OK) {
             checkUserIsConnected(firebaseUser)
         } else {
@@ -80,7 +80,7 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при получении информации о пользователе"
+                    _showSnackbar.value = R.string.error_fetch_information_about_user.toString()
 
                 is Result.Error ->
                     _showSnackbar.value = "Ошибка при получении информации о пользователе"

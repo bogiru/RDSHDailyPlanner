@@ -1,23 +1,40 @@
 <resources>
+
+    <!--app name-->
+    <string name="app_name">Ежедневник РДШ</string>
+
+    <!--sign in-->
     <string name="action_sign_in">Войти или зарегистрироваться</string>
     <string name="action_sign_in_short">Войти</string>
-    <string name="app_name">Ежедневник РДШ</string>
-    <string name="author" >Автор: %1$s</string>
-    <string name="background_color" translatable="false">#DAEBEBEB</string>
-    <string name="change">Изменить</string>
-    <string name="choose_image">Выберите изображение</string>
-    <string name="confirmation_email">
-        На ваш почтовый ящик было отправлено письмо.
-        Просим подтвердить вам почтовый адрес для дальнейшей работы и после перезайти в аккаунт.
-    </string>
-    <string name="data_reset">Сбросить данные</string>
-    <string name="deadline">Дедлайн:</string>
-    <string name="describe_event">Опишите мероприятие</string>
     <string name="hello_blank_fragment">Добро пожаловать</string>
+    <string name="invalid_password">Пароль должен быть больше 5 символов</string>
+    <string name="invalid_username">Неверное имя пользователя</string>
+    <string name="login_failed">Неверный логин</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="title_activity_login">Войти</string>
+    <string name="welcome">Добро пожаловать!</string>
+    <string name="prompt_email">Email</string>
+
+    <!--input-->
+    <string name="input_data">Введите ваши данные</string>
+    <string name="input_message">Введите сообщение</string>
+    <string name="input_text_notice">Введите текст объявления</string>
+    <string name="input_region_name">Введите название региона</string>
+    <string name="input_city">input_city_name</string>
+    <string name="input_school_name">Введите название школы</string>
+    <string name="input_title">Введите название</string>
+
+    <!--choose school-->
+    <string name="school">школа</string>
+    <string name="region">Регион</string>
+    <string name="data_reset">Сбросить данные</string>
+    <string name="submit">Подтвердить</string>
+
+    <!--info-->
     <string name="info_text_page_one" >
         Каждый человек уникален по своими способнястям талантам. рдш - отличный способ самореализации. исходя из своих навыков, ты можешь выбрать одно из четырех направлений, в пользу которого ты готов проявлять активность и помогать развитию движения. если ты наполнен мотивацией, энергией и стремлением, то мы ждем именно тебя!
     </string>
-    <string name="info_text_page_two" translatable="false">
+    <string name="info_text_page_two">
         ------------------ \n
         Творческое развитие: \n
         ------------------ \n   \n
@@ -59,11 +76,11 @@
              \n
         * Организация профильных событий - фестивалей, конкурсов, олимпиад, акций, флешмобов. Проведение образовательных программ по повышению квалификации инструкторского и педагогического состава, а также руководителей общественных организаций.
     </string>
-    <string name="info_text_page_three" translatable="false">
+    <string name="info_text_page_three">
         Добровольчество, поисковая деятельность, изучение истории России,
         краеведение, создание и развитие школьных музеев, экология
     </string>
-    <string name="info_text4" translatable="false">
+    <string name="info_text4">
         Большая детская редакция, создание школьных газет, радио и телевидения, работа с социальными сетями, подготовка информационного контента, дискуссионные площадки \n
         \n
         * Поддержка талантливых юных журналистов; \n
@@ -79,7 +96,7 @@
         \n
         * Проведение образовательных программ по повышению квалификации педагогического состава, а также руководителей общественных организаций. \n
     </string>
-    <string name="info_text_page_four" translatable="false">
+    <string name="info_text_page_four">
         Юные армейцы, юные спасатели, юные казаки, юные пограничники, юные друзья полиции, юные инспектора движения \n
         \n
         * Работа военно-патриотических клубов и вовлечение в неё детей \n
@@ -91,28 +108,40 @@
         * Проведение образовательных программ по повышению квалификации инструкторского и педагогического состава, а также руководителей общественных организаций и военно-патриотических клубов. \n
         \n
     </string>
-    <string name="input_data">Введите ваши данные</string>
-    <string name="input_message">Введите сообщение</string>
-    <string name="input_text_notice">Введите текст объявления</string>
-    <string name="input_region_name">Введите название региона</string>
-    <string name="input_school_name">Введите название школы</string>
-    <string name="input_title">Введите название</string>
-    <string name="invalid_password">Пароль должен быть больше 5 символов</string>
-    <string name="invalid_username">Неверное имя пользователя</string>
-    <string name="load_image">Загрузка изображения</string>
-    <string name="login_failed">Неверный логин</string>
+
+    <!--notice-->
+    <string name="author" >Автор: %1$s</string>
+
+    <!--event-->
+    <string name="describe_event">Опишите мероприятие</string>
+    <string name="responsible">Ответственный: %1$s</string>
+    <string name="task_completed">Задание завершено</string>
+    <string name="deadline">Дедлайн:</string>
     <string name="more_details">Подробнее</string>
-    <string name="no_internet">Нет подключения к интернету</string>
-    <string name="publish">Опубликовать</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Пароль</string>
-    <string name="region">Регион</string>
-    <string name="responsible" translatable="false">Ответственный: %1$s</string>
+    <string name="background_color" translatable="false">#DAEBEBEB</string>
+
+    <!--user: profile and rating-->
+    <string name="change">Изменить</string>
     <string name="score">Счет: %1$d</string>
     <string name="score_title">Счет:</string>
-    <string name="school">школа</string>
-    <string name="submit">Подтвердить</string>
-    <string name="task_completed">Задание завершено</string>
-    <string name="title_activity_login">Войти</string>
-    <string name="welcome">Добро пожаловать!</string>
+    <string name="choose_image">Выберите изображение</string>
+    <string name="load_image">Загрузка изображения</string>
+
+    <!--email unverified-->
+    <string name="confirmation_email">
+        На ваш почтовый ящик было отправлено письмо.
+        Просим подтвердить вам почтовый адрес для дальнейшей работы и после перезайти в аккаунт.
+    </string>
+
+    <!--no internet-->
+    <string name="no_internet">Нет подключения к интернету</string>
+
+    <!--other-->
+    <string name="publish">Опубликовать</string>
+
+    <!--errors-->
+    <string name="error_fetch_information_about_user">
+        Ошибка при получении информации о пользователе
+    </string>
+
 </resources>
