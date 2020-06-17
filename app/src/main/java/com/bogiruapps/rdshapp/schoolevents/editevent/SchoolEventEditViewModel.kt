@@ -21,7 +21,10 @@ class SchoolEventEditViewModel(
     private val chatRepository: ChatRepository
 ) : ViewModel() {
 
-    private val _imageIndex = MutableLiveData<Int>()
+    val user = userRepository.currentUser.value!!
+    val schoolEvent = schoolEventRepository.currentEvent.value!!
+
+    private val _imageIndex = MutableLiveData(schoolEvent.imageIndex)
     val imageIndex: LiveData<Int> = _imageIndex
 
     private val _openSchoolEventFragment = MutableLiveData<Event<Unit>>()
@@ -35,9 +38,6 @@ class SchoolEventEditViewModel(
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
-
-    val user = userRepository.currentUser.value!!
-    val schoolEvent = schoolEventRepository.currentEvent.value!!
 
     fun checkCreateSchoolEventStatus(): Boolean = schoolEventRepository.stateEvent.value == State.CREATE
 
@@ -62,14 +62,12 @@ class SchoolEventEditViewModel(
     }
 
     fun setNextImageSchoolEvent() {
-        schoolEvent.imageIndex = (schoolEvent.imageIndex + 1) % 25
-        _imageIndex.value = schoolEvent.imageIndex
+        _imageIndex.value = ( _imageIndex.value!! + 1) % 25
     }
 
     fun setPreviousImageSchoolEvent() {
-        schoolEvent.imageIndex = (schoolEvent.imageIndex - 1)
-        if (schoolEvent.imageIndex < 0) schoolEvent.imageIndex = 24
-        _imageIndex.value = schoolEvent.imageIndex
+        _imageIndex.value = (_imageIndex.value!!  - 1)
+        if (_imageIndex.value!!  < 0) _imageIndex.value = 24
     }
 
     private fun createSchoolEvent(event: SchoolEvent) {
@@ -103,12 +101,17 @@ class SchoolEventEditViewModel(
     }
 
     private fun editSchoolEvent(event: SchoolEvent) {
+        event.imageIndex = _imageIndex.value!!
+        
         viewModelScope.launch {
             when (schoolEventRepository.updateSchoolEvent(user, event)) {
                 is Result.Success -> {
+
+                    schoolEventRepository.currentEvent.value = event
+
                     val tempChat = chatRepository.currentChat.value!!
                     tempChat.title = event.title
-                    tempChat.indexImage = _imageIndex.value!!
+                    tempChat.imageIndex = _imageIndex.value!!
 
                     when (chatRepository.updateChat(user, tempChat)) {
                         is Result.Success -> {

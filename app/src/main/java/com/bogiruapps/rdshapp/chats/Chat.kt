@@ -7,5 +7,5 @@ data class Chat(
     val id: String = "",
     var title: String = "",
     var lastMessage: Message = Message("Сообщений нет"),
-    var indexImage: Int = Random().nextInt(25)
+    var imageIndex: Int = Random().nextInt(25)
 )

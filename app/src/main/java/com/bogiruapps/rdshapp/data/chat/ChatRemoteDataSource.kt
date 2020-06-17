@@ -3,9 +3,6 @@ package com.bogiruapps.rdshapp.data.chat
 import com.bogiruapps.rdshapp.chats.Chat
 import com.bogiruapps.rdshapp.chats.chatroomevent.Message
 import com.bogiruapps.rdshapp.schoolevents.SchoolEvent
-import com.bogiruapps.rdshapp.school.City
-import com.bogiruapps.rdshapp.school.Region
-import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.*
 import com.google.firebase.firestore.FirebaseFirestore
@@ -51,7 +48,8 @@ class ChatRemoteDataSource(private val db: FirebaseFirestore) : ChatDataSource {
             .collection(CHATS_COLLECTION_NAME).document(chat.id)
             .update(
                 FIELD_TITLE, chat.title,
-                FIELD_LAST_MESSAGE, chat.lastMessage
+                FIELD_LAST_MESSAGE, chat.lastMessage,
+                FIELD_IMAGE_INDEX, chat.imageIndex
             )
             .await()
     }
