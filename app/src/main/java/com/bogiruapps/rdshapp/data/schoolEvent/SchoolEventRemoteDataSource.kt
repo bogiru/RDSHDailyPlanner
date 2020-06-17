@@ -2,9 +2,6 @@ package com.bogiruapps.rdshapp.data.schoolEvent
 
 import com.bogiruapps.rdshapp.schoolevents.SchoolEvent
 import com.bogiruapps.rdshapp.schoolevents.taskevent.TaskSchoolEvent
-import com.bogiruapps.rdshapp.school.City
-import com.bogiruapps.rdshapp.school.Region
-import com.bogiruapps.rdshapp.school.School
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.*
 import com.google.firebase.firestore.FirebaseFirestore
@@ -61,19 +58,20 @@ class SchoolEventRemoteDataSource(
                 FIELD_COUNT_COMPLETED_TASK, event.countCompletedTask,
                 FIELD_COUNT_TASK, event.countTask,
                 FIELD_DEADLINE, event.deadline,
-                FIELD_INDEX_IMAGE, event.imageIndex
+                FIELD_IMAGE_INDEX, event.imageIndex
             )
             .await()
     }
 
-    override suspend fun deleteSchoolEvent(user: User, event: SchoolEvent): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext db
-            .collection(REGION_COLLECTION_NAME).document(user.region.id)
-            .collection(CITY_COLLECTION_NAME).document(user.city.id)
-            .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
-            .collection(EVENTS_COLLECTION_NAME).document(event.id)
-            .delete().await()
-    }
+    override suspend fun deleteSchoolEvent(user: User, event: SchoolEvent): Result<Void?> =
+        withContext(ioDispatcher) {
+          return@withContext db
+                .collection(REGION_COLLECTION_NAME).document(user.region.id)
+                .collection(CITY_COLLECTION_NAME).document(user.city.id)
+                .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
+                .collection(EVENTS_COLLECTION_NAME).document(event.id)
+                .delete().await()
+        }
 
     override suspend fun createTaskSchoolEvent(
         user: User,
@@ -113,13 +111,17 @@ class SchoolEventRemoteDataSource(
         event: SchoolEvent,
         taskSchoolEvent: TaskSchoolEvent
     ): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext db
-            .collection(REGION_COLLECTION_NAME).document(user.region.id)
-            .collection(CITY_COLLECTION_NAME).document(user.city.id)
-            .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
-            .collection(EVENTS_COLLECTION_NAME).document(event.id)
-            .collection(TASKS_COLLECTION_NAME).document(taskSchoolEvent.id)
-            .delete().await()
+        return@withContext try {
+            db
+                .collection(REGION_COLLECTION_NAME).document(user.region.id)
+                .collection(CITY_COLLECTION_NAME).document(user.city.id)
+                .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
+                .collection(EVENTS_COLLECTION_NAME).document(event.id)
+                .collection(TASKS_COLLECTION_NAME).document(taskSchoolEvent.id)
+                .delete().await()
+        }catch (e: Exception) {
+            return@withContext Result.Error(e)
+        }
     }
 
     suspend fun fetchFirestoreRecyclerQuerySchoolEvent(user: User): Result<Query>

@@ -36,25 +36,10 @@ class SchoolEventDetailViewModel(
     fun deleteSchoolEvent() {
         _dataLoading.value = true
         viewModelScope.launch {
-            when (schoolEventRepository.deleteSchoolEvent(user)) {
-                is Result.Success -> {
-                    when (chatRepository.deleteChat(
-                        user,
-                        schoolEvent)) {
-                        is Result.Success -> _dataLoading.value = false
-                        is Result.Error ->
-                            _showSnackbar.value = "Ошибка при удалении чата"
-                        is Result.Error ->
-                            _showSnackbar.value = "Ошибка при удалении чата"
-                    }
-                }
-
-                is Result.Canceled ->
-                    _showSnackbar.value = "Ошибка при удалении мероприятия. Попробуйте снова"
-
-                is Result.Error ->
-                    _showSnackbar.value = "Ошибка при удалении мероприятия. Попробуйте снова"
-            }
+            schoolEventRepository.deleteSchoolEvent(user)
+        }
+        viewModelScope.launch {
+            chatRepository.deleteChat(user)
         }
     }
 

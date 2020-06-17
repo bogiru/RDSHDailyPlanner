@@ -14,7 +14,7 @@ interface ChatDataSource {
 
     suspend fun updateChat(user: User, chat: Chat): Result<Void?>
 
-    suspend fun deleteChat(user: User, event: SchoolEvent, chat: Chat): Result<Void?>
+    suspend fun deleteChat(user: User, chat: Chat): Result<Void?>
 
     suspend fun createMessage(user: User, chatId: String, message: Message): Result<Void?>
 

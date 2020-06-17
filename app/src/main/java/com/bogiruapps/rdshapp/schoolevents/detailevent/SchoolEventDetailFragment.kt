@@ -110,10 +110,6 @@ class  SchoolEventDetailFragment : Fragment() {
         }
     }
 
-    private fun openTaskSchoolEventFragment() {
-        findNavController().navigate(R.id.action_schoolEventDetailFragment_to_taskSchoolEventFragment)
-    }
-
     private fun openSchoolEventFragment() {
         findNavController().navigate(R.id.action_schoolEventDetailFragment_to_schoolEventsFragment)
     }

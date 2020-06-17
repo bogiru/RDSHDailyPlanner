@@ -22,7 +22,7 @@ interface ChatRepository {
 
     suspend fun updateChat(user: User, chat: Chat): Result<Void?>
 
-    suspend fun deleteChat(user: User, event: SchoolEvent): Result<Void?>
+    suspend fun deleteChat(user: User): Result<Void?>
 
     suspend fun createMessage(user: User, message: Message): Result<Void?>
 

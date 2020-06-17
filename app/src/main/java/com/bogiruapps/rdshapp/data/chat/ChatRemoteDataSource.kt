@@ -54,12 +54,11 @@ class ChatRemoteDataSource(private val db: FirebaseFirestore) : ChatDataSource {
             .await()
     }
 
-    override suspend fun deleteChat(user: User, event: SchoolEvent, chat: Chat): Result<Void?> = withContext(ioDispatcher) {
+    override suspend fun deleteChat(user: User, chat: Chat): Result<Void?> = withContext(ioDispatcher) {
         return@withContext db
             .collection(REGION_COLLECTION_NAME).document(user.region.id)
             .collection(CITY_COLLECTION_NAME).document(user.city.id)
             .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
-            .collection(EVENTS_COLLECTION_NAME).document(event.id)
             .collection(CHATS_COLLECTION_NAME).document(chat.id)
             .delete().await()
     }

@@ -52,10 +52,9 @@ class ChatRepositoryImpl(private val dataSource: ChatRemoteDataSource): ChatRepo
         return@coroutineScope returnSuccessOrError(task.await())
     }
 
-    override suspend fun deleteChat(user: User, event: SchoolEvent): Result<Void?> = coroutineScope {
+    override suspend fun deleteChat(user: User): Result<Void?> = coroutineScope {
         val task = async { dataSource.deleteChat(
             user,
-            event,
             currentChat.value!!
         )}
         return@coroutineScope task.await()
