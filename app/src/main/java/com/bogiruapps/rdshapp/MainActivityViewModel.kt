@@ -1,10 +1,8 @@
 package com.bogiruapps.rdshapp
 
 import android.app.Activity.RESULT_OK
-import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,7 +10,6 @@ import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
-import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseUser
@@ -50,7 +47,11 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
         }
     }
 
-    fun handleSignInActivityResult(resultCode: Int, firebaseUser: FirebaseUser?) {
+    fun handleSignInActivityResult(
+        resultCode: Int,
+        firebaseUser1: Intent?,
+        firebaseUser: FirebaseUser?
+    ) {
         if (resultCode == RESULT_OK) {
             checkUserIsConnected(firebaseUser)
         } else {

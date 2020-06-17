@@ -65,10 +65,10 @@ class TaskSchoolEventEditViewModel(
                 is Result.Success -> _users.value = result.data
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_fetch_users_from_current_school.toString()
+                    _showSnackbar.value = R.string.error_fetch_users_list_from_current_school.toString()
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_fetch_users_from_current_school.toString()
+                    _showSnackbar.value = R.string.error_fetch_users_list_from_current_school.toString()
             }
         }
     }

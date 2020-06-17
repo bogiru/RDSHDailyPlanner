@@ -63,12 +63,12 @@ class SchoolEventEditViewModel(
     }
 
     fun setNextImageSchoolEvent() {
-        _imageIndex.value = ( _imageIndex.value!! + 1) % 25
+        _imageIndex.value = ( _imageIndex.value!! + 1) % 45
     }
 
     fun setPreviousImageSchoolEvent() {
         _imageIndex.value = (_imageIndex.value!!  - 1)
-        if (_imageIndex.value!!  < 0) _imageIndex.value = 24
+        if (_imageIndex.value!!  < 0) _imageIndex.value = 44
     }
 
     private fun createSchoolEvent(event: SchoolEvent) {
