@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:hint="Введите сообщение"
+                android:hint="@string/input_message"
                 android:text="@={textMessage}"
                 app:layout_constraintBottom_toBottomOf="@+id/event_chat_room_fb"
                 app:layout_constraintEnd_toStartOf="@+id/event_chat_room_fb"

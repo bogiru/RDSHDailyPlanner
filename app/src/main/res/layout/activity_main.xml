@@ -91,7 +91,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Нет подключения к интернету"
+                        android:text="@string/no_internet"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/image_no_internet" />
@@ -130,7 +130,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
                         android:gravity="center"
-                        android:text="На ваш почтовый ящик было отправлено письмо. Просим подтвердить вам почтовый адрес для дальнейшей работы и после перезайти в аккаунт."
+                        android:text="@string/confirmation_email"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/image_email_unverified" />
@@ -145,7 +145,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:fitsSystemWindows="true"
-                app:menu="@menu/drawer_menu"></com.google.android.material.navigation.NavigationView>
+                app:menu="@menu/drawer_menu" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 

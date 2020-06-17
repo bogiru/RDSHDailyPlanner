@@ -9,11 +9,11 @@ import android.view.LayoutInflater
 class InfoViewPagerAdapter : RecyclerView.Adapter<InfoViewPagerAdapter.InfoHolder>() {
 
     private val pages = listOf(
-        InfoPage(R.string.info_text1, R.drawable.info_image_rdsh),
-        InfoPage(R.string.info_text2, R.drawable.info_image_personal_development),
-        InfoPage(R.string.info_text3, R.drawable.info_image_civic_engagement),
+        InfoPage(R.string.info_text_page_one, R.drawable.info_image_rdsh),
+        InfoPage(R.string.info_text_page_two, R.drawable.info_image_personal_development),
+        InfoPage(R.string.info_text_page_three, R.drawable.info_image_civic_engagement),
         InfoPage(R.string.info_text4, R.drawable.info_image_media),
-        InfoPage(R.string.info_text5, R.drawable.info_image_military_patriotic)
+        InfoPage(R.string.info_text_page_four, R.drawable.info_image_military_patriotic)
     )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InfoHolder {

@@ -107,7 +107,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="8dp"
-                    android:text="Дедлайн:" />
+                    android:text="@string/deadline" />
 
             <TextView
                     android:id="@+id/event_deadline_textView"
