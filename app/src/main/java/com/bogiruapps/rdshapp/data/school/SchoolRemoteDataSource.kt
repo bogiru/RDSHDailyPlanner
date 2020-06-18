@@ -50,28 +50,4 @@ class SchoolRemoteDataSource(private val db: FirebaseFirestore): SchoolDataSourc
             Result.Error(e)
         }
     }
-
-    override suspend fun addUserToSchool(user: User): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext db.collection(REGION_COLLECTION_NAME).document(user.region.id)
-            .collection(CITY_COLLECTION_NAME).document(user.city.id).collection(
-                SCHOOL_COLLECTION_NAME
-            )
-            .document(user.school.id).collection(USERS_COLLECTION_NAME)
-            .document(user.id.toString()).set(user).await()
-    }
-
-    override suspend fun deleteUserFromSchool(user: User): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext db.collection(REGION_COLLECTION_NAME).document(user.region.id)
-            .collection(CITY_COLLECTION_NAME).document(user.city.id).collection(SCHOOL_COLLECTION_NAME)
-            .document(user.school.id).collection(USERS_COLLECTION_NAME)
-            .document(user.id.toString()).delete().await()
-    }
-
-    override suspend fun updateUserInSchool(user: User): Result<Void?> = withContext(ioDispatcher) {
-        return@withContext db.collection(SCHOOL_COLLECTION_NAME).document(user.school.id).collection(
-            USERS_COLLECTION_NAME
-        ).document(user.id.toString()).update(
-            FIELD_SCORE, user.score
-        ).await()
-    }
 }

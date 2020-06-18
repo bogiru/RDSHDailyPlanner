@@ -91,7 +91,7 @@ val modules = module {
     viewModel { TaskSchoolEventViewModel(userRepository = get(), schoolEventRepository = get()) }
     viewModel { TaskSchoolEventEditViewModel(userRepository = get(), schoolEventRepository = get()) }
     viewModel { RatingViewModel(userRepository = get()) }
-    viewModel { UserViewModel(userRepository = get(), schoolRepository = get()) }
+    viewModel { UserViewModel(userRepository = get()) }
     viewModel { ChatRoomViewModel(userRepository = get(), chatRepository = get()) }
     viewModel { ChatsViewModel(userRepository = get(), chatRepository = get()) }
 

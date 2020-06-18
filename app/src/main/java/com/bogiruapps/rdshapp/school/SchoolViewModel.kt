@@ -90,17 +90,8 @@ class SchoolViewModel(
                 user.school = school
                 when (userRepository.updateUser(user)) {
                     is Result.Success -> {
-                        when (schoolRepository.addUserToSchool(user)) {
-                            is Result.Success -> {
-                                _dataLoading.value = false
-                                _showSubmitButton.value = Event(Unit)
-                            }
-                            is Result.Canceled ->
-                                _showSnackbar.value = R.string.error_add_user_to_school.toString()
-
-                            is Result.Error ->
-                                _showSnackbar.value = R.string.error_add_user_to_school.toString()
-                        }
+                        _dataLoading.value = false
+                        _showSubmitButton.value = Event(Unit)
                     }
 
                     is Result.Canceled ->
@@ -113,23 +104,7 @@ class SchoolViewModel(
     }
 
     fun resetAddress() {
-        viewModelScope.launch {
-            if (userRepository.currentUser.value!!.school.name != "") {
-                when (schoolRepository.deleteUserFromSchool(user)) {
-                    is Result.Success -> {
-                        _resetAddress.value = Event(Unit)
-                    }
-
-                    is Result.Canceled ->
-                        _showSnackbar.value = R.string.error_update_school.toString()
-
-                    is Result.Error ->
-                        _showSnackbar.value = R.string.error_update_school.toString()
-                }
-            } else {
-                _resetAddress.value = Event(Unit)
-            }
-        }
+        _resetAddress.value = Event(Unit)
     }
 
     fun showNoticeFragment() {

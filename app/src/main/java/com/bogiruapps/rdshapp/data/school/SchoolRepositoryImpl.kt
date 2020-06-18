@@ -28,20 +28,4 @@ class SchoolRepositoryImpl (private val dataSource: SchoolRemoteDataSource): Sch
         ) }
         return@coroutineScope task.await()
     }
-
-    override suspend fun addUserToSchool(user: User): Result<Void?> = coroutineScope {
-        val task = async { dataSource.addUserToSchool(user)}
-        return@coroutineScope task.await()
-    }
-
-    override suspend fun deleteUserFromSchool(user: User): Result<Void?> = coroutineScope {
-        val task = async { dataSource.deleteUserFromSchool(user) }
-        return@coroutineScope task.await()
-    }
-
-    override suspend fun updateUserInSchool(user: User): Result<Void?> = coroutineScope {
-        val task = async { dataSource.updateUserInSchool(user) }
-        return@coroutineScope task.await()
-    }
-
 }

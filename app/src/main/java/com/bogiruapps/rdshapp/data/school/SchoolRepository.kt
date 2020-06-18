@@ -14,10 +14,4 @@ interface SchoolRepository {
 
     suspend fun fetchSchools(user: User): Result<List<School>>
 
-    suspend fun addUserToSchool(user: User): Result<Void?>
-
-    suspend fun deleteUserFromSchool(user: User): Result<Void?>
-
-    suspend fun updateUserInSchool(user: User): Result<Void?>
-
 }

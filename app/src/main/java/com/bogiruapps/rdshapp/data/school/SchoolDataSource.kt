@@ -14,10 +14,4 @@ interface SchoolDataSource {
 
     suspend fun fetchSchools(regionId: String, cityId: String): Result<List<School>>
 
-    suspend fun addUserToSchool(user: User): Result<Void?>
-
-    suspend fun deleteUserFromSchool(user: User): Result<Void?>
-
-    suspend fun updateUserInSchool(user: User): Result<Void?>
-
 }

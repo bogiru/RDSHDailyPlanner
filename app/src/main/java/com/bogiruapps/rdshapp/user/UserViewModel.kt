@@ -18,8 +18,7 @@ import kotlinx.coroutines.launch
 import com.bogiruapps.rdshapp.utils.Result
 
 class UserViewModel(
-    val userRepository: UserRepository,
-    val schoolRepository: SchoolRepository
+    val userRepository: UserRepository
 ): ViewModel() {
 
     private val _dataLoading = MutableLiveData<Boolean>()
@@ -55,21 +54,16 @@ class UserViewModel(
     fun deleteUserFromSchool() {
         _dataLoading.value = true
         viewModelScope.launch {
-            when(schoolRepository.deleteUserFromSchool(user)) {
+            user.apply {
+                region = Region()
+                city = City()
+                school = School()
+            }
+            when(userRepository.updateUser(user)) {
                 is Result.Success -> {
-                    user.apply {
-                        region = Region()
-                        city = City()
-                        school = School()
-                    }
-
-                    when (userRepository.updateUser(user)) {
-                        is Result.Success -> {
-                            userRepository.currentUser.value = user
-                            openChooseSchoolFragmentEvent()
-                            _dataLoading.value = false
-                        }
-                    }
+                    userRepository.currentUser.value = user
+                    openChooseSchoolFragmentEvent()
+                    _dataLoading.value = false
                 }
 
                 is Result.Canceled ->
