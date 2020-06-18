@@ -12,6 +12,5 @@ data class User(
     var region: Region = Region("", ""),
     var city: City = City("", ""),
     var school: School = School("", ""),
-    var score: Int = 0,
-    var admin: Boolean? = false
+    var score: Int = 0
 )

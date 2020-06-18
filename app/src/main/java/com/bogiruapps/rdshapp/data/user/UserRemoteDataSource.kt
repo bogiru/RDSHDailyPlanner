@@ -38,7 +38,6 @@ class UserRemoteDataSource(
             FIELD_CITY, user.city,
             FIELD_SCHOOL, user.school,
             FIELD_SCORE, user.score,
-            FIELD_ADMIN, user.admin,
             FIELD_ID, user.id
         )
             .await()
