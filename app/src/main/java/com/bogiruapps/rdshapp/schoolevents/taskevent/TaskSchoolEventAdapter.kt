@@ -8,7 +8,6 @@ import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.TasksSchoolEventItemBinding
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.google.firebase.auth.FirebaseAuth
 
 class TaskSchoolEventAdapter(
     options : FirestoreRecyclerOptions<TaskSchoolEvent>,
@@ -55,7 +54,7 @@ class TaskSchoolEventAdapter(
         }
 
         private fun showDetailSchoolEvent() {
-            binding.taskEventMoreDetailsImageView.setImageResource(R.drawable.ic_expand_less_black_48dp)
+            binding.taskEventMoreDetailsImageView.setImageResource(R.drawable.ic_keyboard_arrow_up_black_48dp)
             binding.taskEventDescription.visibility = View.VISIBLE
             binding.ckeckBoxTaskCompleted.visibility = View.VISIBLE
         }

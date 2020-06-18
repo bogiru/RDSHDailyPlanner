@@ -47,7 +47,7 @@
 
                     <ImageView
                             android:id="@+id/task_event_background"
-                            imageDrawable="@{@drawable/header10}"
+                            imageDrawable="@{@drawable/background_task_school_event}"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:scaleType="centerCrop"

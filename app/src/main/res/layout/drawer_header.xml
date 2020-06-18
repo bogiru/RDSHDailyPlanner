@@ -22,7 +22,7 @@
                 android:adjustViewBounds="true"
                 android:orientation="vertical"
                 android:scaleType="fitCenter"
-                app:imageDrawable="@{@drawable/header3}"
+                app:imageDrawable="@{@drawable/header}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"

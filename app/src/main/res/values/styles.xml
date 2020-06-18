@@ -14,10 +14,5 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="MyProgressBarTwo" parent="Widget.AppCompat.ProgressBar">
-        <item name="android:progressDrawable">@drawable/white_progress</item>
-        <item name="android:solidColor">#ffffff</item>
-    </style>
-
     <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog"/>
 </resources>

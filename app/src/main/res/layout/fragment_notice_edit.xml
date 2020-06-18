@@ -74,7 +74,7 @@
                         android:text="@string/publish"
                         android:textColor="#FFFFFF"
                         app:backgroundTint="#5A9FF1"
-                        app:icon="@drawable/enter_icon"
+                        app:icon="@drawable/ic_send_white_18dp"
                         app:iconGravity="end"
                         app:iconTint="#FFFFFF"
                         app:layout_constraintEnd_toEndOf="parent"
