@@ -6,7 +6,6 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.BindingConversion
 import com.bogiruapps.rdshapp.R
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.tasks.RuntimeExecutionException
 import com.google.firebase.storage.FirebaseStorage
 import java.text.SimpleDateFormat
@@ -42,16 +41,27 @@ fun bindImage(view: ImageView, img: Int) {
 
 @BindingAdapter("loadIdInCircle")
 fun loadIdInCircle(view: ImageView, userId: String?) {
-    val storageReference =
-        FirebaseStorage.getInstance().reference.child("images/userPicture/$userId")
+    val url = FirebaseStorage
+        .getInstance()
+        .reference.child("images/userPicture/$userId")
+        .downloadUrl
 
-    storageReference.downloadUrl.addOnSuccessListener { result ->
+    url.addOnSuccessListener { result ->
         val glide = Glide.with(view.context)
         glide
             .load(result)
             .error(glide.load(R.drawable.noavatar))
             .into(view)
     }
+
+    url.addOnCanceledListener {
+        Glide.with(view.context).load(R.drawable.noavatar).into(view)
+    }
+
+    url.addOnFailureListener {
+        Glide.with(view.context).load(R.drawable.noavatar).into(view)
+    }
+
 }
 
 @BindingAdapter("loadImageEvent")
@@ -62,7 +72,7 @@ fun loadImageEvent(view: ImageView, indexImage: Int) {
         try {
             Glide.with(view.context).load(it.result).error(R.drawable.noavatar).into(view)
         } catch (e: RuntimeExecutionException) {
-            Glide.with(view.context).load(R.drawable.noavatar).into(view)
+            Glide.with(view.context).load(R.drawable.error_load_image_school_event).into(view)
         }
     }
 }
