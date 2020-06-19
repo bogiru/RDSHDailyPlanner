@@ -19,17 +19,14 @@ class ChatRoomViewModel(
     private val chatRepository: ChatRepository)
     : ViewModel() {
 
-    private val _query = MutableLiveData<Query>()
-    val query: LiveData<Query> = _query
+    private val _queryMessages = MutableLiveData<Query>()
+    val queryMessages: LiveData<Query> = _queryMessages
 
-    private val _showEventChatRoomContent = MutableLiveData<Event<Unit>>()
-    val showEventChatRoomContent: LiveData<Event<Unit>> = _showEventChatRoomContent
+    private val _updateChatRoomRecyclerView = MutableLiveData<Event<Unit>>()
+    val updateChatRoomRecyclerView: LiveData<Event<Unit>> = _updateChatRoomRecyclerView
 
-    private val _updateEventChatRoomRecyclerView = MutableLiveData<Event<Unit>>()
-    val updateEventChatRoomRecyclerView: LiveData<Event<Unit>> = _updateEventChatRoomRecyclerView
-
-    private val _clearEventChatRoomEdtText = MutableLiveData<Event<Unit>>()
-    val clearEventChatRoomEdtText: LiveData<Event<Unit>> = _clearEventChatRoomEdtText
+    private val _clearChatRoomEdtText = MutableLiveData<Event<Unit>>()
+    val clearChatRoomEdtText: LiveData<Event<Unit>> = _clearChatRoomEdtText
 
     private val _showSnackbar = MutableLiveData<String>()
     val showSnackbar: MutableLiveData<String> = _showSnackbar
@@ -45,8 +42,7 @@ class ChatRoomViewModel(
         viewModelScope.launch {
             when (val result = chatRepository.fetchFirestoreRecyclerQueryEventMessage(user)) {
                 is Result.Success -> {
-                    _query.value = result.data
-                    _showEventChatRoomContent.value = Event(Unit)
+                    _queryMessages.value = result.data
                     _dataLoading.value = false
                 }
 
@@ -62,14 +58,13 @@ class ChatRoomViewModel(
     }
 
     fun loadMessage(textMessage: String) {
-        clearEventChatRoomEdtText()
+        clearChatRoomEdtText()
         viewModelScope.launch {
             val message = Message(textMessage, user)
             when(chatRepository.createMessage(user, message)) {
                 is Result.Success -> {
-                    val tempChat = chat
-                    tempChat.lastMessage = message
-                    when (chatRepository.updateChat(user, tempChat)) {
+                    chat.lastMessage = message
+                    when (chatRepository.updateChat(user, chat)) {
                         is Result.Canceled ->
                             _showSnackbar.value = application.resources
                                 .getString(R.string.error_update_chats_to_db)
@@ -91,12 +86,12 @@ class ChatRoomViewModel(
         }
     }
 
-    fun updateEventChatRoomRecyclerView() {
-        _updateEventChatRoomRecyclerView.value = Event(Unit)
+    fun updateChatRoomRecyclerView() {
+        _updateChatRoomRecyclerView.value = Event(Unit)
     }
 
-    private fun clearEventChatRoomEdtText() {
-        _clearEventChatRoomEdtText.value = Event(Unit)
+    private fun clearChatRoomEdtText() {
+        _clearChatRoomEdtText.value = Event(Unit)
     }
 
 }

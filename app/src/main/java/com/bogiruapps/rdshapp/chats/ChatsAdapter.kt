@@ -12,8 +12,8 @@ class ChatsAdapter(
     private val viewModel: ChatsViewModel
 ) : FirestoreRecyclerAdapter<Chat, ChatsAdapter.ChatsViewHolder>(options) {
 
-    override fun onBindViewHolder(p0: ChatsViewHolder, p1: Int, p2: Chat) {
-        p0.bind(viewModel, p2)
+    override fun onBindViewHolder(holder: ChatsViewHolder, position: Int, chat: Chat) {
+        holder.bind(viewModel, chat)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatsViewHolder {

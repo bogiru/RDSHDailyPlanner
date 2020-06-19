@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
 
@@ -14,12 +15,10 @@ import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentSchoolEventChatRoomBinding
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-/**
- * A simple [Fragment] subclass.
- */
 class ChatRoomFragment : Fragment() {
 
     private val chatRoomViewModel: ChatRoomViewModel by viewModel()
@@ -44,24 +43,27 @@ class ChatRoomFragment : Fragment() {
         this.hideKeyboard()
     }
 
-
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_school_event_chat_room, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_school_event_chat_room,
+            container,
+            false)
         binding.viewModel = chatRoomViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
 
 
     private fun setupObserverViewModel() {
-        chatRoomViewModel.showEventChatRoomContent.observe(viewLifecycleOwner, EventObserver {
-            configureRecyclerView()
+        chatRoomViewModel.queryMessages.observe(viewLifecycleOwner, Observer { queryMessages ->
+            configureRecyclerView(queryMessages)
         })
 
-        chatRoomViewModel.updateEventChatRoomRecyclerView.observe(viewLifecycleOwner, EventObserver {
+        chatRoomViewModel.updateChatRoomRecyclerView.observe(viewLifecycleOwner, EventObserver {
             binding.eventChatRoomRecyclerView.smoothScrollToPosition(0)
         })
 
-        chatRoomViewModel.clearEventChatRoomEdtText.observe(viewLifecycleOwner, EventObserver {
+        chatRoomViewModel.clearChatRoomEdtText.observe(viewLifecycleOwner, EventObserver {
             binding.eventChatRoomEdtText.text.clear()
             this.hideKeyboard()
         })
@@ -70,25 +72,22 @@ class ChatRoomFragment : Fragment() {
     private fun configureToolbar() {
         val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
-
-        activity?.main_toolbar?.title = "Чат"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }
 
-    private fun configureRecyclerView() {
+    private fun configureRecyclerView(queryMessages: Query) {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.reverseLayout = true
 
-        adapter = ChatRoomAdapter(getFirestoreRecyclerOptions(), chatRoomViewModel)
+        adapter = ChatRoomAdapter(getFirestoreRecyclerOptions(queryMessages), chatRoomViewModel)
         binding.eventChatRoomRecyclerView.layoutManager = layoutManager
         binding.eventChatRoomRecyclerView.adapter = adapter
     }
 
-    private fun getFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Message> {
-        val query = chatRoomViewModel.query.value
+    private fun getFirestoreRecyclerOptions(queryMessages: Query): FirestoreRecyclerOptions<Message> {
         return FirestoreRecyclerOptions.Builder<Message>()
-            .setQuery(query!!, Message::class.java)
+            .setQuery(queryMessages, Message::class.java)
             .setLifecycleOwner(this)
             .build()
     }

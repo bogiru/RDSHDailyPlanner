@@ -18,6 +18,7 @@ import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -54,12 +55,12 @@ class ChatsFragment : Fragment() {
 
     private fun setupObserverViewModel() {
 
-        chatsViewModel.showChatsContent.observe(viewLifecycleOwner, Observer {
-            configureRecyclerView()
+        chatsViewModel.queryChats.observe(viewLifecycleOwner, Observer { queryChats ->
+            configureRecyclerView(queryChats)
         })
 
-        chatsViewModel.openChatRoomEvent.observe(viewLifecycleOwner, EventObserver {
-            findNavController().navigate(R.id.action_chatsFragment_to_eventChatRoomFragment)
+        chatsViewModel.openChatRoomEventFragment.observe(viewLifecycleOwner, EventObserver {
+            openChatRoomEventFragment()
         })
 
         chatsViewModel.showSnackbar.observe(viewLifecycleOwner, Observer { message ->
@@ -72,21 +73,24 @@ class ChatsFragment : Fragment() {
         val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
         editItem?.isVisible = false
         deleteItem?.isVisible = false
-
     }
 
-    private fun configureRecyclerView() {
-        val options = getFirestoreRecyclerOptions()
+    private fun configureRecyclerView(queryChats: Query) {
+        val options = getFirestoreRecyclerOptions(queryChats)
         adapter = ChatsAdapter(options, chatsViewModel)
         binding.recyclerViewChats.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewChats.adapter = adapter
     }
 
-    private fun getFirestoreRecyclerOptions(): FirestoreRecyclerOptions<Chat> {
-        val query = chatsViewModel.query.value
+    private fun getFirestoreRecyclerOptions(queryChats: Query): FirestoreRecyclerOptions<Chat> {
         return FirestoreRecyclerOptions.Builder<Chat>()
-            .setQuery(query!!, Chat::class.java)
+            .setQuery(queryChats, Chat::class.java)
             .setLifecycleOwner(this)
             .build()
     }
+
+    private fun openChatRoomEventFragment() {
+        findNavController().navigate(R.id.action_chatsFragment_to_eventChatRoomFragment)
+    }
+
 }
