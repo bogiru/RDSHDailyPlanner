@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.schoolevents
 
+import android.app.Application
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,7 +17,8 @@ import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
 class SchoolEventsViewModel(
-    private val userRepository: UserRepository,
+    private val application: Application,
+    userRepository: UserRepository,
     private val schoolEventRepository: SchoolEventRepository,
     private val chatRepository: ChatRepository
 ) : ViewModel() {
@@ -53,10 +55,12 @@ class SchoolEventsViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_fetch_school_events_list.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_school_events_list)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_fetch_school_events_list.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_school_events_list)
             }
         }
     }
@@ -73,10 +77,12 @@ class SchoolEventsViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_fetch_information_about_school_event.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_information_about_school_event)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_fetch_information_about_school_event.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_information_about_school_event)
             }
         }
     }

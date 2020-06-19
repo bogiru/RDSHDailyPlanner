@@ -83,11 +83,20 @@
     </string>
 
     <!--chats-->
+    <string name="error_fetch_chats_list">
+        Ошибка при получении списка диалогов
+    </string>
     <string name="error_create_chats_to_db">
         Ошибка при создании чата. Попробуйте снова
     </string>
     <string name="error_update_chats_to_db">
         Ошибка при обновлении чата. Попробуйте снова
+    </string>
+    <string name="error_fetch_messages_list">
+        Ошибка при получении списка сообщений
+    </string>
+    <string name="error_create_message_to_db">
+        Ошибка при отправке сообщения. Попробуйте снова
     </string>
 
     <!--notices-->

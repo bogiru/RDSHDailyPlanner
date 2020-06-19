@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.schoolevents.editevent
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,7 @@ import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
 class SchoolEventEditViewModel(
+    private val application: Application,
     private val userRepository: UserRepository,
     private val schoolEventRepository: SchoolEventRepository,
     private val chatRepository: ChatRepository
@@ -48,7 +50,9 @@ class SchoolEventEditViewModel(
 
     fun updateSchoolEvent(event: SchoolEvent) {
         if (event.title == "" || event.description == "") {
-            _showSnackbar.value = R.string.error_not_all_fields_are_filled.toString()
+
+            _showSnackbar.value = application.resources
+                .getString(R.string.error_not_all_fields_are_filled)
         } else {
             _dataLoading.value = true
             when (schoolEventRepository.stateEvent.value) {
@@ -80,7 +84,7 @@ class SchoolEventEditViewModel(
                     val chat = Chat(
                         event.id,
                         event.title,
-                        Message(R.string.there_are_not_message.toString()),
+                        Message(application.resources.getString(R.string.there_are_not_message)),
                         event.imageIndex)
                     when (chatRepository.createChat(user, chat)) {
                         is Result.Success -> {
@@ -92,10 +96,12 @@ class SchoolEventEditViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_create_event_to_db.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_create_event_to_db)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_create_event_to_db.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_create_event_to_db)
 
             }
         }
@@ -122,18 +128,22 @@ class SchoolEventEditViewModel(
                         }
 
                         is Result.Canceled ->
-                            _showSnackbar.value = R.string.error_update_chats_to_db.toString()
+                            _showSnackbar.value = application.resources
+                                .getString(R.string.error_update_chats_to_db)
 
                         is Result.Error ->
-                            _showSnackbar.value = R.string.error_update_chats_to_db.toString()
+                            _showSnackbar.value = application.resources
+                                .getString(R.string.error_update_chats_to_db)
                     }
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_update_event_to_db.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_update_event_to_db)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_update_event_to_db.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_update_event_to_db)
             }
         }
     }

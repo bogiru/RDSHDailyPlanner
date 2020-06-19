@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.notice.noticeedit
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +15,8 @@ import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
 class NoticeEditViewModel(
-    private val userRepository: UserRepository,
+    private val application: Application,
+    userRepository: UserRepository,
     private val noticeRepository: NoticeRepository) : ViewModel() {
 
     private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
@@ -54,10 +56,12 @@ class NoticeEditViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_create_notice_to_db.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_create_notice_to_db)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_create_notice_to_db.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_create_notice_to_db)
             }
         }
     }
@@ -74,10 +78,12 @@ class NoticeEditViewModel(
                     }
 
                     is Result.Canceled ->
-                        _showSnackbar.value = R.string.error_update_notice_to_db.toString()
+                        _showSnackbar.value = application.resources
+                            .getString(R.string.error_update_notice_to_db)
 
                     is Result.Error ->
-                        _showSnackbar.value = R.string.error_update_notice_to_db.toString()
+                        _showSnackbar.value = application.resources
+                            .getString(R.string.error_update_notice_to_db)
                 }
             }
         }

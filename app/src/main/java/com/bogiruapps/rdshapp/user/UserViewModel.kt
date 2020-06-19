@@ -1,6 +1,7 @@
 package com.bogiruapps.rdshapp.user
 
 import android.app.Activity.RESULT_OK
+import android.app.Application
 import android.net.Uri
 import android.net.wifi.WifiConfiguration.AuthAlgorithm.strings
 import androidx.lifecycle.ViewModel
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 import com.bogiruapps.rdshapp.utils.Result
 
 class UserViewModel(
+    val application: Application,
     val userRepository: UserRepository
 ): ViewModel() {
 
@@ -67,10 +69,12 @@ class UserViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_delete_user_from_school.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_delete_user_from_school)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_delete_user_from_school.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_delete_user_from_school)
             }
         }
     }
@@ -85,10 +89,12 @@ class UserViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_load_image_to_remote_storage.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_load_image_to_remote_storage)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_load_image_to_remote_storage.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_load_image_to_remote_storage)
             }
         }
     }

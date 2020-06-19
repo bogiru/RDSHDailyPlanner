@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.schoolevents.taskevent.taskEventEdit
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +15,7 @@ import com.bogiruapps.rdshapp.schoolevents.taskevent.TaskSchoolEvent
 import kotlinx.coroutines.launch
 
 class TaskSchoolEventEditViewModel(
+    private val application: Application,
     private val userRepository: UserRepository,
     private val schoolEventRepository: SchoolEventRepository)
     : ViewModel() {
@@ -38,7 +40,8 @@ class TaskSchoolEventEditViewModel(
 
     fun createTaskEvent() {
         if (taskSchoolEvent.title == "" || taskSchoolEvent.description == "") {
-            _showSnackbar.value = R.string.error_not_all_fields_are_filled.toString()
+            _showSnackbar.value = application.resources
+                .getString(R.string.error_not_all_fields_are_filled)
         } else {
             viewModelScope.launch {
                 when (schoolEventRepository.createTaskSchoolEvent(user, taskSchoolEvent)) {
@@ -50,10 +53,12 @@ class TaskSchoolEventEditViewModel(
                     }
 
                     is Result.Canceled ->
-                        _showSnackbar.value = R.string.error_create_task_school_event.toString()
+                        _showSnackbar.value = application.resources
+                            .getString(R.string.error_create_task_school_event)
 
                     is Result.Error ->
-                        _showSnackbar.value = R.string.error_create_task_school_event.toString()
+                        _showSnackbar.value = application.resources
+                            .getString(R.string.error_create_task_school_event)
                 }
             }
         }
@@ -65,10 +70,12 @@ class TaskSchoolEventEditViewModel(
                 is Result.Success -> _users.value = result.data
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_fetch_users_list_from_current_school.toString()
+                    _showSnackbar.value = application.resources
+                        .getString( R.string.error_fetch_users_list_from_current_school)
 
-                is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_fetch_users_list_from_current_school.toString()
+                is Result.Error ->
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_users_list_from_current_school)
             }
         }
     }

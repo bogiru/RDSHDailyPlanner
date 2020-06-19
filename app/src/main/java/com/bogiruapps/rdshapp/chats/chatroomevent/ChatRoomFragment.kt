@@ -33,7 +33,7 @@ class ChatRoomFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         setupObserverViewModel()
-        chatRoomViewModel.fetchFirestoreRecyclerQuery()
+        chatRoomViewModel.fetchFirestoreRecyclerQueryMessages()
         configureToolbar()
 
         return binding.root

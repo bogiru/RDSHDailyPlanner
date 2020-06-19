@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.notice.noticedetail
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +14,8 @@ import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
 
 class NoticeDetailViewModel(
-    private val userRepository: UserRepository,
+    private val application: Application,
+    userRepository: UserRepository,
     private val noticeRepository: NoticeRepository
 ) : ViewModel() {
 
@@ -42,10 +44,12 @@ class NoticeDetailViewModel(
                 is Result.Success -> _dataLoading.value = false
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_delete_notice_to_db.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_delete_notice_to_db)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_delete_notice_to_db.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_delete_notice_to_db)
             }
         }
     }
@@ -55,7 +59,8 @@ class NoticeDetailViewModel(
             _openNoticeEditFragmentEvent.value = Event(Unit)
             noticeRepository.stateNotice.value = State.EDIT
         } else {
-            _showSnackbar.value = R.string.error_not_enough_rights_to_edit.toString()
+            _showSnackbar.value = application.resources
+                .getString(R.string.error_not_enough_rights_to_edit)
         }
     }
 
@@ -63,7 +68,8 @@ class NoticeDetailViewModel(
         if (user.id  == notice!!.author.id) {
             _openNoticeDeleteFragmentEvent.value = Event(Unit)
         } else {
-            _showSnackbar.value = R.string.error_not_enough_rights_to_delete.toString()
+            _showSnackbar.value = application.resources
+                .getString(R.string.error_not_enough_rights_to_edit)
         }
     }
 }

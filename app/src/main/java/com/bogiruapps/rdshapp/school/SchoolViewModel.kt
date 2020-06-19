@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.school
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +13,7 @@ import com.bogiruapps.rdshapp.data.user.UserRepository
 import kotlinx.coroutines.launch
 
 class SchoolViewModel(
+    private val application: Application,
     private val userRepository: UserRepository,
     private val schoolRepository: SchoolRepository
 ): ViewModel() {
@@ -57,10 +59,12 @@ class SchoolViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_update_region.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_update_region)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_update_region.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_update_region)
             }
         }
     }
@@ -76,10 +80,12 @@ class SchoolViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_update_city.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_update_city)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_update_city.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_update_city)
             }
         }
     }
@@ -95,10 +101,12 @@ class SchoolViewModel(
                     }
 
                     is Result.Canceled ->
-                        _showSnackbar.value = R.string.error_update_data_user.toString()
+                        _showSnackbar.value = application.resources
+                            .getString(R.string.error_update_data_user)
 
                     is Result.Error ->
-                        _showSnackbar.value = R.string.error_update_data_user.toString()
+                        _showSnackbar.value = application.resources
+                            .getString(R.string.error_update_data_user)
                 }
             }
     }
@@ -120,10 +128,12 @@ class SchoolViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_fetch_regions_list.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_regions_list)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_fetch_regions_list.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_regions_list)
             }
         }
     }
@@ -137,10 +147,12 @@ class SchoolViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_fetch_cities_list.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_cities_list)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_fetch_cities_list.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_cities_list)
             }
         }
     }
@@ -154,10 +166,12 @@ class SchoolViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_fetch_schools_list.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_schools_list)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_fetch_schools_list.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_schools_list)
             }
         }
     }

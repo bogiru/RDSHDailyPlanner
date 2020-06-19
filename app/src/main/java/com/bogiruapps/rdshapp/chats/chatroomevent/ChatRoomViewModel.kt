@@ -1,10 +1,12 @@
 package com.bogiruapps.rdshapp.chats.chatroomevent
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bogiruapps.rdshapp.Event
+import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
 import com.bogiruapps.rdshapp.utils.Result
@@ -12,7 +14,8 @@ import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
 class ChatRoomViewModel(
-    private val userRepository: UserRepository,
+    private val application: Application,
+    userRepository: UserRepository,
     private val chatRepository: ChatRepository)
     : ViewModel() {
 
@@ -28,13 +31,16 @@ class ChatRoomViewModel(
     private val _clearEventChatRoomEdtText = MutableLiveData<Event<Unit>>()
     val clearEventChatRoomEdtText: LiveData<Event<Unit>> = _clearEventChatRoomEdtText
 
+    private val _showSnackbar = MutableLiveData<String>()
+    val showSnackbar: MutableLiveData<String> = _showSnackbar
+
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
     private val chat = chatRepository.currentChat.value!!
     private val user = userRepository.currentUser.value!!
 
-    fun fetchFirestoreRecyclerQuery() {
+    fun fetchFirestoreRecyclerQueryMessages() {
         _dataLoading.value = true
         viewModelScope.launch {
             when (val result = chatRepository.fetchFirestoreRecyclerQueryEventMessage(user)) {
@@ -43,6 +49,14 @@ class ChatRoomViewModel(
                     _showEventChatRoomContent.value = Event(Unit)
                     _dataLoading.value = false
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_messages_list)
+
+                is Result.Error ->
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_messages_list)
             }
         }
     }
@@ -56,9 +70,23 @@ class ChatRoomViewModel(
                     val tempChat = chat
                     tempChat.lastMessage = message
                     when (chatRepository.updateChat(user, tempChat)) {
-                        is Result.Success -> {}
+                        is Result.Canceled ->
+                            _showSnackbar.value = application.resources
+                                .getString(R.string.error_update_chats_to_db)
+
+                        is Result.Error ->
+                            _showSnackbar.value = application.resources
+                                .getString(R.string.error_update_chats_to_db)
                     }
                 }
+
+                is Result.Canceled ->
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_create_message_to_db)
+
+                is Result.Error ->
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_create_message_to_db)
             }
         }
     }

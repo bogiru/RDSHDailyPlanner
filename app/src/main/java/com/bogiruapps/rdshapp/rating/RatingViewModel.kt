@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.rating
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +11,11 @@ import com.bogiruapps.rdshapp.utils.Result
 import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
-class RatingViewModel(val userRepository: UserRepository) : ViewModel() {
+class RatingViewModel(
+    private val application: Application,
+    val userRepository: UserRepository
+) : ViewModel() {
+
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
@@ -29,10 +34,12 @@ class RatingViewModel(val userRepository: UserRepository) : ViewModel() {
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_fetch_users_list_from_current_school.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_users_list_from_current_school)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_fetch_users_list_from_current_school.toString()
+                    _showSnackbar.value = application.resources
+                        .getString(R.string.error_fetch_users_list_from_current_school)
             }
         }
     }

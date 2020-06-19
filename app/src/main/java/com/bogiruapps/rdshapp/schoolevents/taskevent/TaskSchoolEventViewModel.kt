@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.schoolevents.taskevent
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,7 @@ import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
 class TaskSchoolEventViewModel(
+    private val application: Application,
     private val userRepository: UserRepository,
     private val schoolEventRepository: SchoolEventRepository)
     : ViewModel() {
@@ -48,10 +50,12 @@ class TaskSchoolEventViewModel(
                 }
 
                 is Result.Canceled ->
-                    showSnackbar(R.string.error_fetch_school_event_tasks_list.toString())
+                    showSnackbar(application.resources
+                        .getString(R.string.error_fetch_school_event_tasks_list))
 
                 is Result.Error ->
-                    showSnackbar(R.string.error_fetch_school_event_tasks_list.toString())
+                    showSnackbar(application.resources
+                        .getString(R.string.error_fetch_school_event_tasks_list))
             }
         }
     }
@@ -86,10 +90,12 @@ class TaskSchoolEventViewModel(
                     }
 
                     is Result.Canceled ->
-                        showSnackbar(R.string.error_update_task_school_event.toString())
+                        showSnackbar(application.resources
+                            .getString(R.string.error_update_task_school_event))
 
                     is Result.Error ->
-                        showSnackbar(R.string.error_update_task_school_event.toString())
+                        showSnackbar(application.resources
+                            .getString(R.string.error_update_task_school_event))
                 }
             }
         }

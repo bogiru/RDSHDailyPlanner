@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.notice
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +15,8 @@ import com.google.firebase.firestore.Query
 import kotlinx.coroutines.launch
 
 class NoticeViewModel(
-    private val userRepository: UserRepository,
+    private val application: Application,
+    userRepository: UserRepository,
     private val noticeRepository: NoticeRepository
 ) : ViewModel() {
 
@@ -72,10 +74,12 @@ class NoticeViewModel(
                 }
 
                 is Result.Canceled ->
-                    _showSnackbar.value = R.string.error_fetch_notices_list.toString()
+                    _showSnackbar.value = application.resources
+                        .getString( R.string.error_fetch_notices_list)
 
                 is Result.Error ->
-                    _showSnackbar.value = R.string.error_fetch_notices_list.toString()
+                    _showSnackbar.value = application.resources
+                        .getString( R.string.error_fetch_notices_list)
             }
         }
     }

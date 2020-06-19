@@ -16,6 +16,7 @@ import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentChatsBinding
 import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
 import com.bogiruapps.rdshapp.utils.hideKeyboard
+import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -59,6 +60,10 @@ class ChatsFragment : Fragment() {
 
         chatsViewModel.openChatRoomEvent.observe(viewLifecycleOwner, EventObserver {
             findNavController().navigate(R.id.action_chatsFragment_to_eventChatRoomFragment)
+        })
+
+        chatsViewModel.showSnackbar.observe(viewLifecycleOwner, Observer { message ->
+            showSnackbar(view!!, message)
         })
     }
 
