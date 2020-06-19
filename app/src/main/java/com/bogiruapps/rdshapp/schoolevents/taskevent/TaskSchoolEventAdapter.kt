@@ -15,9 +15,12 @@ class TaskSchoolEventAdapter(
 ) :
     FirestoreRecyclerAdapter<TaskSchoolEvent, TaskSchoolEventAdapter.TaskSchoolEventViewHolder>(options) {
 
-    override fun onBindViewHolder(holderSchool:  TaskSchoolEventViewHolder, position: Int, taskEvent: TaskSchoolEvent) {
+    override fun onBindViewHolder(
+        holderSchool:  TaskSchoolEventViewHolder,
+        position: Int,
+        taskEvent: TaskSchoolEvent
+    ) {
         holderSchool.bind(viewModelSchool, taskEvent)
-
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskSchoolEventViewHolder {
         return TaskSchoolEventViewHolder.from(parent)
@@ -27,7 +30,9 @@ class TaskSchoolEventAdapter(
         snapshots.getSnapshot(position).reference.delete()
     }
 
-    class TaskSchoolEventViewHolder(private val binding: TasksSchoolEventItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class TaskSchoolEventViewHolder(
+        private val binding: TasksSchoolEventItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: TaskSchoolEventViewModel, taskEvent: TaskSchoolEvent) {
             binding.taskEvent = taskEvent
@@ -38,9 +43,9 @@ class TaskSchoolEventAdapter(
             }
 
             if (taskEvent.completed) {
-                binding.taskEventStatus.text = "Статус: Выполнен"
+                binding.taskEventStatus.text = R.string.no_internet.toString()
             } else {
-                binding.taskEventStatus.text = "Статус: Ожидает выполнения"
+                binding.taskEventStatus.text = R.string.status_await_completion.toString()
             }
             var numberClick = 1
 

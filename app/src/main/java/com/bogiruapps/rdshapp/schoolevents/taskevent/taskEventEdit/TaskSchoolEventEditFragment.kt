@@ -21,10 +21,9 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class TaskSchoolEventEditFragment : Fragment() {
 
-    private val taskEventviewModel: TaskSchoolEventEditViewModel by viewModel()
+    private val taskEventViewModel: TaskSchoolEventEditViewModel by viewModel()
 
     private lateinit var binding: FragmentTaskEventEditBinding
-    private lateinit var chosenUser: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,21 +36,25 @@ class TaskSchoolEventEditFragment : Fragment() {
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_task_event_edit, container, false)
-        binding.viewModel = taskEventviewModel
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_task_event_edit,
+            container,
+            false)
+        binding.viewModel = taskEventViewModel
         binding.lifecycleOwner = this.viewLifecycleOwner
     }
 
     private fun setupObserverViewModel() {
-        taskEventviewModel.openTaskEventFragment.observe(this, EventObserver {
-            findNavController().navigate(R.id.action_taskSchoolEventEditFragment_to_taskSchoolEventFragment)
+        taskEventViewModel.openTaskSchoolEventFragment.observe(viewLifecycleOwner, EventObserver {
+            openTaskSchoolEventFragment()
         })
 
-        taskEventviewModel.users.observe(this, Observer {
+        taskEventViewModel.users.observe(viewLifecycleOwner, Observer {
             setupSpinner(it)
         })
 
-        taskEventviewModel.showSnackbar.observe(this, Observer {message ->
+        taskEventViewModel.showSnackbar.observe(viewLifecycleOwner, Observer { message ->
             showSnackbar(view!!, message)
         })
     }
@@ -59,16 +62,16 @@ class TaskSchoolEventEditFragment : Fragment() {
     private fun configureToolbar() {
         val editItem = activity?.main_toolbar?.menu?.findItem(R.id.item_edit)
         val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
-
-        activity?.window?.decorView?.systemUiVisibility = View.VISIBLE
-        activity?.main_toolbar?.title = "Редактирование"
         editItem?.isVisible = false
         deleteItem?.isVisible = false
     }
 
-    private fun setupSpinner(items: List<User?>) {
-        val spinnerAdapter: ArrayAdapter<String> =
-            ArrayAdapter(context!!, android.R.layout.simple_spinner_item, getUserNames(items))
+    private fun setupSpinner(users: List<User?>) {
+        val spinnerAdapter = ArrayAdapter(
+            context!!,
+            android.R.layout.simple_spinner_item,
+            users
+        )
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.taskEventEditSpinner.adapter = spinnerAdapter
 
@@ -79,7 +82,7 @@ class TaskSchoolEventEditFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                taskEventviewModel.taskSchoolEvent.user = items[position]
+                taskEventViewModel.taskSchoolEvent.user = users[position]
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -87,10 +90,8 @@ class TaskSchoolEventEditFragment : Fragment() {
         }
     }
 
-    private fun getUserNames(users: List<User?>): List<String> {
-        val userNames = mutableListOf<String>()
-        for (user in users) userNames.add(user!!.name!!)
-        return userNames
+    private fun openTaskSchoolEventFragment() {
+        findNavController().navigate(R.id.action_taskSchoolEventEditFragment_to_taskSchoolEventFragment)
     }
 
 }

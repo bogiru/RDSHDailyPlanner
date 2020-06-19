@@ -18,8 +18,8 @@ class TaskSchoolEventEditViewModel(
     private val schoolEventRepository: SchoolEventRepository)
     : ViewModel() {
 
-    private val _openTaskEventFragment = MutableLiveData<Event<Unit>>()
-    val openTaskEventFragment: LiveData<Event<Unit>> = _openTaskEventFragment
+    private val _openTaskSchoolEventFragment = MutableLiveData<Event<Unit>>()
+    val openTaskSchoolEventFragment: LiveData<Event<Unit>> = _openTaskSchoolEventFragment
 
     private val _users = MutableLiveData<List<User?>>()
     val users: LiveData<List<User?>> = _users
@@ -74,7 +74,7 @@ class TaskSchoolEventEditViewModel(
     }
 
     private fun showTaskEventFragment() {
-        _openTaskEventFragment.value = Event(Unit)
+        _openTaskSchoolEventFragment.value = Event(Unit)
     }
 
 }

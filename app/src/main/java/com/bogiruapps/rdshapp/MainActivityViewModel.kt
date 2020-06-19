@@ -34,7 +34,6 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
 
     fun checkUserIsConnected(firebaseUser: FirebaseUser?) {
         if (firebaseUser != null) {
-
             if (firebaseUser.isEmailVerified) {
                 _setVisibilityEmailUnverifiedLayoutEvent.value = Event(false)
                 if (user.value == null) fetchCurrentUserInformation(firebaseUser)

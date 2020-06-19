@@ -13,4 +13,6 @@ data class User(
     var city: City = City("", ""),
     var school: School = School("", ""),
     var score: Int = 0
-)
+) {
+    override fun toString(): String = name.toString()
+}

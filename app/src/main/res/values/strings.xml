@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!--app name-->
     <string name="app_name">Ежедневник РДШ</string>
@@ -119,10 +119,20 @@
     <string name="deadline">Дедлайн:</string>
     <string name="more_details">Подробнее</string>
     <string name="background_color" translatable="false">#DAEBEBEB</string>
+    <string name="delete_event_title">Удалить задачу</string>
+    <string name="delete_event_question">Вы уверены, что хотите удалить задачу?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 
     <!--chats-->
     <string name="there_are_not_message">
         Сообщений нет
+    </string>
+    <string name="status_task_completed">
+        Статус: Выполнен
+    </string>
+    <string name="status_await_completion">
+        Статус: Ожидает выполнения
     </string>
 
     <!--user: profile and rating-->

@@ -21,13 +21,10 @@ class TaskSchoolEventViewModel(
     val openTaskSchoolEventEdit: LiveData<Event<Unit>> = _openTaskSchoolEventEdit
 
     private val _queryTaskSchoolEvent = MutableLiveData<Query>()
-    val query: LiveData<Query> = _queryTaskSchoolEvent
+    val queryTasksSchoolEvent: LiveData<Query> = _queryTaskSchoolEvent
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
-
-    private val _openTaskSchoolEventDeleteFragmentEvent = MutableLiveData<Event<TaskSchoolEvent>>()
-    val openTaskEventDeleteFragmentSchoolEvent: LiveData<Event<TaskSchoolEvent>> = _openTaskSchoolEventDeleteFragmentEvent
 
     private val _showSnackbar = MutableLiveData<String>()
     val showSnackbar: LiveData<String> = _showSnackbar
@@ -36,12 +33,12 @@ class TaskSchoolEventViewModel(
     val user = userRepository.currentUser.value!!
 
     init {
-        fetchFirestoreRecyclerQuery()
+        fetchFirestoreRecyclerQueryTasksSchoolEvent()
     }
 
     fun checkUserIsAuthorSchoolEvent() =  schoolEvent.author.id == user.id
 
-    fun fetchFirestoreRecyclerQuery() {
+    private fun fetchFirestoreRecyclerQueryTasksSchoolEvent() {
         viewModelScope.launch {
             when (val result =
                 schoolEventRepository.fetchFirestoreRecyclerQueryTasksSchoolEvent(user)) {
@@ -61,25 +58,18 @@ class TaskSchoolEventViewModel(
 
     fun taskCompleted(taskSchoolEvent: TaskSchoolEvent) {
         viewModelScope.launch {
-            if (taskSchoolEvent.user!!.id == user.id) {
-                val task = TaskSchoolEvent(
-                    taskSchoolEvent.id,
-                    taskSchoolEvent.title,
-                    !(taskSchoolEvent.completed),
-                    taskSchoolEvent.description,
-                    taskSchoolEvent.user
-                )
-
+            if (checkUserIsAuthorSchoolEvent()) {
+                taskSchoolEvent.completed = !(taskSchoolEvent.completed)
                 _dataLoading.value = true
 
-                when (schoolEventRepository.updateTaskSchoolEvent(user, task)) {
+                when (schoolEventRepository.updateTaskSchoolEvent(user, taskSchoolEvent)) {
                     is Result.Success -> {
                         if (taskSchoolEvent.completed) {
-                            schoolEventRepository.currentEvent.value!!.countCompletedTask--
-                            user.score--
-                        } else {
-                            schoolEventRepository.currentEvent.value!!.countCompletedTask++
+                            schoolEvent.countCompletedTask++
                             user.score++
+                        } else {
+                            schoolEvent.countCompletedTask--
+                            user.score--
                         }
 
                         when (schoolEventRepository.updateSchoolEvent(user, schoolEvent)) {
@@ -102,12 +92,6 @@ class TaskSchoolEventViewModel(
                         showSnackbar(R.string.error_update_task_school_event.toString())
                 }
             }
-        }
-    }
-
-    fun deleteTaskSchoolEvent(taskSchoolEvent: TaskSchoolEvent) {
-        viewModelScope.launch {
-            schoolEventRepository.deleteTaskSchoolEvent(user, taskSchoolEvent)
         }
     }
 

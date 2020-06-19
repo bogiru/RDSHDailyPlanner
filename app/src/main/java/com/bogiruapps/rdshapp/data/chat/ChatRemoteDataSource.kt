@@ -68,7 +68,7 @@ class ChatRemoteDataSource(private val db: FirebaseFirestore) : ChatDataSource {
             .collection(REGION_COLLECTION_NAME).document(user.region.id)
             .collection(CITY_COLLECTION_NAME).document(user.city.id)
             .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
-            .collection(EVENTS_COLLECTION_NAME).document(chatId)
+            .collection(CHATS_COLLECTION_NAME).document(chatId)
             .collection(MESSAGES_COLLECTION_NAME).document()
             .set(message).await()
     }
@@ -96,7 +96,7 @@ class ChatRemoteDataSource(private val db: FirebaseFirestore) : ChatDataSource {
                 .collection(REGION_COLLECTION_NAME).document(user.region.id)
                 .collection(CITY_COLLECTION_NAME).document(user.city.id)
                 .collection(SCHOOL_COLLECTION_NAME).document(user.school.id)
-                .collection(EVENTS_COLLECTION_NAME).document(chatId)
+                .collection(CHATS_COLLECTION_NAME).document(chatId)
                 .collection(MESSAGES_COLLECTION_NAME)
                 .orderBy(FIELD_DATE, Query.Direction.DESCENDING).get().await()) {
                 is Result.Success -> Result.Success(result.data.query)
