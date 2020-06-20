@@ -19,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class SchoolEventEditViewModel(
     private val application: Application,
-    private val userRepository: UserRepository,
+    userRepository: UserRepository,
     private val schoolEventRepository: SchoolEventRepository,
     private val chatRepository: ChatRepository
 ) : ViewModel() {
@@ -78,6 +78,8 @@ class SchoolEventEditViewModel(
     private fun createSchoolEvent(event: SchoolEvent) {
         viewModelScope.launch {
             event.author = user
+            event.imageIndex = _imageIndex.value!!
+
             when(schoolEventRepository.createSchoolEvent(user, event)) {
                 is Result.Success -> {
                     schoolEventRepository.currentEvent.value = event
