@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.schoolevents.editevent
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +10,16 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bogiruapps.rdshapp.EventObserver
+import com.bogiruapps.rdshapp.MainActivity
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.databinding.FragmentSchoolEventEditBinding
 import com.bogiruapps.rdshapp.utils.hideBottomNavigationView
 import com.bogiruapps.rdshapp.utils.showSnackbar
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class SchoolEventEditFragment : Fragment() {
@@ -67,15 +72,19 @@ class SchoolEventEditFragment : Fragment() {
     }
 
     private fun showDatePickerDialog() {
-        /*val datePicker = DatePickerDialog(activity!!)
-        datePicker.show()
+        val dpd =
+            DatePickerDialog.newInstance { _, year, monthOfYear, dayOfMonth ->
+                schoolEventEditViewModel.updateDate(year - 1900, monthOfYear, dayOfMonth)
 
-        datePicker.setOnDateSetListener { view, year, month, dayOfMonth ->
-            eventEditViewModel.updateDate(year - 1900, month, dayOfMonth)
-
-            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
-            binding.eventEditDeadlineTextView.text = dateFormat.format(eventEditViewModel.event!!.deadline)
-        }*/
+                val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH)
+                binding.eventEditDeadlineTextView.text = dateFormat
+                    .format(schoolEventEditViewModel.schoolEvent.deadline)
+            }
+        fragmentManager?.let {
+            dpd.show(it, "Datepickerdialog")
+            dpd.setCancelColor(Color.WHITE)
+            dpd.setOkColor(Color.WHITE)
+        }
     }
 
     private fun openSchoolEventFragment() {

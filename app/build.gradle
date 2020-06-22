@@ -115,6 +115,8 @@ dependencies {
     // EasyPermissions
     implementation 'pub.devrel:easypermissions:3.0.0'
 
+    //data picker
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 
     //SublimePicker
     implementation 'com.appeaser.sublimepickerlibrary:sublimepickerlibrary:2.1.2'

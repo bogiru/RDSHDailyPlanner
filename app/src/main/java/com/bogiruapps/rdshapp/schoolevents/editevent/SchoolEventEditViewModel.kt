@@ -16,6 +16,7 @@ import com.bogiruapps.rdshapp.data.chat.ChatRepository
 import com.bogiruapps.rdshapp.data.schoolEvent.SchoolEventRepository
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
+import java.util.*
 
 class SchoolEventEditViewModel(
     private val application: Application,
@@ -45,7 +46,7 @@ class SchoolEventEditViewModel(
     fun checkCreateSchoolEventStatus(): Boolean = schoolEventRepository.stateEvent.value == State.CREATE
 
     fun updateDate(year: Int, month: Int, dayOfMonth: Int) {
-        //schoolEvent!!.deadline = Calendar.getInstance().set(year, month, dayOfMonth)
+        schoolEvent.deadline = Date(year, month, dayOfMonth)
     }
 
     fun updateSchoolEvent(event: SchoolEvent) {

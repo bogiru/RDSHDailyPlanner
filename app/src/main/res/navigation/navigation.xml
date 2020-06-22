@@ -20,7 +20,8 @@
         <action
                 android:id="@+id/action_schoolEventsFragment_to_schoolEventDetailFragment"
                 app:destination="@id/schoolEventDetailFragment"
-                app:enterAnim="@anim/fui_slide_in_right" />
+                app:enterAnim="@anim/fui_slide_in_right"
+                app:popUpTo="@id/schoolEventsFragment" />
     </fragment>
     <fragment
             android:id="@+id/choseSchoolFragment"
@@ -82,6 +83,9 @@
         <action
                 android:id="@+id/action_taskSchoolEventFragment_to_taskSchoolEventEditFragment"
                 app:destination="@id/taskSchoolEventEditFragment" />
+        <action
+                android:id="@+id/action_tasksSchoolEventFragment_to_schoolEventDetailFragment"
+                app:destination="@id/schoolEventDetailFragment" />
     </fragment>
     <fragment
             android:id="@+id/noticeDetailFragment"
@@ -103,7 +107,7 @@
         <action
                 android:id="@+id/action_taskSchoolEventEditFragment_to_taskSchoolEventFragment"
                 app:destination="@id/tasksSchoolEventFragment"
-                app:popUpTo="@+id/schoolEventsFragment" />
+                app:popUpTo="@id/schoolEventDetailFragment" />
     </fragment>
     <fragment
             android:id="@+id/schoolEventDetailFragment"
@@ -112,10 +116,6 @@
         <action
                 android:id="@+id/action_schoolEventDetailFragment_to_schoolEventEditFragment"
                 app:destination="@id/schoolEventEditFragment" />
-        <action
-                android:id="@+id/action_schoolEventDetailFragment_to_taskSchoolEventFragment"
-                app:destination="@id/tasksSchoolEventFragment"
-                app:popUpTo="@+id/schoolEventsFragment" />
         <action
                 android:id="@+id/action_schoolEventDetailFragment_to_schoolEventsFragment"
                 app:destination="@id/schoolEventsFragment"
