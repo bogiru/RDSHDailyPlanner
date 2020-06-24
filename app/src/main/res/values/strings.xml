@@ -128,12 +128,6 @@
     <string name="there_are_not_message">
         Сообщений нет
     </string>
-    <string name="status_task_completed">
-        Статус: Выполнен
-    </string>
-    <string name="status_await_completion">
-        Статус: Ожидает выполнения
-    </string>
 
     <!--user: profile and rating-->
     <string name="change">Изменить</string>

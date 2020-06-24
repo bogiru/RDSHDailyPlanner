@@ -53,7 +53,8 @@ class NoticeRemoteDataSource(
 
     }
 
-    suspend fun fetchFirestoreRecyclerQueryNotice(user: User): Result<Query> = withContext(ioDispatcher) {
+    suspend fun fetchFirestoreRecyclerQueryNotice(user: User): Result<Query>
+            = withContext(ioDispatcher) {
         return@withContext try {
             when (val result = db
                 .collection(REGION_COLLECTION_NAME).document(user.region.id)

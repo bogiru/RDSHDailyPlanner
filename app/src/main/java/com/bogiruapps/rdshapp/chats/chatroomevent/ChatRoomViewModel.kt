@@ -34,7 +34,7 @@ class ChatRoomViewModel(
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    private val chat = chatRepository.currentChat.value!!
+    val chat = chatRepository.currentChat.value!!
     private val user = userRepository.currentUser.value!!
 
     fun fetchFirestoreRecyclerQueryMessages() {

@@ -1,5 +1,6 @@
 package com.bogiruapps.rdshapp.schoolevents.taskevent
 
+import android.app.Application
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,9 +44,9 @@ class TaskSchoolEventAdapter(
             }
 
             if (taskEvent.completed) {
-                binding.taskEventStatus.text = R.string.no_internet.toString()
+                binding.taskEventStatus.text = "Статус: Выполнен"
             } else {
-                binding.taskEventStatus.text = R.string.status_await_completion.toString()
+                binding.taskEventStatus.text = "Статус: Ожидает выполнения"
             }
             var numberClick = 1
 

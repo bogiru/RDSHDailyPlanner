@@ -74,6 +74,8 @@ class ChatRoomFragment : Fragment() {
         val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
         editItem?.isVisible = false
         deleteItem?.isVisible = false
+
+        activity?.main_toolbar?.title = chatRoomViewModel.chat.title
     }
 
     private fun configureRecyclerView(queryMessages: Query) {

@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toolbar
+import androidx.activity.OnBackPressedCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -124,5 +126,9 @@ class TaskSchoolEventFragment : Fragment() {
 
     private fun openTaskSchoolEventEditFragment() {
         findNavController().navigate(R.id.action_taskSchoolEventFragment_to_taskSchoolEventEditFragment)
+    }
+
+    private fun openSchoolEventDetailFragment() {
+        findNavController().navigate(R.id.action_tasksSchoolEventFragment_to_schoolEventDetailFragment)
     }
 }

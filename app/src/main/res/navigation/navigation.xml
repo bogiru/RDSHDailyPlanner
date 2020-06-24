@@ -107,7 +107,8 @@
         <action
                 android:id="@+id/action_taskSchoolEventEditFragment_to_taskSchoolEventFragment"
                 app:destination="@id/tasksSchoolEventFragment"
-                app:popUpTo="@id/schoolEventDetailFragment" />
+                app:popUpTo="@id/taskSchoolEventEditFragment"
+                app:popUpToInclusive="true" />
     </fragment>
     <fragment
             android:id="@+id/schoolEventDetailFragment"
@@ -141,7 +142,7 @@
     <fragment
             android:id="@+id/chatsFragment"
             android:name="com.bogiruapps.rdshapp.chats.ChatsFragment"
-            android:label="Чаты" >
+            android:label="Диалоги">
         <action
                 android:id="@+id/action_chatsFragment_to_eventChatRoomFragment"
                 app:destination="@id/ChatRoomFragment"

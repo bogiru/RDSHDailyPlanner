@@ -111,6 +111,8 @@
                         android:layout_marginBottom="8dp"
                         app:donut_finished_color="#FFFFFF"
                         app:donut_text_color="#FFFFFF"
+                        app:donut_finished_stroke_width="8dp"
+                        app:donut_unfinished_stroke_width="8dp"
                         app:donut_text_size="9sp"
                         app:donut_unfinished_color="#ABFFFFFF"
                         app:layout_constraintBottom_toBottomOf="parent"
