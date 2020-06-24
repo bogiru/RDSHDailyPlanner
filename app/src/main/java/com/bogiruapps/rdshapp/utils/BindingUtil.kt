@@ -65,7 +65,7 @@ fun loadIdInCircle(view: ImageView, userId: String?) {
 }
 
 @BindingAdapter("loadImageEvent")
-fun loadImageEvent(view: ImageView, indexImage: Int) {
+fun loadImageFromPackageEvent(view: ImageView, indexImage: Int) {
     val storageReference =
         FirebaseStorage.getInstance().reference.child("images/backgroundEvents/$indexImage.png")
     storageReference.downloadUrl.addOnCompleteListener {

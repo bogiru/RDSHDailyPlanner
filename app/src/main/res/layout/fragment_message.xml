@@ -19,12 +19,12 @@
             android:background="#DAEBEBEB">
 
         <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/event_chat_room_recyclerView"
+                android:id="@+id/message_recyclerView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/event_chat_room_edtText"
+                app:layout_constraintBottom_toTopOf="@+id/message_edtText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -33,20 +33,20 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <EditText
-                android:id="@+id/event_chat_room_edtText"
+                android:id="@+id/message_edtText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:hint="@string/input_message"
                 android:text="@={textMessage}"
-                app:layout_constraintBottom_toBottomOf="@+id/event_chat_room_fb"
-                app:layout_constraintEnd_toStartOf="@+id/event_chat_room_fb"
+                app:layout_constraintBottom_toBottomOf="@+id/message_fub"
+                app:layout_constraintEnd_toStartOf="@+id/message_fub"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/event_chat_room_fb" />
+                app:layout_constraintTop_toTopOf="@+id/message_fub" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                android:id="@+id/event_chat_room_fb"
+                android:id="@+id/message_fub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
@@ -59,7 +59,7 @@
                 app:layout_constraintEnd_toEndOf="parent" />
 
         <ProgressBar
-                android:id="@+id/eventChatRoomPb"
+                android:id="@+id/message_pb"
                 style="?android:attr/progressBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

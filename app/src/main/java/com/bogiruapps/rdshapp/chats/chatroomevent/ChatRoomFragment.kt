@@ -12,7 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bogiruapps.rdshapp.EventObserver
 
 import com.bogiruapps.rdshapp.R
-import com.bogiruapps.rdshapp.databinding.FragmentSchoolEventChatRoomBinding
+import com.bogiruapps.rdshapp.databinding.FragmentMessageBinding
+import com.bogiruapps.rdshapp.databinding.MessageItemBinding
 import com.bogiruapps.rdshapp.utils.hideKeyboard
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.Query
@@ -24,7 +25,7 @@ class ChatRoomFragment : Fragment() {
     private val chatRoomViewModel: ChatRoomViewModel by viewModel()
 
     private lateinit var adapter: ChatRoomAdapter
-    private lateinit var binding: FragmentSchoolEventChatRoomBinding
+    private lateinit var binding: FragmentMessageBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,7 +47,7 @@ class ChatRoomFragment : Fragment() {
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_school_event_chat_room,
+            R.layout.fragment_message,
             container,
             false)
         binding.viewModel = chatRoomViewModel
@@ -60,11 +61,11 @@ class ChatRoomFragment : Fragment() {
         })
 
         chatRoomViewModel.updateChatRoomRecyclerView.observe(viewLifecycleOwner, EventObserver {
-            binding.eventChatRoomRecyclerView.smoothScrollToPosition(0)
+            binding.messageRecyclerView.smoothScrollToPosition(0)
         })
 
         chatRoomViewModel.clearChatRoomEdtText.observe(viewLifecycleOwner, EventObserver {
-            binding.eventChatRoomEdtText.text.clear()
+            binding.messageEdtText.text.clear()
             this.hideKeyboard()
         })
     }
@@ -83,8 +84,8 @@ class ChatRoomFragment : Fragment() {
         layoutManager.reverseLayout = true
 
         adapter = ChatRoomAdapter(getFirestoreRecyclerOptions(queryMessages), chatRoomViewModel)
-        binding.eventChatRoomRecyclerView.layoutManager = layoutManager
-        binding.eventChatRoomRecyclerView.adapter = adapter
+        binding.messageRecyclerView.layoutManager = layoutManager
+        binding.messageRecyclerView.adapter = adapter
     }
 
     private fun getFirestoreRecyclerOptions(queryMessages: Query): FirestoreRecyclerOptions<Message> {

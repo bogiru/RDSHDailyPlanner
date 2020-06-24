@@ -24,7 +24,7 @@
             android:paddingBottom="10dp">
 
         <androidx.cardview.widget.CardView
-                android:id="@+id/event_chat_room_item_cardView"
+                android:id="@+id/school_item_cardView"
                 android:layout_width="0dp"
                 android:layout_height="136dp"
                 android:layout_marginStart="8dp"

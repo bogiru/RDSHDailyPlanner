@@ -3,7 +3,7 @@ package com.bogiruapps.rdshapp.chats.chatroomevent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bogiruapps.rdshapp.databinding.SchoolEventChatRoomItemBinding
+import com.bogiruapps.rdshapp.databinding.MessageItemBinding
 import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
@@ -17,7 +17,6 @@ class ChatRoomAdapter(
 
     override fun onBindViewHolder(holder: EventsChatRoomViewHolder, position: Int, message: Message) {
         holder.bind(viewModel, message)
-
     }
 
     override fun onChildChanged(
@@ -34,7 +33,7 @@ class ChatRoomAdapter(
         return EventsChatRoomViewHolder.from(parent)
     }
 
-    class EventsChatRoomViewHolder(private val binding: SchoolEventChatRoomItemBinding)
+    class EventsChatRoomViewHolder(private val binding: MessageItemBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(viewModel: ChatRoomViewModel, message: Message) {
@@ -47,7 +46,7 @@ class ChatRoomAdapter(
             fun from(parent: ViewGroup): EventsChatRoomViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding =
-                    SchoolEventChatRoomItemBinding.inflate(layoutInflater, parent, false)
+                    MessageItemBinding.inflate(layoutInflater, parent, false)
                 return EventsChatRoomViewHolder(binding)
             }
         }

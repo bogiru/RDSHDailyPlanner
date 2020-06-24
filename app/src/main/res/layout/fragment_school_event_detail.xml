@@ -19,7 +19,7 @@
 
 
         <androidx.cardview.widget.CardView
-                android:id="@+id/event_chat_room_item_cardView"
+                android:id="@+id/school_event_item_cardView"
                 android:layout_width="match_parent"
                 android:layout_height="136dp"
                 android:layout_marginStart="8dp"
@@ -99,7 +99,7 @@
                 app:cardCornerRadius="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/event_chat_room_item_cardView">
+                app:layout_constraintTop_toBottomOf="@+id/message_item_cardView">
 
             <TextView
                     android:id="@+id/deadline_textView"

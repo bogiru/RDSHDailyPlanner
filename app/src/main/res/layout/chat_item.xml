@@ -36,19 +36,18 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/chat_item_image"
+                        app:loadImageEvent="@{chat.imageIndex}"
                         android:layout_width="62dp"
                         android:layout_height="62dp"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="8dp"
-                        android:scaleType="centerCrop"
                         android:visibility="visible"
                         app:civ_border_color="#FFF"
                         app:civ_border_width="3dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:loadImageEvent="@{chat.imageIndex}" />
+                        app:layout_constraintTop_toTopOf="parent"        />
 
                 <TextView
                         android:id="@+id/chat_item_title_textView"
