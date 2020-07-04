@@ -84,8 +84,8 @@ class MainActivity : AppCompatActivity() {
             openSignInActivity()
         })
 
-        mainViewModel.openNoticeFragmentEvent.observe(this, EventObserver {
-            openNoticeFragment()
+        mainViewModel.openSchoolEventFragmentEvent.observe(this, EventObserver {
+            openSchoolEventFragment()
         })
 
         isConnected.observe(this, Observer { isConnected ->
@@ -201,7 +201,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun openNoticeFragment() {
-        navController.navigate(R.id.noticeFragment)
+    private fun openSchoolEventFragment() {
+        navController.navigate(R.id.schoolEventsFragment)
     }
 }

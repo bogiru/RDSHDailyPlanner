@@ -11,7 +11,6 @@ import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 import com.firebase.ui.auth.AuthUI
-import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 
@@ -21,8 +20,8 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
     private val _openSignInActivityEvent = MutableLiveData<Event<Unit>>()
     val openSignInActivityEvent: LiveData<Event<Unit>> = _openSignInActivityEvent
 
-    private val _openNoticeFragmentEvent = MutableLiveData<Event<Unit>>()
-    val openNoticeFragmentEvent: LiveData<Event<Unit>> = _openNoticeFragmentEvent
+    private val _openSchoolEventFragmentEvent = MutableLiveData<Event<Unit>>()
+    val openSchoolEventFragmentEvent: LiveData<Event<Unit>> = _openSchoolEventFragmentEvent
 
     private val _setVisibilityEmailUnverifiedLayoutEvent = MutableLiveData<Event<Boolean>>()
     val setVisibilityEmailUnverifiedLayoutEvent: LiveData<Event<Boolean>> = _setVisibilityEmailUnverifiedLayoutEvent
@@ -107,14 +106,14 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
 
     private fun setupUserInformation(user: User) {
         userRepository.currentUser.value = user
-        showNoticeFragment()
+        showSchoolEventFragment()
     }
 
-    private fun showNoticeFragment() {
-        _openNoticeFragmentEvent.value = Event(Unit)
+    private fun showSchoolEventFragment() {
+        _openSchoolEventFragmentEvent.value = Event(Unit)
     }
 
-    private fun showSignInActivity() {
+    fun showSignInActivity() {
         _openSignInActivityEvent.value = Event(Unit)
     }
 }

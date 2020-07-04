@@ -11,6 +11,7 @@ import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.data.chat.ChatRepository
 import com.bogiruapps.rdshapp.data.schoolEvent.SchoolEventRepository
 import com.bogiruapps.rdshapp.data.user.UserRepository
+import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
 import com.google.firebase.firestore.Query
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class SchoolEventsViewModel(
     private val application: Application,
-    userRepository: UserRepository,
+    private val userRepository: UserRepository,
     private val schoolEventRepository: SchoolEventRepository,
     private val chatRepository: ChatRepository
 ) : ViewModel() {
@@ -41,29 +42,29 @@ class SchoolEventsViewModel(
     private val _showSnackbar = MutableLiveData<String>()
     val showSnackbar: MutableLiveData<String> = _showSnackbar
 
-    private val user = userRepository.currentUser.value
+    private var user = userRepository.currentUser.value
 
     fun fetchFirestoreRecyclerQuerySchoolEvents() {
-        _dataLoading.value = true
+            _dataLoading.value = true
         user?.let {
-        viewModelScope.launch {
-            when (val result = schoolEventRepository
-                .fetchFirestoreRecyclerQuerySchoolEvents(user)) {
-                is Result.Success -> {
-                    _querySchoolEvents.value = result.data
-                    _dataLoading.value = false
-                    showSchoolEventContent()
+            viewModelScope.launch {
+                when (val result = schoolEventRepository
+                    .fetchFirestoreRecyclerQuerySchoolEvents(user!!)) {
+                    is Result.Success -> {
+                        _querySchoolEvents.value = result.data
+                        _dataLoading.value = false
+                        showSchoolEventContent()
+                    }
+
+                    is Result.Canceled ->
+                        _showSnackbar.value = application.resources
+                            .getString(R.string.error_fetch_school_events_list)
+
+                    is Result.Error ->
+                        _showSnackbar.value = application.resources
+                            .getString(R.string.error_fetch_school_events_list)
                 }
-
-                is Result.Canceled ->
-                    _showSnackbar.value = application.resources
-                        .getString(R.string.error_fetch_school_events_list)
-
-                is Result.Error ->
-                    _showSnackbar.value = application.resources
-                        .getString(R.string.error_fetch_school_events_list)
             }
-        }
         }
     }
 

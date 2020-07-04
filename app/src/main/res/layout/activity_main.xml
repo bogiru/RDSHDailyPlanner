@@ -116,10 +116,11 @@
                         android:id="@+id/image_email_unverified"
                         android:layout_width="0dp"
                         android:layout_height="60dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
+
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/textView_email_unverified"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_email_24px" />
 
                 <TextView
@@ -127,13 +128,26 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
                         android:gravity="center"
                         android:text="@string/confirmation_email"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_email_unverified" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.55" />
+
+                <Button
+                        android:id="@+id/btn_email_unverified"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="8dp"
+                        android:onClick="@{(view) -> viewModel.showSignInActivity()}"
+                        android:text="Выйти из аккаунта"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/textView_email_unverified" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

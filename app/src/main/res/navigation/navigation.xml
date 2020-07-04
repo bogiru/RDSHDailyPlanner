@@ -75,7 +75,7 @@
         <action
                 android:id="@+id/action_noticeEditFragment_to_noticeFragment"
                 app:destination="@id/noticeFragment"
-                app:popUpTo="@id/noticeEditFragment" />
+                app:popUpTo="@id/noticeFragment" />
     </fragment>
     <fragment
             android:id="@+id/tasksSchoolEventFragment"
@@ -108,8 +108,7 @@
         <action
                 android:id="@+id/action_taskSchoolEventEditFragment_to_taskSchoolEventFragment"
                 app:destination="@id/tasksSchoolEventFragment"
-                app:popUpTo="@id/taskSchoolEventEditFragment"
-                app:popUpToInclusive="true" />
+                app:popUpTo="@id/schoolEventsFragment" />
     </fragment>
     <fragment
             android:id="@+id/schoolEventDetailFragment"

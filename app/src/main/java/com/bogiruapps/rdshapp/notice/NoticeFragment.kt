@@ -36,6 +36,7 @@ class NoticeFragment : Fragment() {
         configureToolbar()
         hideBottomNavigationView(activity!!)
 
+
         return binding.root
     }
 
@@ -77,6 +78,7 @@ class NoticeFragment : Fragment() {
         val deleteItem = activity?.main_toolbar?.menu?.findItem(R.id.item_delete)
         editItem?.isVisible = false
         deleteItem?.isVisible = false
+
     }
 
     private fun openChooseSchoolFragment() {

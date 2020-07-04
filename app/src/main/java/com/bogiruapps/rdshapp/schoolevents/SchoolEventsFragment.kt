@@ -34,8 +34,8 @@ class SchoolEventsFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         setupObserverViewModel()
-        schoolEventsViewModel.fetchFirestoreRecyclerQuerySchoolEvents()
         configureToolbar()
+        schoolEventsViewModel.fetchFirestoreRecyclerQuerySchoolEvents()
         hideBottomNavigationView(activity!!)
 
         return binding.root
