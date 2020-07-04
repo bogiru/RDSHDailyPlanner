@@ -95,7 +95,7 @@
                         app:layout_constraintBottom_toBottomOf="@+id/notice_item_author_textView"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:setDateNoticeItem="@{notice.date}" />
+                        app:setShortDateWithoutTime="@{notice.date}" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -36,7 +36,9 @@ class MainActivityViewModel(val userRepository: UserRepository) : ViewModel() {
         if (firebaseUser != null) {
             if (firebaseUser.isEmailVerified) {
                 _setVisibilityEmailUnverifiedLayoutEvent.value = Event(false)
-                if (user.value == null) fetchCurrentUserInformation(firebaseUser)
+                if (user.value == null) {
+                    fetchCurrentUserInformation(firebaseUser)
+                }
             } else {
                 _setVisibilityEmailUnverifiedLayoutEvent.value = Event(true)
                 firebaseUser.sendEmailVerification()

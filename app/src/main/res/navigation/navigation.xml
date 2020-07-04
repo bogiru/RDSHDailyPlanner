@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools" android:id="@+id/navigation"
-        app:startDestination="@id/noticeFragment">
+        app:startDestination="@id/schoolEventsFragment">
 
     <fragment
             android:id="@+id/infoFragment"
@@ -31,7 +31,7 @@
         <action
                 android:id="@+id/action_choseSchoolFragment_to_noticeFragment"
                 app:destination="@id/noticeFragment"
-                app:popUpTo="@+id/navigation" />
+                app:popUpTo="@id/choseSchoolFragment" />
     </fragment>
     <fragment
             android:id="@+id/noticeFragment"
@@ -70,11 +70,12 @@
             android:id="@+id/noticeEditFragment"
             android:name="com.bogiruapps.rdshapp.notice.noticeedit.NoticeEditFragment"
             android:label="Информация об объявлении"
-            tools:layout="@layout/fragment_notice_edit" >
+            tools:layout="@layout/fragment_notice_edit"
+            app:startDestination="@id/action_noticeEditFragment_to_noticeFragment">
         <action
                 android:id="@+id/action_noticeEditFragment_to_noticeFragment"
                 app:destination="@id/noticeFragment"
-                app:popUpTo="@+id/navigation" />
+                app:popUpTo="@id/noticeEditFragment" />
     </fragment>
     <fragment
             android:id="@+id/tasksSchoolEventFragment"
@@ -98,7 +99,7 @@
         <action
                 android:id="@+id/action_noticeDetailFragment_to_noticeFragment"
                 app:destination="@id/noticeFragment"
-                app:popUpTo="@+id/navigation" />
+                app:popUpTo="@id/noticeDetailFragment" />
     </fragment>
     <fragment
             android:id="@+id/taskSchoolEventEditFragment"

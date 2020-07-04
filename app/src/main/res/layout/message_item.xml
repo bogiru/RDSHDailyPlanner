@@ -27,7 +27,7 @@
                 app:civ_border_color="#FFF"
                 app:civ_border_width="3dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/message_item_cardView"
                 app:loadIdInCircle="@{message.author.id}" />
 
         <androidx.cardview.widget.CardView
@@ -43,7 +43,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/message_item_profile_image"
-                app:layout_constraintTop_toBottomOf="@+id/message_item_author_name">
+                app:layout_constraintTop_toBottomOf="@id/message_item_date">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -54,16 +54,27 @@
                     android:paddingBottom="4dp">
 
                 <TextView
-                        android:id="@+id/message_item_text"
+                        android:id="@+id/message_item_author_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
+                        android:text="@{message.author.name}"
+                        android:textColor="@color/colorPrimaryDark"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                        android:id="@+id/message_item_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="4dp"
                         android:maxWidth="224dp"
                         android:text="@{message.text}"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/message_item_author_name"
                         tools:text="ЫВАВЫАВЫАВЫА" />
 
                 <TextView
@@ -83,14 +94,16 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-                android:id="@+id/message_item_author_name"
+                android:id="@+id/message_item_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@{message.author.name}"
-                android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintStart_toEndOf="@+id/message_item_profile_image"
-                app:layout_constraintTop_toTopOf="@+id/message_item_profile_image" />
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -43,14 +43,19 @@ val modules = module {
 
     // Data source
     single { UserRemoteDataSource(db = get(), storage = get()) }
-    single { NoticeRemoteDataSource(db = get()) }
     single { SchoolEventRemoteDataSource(db = get(), storage = get()) }
+    single { NoticeRemoteDataSource(db = get()) }
     single { ChatRemoteDataSource(db = get()) }
     single { SchoolRemoteDataSource(db = get()) }
 
     // Repository
     single<UserRepository> {
         UserRepositoryImpl(
+            dataSource = get()
+        )
+    }
+    single<SchoolEventRepository> {
+        SchoolEventRepositoryImpl(
             dataSource = get()
         )
     }
@@ -61,11 +66,6 @@ val modules = module {
         )
     }
 
-    single<SchoolEventRepository> {
-        SchoolEventRepositoryImpl(
-            dataSource = get()
-        )
-    }
 
     single<ChatRepository> {
         ChatRepositoryImpl(
@@ -81,10 +81,6 @@ val modules = module {
 
     // ViewModels
     viewModel { MainActivityViewModel(userRepository = get()) }
-    viewModel { NoticeViewModel(application = get(), userRepository = get(), noticeRepository = get()) }
-    viewModel { SchoolViewModel(application = get(), userRepository = get(), schoolRepository = get()) }
-    viewModel { NoticeEditViewModel(application = get(), userRepository = get(), noticeRepository = get()) }
-    viewModel { NoticeDetailViewModel(application = get(), userRepository = get(), noticeRepository = get()) }
     viewModel { SchoolEventsViewModel(application = get(), userRepository = get(), schoolEventRepository = get(), chatRepository = get()) }
     viewModel { SchoolEventDetailViewModel(application = get(), userRepository = get(), schoolEventRepository = get(), chatRepository = get()) }
     viewModel { SchoolEventEditViewModel(application = get(), userRepository = get(), schoolEventRepository = get(), chatRepository = get()) }
@@ -94,5 +90,9 @@ val modules = module {
     viewModel { UserViewModel(application = get(), userRepository = get()) }
     viewModel { ChatRoomViewModel(application = get(), userRepository = get(), chatRepository = get()) }
     viewModel { ChatsViewModel(application = get(), userRepository = get(), chatRepository = get()) }
+    viewModel { NoticeViewModel(application = get(), userRepository = get(), noticeRepository = get()) }
+    viewModel { SchoolViewModel(application = get(), userRepository = get(), schoolRepository = get()) }
+    viewModel { NoticeEditViewModel(application = get(), userRepository = get(), noticeRepository = get()) }
+    viewModel { NoticeDetailViewModel(application = get(), userRepository = get(), noticeRepository = get()) }
 
 }

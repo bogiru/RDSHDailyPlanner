@@ -41,10 +41,11 @@ class SchoolEventsViewModel(
     private val _showSnackbar = MutableLiveData<String>()
     val showSnackbar: MutableLiveData<String> = _showSnackbar
 
-    private val user = userRepository.currentUser.value!!
+    private val user = userRepository.currentUser.value
 
     fun fetchFirestoreRecyclerQuerySchoolEvents() {
         _dataLoading.value = true
+        user?.let {
         viewModelScope.launch {
             when (val result = schoolEventRepository
                 .fetchFirestoreRecyclerQuerySchoolEvents(user)) {
@@ -63,6 +64,7 @@ class SchoolEventsViewModel(
                         .getString(R.string.error_fetch_school_events_list)
             }
         }
+        }
     }
 
     fun showDetailSchoolEventFragment(schoolEvent: SchoolEvent, view: View) {
@@ -70,7 +72,7 @@ class SchoolEventsViewModel(
 
         viewModelScope.launch {
             when (val result = chatRepository
-                .fetchChat(user, schoolEvent.id)) {
+                .fetchChat(user!!, schoolEvent.id)) {
                 is Result.Success -> {
                     chatRepository.currentChat.value = result.data
                     _openSchoolEventDetailFragment.value = Event(view)

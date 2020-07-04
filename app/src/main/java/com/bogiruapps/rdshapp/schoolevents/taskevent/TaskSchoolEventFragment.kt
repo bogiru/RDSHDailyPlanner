@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.transition.TransitionInflater
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toolbar
@@ -44,7 +45,6 @@ class TaskSchoolEventFragment : Fragment() {
         configureBinding(inflater, container)
         configureToolbar()
         setupObserverViewModel()
-
         return binding.root
     }
 

@@ -99,7 +99,7 @@
                 app:cardCornerRadius="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/message_item_cardView">
+                app:layout_constraintTop_toBottomOf="@+id/school_event_item_cardView">
 
             <TextView
                     android:id="@+id/deadline_textView"
@@ -111,14 +111,14 @@
                     android:text="@string/deadline" />
 
             <TextView
-                    android:id="@+id/event_deadline_textView"
+                    android:id="@+id/event_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_marginTop="12dp"
-                    android:layout_marginRight="8dp"
+                    android:layout_marginEnd="12dp"
                     android:layout_marginBottom="12dp"
-                    android:text="@{viewModel.schoolEvent.deadline}" />
+                    app:setDateWithoutTime="@{viewModel.schoolEvent.deadline}" />
 
         </androidx.cardview.widget.CardView>
 

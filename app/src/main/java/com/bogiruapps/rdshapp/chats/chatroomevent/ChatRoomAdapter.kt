@@ -1,13 +1,16 @@
 package com.bogiruapps.rdshapp.chats.chatroomevent
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bogiruapps.rdshapp.databinding.MessageItemBinding
+import com.bogiruapps.rdshapp.utils.setDateWithoutTime
 import com.firebase.ui.common.ChangeEventType
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
+import java.util.*
 
 class ChatRoomAdapter(
     options : FirestoreRecyclerOptions<Message>,

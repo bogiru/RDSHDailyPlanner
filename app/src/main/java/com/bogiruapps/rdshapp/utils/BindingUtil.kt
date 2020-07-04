@@ -13,14 +13,25 @@ import java.util.*
 
 @BindingConversion
 fun convertDateToString(date: Date): String {
-    val dateFormat = SimpleDateFormat("dd.MM.yyyy. HH:mm", Locale.ENGLISH)
+    val dateFormat = SimpleDateFormat("dd.MM.yyyy, HH:mm", Locale.ENGLISH)
     return dateFormat.format(date)
 }
 
-@BindingAdapter("setDateNoticeItem")
-fun setDateNoticeItem(view: TextView, date: Date) {
-    val dateFormat = SimpleDateFormat("dd MMM", Locale("Ru"))
+@BindingAdapter("setDateWithoutTime")
+fun setDateWithoutTime(view: TextView, date: Date) {
+    val dateFormat = SimpleDateFormat("dd MMMM", Locale("Ru"))
+    view.text = dateFormat.format(date).toString()
+}
 
+@BindingAdapter("setShortDateWithoutTime")
+fun setShortDateWithoutTime(view: TextView, date: Date) {
+    val dateFormat = SimpleDateFormat("dd MMM", Locale("Ru"))
+    view.text = dateFormat.format(date).toString()
+}
+
+@BindingAdapter("setTime")
+fun setTime(view: TextView, date: Date) {
+    val dateFormat = SimpleDateFormat("HH:mm", Locale("Ru"))
     view.text = dateFormat.format(date).toString()
 }
 
