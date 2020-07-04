@@ -147,5 +147,6 @@
 
     <!--edit, create-->
     <string name="publish">Опубликовать</string>
+    <string name="reference_choose_school">Данное приложение расчитано только для официально зарегистрированных штабов РДШ. Если вашей школы не оказалось в списках, просим написать на почту skat.apps@gmail.com</string>
 
 </resources>
