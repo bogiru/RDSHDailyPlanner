@@ -77,6 +77,11 @@ class ChatRoomFragment : Fragment() {
         deleteItem?.isVisible = false
 
         activity?.main_toolbar?.title = chatRoomViewModel.chat.title
+
+        if (activity?.bottomNavigationView?.visibility == View.VISIBLE) {
+            activity?.main_toolbar?.navigationIcon = null
+        }
+
     }
 
     private fun configureRecyclerView(queryMessages: Query) {

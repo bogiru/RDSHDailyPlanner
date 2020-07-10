@@ -58,7 +58,7 @@ class TaskSchoolEventFragment : Fragment() {
         sharedElementEnterTransition = TransitionInflater
             .from(context)
             .inflateTransition(android.R.transition.move)
-    }
+    }   
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_tasks_event, container, false)
@@ -77,6 +77,8 @@ class TaskSchoolEventFragment : Fragment() {
 
         editItem?.isVisible = false
         deleteItem?.isVisible = false
+        
+        activity?.main_toolbar?.navigationIcon = null
     }
 
     private fun setupObserverViewModel() {

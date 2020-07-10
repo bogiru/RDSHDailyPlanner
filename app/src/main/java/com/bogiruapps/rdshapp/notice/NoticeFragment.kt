@@ -1,11 +1,14 @@
 package com.bogiruapps.rdshapp.notice
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.transaction
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,17 +35,15 @@ class NoticeFragment : Fragment() {
     ): View? {
         configureBinding(inflater, container)
         setupObserverViewModel()
-        noticeViewModel.checkUserSchool()
         configureToolbar()
         hideBottomNavigationView(activity!!)
-
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.hideKeyboard()
+        noticeViewModel.checkUserSchool()
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {

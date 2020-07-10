@@ -9,6 +9,7 @@ import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.data.notice.NoticeRepository
 import com.bogiruapps.rdshapp.data.user.UserRepository
+import com.bogiruapps.rdshapp.user.User
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
 import com.google.firebase.firestore.Query
@@ -16,7 +17,7 @@ import kotlinx.coroutines.launch
 
 class NoticeViewModel(
     private val application: Application,
-    userRepository: UserRepository,
+    private val userRepository: UserRepository,
     private val noticeRepository: NoticeRepository
 ) : ViewModel() {
 
@@ -41,10 +42,10 @@ class NoticeViewModel(
     private val _showSnackbar = MutableLiveData<String>()
     val showSnackbar: MutableLiveData<String> = _showSnackbar
 
-    private val user = userRepository.currentUser.value
+    private val  user = userRepository.currentUser.value
 
     fun checkUserSchool() {
-        if (user != null) {
+        user?.let {
             val school = user.school
             if (school.name == "") {
                 showSchoolFragment()

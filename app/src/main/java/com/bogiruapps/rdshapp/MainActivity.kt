@@ -2,6 +2,7 @@ package com.bogiruapps.rdshapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
+import androidx.navigation.ActivityNavigator
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -23,8 +25,10 @@ import com.bogiruapps.rdshapp.utils.showSnackbar
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.get
 import org.koin.android.viewmodel.ext.android.viewModel
+import kotlin.concurrent.fixedRateTimer
 
 
 class MainActivity : AppCompatActivity() {
@@ -157,10 +161,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
+        when (navController.currentDestination!!.id) {
+            R.id.schoolEventsFragment -> navController.navigate(R.id.noticeFragment)
+            R.id.schoolEventDetailFragment -> navController.navigate(R.id.schoolEventsFragment)
+            R.id.tasksSchoolEventFragment -> navController.navigate(R.id.schoolEventDetailFragment)
+            R.id.ChatRoomFragment -> {
+                val bottomNavigationView = binding.bottomNavigationView
+                if (bottomNavigationView.visibility == View.VISIBLE) {
+                    navController.navigate(R.id.schoolEventDetailFragment)
+                } else {
+                    navController.navigate(R.id.chatsFragment)
+                }
+            }
+            R.id.noticeFragment -> finishAffinity()
+            else -> {
+                if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+                    drawerLayout.closeDrawer(GravityCompat.START)
+                } else {
+                    super.onBackPressed()
+                }
+            }
         }
     }
 
@@ -202,6 +222,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openSchoolEventFragment() {
-        navController.navigate(R.id.schoolEventsFragment)
+        navController.navigate(R.id.noticeFragment)
     }
 }

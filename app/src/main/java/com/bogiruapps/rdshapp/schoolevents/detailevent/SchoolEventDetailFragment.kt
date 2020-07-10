@@ -59,6 +59,8 @@ class  SchoolEventDetailFragment : Fragment() {
             schoolEventDetailViewModel.showDialogDeleteSchoolEvent()
             return@setOnMenuItemClickListener true
         }
+
+        activity?.main_toolbar?.navigationIcon = null
     }
 
     private fun setupObserverViewModel() {
