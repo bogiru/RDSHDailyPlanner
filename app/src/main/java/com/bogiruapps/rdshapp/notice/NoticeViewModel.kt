@@ -55,15 +55,6 @@ class NoticeViewModel(
         }
     }
 
-    fun addUserViewed(notice: Notice) {
-        viewModelScope.launch {
-            if (!notice.listOfUsersViewed.contains(user!!.id)) {
-                notice.listOfUsersViewed.add(user.id)
-                noticeRepository.updateNotice(user, notice)
-            }
-        }
-    }
-
     private fun fetchFirestoreRecyclerQueryNotices() {
         viewModelScope.launch {
             when (val result = noticeRepository

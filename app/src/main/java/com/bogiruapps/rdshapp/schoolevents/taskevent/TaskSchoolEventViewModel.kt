@@ -50,7 +50,7 @@ class TaskSchoolEventViewModel(
                 }
 
                 is Result.Canceled ->
-                    showSnackbar(application.resources
+                    showSnackbar( application.resources
                         .getString(R.string.error_fetch_school_event_tasks_list))
 
                 is Result.Error ->
@@ -90,7 +90,7 @@ class TaskSchoolEventViewModel(
                     }
 
                     is Result.Canceled ->
-                        showSnackbar(application.resources
+                        showSnackbar( application.resources
                             .getString(R.string.error_update_task_school_event))
 
                     is Result.Error ->

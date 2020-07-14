@@ -9,6 +9,7 @@ import com.bogiruapps.rdshapp.Event
 import com.bogiruapps.rdshapp.R
 import com.bogiruapps.rdshapp.data.user.UserRepository
 import com.bogiruapps.rdshapp.data.notice.NoticeRepository
+import com.bogiruapps.rdshapp.notice.Notice
 import com.bogiruapps.rdshapp.utils.Result
 import com.bogiruapps.rdshapp.utils.State
 import kotlinx.coroutines.launch
@@ -34,7 +35,10 @@ class NoticeDetailViewModel(
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    val notice = noticeRepository.currentNotice.value
+    private val _updateFieldViews = MutableLiveData<Event<Unit>>()
+    val updateFieldViews: LiveData<Event<Unit>> = _updateFieldViews
+
+    var notice = noticeRepository.currentNotice.value!!
     private val user = userRepository.currentUser.value!!
 
     fun deleteNotice() {
@@ -54,8 +58,23 @@ class NoticeDetailViewModel(
         }
     }
 
+    fun addUserViewed(notice: Notice) {
+        viewModelScope.launch {
+            if (!notice.listOfUsersViewed.contains(user.id)) {
+                notice.listOfUsersViewed.add(user.id)
+                when (noticeRepository.updateNotice(user, notice)) {
+                    is Result.Success -> {
+                        this@NoticeDetailViewModel.notice = noticeRepository.currentNotice.value!!
+                        _updateFieldViews.value = Event(Unit)
+                    }
+                }
+
+            }
+        }
+    }
+
     fun showEditNoticeFragment() {
-        if (user.id == notice!!.author.id) {
+        if (user.id == notice.author.id) {
             _openNoticeEditFragmentEvent.value = Event(Unit)
             noticeRepository.stateNotice.value = State.EDIT
         } else {
@@ -65,7 +84,7 @@ class NoticeDetailViewModel(
     }
 
     fun showDeleteNoticeFragment() {
-        if (user.id  == notice!!.author.id) {
+        if (user.id  == notice.author.id) {
             _openNoticeDeleteFragmentEvent.value = Event(Unit)
         } else {
             _showSnackbar.value = application.resources

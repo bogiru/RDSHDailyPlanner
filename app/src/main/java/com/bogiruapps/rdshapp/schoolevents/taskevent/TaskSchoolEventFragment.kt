@@ -109,7 +109,8 @@ class TaskSchoolEventFragment : Fragment() {
                     adapter.deleteItem(viewHolder.adapterPosition)
                 } else {
                     adapter.notifyItemChanged(viewHolder.adapterPosition)
-                    showSnackbar(view!!, R.string.error_not_enough_rights_to_delete.toString())
+                    showSnackbar(view!!, activity!!.application.resources
+                        .getString(R.string.error_not_enough_rights_to_delete))
                 }
             }
         }

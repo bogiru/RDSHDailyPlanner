@@ -31,7 +31,17 @@ class NoticeDetailFragment : Fragment() {
         configureBinding(inflater, container)
         setupObserverViewModel()
         configureToolbar()
+
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        addUserViewed()
+    }
+
+    private fun addUserViewed() {
+        noticeDetailViewModel.addUserViewed(noticeDetailViewModel.notice)
     }
 
     private fun configureBinding(inflater: LayoutInflater, container: ViewGroup?) {
@@ -55,6 +65,10 @@ class NoticeDetailFragment : Fragment() {
 
         noticeDetailViewModel.showSnackbar.observe(viewLifecycleOwner, Observer {message ->
             showSnackbar(view!!, message)
+        })
+
+        noticeDetailViewModel.updateFieldViews.observe(viewLifecycleOwner, Observer {
+            binding.noticeDetailViewsTextView.text = noticeDetailViewModel.notice.listOfUsersViewed.size.toString()
         })
     }
 

@@ -13,7 +13,6 @@ class NoticeAdapter(
 ) : FirestoreRecyclerAdapter<Notice, NoticeAdapter.NoticeViewHolder>(options) {
 
     override fun onBindViewHolder(viewHolder: NoticeViewHolder, position: Int, notice: Notice) {
-        viewModel.addUserViewed(notice)
         viewHolder.bind(viewModel, notice)
     }
 
