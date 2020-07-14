@@ -77,7 +77,7 @@ class ChooseSchoolFragment : Fragment() {
         val tvRegionsAutoComplete = binding.regionAutoCompleteTextView
 
         val regionsAdapter = ArrayAdapter(
-            activity!!.applicationContext,
+            context!!,
             android.R.layout.simple_dropdown_item_1line,
             regions)
         tvRegionsAutoComplete.setAdapter(regionsAdapter)
@@ -93,7 +93,7 @@ class ChooseSchoolFragment : Fragment() {
     private fun showCitiesAutoCompleteTextView(cities: List<City>) {
         val tvCitiesAutoComplete = binding.cityAutoCompleteTextView
         val citiesAdapter = ArrayAdapter(
-            activity!!.applicationContext,
+            context!!,
             android.R.layout.simple_dropdown_item_1line,
             cities
         )
@@ -113,7 +113,7 @@ class ChooseSchoolFragment : Fragment() {
     private fun showSchoolsAutoCompleteTextView(schools: List<School>) {
         val tvSchoolsAutoComplete = binding.schoolAutoCompleteTextView
         val schoolAdapter = ArrayAdapter(
-            activity!!.applicationContext,
+            context!!,
             android.R.layout.simple_dropdown_item_1line,
             schools
         )

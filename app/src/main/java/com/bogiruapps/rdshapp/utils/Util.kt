@@ -26,7 +26,7 @@ fun showSnackbar(view: View, message: String) {
 }
 
 fun hideBottomNavigationView(activity: Activity) {
-    activity!!.bottomNavigationView.visibility = View.GONE
+    activity.bottomNavigationView.visibility = View.GONE
 }
 
 @AfterPermissionGranted(RC_IMAGE_PERMS)
